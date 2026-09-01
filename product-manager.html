@@ -3,18 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Product Manager</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
     font-family:Arial,Helvetica,sans-serif;
@@ -22,12 +16,10 @@ body{
     color:#0f172a;
 }
 
-/* HEADER */
-
 .header{
     height:70px;
     background:#0f172a;
-    color:white;
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -43,16 +35,25 @@ body{
     color:#60a5fa;
 }
 
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-email{
+    font-size:13px;
+    color:#cbd5e1;
+}
+
 .logout{
     background:#334155;
-    color:white;
+    color:#fff;
     border:0;
     padding:9px 15px;
     border-radius:8px;
     cursor:pointer;
 }
-
-/* CONTENT */
 
 .container{
     max-width:1400px;
@@ -65,7 +66,7 @@ body{
     justify-content:space-between;
     align-items:center;
     gap:15px;
-    margin-bottom:25px;
+    margin-bottom:20px;
     flex-wrap:wrap;
 }
 
@@ -79,7 +80,39 @@ body{
     margin-top:5px;
 }
 
-/* BUTTON */
+.client-panel{
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:20px;
+}
+
+.client-panel label{
+    display:block;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.client-selector{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.client-selector select{
+    max-width:500px;
+}
+
+.selected-client{
+    background:#dbeafe;
+    color:#1d4ed8;
+    padding:9px 12px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:800;
+}
 
 .btn{
     border:0;
@@ -91,7 +124,7 @@ body{
 
 .primary{
     background:#2563eb;
-    color:white;
+    color:#fff;
 }
 
 .primary:hover{
@@ -108,10 +141,8 @@ body{
     color:#b91c1c;
 }
 
-/* FILTER */
-
 .filters{
-    background:white;
+    background:#fff;
     padding:18px;
     border-radius:15px;
     border:1px solid #e2e8f0;
@@ -121,9 +152,7 @@ body{
     margin-bottom:20px;
 }
 
-input,
-select,
-textarea{
+input,select,textarea{
     width:100%;
     padding:11px 12px;
     border:1px solid #cbd5e1;
@@ -138,10 +167,8 @@ textarea:focus{
     border-color:#2563eb;
 }
 
-/* TABLE */
-
 .table-card{
-    background:white;
+    background:#fff;
     border:1px solid #e2e8f0;
     border-radius:15px;
     overflow:auto;
@@ -153,8 +180,7 @@ table{
     min-width:900px;
 }
 
-th,
-td{
+th,td{
     padding:14px;
     border-bottom:1px solid #e2e8f0;
     text-align:left;
@@ -198,7 +224,11 @@ th{
     gap:7px;
 }
 
-/* MODAL */
+.empty{
+    text-align:center;
+    padding:40px;
+    color:#64748b;
+}
 
 .modal{
     position:fixed;
@@ -216,7 +246,7 @@ th{
 }
 
 .modal-box{
-    background:white;
+    background:#fff;
     width:min(800px,100%);
     max-height:92vh;
     overflow:auto;
@@ -268,15 +298,6 @@ th{
     width:auto;
 }
 
-.modal-footer{
-    margin-top:22px;
-    display:flex;
-    justify-content:flex-end;
-    gap:10px;
-}
-
-/* SPECIFICATIONS */
-
 .spec-row{
     display:grid;
     grid-template-columns:1fr 1fr 40px;
@@ -292,27 +313,30 @@ th{
     cursor:pointer;
 }
 
-.empty{
-    text-align:center;
-    padding:40px;
-    color:#64748b;
+.modal-footer{
+    margin-top:22px;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
 }
-
-/* TOAST */
 
 .toast{
     position:fixed;
     right:20px;
     bottom:20px;
     background:#0f172a;
-    color:white;
+    color:#fff;
     padding:13px 18px;
     border-radius:10px;
     display:none;
     z-index:500;
 }
 
-/* RESPONSIVE */
+.loading{
+    text-align:center;
+    padding:35px;
+    color:#64748b;
+}
 
 @media(max-width:700px){
 
@@ -332,8 +356,19 @@ th{
         grid-column:auto;
     }
 
-}
+    .client-selector{
+        flex-direction:column;
+        align-items:stretch;
+    }
 
+    .header{
+        padding:0 15px;
+    }
+
+    .user-email{
+        display:none;
+    }
+}
 </style>
 </head>
 
@@ -345,9 +380,20 @@ th{
         WEB<span>PLATFORM</span>
     </div>
 
-    <button class="logout" id="logoutBtn">
-        Logout
-    </button>
+    <div class="header-right">
+
+        <span
+            class="user-email"
+            id="userEmail">
+        </span>
+
+        <button
+            class="logout"
+            id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
 
 </header>
 
@@ -357,20 +403,60 @@ th{
     <div class="top">
 
         <div>
-            <h1>Products</h1>
+            <h1>Product Manager</h1>
 
             <p class="muted">
-                Manage products for your website.
+                Manage products for client websites.
             </p>
         </div>
 
         <button
             class="btn primary"
             id="addProductBtn">
-
             + Add Product
-
         </button>
+
+    </div>
+
+
+    <!-- CLIENT SELECTOR -->
+
+    <div
+        class="client-panel"
+        id="clientPanel">
+
+        <label>
+            Select Client Website
+        </label>
+
+        <div class="client-selector">
+
+            <select
+                id="clientSelector">
+
+                <option value="">
+                    Loading clients...
+                </option>
+
+            </select>
+
+            <div
+                class="selected-client"
+                id="selectedClientLabel">
+
+                No Client Selected
+
+            </div>
+
+        </div>
+
+        <p
+            class="muted"
+            id="clientHelp">
+
+            Select a client before adding products.
+
+        </p>
 
     </div>
 
@@ -410,7 +496,7 @@ th{
     </div>
 
 
-    <!-- TABLE -->
+    <!-- PRODUCTS -->
 
     <div class="table-card">
 
@@ -419,26 +505,28 @@ th{
             <thead>
 
                 <tr>
-
                     <th>Image</th>
-
                     <th>Product</th>
-
                     <th>Code</th>
-
                     <th>Category</th>
-
                     <th>Status</th>
-
                     <th>Featured</th>
-
                     <th>Actions</th>
-
                 </tr>
 
             </thead>
 
             <tbody id="productRows">
+
+                <tr>
+                    <td
+                        colspan="7"
+                        class="loading">
+
+                        Select a client.
+
+                    </td>
+                </tr>
 
             </tbody>
 
@@ -459,9 +547,18 @@ th{
 
         <div class="modal-head">
 
-            <h2 id="modalTitle">
-                Add Product
-            </h2>
+            <div>
+
+                <h2 id="modalTitle">
+                    Add Product
+                </h2>
+
+                <p
+                    class="muted"
+                    id="modalClientName">
+                </p>
+
+            </div>
 
             <button
                 class="close"
@@ -563,8 +660,7 @@ th{
                 <textarea
                     id="description"
                     rows="5"
-                    placeholder="Detailed product description">
-                </textarea>
+                    placeholder="Detailed product description"></textarea>
 
             </div>
 
@@ -578,13 +674,10 @@ th{
                 <textarea
                     id="applications"
                     rows="4"
-                    placeholder="Where is this product used?">
-                </textarea>
+                    placeholder="Where is this product used?"></textarea>
 
             </div>
 
-
-            <!-- SPECIFICATIONS -->
 
             <div class="group full">
 
@@ -597,7 +690,7 @@ th{
                 <button
                     type="button"
                     class="btn secondary"
-                    onclick="addSpecification()">
+                    id="addSpecBtn">
 
                     + Add Specification
 
@@ -617,7 +710,8 @@ th{
                     placeholder="https://...">
 
                 <p class="muted">
-                    Storage upload will be connected in the next step.
+                    Supabase Storage upload will be connected next.
+
                 </p>
 
             </div>
@@ -636,7 +730,6 @@ th{
                 </label>
 
             </div>
-
 
         </div>
 
@@ -675,7 +768,7 @@ th{
 <script>
 
 /* =========================================================
-   SUPABASE
+   SUPABASE CONNECTION
 ========================================================= */
 
 const SUPABASE_URL =
@@ -697,21 +790,25 @@ window.supabase.createClient(
 
 let currentUser = null;
 
+let currentRole = null;
+
 let currentClientId = null;
 
-let products = [];
+let clients = [];
 
 let categories = [];
+
+let products = [];
 
 let editingProductId = null;
 
 
 /* =========================================================
-   HELPERS
+   HELPER
 ========================================================= */
 
-const $ = id =>
-document.getElementById(id);
+const $ =
+id => document.getElementById(id);
 
 
 function escapeHTML(value){
@@ -764,7 +861,7 @@ function showToast(message){
 
 
 /* =========================================================
-   AUTH + CLIENT
+   INITIALIZE
 ========================================================= */
 
 async function initialize(){
@@ -781,6 +878,10 @@ async function initialize(){
 
     if(!user){
 
+        alert(
+            "Please login first."
+        );
+
         window.location.href =
         "admin.html";
 
@@ -793,6 +894,10 @@ async function initialize(){
     user;
 
 
+    $("userEmail").textContent =
+    user.email;
+
+
     const {
         data:profile,
         error
@@ -802,14 +907,17 @@ async function initialize(){
     .select(
         "id,role,client_id,full_name"
     )
-    .eq("id",user.id)
+    .eq(
+        "id",
+        user.id
+    )
     .single();
 
 
     if(error){
 
         alert(
-            "Profile error: "
+            "Profile error:\n"
             +
             error.message
         );
@@ -819,31 +927,305 @@ async function initialize(){
     }
 
 
+    currentRole =
+    profile.role;
+
+
     /*
-       Super Admin can see all clients.
-       Client Admin works only with own client.
+       SUPER ADMIN
+       gets client selector.
+
+       CLIENT ADMIN
+       automatically uses own client.
     */
 
-    if(profile.role === "super_admin"){
+    if(
+        currentRole ===
+        "super_admin"
+    ){
 
-        currentClientId = null;
+        $("clientPanel")
+        .style.display =
+        "block";
+
+
+        await loadClients();
+
 
     }else{
 
-        currentClientId =
-        profile.client_id;
-
-        if(!currentClientId){
+        if(!profile.client_id){
 
             alert(
-                "This user is not assigned to a client."
+                "Your account is not assigned to a client."
             );
 
             return;
 
         }
 
+
+        currentClientId =
+        profile.client_id;
+
+
+        $("clientPanel")
+        .style.display =
+        "block";
+
+
+        $("clientSelector")
+        .disabled =
+        true;
+
+
+        await setSelectedClient(
+            currentClientId
+        );
+
     }
+
+}
+
+
+/* =========================================================
+   LOAD CLIENTS
+========================================================= */
+
+async function loadClients(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,domain,status"
+    )
+    .order(
+        "company_name",
+        {
+            ascending:true
+        }
+    );
+
+
+    if(error){
+
+        alert(
+            "Clients load failed:\n"
+            +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    clients =
+    data || [];
+
+
+    $("clientSelector").innerHTML =
+
+    `<option value="">
+        -- Select Client --
+    </option>`
+
+    +
+
+    clients.map(function(client){
+
+        return `
+
+        <option value="${client.id}">
+
+            ${escapeHTML(client.company_name)}
+
+            ${client.domain
+                ? " — "
+                + escapeHTML(client.domain)
+                : ""}
+
+        </option>
+
+        `;
+
+    }).join("");
+
+
+    const savedClient =
+    localStorage.getItem(
+        "selectedClientId"
+    );
+
+
+    if(
+        savedClient
+        &&
+        clients.some(
+            c=>c.id===savedClient
+        )
+    ){
+
+        await setSelectedClient(
+            savedClient
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SELECT CLIENT
+========================================================= */
+
+$("clientSelector")
+.addEventListener(
+    "change",
+    async function(){
+
+        const clientId =
+        this.value;
+
+
+        if(!clientId){
+
+            currentClientId =
+            null;
+
+            $("selectedClientLabel")
+            .textContent =
+            "No Client Selected";
+
+
+            $("productRows")
+            .innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="loading">
+
+                    Select a client.
+
+                </td>
+
+            </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        await setSelectedClient(
+            clientId
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SET SELECTED CLIENT
+========================================================= */
+
+async function setSelectedClient(
+    clientId
+){
+
+    const client =
+    clients.find(
+        c=>c.id===clientId
+    );
+
+
+    if(
+        !client
+        &&
+        currentRole !==
+        "super_admin"
+    ){
+
+        /*
+           For Client Admin,
+           fetch own client.
+        */
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .from("clients")
+        .select(
+            "id,company_name,domain,status"
+        )
+        .eq(
+            "id",
+            clientId
+        )
+        .single();
+
+
+        if(error){
+
+            alert(
+                "Client load failed:\n"
+                +
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        clients =
+        [data];
+
+    }
+
+
+    currentClientId =
+    clientId;
+
+
+    localStorage.setItem(
+        "selectedClientId",
+        clientId
+    );
+
+
+    $("clientSelector").value =
+    clientId;
+
+
+    const selected =
+    clients.find(
+        c=>c.id===clientId
+    );
+
+
+    $("selectedClientLabel")
+    .textContent =
+    selected
+    ? selected.company_name
+    : "Selected Client";
+
+
+    $("clientHelp")
+    .textContent =
+    selected
+    ? "Managing products for " +
+      selected.company_name
+    : "";
 
 
     await loadCategories();
@@ -854,25 +1236,19 @@ async function initialize(){
 
 
 /* =========================================================
-   CATEGORIES
+   LOAD CATEGORIES
 ========================================================= */
 
 async function loadCategories(){
 
-    let query =
-    supabaseClient
-    .from("categories")
-    .select("*")
-    .order("sort_order");
+    if(!currentClientId){
 
+        categories =
+        [];
 
-    if(currentClientId){
+        renderCategoryOptions();
 
-        query =
-        query.eq(
-            "client_id",
-            currentClientId
-        );
+        return;
 
     }
 
@@ -881,12 +1257,32 @@ async function loadCategories(){
         data,
         error
     } =
-    await query;
+    await supabaseClient
+    .from("categories")
+    .select("*")
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .order(
+        "sort_order",
+        {
+            ascending:true
+        }
+    );
 
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "Category error:",
+            error
+        );
+
+        categories =
+        [];
+
+        renderCategoryOptions();
 
         return;
 
@@ -919,9 +1315,13 @@ function renderCategoryOptions(){
     categories.map(function(c){
 
         return `
+
         <option value="${c.id}">
+
             ${escapeHTML(c.name)}
+
         </option>
+
         `;
 
     }).join("");
@@ -938,9 +1338,13 @@ function renderCategoryOptions(){
     categories.map(function(c){
 
         return `
+
         <option value="${c.id}">
+
             ${escapeHTML(c.name)}
+
         </option>
+
         `;
 
     }).join("");
@@ -954,8 +1358,41 @@ function renderCategoryOptions(){
 
 async function loadProducts(){
 
-    let query =
-    supabaseClient
+    if(!currentClientId){
+
+        products =
+        [];
+
+        renderProducts();
+
+        return;
+
+    }
+
+
+    $("productRows")
+    .innerHTML = `
+
+    <tr>
+
+        <td
+            colspan="7"
+            class="loading">
+
+            Loading products...
+
+        </td>
+
+    </tr>
+
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
     .from("products")
     .select(`
         *,
@@ -963,6 +1400,10 @@ async function loadProducts(){
             name
         )
     `)
+    .eq(
+        "client_id",
+        currentClientId
+    )
     .order(
         "created_at",
         {
@@ -971,31 +1412,24 @@ async function loadProducts(){
     );
 
 
-    if(currentClientId){
-
-        query =
-        query.eq(
-            "client_id",
-            currentClientId
-        );
-
-    }
-
-
-    const {
-        data,
-        error
-    } =
-    await query;
-
-
     if(error){
 
-        alert(
-            "Products load failed: "
-            +
-            error.message
-        );
+        $("productRows")
+        .innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="7"
+                class="empty">
+
+                ${escapeHTML(error.message)}
+
+            </td>
+
+        </tr>
+
+        `;
 
         return;
 
@@ -1037,36 +1471,32 @@ function renderProducts(){
     const filtered =
     products.filter(function(p){
 
-        const matchesSearch =
-        !search
-        ||
-        p.name
-        .toLowerCase()
-        .includes(search)
-        ||
-        (p.product_code || "")
-        .toLowerCase()
-        .includes(search);
-
-
-        const matchesCategory =
-        !category
-        ||
-        p.category_id === category;
-
-
-        const matchesStatus =
-        !status
-        ||
-        p.status === status;
+        const text =
+        (
+            p.name
+            +
+            " "
+            +
+            (p.product_code || "")
+        )
+        .toLowerCase();
 
 
         return (
-            matchesSearch
+
+            (!search ||
+             text.includes(search))
+
             &&
-            matchesCategory
+
+            (!category ||
+             p.category_id === category)
+
             &&
-            matchesStatus
+
+            (!status ||
+             p.status === status)
+
         );
 
     });
@@ -1074,7 +1504,8 @@ function renderProducts(){
 
     if(!filtered.length){
 
-        $("productRows").innerHTML = `
+        $("productRows")
+        .innerHTML = `
 
         <tr>
 
@@ -1095,7 +1526,8 @@ function renderProducts(){
     }
 
 
-    $("productRows").innerHTML =
+    $("productRows")
+    .innerHTML =
 
     filtered.map(function(p){
 
@@ -1103,12 +1535,6 @@ function renderProducts(){
         p.main_image_url
         ||
         "https://placehold.co/100x100?text=Product";
-
-
-        const categoryName =
-        p.categories?.name
-        ||
-        "—";
 
 
         return `
@@ -1128,19 +1554,35 @@ function renderProducts(){
             <td>
 
                 <strong>
-                    ${escapeHTML(p.name)}
+
+                    ${escapeHTML(
+                        p.name
+                    )}
+
                 </strong>
 
             </td>
 
 
             <td>
-                ${escapeHTML(p.product_code || "—")}
+
+                ${escapeHTML(
+                    p.product_code
+                    ||
+                    "—"
+                )}
+
             </td>
 
 
             <td>
-                ${escapeHTML(categoryName)}
+
+                ${escapeHTML(
+                    p.categories?.name
+                    ||
+                    "—"
+                )}
+
             </td>
 
 
@@ -1148,11 +1590,18 @@ function renderProducts(){
 
                 <span
                     class="badge
-                    ${p.status === "active"
-                    ? "active"
-                    : "inactive"}">
+                    ${
+                        p.status ===
+                        "active"
+                        ?
+                        "active"
+                        :
+                        "inactive"
+                    }">
 
-                    ${escapeHTML(p.status)}
+                    ${escapeHTML(
+                        p.status
+                    )}
 
                 </span>
 
@@ -1163,8 +1612,10 @@ function renderProducts(){
 
                 ${
                     p.featured
-                    ? "⭐ Yes"
-                    : "No"
+                    ?
+                    "⭐ Yes"
+                    :
+                    "No"
                 }
 
             </td>
@@ -1205,7 +1656,7 @@ function renderProducts(){
 
 
 /* =========================================================
-   SPECIFICATIONS
+   SPECIFICATION
 ========================================================= */
 
 function addSpecification(
@@ -1214,7 +1665,10 @@ function addSpecification(
 ){
 
     const row =
-    document.createElement("div");
+    document.createElement(
+        "div"
+    );
+
 
     row.className =
     "spec-row";
@@ -1247,7 +1701,8 @@ function addSpecification(
 
     row.querySelector(
         ".remove-spec"
-    ).onclick=function(){
+    ).onclick =
+    function(){
 
         row.remove();
 
@@ -1260,29 +1715,45 @@ function addSpecification(
 }
 
 
+$("addSpecBtn")
+.onclick =
+function(){
+
+    addSpecification();
+
+};
+
+
 /* =========================================================
-   READ SPECIFICATIONS
+   GET SPECIFICATIONS
 ========================================================= */
 
 function getSpecifications(){
 
-    const result = {};
+    const result =
+    {};
 
 
     document
-    .querySelectorAll(".spec-row")
+    .querySelectorAll(
+        ".spec-row"
+    )
     .forEach(function(row){
 
         const key =
         row.querySelector(
             ".spec-key"
-        ).value.trim();
+        )
+        .value
+        .trim();
 
 
         const value =
         row.querySelector(
             ".spec-value"
-        ).value.trim();
+        )
+        .value
+        .trim();
 
 
         if(key){
@@ -1301,17 +1772,47 @@ function getSpecifications(){
 
 
 /* =========================================================
-   OPEN MODAL
+   OPEN ADD
 ========================================================= */
 
-function openProductModal(){
+$("addProductBtn")
+.onclick =
+function(){
+
+    if(!currentClientId){
+
+        alert(
+            "Please select a client first."
+        );
+
+        return;
+
+    }
+
 
     editingProductId =
     null;
 
 
-    $("modalTitle").textContent =
+    $("modalTitle")
+    .textContent =
     "Add Product";
+
+
+    const client =
+    clients.find(
+        c=>c.id===currentClientId
+    );
+
+
+    $("modalClientName")
+    .textContent =
+    client
+    ?
+    "Client: " +
+    client.company_name
+    :
+    "";
 
 
     $("productName").value =
@@ -1343,32 +1844,23 @@ function openProductModal(){
 
 
     $("specifications")
-    .innerHTML="";
+    .innerHTML =
+    "";
 
 
     addSpecification();
 
 
     $("productModal")
-    .classList.add("show");
+    .classList.add(
+        "show"
+    );
 
-}
-
-
-/* =========================================================
-   CLOSE MODAL
-========================================================= */
-
-function closeProductModal(){
-
-    $("productModal")
-    .classList.remove("show");
-
-}
+};
 
 
 /* =========================================================
-   EDIT PRODUCT
+   EDIT
 ========================================================= */
 
 window.editProduct =
@@ -1387,8 +1879,25 @@ function(id){
     id;
 
 
-    $("modalTitle").textContent =
+    $("modalTitle")
+    .textContent =
     "Edit Product";
+
+
+    const client =
+    clients.find(
+        c=>c.id===currentClientId
+    );
+
+
+    $("modalClientName")
+    .textContent =
+    client
+    ?
+    "Client: " +
+    client.company_name
+    :
+    "";
 
 
     $("productName").value =
@@ -1428,18 +1937,20 @@ function(id){
 
 
     $("specifications")
-    .innerHTML="";
+    .innerHTML =
+    "";
 
 
     const specs =
     p.specifications || {};
 
 
-    Object.entries(specs)
-    .forEach(function([
-        key,
-        value
-    ]){
+    Object.entries(
+        specs
+    )
+    .forEach(function(
+        [key,value]
+    ){
 
         addSpecification(
             key,
@@ -1450,7 +1961,8 @@ function(id){
 
 
     if(
-        !Object.keys(specs).length
+        !Object.keys(specs)
+        .length
     ){
 
         addSpecification();
@@ -1459,16 +1971,31 @@ function(id){
 
 
     $("productModal")
-    .classList.add("show");
+    .classList.add(
+        "show"
+    );
 
 };
 
 
 /* =========================================================
-   SAVE PRODUCT
+   SAVE
 ========================================================= */
 
-async function saveProduct(){
+$("saveBtn")
+.onclick =
+async function(){
+
+    if(!currentClientId){
+
+        alert(
+            "Please select a client."
+        );
+
+        return;
+
+    }
+
 
     const name =
     $("productName")
@@ -1490,15 +2017,6 @@ async function saveProduct(){
     const payload = {
 
         name:name,
-
-        slug:
-        slugify(name)
-        +
-        "-"
-        +
-        Date.now()
-        .toString()
-        .slice(-6),
 
         product_code:
         $("productCode")
@@ -1545,57 +2063,17 @@ async function saveProduct(){
         null,
 
         featured:
-        $("featured").checked,
+        $("featured")
+        .checked,
 
         status:
-        $("productStatus").value
+        $("productStatus")
+        .value
 
     };
 
 
-    if(!editingProductId){
-
-        if(!currentClientId){
-
-            alert(
-                "Super Admin needs to select a client before creating a product."
-            );
-
-            return;
-
-        }
-
-
-        payload.client_id =
-        currentClientId;
-
-
-        const {
-            error
-        } =
-        await supabaseClient
-        .from("products")
-        .insert(payload);
-
-
-        if(error){
-
-            alert(
-                "Product create failed:\n"
-                +
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        showToast(
-            "Product created successfully"
-        );
-
-    }else{
+    if(editingProductId){
 
         const {
             error
@@ -1606,13 +2084,17 @@ async function saveProduct(){
         .eq(
             "id",
             editingProductId
+        )
+        .eq(
+            "client_id",
+            currentClientId
         );
 
 
         if(error){
 
             alert(
-                "Product update failed:\n"
+                "Update failed:\n"
                 +
                 error.message
             );
@@ -1623,17 +2105,60 @@ async function saveProduct(){
 
 
         showToast(
-            "Product updated successfully"
+            "Product updated."
+        );
+
+    }else{
+
+        payload.client_id =
+        currentClientId;
+
+
+        payload.slug =
+        slugify(name)
+        +
+        "-"
+        +
+        Date.now()
+        .toString()
+        .slice(-6);
+
+
+        const {
+            error
+        } =
+        await supabaseClient
+        .from("products")
+        .insert(
+            payload
+        );
+
+
+        if(error){
+
+            alert(
+                "Product creation failed:\n"
+                +
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        showToast(
+            "Product created."
         );
 
     }
 
 
-    closeProductModal();
+    closeModal();
 
     await loadProducts();
 
-}
+};
 
 
 /* =========================================================
@@ -1643,18 +2168,18 @@ async function saveProduct(){
 window.deleteProduct =
 async function(id){
 
-    const p =
+    const product =
     products.find(
-        x=>x.id===id
+        p=>p.id===id
     );
 
 
-    if(!p)return;
+    if(!product)return;
 
 
     if(
         !confirm(
-            `Delete "${p.name}"?`
+            `Delete "${product.name}"?`
         )
     ){
 
@@ -1672,6 +2197,10 @@ async function(id){
     .eq(
         "id",
         id
+    )
+    .eq(
+        "client_id",
+        currentClientId
     );
 
 
@@ -1689,7 +2218,7 @@ async function(id){
 
 
     showToast(
-        "Product deleted"
+        "Product deleted."
     );
 
 
@@ -1699,28 +2228,32 @@ async function(id){
 
 
 /* =========================================================
-   EVENTS
+   MODAL CLOSE
 ========================================================= */
 
-$("addProductBtn")
-.onclick =
-openProductModal;
+function closeModal(){
+
+    $("productModal")
+    .classList.remove(
+        "show"
+    );
+
+}
 
 
 $("closeModal")
 .onclick =
-closeProductModal;
+closeModal;
 
 
 $("cancelBtn")
 .onclick =
-closeProductModal;
+closeModal;
 
 
-$("saveBtn")
-.onclick =
-saveProduct;
-
+/* =========================================================
+   FILTERS
+========================================================= */
 
 $("search")
 .oninput =
@@ -1737,6 +2270,10 @@ $("statusFilter")
 renderProducts;
 
 
+/* =========================================================
+   LOGOUT
+========================================================= */
+
 $("logoutBtn")
 .onclick =
 async function(){
@@ -1745,10 +2282,37 @@ async function(){
     .auth
     .signOut();
 
+    localStorage.removeItem(
+        "selectedClientId"
+    );
+
     window.location.href =
     "admin.html";
 
 };
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+supabaseClient
+.auth
+.onAuthStateChange(
+    function(event){
+
+        if(
+            event ===
+            "SIGNED_OUT"
+        ){
+
+            window.location.href =
+            "admin.html";
+
+        }
+
+    }
+);
 
 
 /* =========================================================
