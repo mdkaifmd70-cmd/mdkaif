@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Category Manager</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+    color:#0f172a;
+}
+
+.header{
+    height:70px;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#60a5fa;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-email{
+    font-size:13px;
+    color:#cbd5e1;
+}
+
+.logout{
+    background:#334155;
+    color:white;
+    border:0;
+    padding:9px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:25px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.top h1{
+    font-size:27px;
+}
+
+.muted{
+    color:#64748b;
+    font-size:14px;
+    margin-top:5px;
+}
+
+.client-panel{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:20px;
+}
+
+.client-panel label{
+    display:block;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.client-selector{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.client-selector select{
+    max-width:550px;
+}
+
+.selected-client{
+    background:#dbeafe;
+    color:#1d4ed8;
+    padding:9px 12px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:800;
+}
+
+.filters{
+    background:white;
+    padding:18px;
+    border-radius:15px;
+    border:1px solid #e2e8f0;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    outline:none;
+    font:inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#2563eb;
+}
+
+.btn{
+    border:0;
+    border-radius:9px;
+    padding:11px 16px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.primary{
+    background:#2563eb;
+    color:white;
+}
+
+.primary:hover{
+    background:#1d4ed8;
+}
+
+.secondary{
+    background:#e2e8f0;
+    color:#334155;
+}
+
+.danger{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.table-card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+th,
+td{
+    padding:14px;
+    border-bottom:1px solid #e2e8f0;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#f8fafc;
+    color:#64748b;
+    font-size:11px;
+    text-transform:uppercase;
+}
+
+.category-img{
+    width:55px;
+    height:55px;
+    object-fit:cover;
+    border-radius:8px;
+    background:#e2e8f0;
+}
+
+.badge{
+    padding:5px 9px;
+    border-radius:50px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.active{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.inactive{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+.empty{
+    text-align:center;
+    padding:40px;
+    color:#64748b;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:#0008;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:min(700px,100%);
+    max-height:92vh;
+    overflow:auto;
+    border-radius:18px;
+    padding:25px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close{
+    border:0;
+    background:#f1f5f9;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.group label{
+    display:block;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.modal-footer{
+    margin-top:22px;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#0f172a;
+    color:white;
+    padding:13px 18px;
+    border-radius:10px;
+    display:none;
+    z-index:500;
+}
+
+.loading{
+    text-align:center;
+    padding:35px;
+    color:#64748b;
+}
+
+@media(max-width:700px){
+
+    .container{
+        padding:15px;
+    }
+
+    .filters{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .client-selector{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .header{
+        padding:0 15px;
+    }
+
+    .user-email{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        WEB<span>PLATFORM</span>
+    </div>
+
+    <div class="header-right">
+
+        <span
+            class="user-email"
+            id="userEmail">
+        </span>
+
+        <button
+            class="logout"
+            id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="top">
+
+        <div>
+
+            <h1>Category Manager</h1>
+
+            <p class="muted">
+                Manage product categories for client websites.
+            </p>
+
+        </div>
+
+        <button
+            class="btn primary"
+            id="addCategoryBtn">
+
+            + Add Category
+
+        </button>
+
+    </div>
+
+
+    <!-- CLIENT SELECTOR -->
+
+    <div
+        class="client-panel"
+        id="clientPanel">
+
+        <label>
+            Select Client Website
+        </label>
+
+        <div class="client-selector">
+
+            <select
+                id="clientSelector">
+
+                <option value="">
+                    Loading clients...
+                </option>
+
+            </select>
+
+            <div
+                class="selected-client"
+                id="selectedClientLabel">
+
+                No Client Selected
+
+            </div>
+
+        </div>
+
+        <p
+            class="muted"
+            id="clientHelp">
+
+            Select a client before creating categories.
+
+        </p>
+
+    </div>
+
+
+    <!-- FILTER -->
+
+    <div class="filters">
+
+        <input
+            id="search"
+            placeholder="Search category...">
+
+        <select id="statusFilter">
+
+            <option value="">
+                All Status
+            </option>
+
+            <option value="active">
+                Active
+            </option>
+
+            <option value="inactive">
+                Inactive
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Image</th>
+
+                    <th>Category</th>
+
+                    <th>Slug</th>
+
+                    <th>Description</th>
+
+                    <th>Order</th>
+
+                    <th>Status</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="categoryRows">
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="loading">
+
+                        Select a client.
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+
+<!-- MODAL -->
+
+<div
+    class="modal"
+    id="categoryModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <div>
+
+                <h2 id="modalTitle">
+                    Add Category
+                </h2>
+
+                <p
+                    class="muted"
+                    id="modalClientName">
+                </p>
+
+            </div>
+
+            <button
+                class="close"
+                id="closeModal">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="group">
+
+                <label>
+                    Category Name *
+                </label>
+
+                <input
+                    id="categoryName"
+                    placeholder="Industrial Pumps">
+
+            </div>
+
+
+            <div class="group">
+
+                <label>
+                    Slug
+                </label>
+
+                <input
+                    id="categorySlug"
+                    placeholder="industrial-pumps">
+
+            </div>
+
+
+            <div class="group">
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    id="sortOrder"
+                    type="number"
+                    value="0">
+
+            </div>
+
+
+            <div class="group">
+
+                <label>
+                    Status
+                </label>
+
+                <select id="categoryStatus">
+
+                    <option value="active">
+                        Active
+                    </option>
+
+                    <option value="inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="group full">
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    id="categoryDescription"
+                    rows="5"
+                    placeholder="Category description"></textarea>
+
+            </div>
+
+
+            <div class="group full">
+
+                <label>
+                    Image URL
+                </label>
+
+                <input
+                    id="categoryImage"
+                    placeholder="https://...">
+
+                <p class="muted">
+                    Supabase Storage upload will be connected later.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="btn secondary"
+                id="cancelBtn">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="btn primary"
+                id="saveBtn">
+
+                Save Category
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+"https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentUser = null;
+
+let currentRole = null;
+
+let currentClientId = null;
+
+let clients = [];
+
+let categories = [];
+
+let editingCategoryId = null;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ =
+id => document.getElementById(id);
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+    .replace(/[&<>"']/g,function(c){
+
+        return {
+
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+
+        }[c];
+
+    });
+
+}
+
+
+function slugify(text){
+
+    return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-|-$/g,"");
+
+}
+
+
+function showToast(message){
+
+    $("toast").textContent =
+    message;
+
+    $("toast").style.display =
+    "block";
+
+    setTimeout(function(){
+
+        $("toast").style.display =
+        "none";
+
+    },2500);
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initialize(){
+
+    const {
+        data:{
+            user
+        }
+    } =
+    await supabaseClient
+    .auth
+    .getUser();
+
+
+    if(!user){
+
+        alert(
+            "Please login first."
+        );
+
+        window.location.href =
+        "admin.html";
+
+        return;
+
+    }
+
+
+    currentUser =
+    user;
+
+
+    $("userEmail").textContent =
+    user.email;
+
+
+    const {
+        data:profile,
+        error
+    } =
+    await supabaseClient
+    .from("profiles")
+    .select(
+        "id,role,client_id,full_name"
+    )
+    .eq(
+        "id",
+        user.id
+    )
+    .single();
+
+
+    if(error){
+
+        alert(
+            "Profile error:\n"
+            +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    currentRole =
+    profile.role;
+
+
+    if(
+        currentRole ===
+        "super_admin"
+    ){
+
+        await loadClients();
+
+    }else{
+
+        if(!profile.client_id){
+
+            alert(
+                "Your account is not assigned to a client."
+            );
+
+            return;
+
+        }
+
+
+        currentClientId =
+        profile.client_id;
+
+
+        $("clientSelector")
+        .disabled =
+        true;
+
+
+        await loadOwnClient(
+            currentClientId
+        );
+
+        await loadCategories();
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD CLIENTS
+========================================================= */
+
+async function loadClients(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,domain,status"
+    )
+    .order(
+        "company_name",
+        {
+            ascending:true
+        }
+    );
+
+
+    if(error){
+
+        alert(
+            "Clients load failed:\n"
+            +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    clients =
+    data || [];
+
+
+    $("clientSelector")
+    .innerHTML =
+
+    `<option value="">
+        -- Select Client --
+    </option>`
+
+    +
+
+    clients.map(function(c){
+
+        return `
+
+        <option value="${c.id}">
+
+            ${escapeHTML(
+                c.company_name
+            )}
+
+            ${
+                c.domain
+                ?
+                " — " +
+                escapeHTML(
+                    c.domain
+                )
+                :
+                ""
+            }
+
+        </option>
+
+        `;
+
+    }).join("");
+
+
+    const savedClient =
+    localStorage.getItem(
+        "selectedClientId"
+    );
+
+
+    if(
+        savedClient
+        &&
+        clients.some(
+            c=>c.id===savedClient
+        )
+    ){
+
+        await setSelectedClient(
+            savedClient
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD OWN CLIENT
+========================================================= */
+
+async function loadOwnClient(
+    clientId
+){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,domain,status"
+    )
+    .eq(
+        "id",
+        clientId
+    )
+    .single();
+
+
+    if(error){
+
+        alert(
+            "Client load failed:\n"
+            +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    clients =
+    [data];
+
+
+    $("clientSelector")
+    .innerHTML = `
+
+        <option value="${data.id}">
+
+            ${escapeHTML(
+                data.company_name
+            )}
+
+        </option>
+
+    `;
+
+
+    $("selectedClientLabel")
+    .textContent =
+    data.company_name;
+
+
+    $("clientHelp")
+    .textContent =
+    "Managing categories for " +
+    data.company_name;
+
+}
+
+
+/* =========================================================
+   CLIENT CHANGE
+========================================================= */
+
+$("clientSelector")
+.addEventListener(
+    "change",
+    async function(){
+
+        const clientId =
+        this.value;
+
+
+        if(!clientId){
+
+            currentClientId =
+            null;
+
+
+            $("selectedClientLabel")
+            .textContent =
+            "No Client Selected";
+
+
+            $("categoryRows")
+            .innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="loading">
+
+                    Select a client.
+
+                </td>
+
+            </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        await setSelectedClient(
+            clientId
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SET CLIENT
+========================================================= */
+
+async function setSelectedClient(
+    clientId
+){
+
+    currentClientId =
+    clientId;
+
+
+    localStorage.setItem(
+        "selectedClientId",
+        clientId
+    );
+
+
+    $("clientSelector")
+    .value =
+    clientId;
+
+
+    const client =
+    clients.find(
+        c=>c.id===clientId
+    );
+
+
+    $("selectedClientLabel")
+    .textContent =
+    client
+    ?
+    client.company_name
+    :
+    "Selected Client";
+
+
+    $("clientHelp")
+    .textContent =
+    client
+    ?
+    "Managing categories for " +
+    client.company_name
+    :
+    "";
+
+
+    await loadCategories();
+
+}
+
+
+/* =========================================================
+   LOAD CATEGORIES
+========================================================= */
+
+async function loadCategories(){
+
+    if(!currentClientId){
+
+        categories =
+        [];
+
+        renderCategories();
+
+        return;
+
+    }
+
+
+    $("categoryRows")
+    .innerHTML = `
+
+    <tr>
+
+        <td
+            colspan="7"
+            class="loading">
+
+            Loading categories...
+
+        </td>
+
+    </tr>
+
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("categories")
+    .select("*")
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .order(
+        "sort_order",
+        {
+            ascending:true
+        }
+    );
+
+
+    if(error){
+
+        alert(
+            "Categories load failed:\n"
+            +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    categories =
+    data || [];
+
+
+    renderCategories();
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderCategories(){
+
+    const search =
+    $("search")
+    .value
+    .toLowerCase()
+    .trim();
+
+
+    const status =
+    $("statusFilter")
+    .value;
+
+
+    const filtered =
+    categories.filter(function(c){
+
+        const matchesSearch =
+        !search
+        ||
+        c.name
+        .toLowerCase()
+        .includes(search)
+        ||
+        c.slug
+        .toLowerCase()
+        .includes(search);
+
+
+        const matchesStatus =
+        !status
+        ||
+        c.status === status;
+
+
+        return (
+            matchesSearch
+            &&
+            matchesStatus
+        );
+
+    });
+
+
+    if(!filtered.length){
+
+        $("categoryRows")
+        .innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="7"
+                class="empty">
+
+                No categories found.
+
+            </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    $("categoryRows")
+    .innerHTML =
+
+    filtered.map(function(c){
+
+        const image =
+        c.image_url
+        ||
+        "https://placehold.co/100x100?text=Category";
+
+
+        return `
+
+        <tr>
+
+            <td>
+
+                <img
+                    class="category-img"
+                    src="${escapeHTML(image)}"
+                    onerror="this.src='https://placehold.co/100x100?text=Category'">
+
+            </td>
+
+
+            <td>
+
+                <strong>
+
+                    ${escapeHTML(
+                        c.name
+                    )}
+
+                </strong>
+
+            </td>
+
+
+            <td>
+
+                ${escapeHTML(
+                    c.slug
+                )}
+
+            </td>
+
+
+            <td>
+
+                ${escapeHTML(
+                    c.description
+                    ||
+                    "—"
+                )}
+
+            </td>
+
+
+            <td>
+
+                ${c.sort_order ?? 0}
+
+            </td>
+
+
+            <td>
+
+                <span
+                    class="badge
+                    ${
+                        c.status ===
+                        "active"
+                        ?
+                        "active"
+                        :
+                        "inactive"
+                    }">
+
+                    ${escapeHTML(
+                        c.status
+                    )}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <div class="actions">
+
+                    <button
+                        class="btn secondary"
+                        onclick="editCategory('${c.id}')">
+
+                        Edit
+
+                    </button>
+
+
+                    <button
+                        class="btn danger"
+                        onclick="deleteCategory('${c.id}')">
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   OPEN ADD
+========================================================= */
+
+$("addCategoryBtn")
+.onclick =
+function(){
+
+    if(!currentClientId){
+
+        alert(
+            "Please select a client first."
+        );
+
+        return;
+
+    }
+
+
+    editingCategoryId =
+    null;
+
+
+    $("modalTitle")
+    .textContent =
+    "Add Category";
+
+
+    const client =
+    clients.find(
+        c=>c.id===currentClientId
+    );
+
+
+    $("modalClientName")
+    .textContent =
+    client
+    ?
+    "Client: " +
+    client.company_name
+    :
+    "";
+
+
+    $("categoryName").value =
+    "";
+
+    $("categorySlug").value =
+    "";
+
+    $("categoryDescription").value =
+    "";
+
+    $("categoryImage").value =
+    "";
+
+    $("sortOrder").value =
+    "0";
+
+    $("categoryStatus").value =
+    "active";
+
+
+    $("categoryModal")
+    .classList.add(
+        "show"
+    );
+
+};
+
+
+/* =========================================================
+   AUTO SLUG
+========================================================= */
+
+$("categoryName")
+.addEventListener(
+    "input",
+    function(){
+
+        if(
+            !editingCategoryId
+        ){
+
+            $("categorySlug")
+            .value =
+            slugify(
+                this.value
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   EDIT
+========================================================= */
+
+window.editCategory =
+function(id){
+
+    const c =
+    categories.find(
+        x=>x.id===id
+    );
+
+
+    if(!c)return;
+
+
+    editingCategoryId =
+    id;
+
+
+    $("modalTitle")
+    .textContent =
+    "Edit Category";
+
+
+    const client =
+    clients.find(
+        x=>x.id===currentClientId
+    );
+
+
+    $("modalClientName")
+    .textContent =
+    client
+    ?
+    "Client: " +
+    client.company_name
+    :
+    "";
+
+
+    $("categoryName").value =
+    c.name || "";
+
+
+    $("categorySlug").value =
+    c.slug || "";
+
+
+    $("categoryDescription").value =
+    c.description || "";
+
+
+    $("categoryImage").value =
+    c.image_url || "";
+
+
+    $("sortOrder").value =
+    c.sort_order ?? 0;
+
+
+    $("categoryStatus").value =
+    c.status || "active";
+
+
+    $("categoryModal")
+    .classList.add(
+        "show"
+    );
+
+};
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+$("saveBtn")
+.onclick =
+async function(){
+
+    if(!currentClientId){
+
+        alert(
+            "Please select a client."
+        );
+
+        return;
+
+    }
+
+
+    const name =
+    $("categoryName")
+    .value
+    .trim();
+
+
+    if(!name){
+
+        alert(
+            "Category name is required."
+        );
+
+        return;
+
+    }
+
+
+    let slug =
+    $("categorySlug")
+    .value
+    .trim();
+
+
+    if(!slug){
+
+        slug =
+        slugify(name);
+
+    }
+
+
+    const payload = {
+
+        client_id:
+        currentClientId,
+
+        name:name,
+
+        slug:slug,
+
+        description:
+        $("categoryDescription")
+        .value
+        .trim()
+        ||
+        null,
+
+        image_url:
+        $("categoryImage")
+        .value
+        .trim()
+        ||
+        null,
+
+        sort_order:
+        parseInt(
+            $("sortOrder")
+            .value
+        )
+        ||
+        0,
+
+        status:
+        $("categoryStatus")
+        .value
+
+    };
+
+
+    if(editingCategoryId){
+
+        delete payload.client_id;
+
+
+        const {
+            error
+        } =
+        await supabaseClient
+        .from("categories")
+        .update(
+            payload
+        )
+        .eq(
+            "id",
+            editingCategoryId
+        )
+        .eq(
+            "client_id",
+            currentClientId
+        );
+
+
+        if(error){
+
+            alert(
+                "Update failed:\n"
+                +
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        showToast(
+            "Category updated successfully."
+        );
+
+    }else{
+
+        const {
+            error
+        } =
+        await supabaseClient
+        .from("categories")
+        .insert(
+            payload
+        );
+
+
+        if(error){
+
+            alert(
+                "Create failed:\n"
+                +
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        showToast(
+            "Category created successfully."
+        );
+
+    }
+
+
+    closeModal();
+
+    await loadCategories();
+
+};
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+window.deleteCategory =
+async function(id){
+
+    const category =
+    categories.find(
+        c=>c.id===id
+    );
+
+
+    if(!category)return;
+
+
+    if(
+        !confirm(
+            `Delete "${category.name}"?`
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+    .from("categories")
+    .delete()
+    .eq(
+        "id",
+        id
+    )
+    .eq(
+        "client_id",
+        currentClientId
+    );
+
+
+    if(error){
+
+        alert(
+            "Delete failed:\n"
+            +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    showToast(
+        "Category deleted."
+    );
+
+
+    await loadCategories();
+
+};
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+function closeModal(){
+
+    $("categoryModal")
+    .classList.remove(
+        "show"
+    );
+
+}
+
+
+$("closeModal")
+.onclick =
+closeModal;
+
+
+$("cancelBtn")
+.onclick =
+closeModal;
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+$("search")
+.oninput =
+renderCategories;
+
+
+$("statusFilter")
+.onchange =
+renderCategories;
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+$("logoutBtn")
+.onclick =
+async function(){
+
+    await supabaseClient
+    .auth
+    .signOut();
+
+    localStorage.removeItem(
+        "selectedClientId"
+    );
+
+    window.location.href =
+    "admin.html";
+
+};
+
+
+/* =========================================================
+   START
+========================================================= */
+
+initialize();
+
+</script>
+
+</body>
+</html>
