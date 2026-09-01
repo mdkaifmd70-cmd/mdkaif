@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Login - MD Kaif Web Platform</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(15,23,42,.12);
+}
+
+.logo{
+    text-align:center;
+    font-size:25px;
+    font-weight:900;
+    color:#0f172a;
+    margin-bottom:8px;
+}
+
+.logo span{
+    color:#2563eb;
+}
+
+.subtitle{
+    text-align:center;
+    color:#64748b;
+    font-size:14px;
+    margin-bottom:30px;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:7px;
+    color:#334155;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    margin-bottom:18px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#2563eb;
+}
+
+.login-btn{
+    width:100%;
+    border:0;
+    background:#2563eb;
+    color:white;
+    padding:13px;
+    border-radius:9px;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.login-btn:hover{
+    background:#1d4ed8;
+}
+
+.login-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.message{
+    margin-top:15px;
+    padding:12px;
+    border-radius:8px;
+    display:none;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.error{
+    display:block;
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.success{
+    display:block;
+    background:#dcfce7;
+    color:#166534;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#2563eb;
+    text-decoration:none;
+    font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <div class="logo">
+        MD <span>KAIF</span>
+    </div>
+
+    <div class="subtitle">
+        Web Platform Admin Login
+    </div>
+
+    <form id="loginForm">
+
+        <label>
+            Email Address
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+        >
+
+        <label>
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+        >
+
+        <button
+            type="submit"
+            class="login-btn"
+            id="loginBtn">
+
+            Login
+
+        </button>
+
+    </form>
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+    <a
+        href="index.html"
+        class="back">
+
+        ← Back to Website
+
+    </a>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   SUPABASE CONFIG
+========================================= */
+
+const SUPABASE_URL =
+"https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const form =
+document.getElementById("loginForm");
+
+const emailInput =
+document.getElementById("email");
+
+const passwordInput =
+document.getElementById("password");
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+const message =
+document.getElementById("message");
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+    text,
+    type
+){
+
+    message.textContent =
+    text;
+
+    message.className =
+    "message " + type;
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+form.addEventListener(
+    "submit",
+    async function(e){
+
+        e.preventDefault();
+
+        const email =
+        emailInput.value.trim();
+
+        const password =
+        passwordInput.value;
+
+
+        if(!email || !password){
+
+            showMessage(
+                "Please enter email and password.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        loginBtn.disabled =
+        true;
+
+        loginBtn.textContent =
+        "Logging in...";
+
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .auth
+        .signInWithPassword({
+
+            email:email,
+
+            password:password
+
+        });
+
+
+        if(error){
+
+            showMessage(
+                error.message,
+                "error"
+            );
+
+            loginBtn.disabled =
+            false;
+
+            loginBtn.textContent =
+            "Login";
+
+            return;
+
+        }
+
+
+        if(!data.user){
+
+            showMessage(
+                "Login failed.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "Login successful. Opening dashboard...",
+            "success"
+        );
+
+
+        /*
+          Temporary dashboard redirect.
+          We will create dashboard.html next.
+        */
+
+        setTimeout(
+            function(){
+
+                window.location.href =
+                "dashboard.html";
+
+            },
+            800
+        );
+
+    }
+);
+
+
+/* =========================================
+   CHECK EXISTING SESSION
+========================================= */
+
+(async function(){
+
+    const {
+        data:{
+            session
+        }
+    } =
+    await supabaseClient
+    .auth
+    .getSession();
+
+
+    if(session){
+
+        window.location.href =
+        "dashboard.html";
+
+    }
+
+})();
+
+</script>
+
+</body>
+</html>
