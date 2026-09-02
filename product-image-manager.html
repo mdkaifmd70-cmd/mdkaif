@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Images - MD Kaif Web Platform</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+    color:#0f172a;
+}
+
+.header{
+    height:70px;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#60a5fa;
+}
+
+.header-right{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.btn{
+    border:0;
+    border-radius:8px;
+    padding:10px 15px;
+    cursor:pointer;
+    font-weight:700;
+    text-decoration:none;
+}
+
+.dashboard-btn{
+    background:#334155;
+    color:white;
+}
+
+.logout-btn{
+    background:#dc2626;
+    color:white;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:25px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    gap:15px;
+}
+
+.title h1{
+    font-size:28px;
+}
+
+.title p{
+    color:#64748b;
+    font-size:14px;
+    margin-top:5px;
+}
+
+.add-btn{
+    background:#2563eb;
+    color:white;
+}
+
+.card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.filter-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:15px;
+    align-items:end;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+select,
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:14px;
+    outline:none;
+}
+
+select:focus,
+input:focus{
+    border-color:#2563eb;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.form-group.full{
+    grid-column:1 / -1;
+}
+
+.form-actions{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+}
+
+.save-btn{
+    background:#16a34a;
+    color:white;
+}
+
+.cancel-btn{
+    background:#e2e8f0;
+    color:#334155;
+}
+
+.hidden{
+    display:none;
+}
+
+.message{
+    display:none;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:18px;
+    font-size:13px;
+}
+
+.message.success{
+    display:block;
+    background:#dcfce7;
+    color:#166534;
+}
+
+.message.error{
+    display:block;
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.product-info{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.product-name{
+    font-size:18px;
+    font-weight:900;
+}
+
+.image-count{
+    color:#64748b;
+    font-size:13px;
+}
+
+.image-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.image-card{
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    overflow:hidden;
+    background:white;
+}
+
+.image-preview{
+    width:100%;
+    height:190px;
+    background:#f8fafc;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.image-preview img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.image-body{
+    padding:13px;
+}
+
+.image-alt{
+    font-size:13px;
+    font-weight:700;
+    min-height:18px;
+    word-break:break-word;
+}
+
+.image-order{
+    color:#64748b;
+    font-size:12px;
+    margin-top:5px;
+}
+
+.image-url{
+    color:#64748b;
+    font-size:11px;
+    margin-top:7px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.image-actions{
+    display:flex;
+    gap:7px;
+    margin-top:12px;
+}
+
+.edit-btn,
+.delete-btn{
+    border:0;
+    border-radius:7px;
+    padding:7px 10px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+}
+
+.edit-btn{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.delete-btn{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.empty{
+    text-align:center;
+    padding:45px;
+    color:#64748b;
+}
+
+.loading{
+    text-align:center;
+    padding:30px;
+    color:#64748b;
+}
+
+@media(max-width:950px){
+
+    .image-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .container{
+        padding:15px;
+    }
+
+    .header{
+        padding:0 15px;
+    }
+
+    .filter-row{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .image-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+@media(max-width:450px){
+
+    .image-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        MD <span>KAIF</span>
+    </div>
+
+    <div class="header-right">
+
+        <a
+            href="dashboard.html"
+            class="btn dashboard-btn">
+            Dashboard
+        </a>
+
+        <button
+            class="btn logout-btn"
+            id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <div class="topbar">
+
+        <div class="title">
+
+            <h1>Product Images</h1>
+
+            <p>
+                Manage multiple images for your products.
+            </p>
+
+        </div>
+
+        <button
+            class="btn add-btn"
+            id="addImageBtn">
+            + Add Image
+        </button>
+
+    </div>
+
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+
+    <!-- PRODUCT SELECT -->
+
+    <div class="card">
+
+        <div class="filter-row">
+
+            <div>
+
+                <label>
+                    Select Product
+                </label>
+
+                <select
+                    id="productSelect">
+
+                    <option value="">
+                        Select Product
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ADD / EDIT FORM -->
+
+    <div
+        id="imageFormCard"
+        class="card hidden">
+
+        <h2
+            id="formTitle"
+            style="font-size:18px;margin-bottom:18px;">
+            Add Product Image
+        </h2>
+
+
+        <form id="imageForm">
+
+            <input
+                type="hidden"
+                id="imageId">
+
+
+            <div class="form-grid">
+
+                <div class="form-group full">
+
+                    <label>
+                        Image URL *
+                    </label>
+
+                    <input
+                        type="url"
+                        id="imageUrl"
+                        placeholder="https://example.com/product-image.jpg"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Alt Text
+                    </label>
+
+                    <input
+                        type="text"
+                        id="altText"
+                        placeholder="Product image">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Sort Order
+                    </label>
+
+                    <input
+                        type="number"
+                        id="sortOrder"
+                        value="0"
+                        min="0">
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="btn save-btn"
+                    id="saveBtn">
+                    Save Image
+                </button>
+
+                <button
+                    type="button"
+                    class="btn cancel-btn"
+                    id="cancelBtn">
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- IMAGES -->
+
+    <div class="card">
+
+        <div
+            id="loading"
+            class="loading">
+
+            Select a product to view images.
+
+        </div>
+
+
+        <div
+            id="imageArea"
+            class="hidden">
+
+            <div class="product-info">
+
+                <div
+                    id="selectedProductName"
+                    class="product-name">
+                </div>
+
+                <div
+                    id="imageCount"
+                    class="image-count">
+                </div>
+
+            </div>
+
+
+            <div
+                id="imageGrid"
+                class="image-grid">
+            </div>
+
+
+            <div
+                id="emptyImages"
+                class="empty hidden">
+
+                No images found for this product.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   SUPABASE
+========================================== */
+
+const SUPABASE_URL =
+"https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+let currentUser = null;
+let currentClientId = null;
+let products = [];
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const productSelect =
+document.getElementById("productSelect");
+
+const imageFormCard =
+document.getElementById("imageFormCard");
+
+const imageForm =
+document.getElementById("imageForm");
+
+const imageId =
+document.getElementById("imageId");
+
+const imageUrl =
+document.getElementById("imageUrl");
+
+const altText =
+document.getElementById("altText");
+
+const sortOrder =
+document.getElementById("sortOrder");
+
+const saveBtn =
+document.getElementById("saveBtn");
+
+const formTitle =
+document.getElementById("formTitle");
+
+const imageGrid =
+document.getElementById("imageGrid");
+
+const imageArea =
+document.getElementById("imageArea");
+
+const emptyImages =
+document.getElementById("emptyImages");
+
+const selectedProductName =
+document.getElementById("selectedProductName");
+
+const imageCount =
+document.getElementById("imageCount");
+
+const loading =
+document.getElementById("loading");
+
+const message =
+document.getElementById("message");
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showMessage(
+    text,
+    type
+){
+
+    message.textContent =
+    text;
+
+    message.className =
+    "message " + type;
+
+    setTimeout(
+        () => {
+            message.className =
+            "message";
+        },
+        4000
+    );
+
+}
+
+
+/* ==========================================
+   ESCAPE
+========================================== */
+
+function escapeHtml(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* ==========================================
+   LOGIN + PROFILE
+========================================== */
+
+async function initialize(){
+
+    const {
+        data:{
+            user
+        }
+    } =
+    await supabaseClient
+    .auth
+    .getUser();
+
+
+    if(!user){
+
+        window.location.href =
+        "admin.html";
+
+        return;
+
+    }
+
+
+    currentUser =
+    user;
+
+
+    const {
+        data:profile,
+        error
+    } =
+    await supabaseClient
+    .from("profiles")
+    .select(
+        "id,role,client_id"
+    )
+    .eq(
+        "id",
+        user.id
+    )
+    .single();
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            "Unable to load user profile: " +
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    currentClientId =
+    profile.client_id;
+
+
+    /*
+       Client must be assigned
+       for client-specific images.
+    */
+
+    if(!currentClientId){
+
+        showMessage(
+            "Your user is not assigned to a client yet.",
+            "error"
+        );
+
+        loading.textContent =
+        "No client assigned to this user.";
+
+        return;
+
+    }
+
+
+    await loadProducts();
+
+}
+
+
+/* ==========================================
+   LOAD PRODUCTS
+========================================== */
+
+async function loadProducts(){
+
+    productSelect.innerHTML = `
+        <option value="">
+            Select Product
+        </option>
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("products")
+    .select(
+        "id,name,product_code"
+    )
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .order(
+        "name",
+        {
+            ascending:true
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            "Unable to load products: " +
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    products =
+    data || [];
+
+
+    products.forEach(
+        product => {
+
+            const option =
+            document.createElement("option");
+
+            option.value =
+            product.id;
+
+            option.textContent =
+            product.product_code
+            ? `${product.name} (${product.product_code})`
+            : product.name;
+
+            productSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   PRODUCT CHANGE
+========================================== */
+
+productSelect.addEventListener(
+    "change",
+    async function(){
+
+        const productId =
+        this.value;
+
+
+        imageFormCard.classList.add(
+            "hidden"
+        );
+
+
+        if(!productId){
+
+            imageArea.classList.add(
+                "hidden"
+            );
+
+            loading.textContent =
+            "Select a product to view images.";
+
+            loading.classList.remove(
+                "hidden"
+            );
+
+            return;
+
+        }
+
+
+        const product =
+        products.find(
+            p => p.id === productId
+        );
+
+
+        selectedProductName.textContent =
+        product
+        ? product.name
+        : "";
+
+
+        await loadImages(
+            productId
+        );
+
+    }
+);
+
+
+/* ==========================================
+   LOAD IMAGES
+========================================== */
+
+async function loadImages(
+    productId
+){
+
+    loading.classList.remove(
+        "hidden"
+    );
+
+    imageArea.classList.add(
+        "hidden"
+    );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("product_images")
+    .select(
+        "id,product_id,client_id,image_url,alt_text,sort_order,created_at"
+    )
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .eq(
+        "product_id",
+        productId
+    )
+    .order(
+        "sort_order",
+        {
+            ascending:true
+        }
+    );
+
+
+    loading.classList.add(
+        "hidden"
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            "Unable to load images: " +
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    imageGrid.innerHTML = "";
+
+
+    imageArea.classList.remove(
+        "hidden"
+    );
+
+
+    imageCount.textContent =
+    `${data.length} image${data.length === 1 ? "" : "s"}`;
+
+
+    if(data.length === 0){
+
+        emptyImages.classList.remove(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+
+    emptyImages.classList.add(
+        "hidden"
+    );
+
+
+    data.forEach(
+        image => {
+
+            const card =
+            document.createElement("div");
+
+            card.className =
+            "image-card";
+
+
+            card.innerHTML = `
+
+                <div class="image-preview">
+
+                    <img
+                        src="${escapeHtml(image.image_url)}"
+                        alt="${escapeHtml(image.alt_text || "Product image")}"
+                        onerror="this.style.display='none';this.parentElement.innerHTML='<span style=&quot;color:#94a3b8;font-size:13px;&quot;>Image unavailable</span>'">
+
+                </div>
+
+
+                <div class="image-body">
+
+                    <div class="image-alt">
+
+                        ${escapeHtml(
+                            image.alt_text ||
+                            "No alt text"
+                        )}
+
+                    </div>
+
+
+                    <div class="image-order">
+
+                        Sort Order:
+                        ${image.sort_order ?? 0}
+
+                    </div>
+
+
+                    <div
+                        class="image-url"
+                        title="${escapeHtml(image.image_url)}">
+
+                        ${escapeHtml(image.image_url)}
+
+                    </div>
+
+
+                    <div class="image-actions">
+
+                        <button
+                            class="edit-btn"
+                            onclick="editImage('${image.id}')">
+
+                            Edit
+
+                        </button>
+
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteImage('${image.id}')">
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            imageGrid.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   ADD IMAGE
+========================================== */
+
+document
+.getElementById("addImageBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        if(!productSelect.value){
+
+            showMessage(
+                "Please select a product first.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        imageForm.reset();
+
+        imageId.value =
+        "";
+
+        sortOrder.value =
+        "0";
+
+        formTitle.textContent =
+        "Add Product Image";
+
+        saveBtn.textContent =
+        "Save Image";
+
+        imageFormCard.classList.remove(
+            "hidden"
+        );
+
+        imageUrl.focus();
+
+        window.scrollTo(
+            {
+                top:200,
+                behavior:"smooth"
+            }
+        );
+
+    }
+);
+
+
+/* ==========================================
+   CANCEL
+========================================== */
+
+document
+.getElementById("cancelBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        imageFormCard.classList.add(
+            "hidden"
+        );
+
+    }
+);
+
+
+/* ==========================================
+   SAVE IMAGE
+========================================== */
+
+imageForm.addEventListener(
+    "submit",
+    async function(e){
+
+        e.preventDefault();
+
+
+        const productId =
+        productSelect.value;
+
+
+        if(!productId){
+
+            showMessage(
+                "Please select a product first.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const url =
+        imageUrl.value.trim();
+
+        const alt =
+        altText.value.trim();
+
+        const order =
+        parseInt(
+            sortOrder.value
+        ) || 0;
+
+
+        if(!url){
+
+            showMessage(
+                "Image URL is required.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        saveBtn.disabled =
+        true;
+
+        saveBtn.textContent =
+        "Saving...";
+
+
+        let result;
+
+
+        if(imageId.value){
+
+            result =
+            await supabaseClient
+            .from("product_images")
+            .update({
+
+                image_url:
+                url,
+
+                alt_text:
+                alt || null,
+
+                sort_order:
+                order
+
+            })
+            .eq(
+                "id",
+                imageId.value
+            )
+            .eq(
+                "client_id",
+                currentClientId
+            )
+            .eq(
+                "product_id",
+                productId
+            );
+
+        }else{
+
+            result =
+            await supabaseClient
+            .from("product_images")
+            .insert({
+
+                product_id:
+                productId,
+
+                client_id:
+                currentClientId,
+
+                image_url:
+                url,
+
+                alt_text:
+                alt || null,
+
+                sort_order:
+                order
+
+            });
+
+        }
+
+
+        saveBtn.disabled =
+        false;
+
+        saveBtn.textContent =
+        imageId.value
+        ? "Update Image"
+        : "Save Image";
+
+
+        if(result.error){
+
+            console.error(
+                result.error
+            );
+
+            showMessage(
+                result.error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            imageId.value
+            ? "Image updated successfully."
+            : "Image added successfully.",
+            "success"
+        );
+
+
+        imageFormCard.classList.add(
+            "hidden"
+        );
+
+
+        imageForm.reset();
+
+        imageId.value =
+        "";
+
+
+        await loadImages(
+            productId
+        );
+
+    }
+);
+
+
+/* ==========================================
+   EDIT IMAGE
+========================================== */
+
+window.editImage =
+async function(id){
+
+    const productId =
+    productSelect.value;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("product_images")
+    .select(
+        "id,image_url,alt_text,sort_order"
+    )
+    .eq(
+        "id",
+        id
+    )
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .single();
+
+
+    if(error){
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    imageId.value =
+    data.id;
+
+    imageUrl.value =
+    data.image_url || "";
+
+    altText.value =
+    data.alt_text || "";
+
+    sortOrder.value =
+    data.sort_order ?? 0;
+
+
+    formTitle.textContent =
+    "Edit Product Image";
+
+    saveBtn.textContent =
+    "Update Image";
+
+
+    imageFormCard.classList.remove(
+        "hidden"
+    );
+
+    window.scrollTo(
+        {
+            top:200,
+            behavior:"smooth"
+        }
+    );
+
+};
+
+
+/* ==========================================
+   DELETE IMAGE
+========================================== */
+
+window.deleteImage =
+async function(id){
+
+    if(!confirm(
+        "Are you sure you want to delete this image?"
+    )){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+    .from("product_images")
+    .delete()
+    .eq(
+        "id",
+        id
+    )
+    .eq(
+        "client_id",
+        currentClientId
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    showMessage(
+        "Image deleted successfully.",
+        "success"
+    );
+
+
+    await loadImages(
+        productSelect.value
+    );
+
+};
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+    "click",
+    async function(){
+
+        await supabaseClient
+        .auth
+        .signOut();
+
+        window.location.href =
+        "admin.html";
+
+    }
+);
+
+
+/* ==========================================
+   START
+========================================== */
+
+initialize();
+
+</script>
+
+</body>
+</html>
