@@ -1,0 +1,1644 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery Manager - MD Kaif Web Platform</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#1f2937;
+}
+
+.header{
+    background:#111827;
+    color:white;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.header h1{
+    font-size:22px;
+}
+
+.header span{
+    font-size:13px;
+    color:#cbd5e1;
+}
+
+.container{
+    max-width:1400px;
+    margin:25px auto;
+    padding:0 20px;
+}
+
+.toolbar{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+    margin-bottom:20px;
+}
+
+.toolbar-row{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:14px;
+    outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+    border-color:#2563eb;
+}
+
+.toolbar input{
+    flex:1;
+    min-width:220px;
+}
+
+.toolbar select{
+    width:200px;
+}
+
+.btn{
+    border:0;
+    border-radius:8px;
+    padding:11px 17px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:14px;
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+}
+
+.btn-secondary{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:white;
+}
+
+.btn-edit{
+    background:#f59e0b;
+    color:white;
+}
+
+.client-box{
+    display:none;
+    margin-bottom:15px;
+}
+
+.client-box label{
+    display:block;
+    margin-bottom:6px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.client-box select{
+    max-width:450px;
+}
+
+.stats{
+    display:flex;
+    gap:15px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.stat{
+    background:white;
+    border-radius:12px;
+    padding:17px 22px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+    min-width:160px;
+}
+
+.stat small{
+    color:#6b7280;
+    display:block;
+    margin-bottom:6px;
+}
+
+.stat strong{
+    font-size:24px;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:13px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.image-box{
+    height:190px;
+    background:#e5e7eb;
+    position:relative;
+    overflow:hidden;
+}
+
+.image-box img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.status{
+    position:absolute;
+    top:10px;
+    right:10px;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.status-active{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-inactive{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.card-title{
+    font-size:17px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.card-category{
+    font-size:12px;
+    color:#2563eb;
+    margin-bottom:8px;
+}
+
+.card-description{
+    font-size:13px;
+    color:#6b7280;
+    min-height:38px;
+    line-height:1.4;
+}
+
+.card-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:14px;
+    gap:8px;
+}
+
+.order{
+    font-size:12px;
+    color:#6b7280;
+}
+
+.actions{
+    display:flex;
+    gap:6px;
+}
+
+.actions button{
+    padding:7px 10px;
+    font-size:12px;
+}
+
+.empty{
+    background:white;
+    padding:60px 20px;
+    text-align:center;
+    border-radius:12px;
+    color:#6b7280;
+}
+
+.loading{
+    text-align:center;
+    padding:50px;
+    color:#6b7280;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:650px;
+    max-height:90vh;
+    overflow-y:auto;
+    border-radius:14px;
+    padding:24px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:20px;
+}
+
+.close{
+    border:0;
+    background:none;
+    font-size:25px;
+    cursor:pointer;
+    color:#6b7280;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:13px;
+    font-weight:600;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.preview{
+    margin-top:10px;
+    display:none;
+}
+
+.preview img{
+    max-width:100%;
+    max-height:180px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.modal-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:20px;
+}
+
+.message{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    padding:13px 18px;
+    border-radius:9px;
+    color:white;
+    display:none;
+    z-index:2000;
+    box-shadow:0 4px 15px rgba(0,0,0,.2);
+}
+
+.message.success{
+    background:#16a34a;
+}
+
+.message.error{
+    background:#dc2626;
+}
+
+@media(max-width:600px){
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .header{
+        padding:15px;
+    }
+
+    .header h1{
+        font-size:18px;
+    }
+
+    .toolbar select{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div>
+        <h1>Gallery Manager</h1>
+        <span>MD Kaif Web Platform</span>
+    </div>
+
+    <button class="btn btn-primary" onclick="openModal()">
+        + Add Image
+    </button>
+</div>
+
+<div class="container">
+
+    <div class="client-box" id="clientBox">
+        <label>Select Client</label>
+        <select id="clientSelect">
+            <option value="">Select Client</option>
+        </select>
+    </div>
+
+    <div class="toolbar">
+
+        <div class="toolbar-row">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Search gallery..."
+                oninput="renderGallery()"
+            >
+
+            <select id="categoryFilter" onchange="renderGallery()">
+                <option value="">All Categories</option>
+            </select>
+
+            <select id="statusFilter" onchange="renderGallery()">
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+
+        </div>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <small>Total Images</small>
+            <strong id="totalCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <small>Active</small>
+            <strong id="activeCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <small>Inactive</small>
+            <strong id="inactiveCount">0</strong>
+        </div>
+
+    </div>
+
+    <div id="galleryContainer">
+        <div class="loading">Loading gallery...</div>
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="galleryModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">Add Gallery Image</h2>
+
+            <button class="close" onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="form-group">
+            <label>Image Title *</label>
+            <input
+                type="text"
+                id="imageTitle"
+                placeholder="Enter image title"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Image URL *</label>
+            <input
+                type="url"
+                id="imageUrl"
+                placeholder="https://example.com/image.jpg"
+                oninput="showPreview()"
+            >
+
+            <div class="preview" id="previewBox">
+                <img id="previewImage" alt="Preview">
+            </div>
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label>Category</label>
+                <input
+                    type="text"
+                    id="imageCategory"
+                    placeholder="e.g. Products, Events"
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Sort Order</label>
+                <input
+                    type="number"
+                    id="sortOrder"
+                    value="0"
+                >
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea
+                id="imageDescription"
+                placeholder="Enter image description..."
+            ></textarea>
+        </div>
+
+        <div class="form-group">
+
+            <label>Status</label>
+
+            <select id="imageStatus">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveGallery()"
+                id="saveBtn"
+            >
+                Save Image
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="message" class="message"></div>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+let currentUser = null;
+let currentRole = null;
+let currentClientId = null;
+
+let clients = [];
+let gallery = [];
+
+let editingId = null;
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+async function initialize(){
+
+    try{
+
+        const {
+            data:{user},
+            error
+        } = await supabaseClient.auth.getUser();
+
+        if(error) throw error;
+
+        if(!user){
+
+            showMessage(
+                "Please login first.",
+                "error"
+            );
+
+            return;
+        }
+
+        currentUser = user;
+
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
+        .from("profiles")
+        .select("id,role,client_id,full_name")
+        .eq("id",user.id)
+        .single();
+
+
+        if(profileError)
+            throw profileError;
+
+
+        currentRole = profile.role;
+
+
+        if(currentRole === "super_admin"){
+
+            document.getElementById(
+                "clientBox"
+            ).style.display = "block";
+
+            await loadClients();
+
+        }else{
+
+            currentClientId =
+                profile.client_id;
+
+            if(!currentClientId){
+
+                showMessage(
+                    "No client assigned to this user.",
+                    "error"
+                );
+
+                return;
+            }
+
+            await loadGallery();
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        showMessage(
+            error.message ||
+            "Initialization failed.",
+            "error"
+        );
+    }
+
+}
+
+
+/* =========================
+   LOAD CLIENTS
+========================= */
+
+async function loadClients(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,domain,status"
+    )
+    .order(
+        "company_name",
+        {ascending:true}
+    );
+
+
+    if(error){
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    clients = data || [];
+
+
+    const select =
+        document.getElementById(
+            "clientSelect"
+        );
+
+
+    select.innerHTML =
+        '<option value="">Select Client</option>';
+
+
+    clients.forEach(client => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = client.id;
+
+        option.textContent =
+            client.company_name;
+
+        select.appendChild(option);
+
+    });
+
+
+    select.onchange = async function(){
+
+        currentClientId =
+            this.value || null;
+
+        gallery = [];
+
+        renderGallery();
+
+        if(currentClientId){
+
+            await loadGallery();
+
+        }
+
+    };
+
+}
+
+
+/* =========================
+   LOAD GALLERY
+========================= */
+
+async function loadGallery(){
+
+    if(!currentClientId){
+
+        gallery = [];
+
+        renderGallery();
+
+        return;
+    }
+
+
+    document.getElementById(
+        "galleryContainer"
+    ).innerHTML =
+        '<div class="loading">Loading gallery...</div>';
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("gallery")
+    .select("*")
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .order(
+        "sort_order",
+        {ascending:true}
+    )
+    .order(
+        "created_at",
+        {ascending:false}
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    gallery = data || [];
+
+    populateCategoryFilter();
+
+    renderGallery();
+
+}
+
+
+/* =========================
+   CATEGORY FILTER
+========================= */
+
+function populateCategoryFilter(){
+
+    const select =
+        document.getElementById(
+            "categoryFilter"
+        );
+
+
+    const categories =
+        [
+            ...new Set(
+                gallery
+                .map(item => item.category)
+                .filter(Boolean)
+            )
+        ]
+        .sort();
+
+
+    select.innerHTML =
+        '<option value="">All Categories</option>';
+
+
+    categories.forEach(category => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = category;
+
+        option.textContent = category;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderGallery(){
+
+    const search =
+        document.getElementById(
+            "search"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const category =
+        document.getElementById(
+            "categoryFilter"
+        ).value;
+
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    const filtered =
+        gallery.filter(item => {
+
+            const text =
+                (
+                    (item.title || "") +
+                    " " +
+                    (item.description || "") +
+                    " " +
+                    (item.category || "")
+                )
+                .toLowerCase();
+
+
+            return (
+
+                (!search ||
+                    text.includes(search))
+
+                &&
+
+                (!category ||
+                    item.category === category)
+
+                &&
+
+                (!status ||
+                    item.status === status)
+
+            );
+
+        });
+
+
+    updateStats();
+
+
+    const container =
+        document.getElementById(
+            "galleryContainer"
+        );
+
+
+    if(!currentClientId){
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                <h3>Select a client</h3>
+                <p>Please select a client to view gallery.</p>
+            </div>
+            `;
+
+        return;
+    }
+
+
+    if(filtered.length === 0){
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                <h3>No gallery images found</h3>
+                <p>Add your first gallery image.</p>
+            </div>
+            `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        `
+        <div class="gallery-grid">
+
+            ${
+                filtered
+                .map(item => createCard(item))
+                .join("")
+            }
+
+        </div>
+        `;
+
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+function createCard(item){
+
+    const safeTitle =
+        escapeHtml(
+            item.title || "Untitled"
+        );
+
+    const safeDescription =
+        escapeHtml(
+            item.description || ""
+        );
+
+    const safeCategory =
+        escapeHtml(
+            item.category || "Uncategorized"
+        );
+
+
+    const statusClass =
+        item.status === "active"
+        ? "status-active"
+        : "status-inactive";
+
+
+    return `
+        <div class="card">
+
+            <div class="image-box">
+
+                <img
+                    src="${escapeAttribute(item.image_url)}"
+                    alt="${safeTitle}"
+                    onerror="this.style.display='none'"
+                >
+
+                <span class="status ${statusClass}">
+                    ${item.status || "active"}
+                </span>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    ${safeTitle}
+                </div>
+
+                <div class="card-category">
+                    ${safeCategory}
+                </div>
+
+                <div class="card-description">
+                    ${safeDescription}
+                </div>
+
+                <div class="card-footer">
+
+                    <div class="order">
+                        Order: ${item.sort_order ?? 0}
+                    </div>
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-edit"
+                            onclick="editGallery('${item.id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger"
+                            onclick="deleteGallery('${item.id}')"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
+
+    const total =
+        gallery.length;
+
+    const active =
+        gallery.filter(
+            x => x.status === "active"
+        ).length;
+
+    const inactive =
+        gallery.filter(
+            x => x.status === "inactive"
+        ).length;
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "activeCount"
+    ).textContent = active;
+
+
+    document.getElementById(
+        "inactiveCount"
+    ).textContent = inactive;
+
+}
+
+
+/* =========================
+   OPEN MODAL
+========================= */
+
+function openModal(id = null){
+
+    if(!currentClientId){
+
+        showMessage(
+            "Please select a client first.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    editingId = id;
+
+
+    document.getElementById(
+        "galleryModal"
+    ).style.display = "flex";
+
+
+    if(id){
+
+        const item =
+            gallery.find(
+                x => x.id === id
+            );
+
+
+        if(!item) return;
+
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            "Edit Gallery Image";
+
+
+        document.getElementById(
+            "imageTitle"
+        ).value =
+            item.title || "";
+
+
+        document.getElementById(
+            "imageUrl"
+        ).value =
+            item.image_url || "";
+
+
+        document.getElementById(
+            "imageCategory"
+        ).value =
+            item.category || "";
+
+
+        document.getElementById(
+            "sortOrder"
+        ).value =
+            item.sort_order ?? 0;
+
+
+        document.getElementById(
+            "imageDescription"
+        ).value =
+            item.description || "";
+
+
+        document.getElementById(
+            "imageStatus"
+        ).value =
+            item.status || "active";
+
+
+        showPreview();
+
+    }else{
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            "Add Gallery Image";
+
+
+        clearForm();
+
+    }
+
+}
+
+
+/* =========================
+   CLOSE MODAL
+========================= */
+
+function closeModal(){
+
+    document.getElementById(
+        "galleryModal"
+    ).style.display = "none";
+
+    editingId = null;
+
+}
+
+
+/* =========================
+   CLEAR FORM
+========================= */
+
+function clearForm(){
+
+    document.getElementById(
+        "imageTitle"
+    ).value = "";
+
+
+    document.getElementById(
+        "imageUrl"
+    ).value = "";
+
+
+    document.getElementById(
+        "imageCategory"
+    ).value = "";
+
+
+    document.getElementById(
+        "sortOrder"
+    ).value = 0;
+
+
+    document.getElementById(
+        "imageDescription"
+    ).value = "";
+
+
+    document.getElementById(
+        "imageStatus"
+    ).value = "active";
+
+
+    document.getElementById(
+        "previewBox"
+    ).style.display = "none";
+
+}
+
+
+/* =========================
+   PREVIEW
+========================= */
+
+function showPreview(){
+
+    const url =
+        document.getElementById(
+            "imageUrl"
+        ).value.trim();
+
+
+    const box =
+        document.getElementById(
+            "previewBox"
+        );
+
+
+    const img =
+        document.getElementById(
+            "previewImage"
+        );
+
+
+    if(!url){
+
+        box.style.display = "none";
+
+        return;
+    }
+
+
+    img.src = url;
+
+    box.style.display = "block";
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+async function saveGallery(){
+
+    if(!currentClientId){
+
+        showMessage(
+            "Please select a client.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const title =
+        document.getElementById(
+            "imageTitle"
+        ).value.trim();
+
+
+    const imageUrl =
+        document.getElementById(
+            "imageUrl"
+        ).value.trim();
+
+
+    if(!title){
+
+        showMessage(
+            "Image title is required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!imageUrl){
+
+        showMessage(
+            "Image URL is required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const payload = {
+
+        client_id:
+            currentClientId,
+
+        title:
+            title,
+
+        description:
+            document.getElementById(
+                "imageDescription"
+            ).value.trim() || null,
+
+        image_url:
+            imageUrl,
+
+        category:
+            document.getElementById(
+                "imageCategory"
+            ).value.trim() || null,
+
+        sort_order:
+            parseInt(
+                document.getElementById(
+                    "sortOrder"
+                ).value
+            ) || 0,
+
+        status:
+            document.getElementById(
+                "imageStatus"
+            ).value
+
+    };
+
+
+    const saveBtn =
+        document.getElementById(
+            "saveBtn"
+        );
+
+
+    saveBtn.disabled = true;
+
+    saveBtn.textContent =
+        "Saving...";
+
+
+    try{
+
+        if(editingId){
+
+            const {
+                error
+            } =
+            await supabaseClient
+            .from("gallery")
+            .update(payload)
+            .eq(
+                "id",
+                editingId
+            )
+            .eq(
+                "client_id",
+                currentClientId
+            );
+
+
+            if(error)
+                throw error;
+
+
+            showMessage(
+                "Gallery image updated successfully.",
+                "success"
+            );
+
+        }else{
+
+            const {
+                error
+            } =
+            await supabaseClient
+            .from("gallery")
+            .insert(payload);
+
+
+            if(error)
+                throw error;
+
+
+            showMessage(
+                "Gallery image added successfully.",
+                "success"
+            );
+
+        }
+
+
+        closeModal();
+
+        await loadGallery();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showMessage(
+            error.message ||
+            "Unable to save gallery image.",
+            "error"
+        );
+
+    }finally{
+
+        saveBtn.disabled = false;
+
+        saveBtn.textContent =
+            "Save Image";
+
+    }
+
+}
+
+
+/* =========================
+   EDIT
+========================= */
+
+function editGallery(id){
+
+    openModal(id);
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+async function deleteGallery(id){
+
+    const item =
+        gallery.find(
+            x => x.id === id
+        );
+
+
+    if(!item) return;
+
+
+    const confirmDelete =
+        confirm(
+            `Delete "${item.title || "this image"}"?`
+        );
+
+
+    if(!confirmDelete)
+        return;
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+        .from("gallery")
+        .delete()
+        .eq(
+            "id",
+            id
+        )
+        .eq(
+            "client_id",
+            currentClientId
+        );
+
+
+        if(error)
+            throw error;
+
+
+        showMessage(
+            "Gallery image deleted successfully.",
+            "success"
+        );
+
+
+        await loadGallery();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showMessage(
+            error.message ||
+            "Unable to delete image.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(
+    text,
+    type
+){
+
+    const box =
+        document.getElementById(
+            "message"
+        );
+
+
+    box.textContent = text;
+
+    box.className =
+        "message " + type;
+
+    box.style.display = "block";
+
+
+    setTimeout(() => {
+
+        box.style.display = "none";
+
+    },3500);
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+    return escapeHtml(value);
+
+}
+
+
+/* =========================
+   MODAL CLICK OUTSIDE
+========================= */
+
+document.getElementById(
+    "galleryModal"
+).addEventListener(
+    "click",
+    function(e){
+
+        if(e.target === this){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   START
+========================= */
+
+initialize();
+
+</script>
+
+</body>
+</html>
+```
