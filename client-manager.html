@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Clients - MD Kaif Web Platform</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+    color:#0f172a;
+}
+
+.header{
+    height:70px;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#60a5fa;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.back-btn,
+.logout-btn{
+    border:0;
+    padding:9px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.back-btn{
+    background:#334155;
+    color:white;
+    text-decoration:none;
+}
+
+.logout-btn{
+    background:#dc2626;
+    color:white;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:25px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.title h1{
+    font-size:28px;
+}
+
+.title p{
+    color:#64748b;
+    font-size:14px;
+    margin-top:5px;
+}
+
+.add-btn{
+    background:#2563eb;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:800;
+}
+
+.add-btn:hover{
+    background:#1d4ed8;
+}
+
+.card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.form-title{
+    font-size:18px;
+    font-weight:900;
+    margin-bottom:18px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
+.field label{
+    display:block;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:14px;
+    outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#2563eb;
+}
+
+.form-actions{
+    margin-top:18px;
+    display:flex;
+    gap:10px;
+}
+
+.save-btn,
+.cancel-btn{
+    border:0;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:800;
+}
+
+.save-btn{
+    background:#16a34a;
+    color:white;
+}
+
+.cancel-btn{
+    background:#e2e8f0;
+    color:#334155;
+}
+
+.hidden{
+    display:none;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#f8fafc;
+    text-align:left;
+    padding:13px;
+    font-size:12px;
+    color:#475569;
+    border-bottom:1px solid #e2e8f0;
+}
+
+td{
+    padding:14px 13px;
+    border-bottom:1px solid #e2e8f0;
+    font-size:13px;
+}
+
+.company{
+    font-weight:800;
+}
+
+.slug{
+    color:#64748b;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.active{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.inactive{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+.edit-btn,
+.delete-btn{
+    border:0;
+    padding:7px 10px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+}
+
+.edit-btn{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.delete-btn{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.message{
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:18px;
+    display:none;
+    font-size:13px;
+}
+
+.success{
+    display:block;
+    background:#dcfce7;
+    color:#166534;
+}
+
+.error{
+    display:block;
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.empty{
+    text-align:center;
+    padding:35px;
+    color:#64748b;
+}
+
+.loading{
+    text-align:center;
+    padding:30px;
+    color:#64748b;
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:15px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .header{
+        padding:0 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        MD <span>KAIF</span>
+    </div>
+
+    <div class="header-right">
+
+        <a
+            href="dashboard.html"
+            class="back-btn">
+            Dashboard
+        </a>
+
+        <button
+            class="logout-btn"
+            id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <div class="topbar">
+
+        <div class="title">
+
+            <h1>Clients</h1>
+
+            <p>
+                Manage websites and business clients.
+            </p>
+
+        </div>
+
+        <button
+            class="add-btn"
+            id="addBtn">
+            + Add Client
+        </button>
+
+    </div>
+
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+
+    <!-- FORM -->
+
+    <div
+        id="formCard"
+        class="card hidden">
+
+        <div
+            id="formTitle"
+            class="form-title">
+            Add New Client
+        </div>
+
+        <form id="clientForm">
+
+            <input
+                type="hidden"
+                id="clientId">
+
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label>
+                        Company Name *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="companyName"
+                        placeholder="Example: ABC Industries"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Slug *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="slug"
+                        placeholder="abc-industries"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Domain
+                    </label>
+
+                    <input
+                        type="text"
+                        id="domain"
+                        placeholder="www.example.com">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Template
+                    </label>
+
+                    <input
+                        type="text"
+                        id="template"
+                        placeholder="default">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select id="status">
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                    id="saveBtn">
+
+                    Save Client
+
+                </button>
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelBtn">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- CLIENT LIST -->
+
+    <div class="card">
+
+        <div
+            id="loading"
+            class="loading">
+
+            Loading clients...
+
+        </div>
+
+
+        <div
+            id="tableArea"
+            class="table-wrap hidden">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            COMPANY
+                        </th>
+
+                        <th>
+                            SLUG
+                        </th>
+
+                        <th>
+                            DOMAIN
+                        </th>
+
+                        <th>
+                            TEMPLATE
+                        </th>
+
+                        <th>
+                            STATUS
+                        </th>
+
+                        <th>
+                            ACTIONS
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="clientTable">
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div
+            id="empty"
+            class="empty hidden">
+
+            No clients found.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   SUPABASE
+========================================== */
+
+const SUPABASE_URL =
+"https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const formCard =
+document.getElementById("formCard");
+
+const clientForm =
+document.getElementById("clientForm");
+
+const clientId =
+document.getElementById("clientId");
+
+const companyName =
+document.getElementById("companyName");
+
+const slug =
+document.getElementById("slug");
+
+const domain =
+document.getElementById("domain");
+
+const template =
+document.getElementById("template");
+
+const status =
+document.getElementById("status");
+
+const tableArea =
+document.getElementById("tableArea");
+
+const clientTable =
+document.getElementById("clientTable");
+
+const loading =
+document.getElementById("loading");
+
+const empty =
+document.getElementById("empty");
+
+const message =
+document.getElementById("message");
+
+const formTitle =
+document.getElementById("formTitle");
+
+const saveBtn =
+document.getElementById("saveBtn");
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showMessage(
+    text,
+    type
+){
+
+    message.textContent =
+    text;
+
+    message.className =
+    "message " + type;
+
+    setTimeout(
+        () => {
+            message.className =
+            "message";
+        },
+        4000
+    );
+
+}
+
+
+/* ==========================================
+   SESSION
+========================================== */
+
+async function checkLogin(){
+
+    const {
+        data:{
+            user
+        }
+    } =
+    await supabaseClient
+    .auth
+    .getUser();
+
+
+    if(!user){
+
+        window.location.href =
+        "admin.html";
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+
+/* ==========================================
+   LOAD CLIENTS
+========================================== */
+
+async function loadClients(){
+
+    loading.classList.remove(
+        "hidden"
+    );
+
+    tableArea.classList.add(
+        "hidden"
+    );
+
+    empty.classList.add(
+        "hidden"
+    );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,slug,domain,template,status,created_at"
+    )
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+
+    loading.classList.add(
+        "hidden"
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            "Unable to load clients: " +
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!data || data.length === 0){
+
+        empty.classList.remove(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+
+    clientTable.innerHTML = "";
+
+
+    data.forEach(
+        client => {
+
+            const row =
+            document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    <div class="company">
+                        ${escapeHtml(client.company_name)}
+                    </div>
+                </td>
+
+                <td>
+                    <span class="slug">
+                        ${escapeHtml(client.slug)}
+                    </span>
+                </td>
+
+                <td>
+                    ${escapeHtml(client.domain || "—")}
+                </td>
+
+                <td>
+                    ${escapeHtml(client.template || "default")}
+                </td>
+
+                <td>
+
+                    <span class="badge ${
+                        client.status === "active"
+                        ? "active"
+                        : "inactive"
+                    }">
+
+                        ${escapeHtml(client.status || "active")}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <div class="actions">
+
+                        <button
+                            class="edit-btn"
+                            onclick="editClient('${client.id}')">
+
+                            Edit
+
+                        </button>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteClient('${client.id}')">
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
+                </td>
+            `;
+
+
+            clientTable.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    tableArea.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHtml(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* ==========================================
+   ADD BUTTON
+========================================== */
+
+document
+.getElementById("addBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        clientForm.reset();
+
+        clientId.value = "";
+
+        template.value =
+        "default";
+
+        status.value =
+        "active";
+
+        formTitle.textContent =
+        "Add New Client";
+
+        saveBtn.textContent =
+        "Save Client";
+
+        formCard.classList.remove(
+            "hidden"
+        );
+
+        companyName.focus();
+
+    }
+);
+
+
+/* ==========================================
+   CANCEL
+========================================== */
+
+document
+.getElementById("cancelBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        formCard.classList.add(
+            "hidden"
+        );
+
+    }
+);
+
+
+/* ==========================================
+   AUTO SLUG
+========================================== */
+
+companyName.addEventListener(
+    "input",
+    function(){
+
+        if(!clientId.value){
+
+            slug.value =
+            companyName.value
+            .toLowerCase()
+            .trim()
+            .replace(
+                /[^a-z0-9]+/g,
+                "-"
+            )
+            .replace(
+                /^-+|-+$/g,
+                ""
+            );
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   SAVE CLIENT
+========================================== */
+
+clientForm.addEventListener(
+    "submit",
+    async function(e){
+
+        e.preventDefault();
+
+
+        const company =
+        companyName.value.trim();
+
+        const slugValue =
+        slug.value.trim();
+
+        const domainValue =
+        domain.value.trim();
+
+        const templateValue =
+        template.value.trim()
+        ||
+        "default";
+
+        const statusValue =
+        status.value;
+
+
+        if(!company){
+
+            showMessage(
+                "Company name is required.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if(!slugValue){
+
+            showMessage(
+                "Slug is required.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        saveBtn.disabled =
+        true;
+
+        saveBtn.textContent =
+        "Saving...";
+
+
+        let result;
+
+
+        if(clientId.value){
+
+            result =
+            await supabaseClient
+            .from("clients")
+            .update({
+
+                company_name:
+                company,
+
+                slug:
+                slugValue,
+
+                domain:
+                domainValue || null,
+
+                template:
+                templateValue,
+
+                status:
+                statusValue,
+
+                updated_at:
+                new Date().toISOString()
+
+            })
+            .eq(
+                "id",
+                clientId.value
+            );
+
+        }else{
+
+            result =
+            await supabaseClient
+            .from("clients")
+            .insert({
+
+                company_name:
+                company,
+
+                slug:
+                slugValue,
+
+                domain:
+                domainValue || null,
+
+                template:
+                templateValue,
+
+                status:
+                statusValue
+
+            });
+
+        }
+
+
+        saveBtn.disabled =
+        false;
+
+        saveBtn.textContent =
+        clientId.value
+        ? "Update Client"
+        : "Save Client";
+
+
+        if(result.error){
+
+            console.error(
+                result.error
+            );
+
+            showMessage(
+                result.error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            clientId.value
+            ? "Client updated successfully."
+            : "Client created successfully.",
+            "success"
+        );
+
+
+        formCard.classList.add(
+            "hidden"
+        );
+
+
+        clientForm.reset();
+
+        clientId.value = "";
+
+
+        await loadClients();
+
+    }
+);
+
+
+/* ==========================================
+   EDIT CLIENT
+========================================== */
+
+window.editClient =
+async function(id){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,slug,domain,template,status"
+    )
+    .eq(
+        "id",
+        id
+    )
+    .single();
+
+
+    if(error){
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    clientId.value =
+    data.id;
+
+    companyName.value =
+    data.company_name || "";
+
+    slug.value =
+    data.slug || "";
+
+    domain.value =
+    data.domain || "";
+
+    template.value =
+    data.template || "default";
+
+    status.value =
+    data.status || "active";
+
+
+    formTitle.textContent =
+    "Edit Client";
+
+    saveBtn.textContent =
+    "Update Client";
+
+
+    formCard.classList.remove(
+        "hidden"
+    );
+
+    window.scrollTo(
+        {
+            top:0,
+            behavior:"smooth"
+        }
+    );
+
+};
+
+
+/* ==========================================
+   DELETE CLIENT
+========================================== */
+
+window.deleteClient =
+async function(id){
+
+    const confirmed =
+    confirm(
+        "Are you sure you want to delete this client?"
+    );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .delete()
+    .eq(
+        "id",
+        id
+    );
+
+
+    if(error){
+
+        console.error(
+            error
+        );
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    showMessage(
+        "Client deleted successfully.",
+        "success"
+    );
+
+
+    await loadClients();
+
+};
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+    "click",
+    async function(){
+
+        await supabaseClient
+        .auth
+        .signOut();
+
+        window.location.href =
+        "admin.html";
+
+    }
+);
+
+
+/* ==========================================
+   START
+========================================== */
+
+(async function(){
+
+    const loggedIn =
+    await checkLogin();
+
+    if(loggedIn){
+
+        await loadClients();
+
+    }
+
+})();
+
+</script>
+
+</body>
+</html>
