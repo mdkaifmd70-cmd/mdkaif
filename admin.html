@@ -1,6 +1,8 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,6 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -125,7 +128,9 @@ input:focus{
     text-decoration:none;
     font-size:13px;
 }
+
 </style>
+
 </head>
 
 <body>
@@ -150,6 +155,7 @@ input:focus{
             type="email"
             id="email"
             placeholder="Enter your email"
+            autocomplete="username"
             required
         >
 
@@ -161,6 +167,7 @@ input:focus{
             type="password"
             id="password"
             placeholder="Enter your password"
+            autocomplete="current-password"
             required
         >
 
@@ -198,7 +205,7 @@ input:focus{
 ========================================= */
 
 const SUPABASE_URL =
-"https://ywvdozdoanmcxscfofcf.supabase.co";
+"https://ywvdozdoanmcxscfofc.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
@@ -234,13 +241,9 @@ document.getElementById("message");
    MESSAGE
 ========================================= */
 
-function showMessage(
-    text,
-    type
-){
+function showMessage(text,type){
 
-    message.textContent =
-    text;
+    message.textContent = text;
 
     message.className =
     "message " + type;
@@ -277,109 +280,105 @@ form.addEventListener(
         }
 
 
-        loginBtn.disabled =
-        true;
+        loginBtn.disabled = true;
 
         loginBtn.textContent =
         "Logging in...";
 
 
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-        .auth
-        .signInWithPassword({
+        try{
 
-            email:email,
+            const {
+                data,
+                error
+            } =
+            await supabaseClient
+            .auth
+            .signInWithPassword({
 
-            password:password
+                email: email,
 
-        });
+                password: password
+
+            });
 
 
-        if(error){
+            if(error){
+
+                showMessage(
+                    error.message,
+                    "error"
+                );
+
+                loginBtn.disabled = false;
+
+                loginBtn.textContent =
+                "Login";
+
+                return;
+
+            }
+
+
+            if(!data || !data.user){
+
+                showMessage(
+                    "Login failed. Please try again.",
+                    "error"
+                );
+
+                loginBtn.disabled = false;
+
+                loginBtn.textContent =
+                "Login";
+
+                return;
+
+            }
+
 
             showMessage(
-                error.message,
+                "Login successful. Opening dashboard...",
+                "success"
+            );
+
+
+            /*
+              Give Supabase a moment to save
+              the session before navigation.
+            */
+
+            setTimeout(function(){
+
+                window.location.replace(
+                    "dashboard.html"
+                );
+
+            },500);
+
+
+        }
+        catch(err){
+
+            console.error(err);
+
+            showMessage(
+                "Something went wrong. Please try again.",
                 "error"
             );
 
-            loginBtn.disabled =
-            false;
+            loginBtn.disabled = false;
 
             loginBtn.textContent =
             "Login";
 
-            return;
-
         }
-
-
-        if(!data.user){
-
-            showMessage(
-                "Login failed.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        showMessage(
-            "Login successful. Opening dashboard...",
-            "success"
-        );
-
-
-        /*
-          Temporary dashboard redirect.
-          We will create dashboard.html next.
-        */
-
-        setTimeout(
-            function(){
-
-                window.location.href =
-                "dashboard.html";
-
-            },
-            800
-        );
 
     }
 );
-
-
-/* =========================================
-   CHECK EXISTING SESSION
-========================================= */
-
-(async function(){
-
-    const {
-        data:{
-            session
-        }
-    } =
-    await supabaseClient
-    .auth
-    .getSession();
-
-
-    if(session){
-
-        window.location.href =
-        "dashboard.html";
-
-    }
-
-})();
 
 </script>
 
 </body>
 </html>
+```
