@@ -490,7 +490,7 @@ body{
         </a>
 
 
-        <!-- Gallery - CONNECTED -->
+        <!-- Gallery -->
 
         <a
             href="gallery-manager.html"
@@ -505,12 +505,11 @@ body{
         </a>
 
 
-        <!-- Testimonials -->
+        <!-- Testimonials - CONNECTED -->
 
         <a
-            href="#"
-            class="menu"
-            onclick="comingSoon('Testimonials');return false;">
+            href="testimonials-manager.html"
+            class="menu">
 
             <span class="menu-icon">⭐</span>
 
@@ -848,7 +847,7 @@ body{
             </a>
 
 
-            <!-- GALLERY - CONNECTED -->
+            <!-- GALLERY -->
 
             <a
                 href="gallery-manager.html"
@@ -869,12 +868,11 @@ body{
             </a>
 
 
-            <!-- TESTIMONIALS -->
+            <!-- TESTIMONIALS - CONNECTED -->
 
             <a
-                href="#"
-                class="module"
-                onclick="comingSoon('Testimonials');return false;">
+                href="testimonials-manager.html"
+                class="module">
 
                 <div class="module-icon">
                     ⭐
@@ -885,7 +883,7 @@ body{
                 </h3>
 
                 <p>
-                    Add and manage customer testimonials.
+                    Add and manage customer testimonials and reviews.
                 </p>
 
             </a>
@@ -1029,10 +1027,6 @@ async function initialize(){
             throw userError;
 
 
-        /*
-           Login check
-        */
-
         if(!user){
 
             window.location.href =
@@ -1041,10 +1035,6 @@ async function initialize(){
             return;
         }
 
-
-        /*
-           Load profile
-        */
 
         const {
             data:profile,
@@ -1086,10 +1076,6 @@ async function initialize(){
         }
 
 
-        /*
-           User information
-        */
-
         setText(
             "userName",
             profile.full_name ||
@@ -1103,10 +1089,6 @@ async function initialize(){
         );
 
 
-        /*
-           Client Dashboard
-        */
-
         if(profile.client_id){
 
             await loadClient(
@@ -1119,11 +1101,6 @@ async function initialize(){
             );
 
         }
-
-
-        /*
-           Super Admin
-        */
 
         else{
 
