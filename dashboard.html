@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +21,10 @@ body{
     background:#f1f5f9;
     color:#0f172a;
 }
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
     height:70px;
@@ -75,10 +80,18 @@ body{
     background:#475569;
 }
 
+/* =========================
+   LAYOUT
+========================= */
+
 .layout{
     display:flex;
     min-height:calc(100vh - 70px);
 }
+
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar{
     width:240px;
@@ -122,6 +135,10 @@ body{
     display:inline-block;
 }
 
+/* =========================
+   MAIN
+========================= */
+
 .main{
     flex:1;
     padding:25px;
@@ -146,6 +163,10 @@ body{
     font-size:14px;
     margin-top:5px;
 }
+
+/* =========================
+   CLIENT BOX
+========================= */
 
 .client-box{
     background:white;
@@ -172,6 +193,10 @@ body{
     color:#64748b;
     margin-top:4px;
 }
+
+/* =========================
+   STATS
+========================= */
 
 .stats{
     display:grid;
@@ -216,6 +241,10 @@ body{
     margin-top:15px;
 }
 
+/* =========================
+   MODULES
+========================= */
+
 .section-title{
     font-size:19px;
     font-weight:900;
@@ -259,6 +288,10 @@ body{
     font-size:13px;
     line-height:1.5;
 }
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:1000px){
 
@@ -321,6 +354,10 @@ body{
 
 <body>
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header class="header">
 
     <div class="logo">
@@ -358,11 +395,18 @@ body{
 
 <div class="layout">
 
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
     <aside class="sidebar">
 
         <div class="menu-title">
             Management
         </div>
+
+
+        <!-- Dashboard -->
 
         <a
             href="dashboard.html"
@@ -377,6 +421,8 @@ body{
         </a>
 
 
+        <!-- Clients -->
+
         <a
             href="client-manager.html"
             class="menu">
@@ -389,6 +435,8 @@ body{
 
         </a>
 
+
+        <!-- Categories -->
 
         <a
             href="category-manager.html"
@@ -403,6 +451,8 @@ body{
         </a>
 
 
+        <!-- Products -->
+
         <a
             href="product-manager.html"
             class="menu">
@@ -416,10 +466,16 @@ body{
         </a>
 
 
+        <!-- =========================
+             WEBSITE
+        ========================== -->
+
         <div class="menu-title">
             Website
         </div>
 
+
+        <!-- Product Images -->
 
         <a
             href="product-image-manager.html"
@@ -434,6 +490,8 @@ body{
         </a>
 
 
+        <!-- Gallery -->
+
         <a
             href="gallery-manager.html"
             class="menu">
@@ -446,6 +504,8 @@ body{
 
         </a>
 
+
+        <!-- Testimonials - CONNECTED -->
 
         <a
             href="testimonials-manager.html"
@@ -460,11 +520,12 @@ body{
         </a>
 
 
-        <!-- FAQs - CONNECTED -->
+        <!-- FAQs -->
 
         <a
-            href="faqs-manager.html"
-            class="menu">
+            href="#"
+            class="menu"
+            onclick="comingSoon('FAQs');return false;">
 
             <span class="menu-icon">❓</span>
 
@@ -475,10 +536,16 @@ body{
         </a>
 
 
+        <!-- =========================
+             BUSINESS
+        ========================== -->
+
         <div class="menu-title">
             Business
         </div>
 
+
+        <!-- Enquiries -->
 
         <a
             href="#"
@@ -493,6 +560,8 @@ body{
 
         </a>
 
+
+        <!-- Company Settings -->
 
         <a
             href="#"
@@ -510,7 +579,14 @@ body{
     </aside>
 
 
+    <!-- =========================
+         MAIN
+    ========================== -->
+
     <main class="main">
+
+
+        <!-- PAGE TITLE -->
 
         <div class="page-title">
 
@@ -528,6 +604,10 @@ body{
 
         </div>
 
+
+        <!-- =========================
+             CURRENT CLIENT
+        ========================== -->
 
         <div class="client-box">
 
@@ -554,7 +634,14 @@ body{
         </div>
 
 
+        <!-- =========================
+             STATISTICS
+        ========================== -->
+
         <div class="stats">
+
+
+            <!-- Categories -->
 
             <div class="stat-card">
 
@@ -581,6 +668,8 @@ body{
             </div>
 
 
+            <!-- Products -->
+
             <div class="stat-card">
 
                 <div class="stat-top">
@@ -606,6 +695,8 @@ body{
             </div>
 
 
+            <!-- Gallery -->
+
             <div class="stat-card">
 
                 <div class="stat-top">
@@ -630,6 +721,8 @@ body{
 
             </div>
 
+
+            <!-- Enquiries -->
 
             <div class="stat-card">
 
@@ -658,12 +751,19 @@ body{
         </div>
 
 
+        <!-- =========================
+             WEBSITE MANAGEMENT
+        ========================== -->
+
         <div class="section-title">
             Website Management
         </div>
 
 
         <div class="modules">
+
+
+            <!-- CLIENT MANAGER -->
 
             <a
                 href="client-manager.html"
@@ -684,6 +784,8 @@ body{
             </a>
 
 
+            <!-- CATEGORIES -->
+
             <a
                 href="category-manager.html"
                 class="module">
@@ -702,6 +804,8 @@ body{
 
             </a>
 
+
+            <!-- PRODUCTS -->
 
             <a
                 href="product-manager.html"
@@ -722,6 +826,8 @@ body{
             </a>
 
 
+            <!-- PRODUCT IMAGES -->
+
             <a
                 href="product-image-manager.html"
                 class="module">
@@ -740,6 +846,8 @@ body{
 
             </a>
 
+
+            <!-- GALLERY -->
 
             <a
                 href="gallery-manager.html"
@@ -760,6 +868,8 @@ body{
             </a>
 
 
+            <!-- TESTIMONIALS - CONNECTED -->
+
             <a
                 href="testimonials-manager.html"
                 class="module">
@@ -779,11 +889,12 @@ body{
             </a>
 
 
-            <!-- FAQ - CONNECTED -->
+            <!-- FAQ -->
 
             <a
-                href="faqs-manager.html"
-                class="module">
+                href="#"
+                class="module"
+                onclick="comingSoon('FAQs');return false;">
 
                 <div class="module-icon">
                     ❓
@@ -799,6 +910,8 @@ body{
 
             </a>
 
+
+            <!-- ENQUIRIES -->
 
             <a
                 href="#"
@@ -819,6 +932,8 @@ body{
 
             </a>
 
+
+            <!-- COMPANY SETTINGS -->
 
             <a
                 href="#"
@@ -848,8 +963,12 @@ body{
 
 <script>
 
+/* ==========================================
+   SUPABASE
+========================================== */
+
 const SUPABASE_URL =
-"https://ywvdozdoanmcxscfofc.supabase.co";
+"https://ywvdozdoanmcxscfofcf.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
@@ -861,6 +980,10 @@ window.supabase.createClient(
     SUPABASE_KEY
 );
 
+
+/* ==========================================
+   HELPER
+========================================== */
 
 function setText(
     id,
@@ -880,6 +1003,10 @@ function setText(
 
 }
 
+
+/* ==========================================
+   INITIALIZE
+========================================== */
 
 async function initialize(){
 
@@ -1006,6 +1133,10 @@ async function initialize(){
 }
 
 
+/* ==========================================
+   LOAD CLIENT
+========================================== */
+
 async function loadClient(
     clientId
 ){
@@ -1064,6 +1195,10 @@ async function loadClient(
 
 }
 
+
+/* ==========================================
+   CLIENT STATS
+========================================== */
 
 async function loadStats(
     clientId
@@ -1173,6 +1308,10 @@ async function loadStats(
 }
 
 
+/* ==========================================
+   ALL CLIENTS STATS
+========================================== */
+
 async function loadAllStats(){
 
     const [
@@ -1263,6 +1402,10 @@ async function loadAllStats(){
 }
 
 
+/* ==========================================
+   COMING SOON
+========================================== */
+
 function comingSoon(
     moduleName
 ){
@@ -1274,6 +1417,10 @@ function comingSoon(
 
 }
 
+
+/* ==========================================
+   LOGOUT
+========================================== */
 
 document
 .getElementById("logoutBtn")
@@ -1305,9 +1452,14 @@ document
 );
 
 
+/* ==========================================
+   START
+========================================== */
+
 initialize();
 
 </script>
 
 </body>
 </html>
+```
