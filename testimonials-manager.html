@@ -1,0 +1,3040 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Testimonials Manager - MD Kaif Web Platform</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#1f2937;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    background:#111827;
+    color:white;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.header h1{
+    font-size:22px;
+}
+
+.header span{
+    font-size:13px;
+    color:#cbd5e1;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+    max-width:1400px;
+    margin:25px auto;
+    padding:0 20px;
+}
+
+
+/* =========================
+   CLIENT BOX
+========================= */
+
+.client-box{
+    display:none;
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+    margin-bottom:20px;
+}
+
+.client-box label{
+    display:block;
+    margin-bottom:7px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.client-box select{
+    width:100%;
+    max-width:500px;
+}
+
+
+/* =========================
+   PRODUCT / INFO
+========================= */
+
+.info-box{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.info-box h2{
+    font-size:18px;
+    margin-bottom:5px;
+}
+
+.info-box p{
+    color:#64748b;
+    font-size:13px;
+}
+
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+    margin-bottom:20px;
+}
+
+.toolbar-row{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.toolbar input{
+    flex:1;
+    min-width:220px;
+}
+
+.toolbar select{
+    width:200px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:14px;
+    outline:none;
+    background:white;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#2563eb;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:13px;
+    font-weight:700;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+    border:0;
+    border-radius:8px;
+    padding:11px 17px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:14px;
+}
+
+.btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+}
+
+.btn-secondary{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:white;
+}
+
+.btn-edit{
+    background:#f59e0b;
+    color:white;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-radius:12px;
+    padding:17px 22px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+    min-width:160px;
+}
+
+.stat small{
+    color:#6b7280;
+    display:block;
+    margin-bottom:6px;
+}
+
+.stat strong{
+    font-size:24px;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.testimonial-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:20px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    background:white;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.card-image{
+    width:100%;
+    height:230px;
+    background:#e5e7eb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.card-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.no-image{
+    color:#9ca3af;
+    font-size:13px;
+}
+
+.card-body{
+    padding:17px;
+}
+
+.customer-name{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.designation{
+    color:#2563eb;
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.company{
+    color:#6b7280;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.rating{
+    font-size:18px;
+    letter-spacing:2px;
+    margin-bottom:10px;
+}
+
+.message-text{
+    color:#475569;
+    font-size:14px;
+    line-height:1.6;
+    min-height:65px;
+}
+
+.card-footer{
+    margin-top:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+}
+
+.order{
+    color:#64748b;
+    font-size:12px;
+}
+
+.status{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.status-active{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-inactive{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.actions{
+    display:flex;
+    gap:6px;
+}
+
+.actions button{
+    padding:7px 10px;
+    font-size:12px;
+}
+
+
+/* =========================
+   EMPTY / LOADING
+========================= */
+
+.empty{
+    background:white;
+    padding:60px 20px;
+    text-align:center;
+    border-radius:12px;
+    color:#6b7280;
+}
+
+.loading{
+    text-align:center;
+    padding:50px;
+    color:#6b7280;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:650px;
+    max-height:90vh;
+    overflow-y:auto;
+    border-radius:14px;
+    padding:24px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:20px;
+}
+
+.close{
+    border:0;
+    background:none;
+    font-size:25px;
+    cursor:pointer;
+    color:#6b7280;
+}
+
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
+.preview{
+    margin-top:10px;
+    width:100%;
+    height:220px;
+    border:2px dashed #d1d5db;
+    border-radius:10px;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f9fafb;
+}
+
+.preview img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.preview-placeholder{
+    color:#9ca3af;
+    font-size:13px;
+    text-align:center;
+    padding:20px;
+}
+
+
+/* =========================
+   RATING
+========================= */
+
+.rating-select{
+    display:flex;
+    gap:7px;
+}
+
+.rating-star{
+    font-size:30px;
+    cursor:pointer;
+    color:#cbd5e1;
+    transition:.15s;
+    user-select:none;
+}
+
+.rating-star.active{
+    color:#f59e0b;
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-wrap{
+    margin-top:12px;
+    height:8px;
+    width:100%;
+    background:#e5e7eb;
+    border-radius:20px;
+    overflow:hidden;
+    display:none;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:#2563eb;
+    transition:.2s;
+}
+
+.upload-status{
+    margin-top:10px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.upload-status.info{
+    color:#2563eb;
+}
+
+.upload-status.success{
+    color:#15803d;
+}
+
+.upload-status.error{
+    color:#dc2626;
+}
+
+
+/* =========================
+   MODAL FOOTER
+========================= */
+
+.modal-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:20px;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    padding:13px 18px;
+    border-radius:9px;
+    color:white;
+    display:none;
+    z-index:2000;
+    box-shadow:0 4px 15px rgba(0,0,0,.2);
+}
+
+.message.success{
+    background:#16a34a;
+}
+
+.message.error{
+    background:#dc2626;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:650px){
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .header{
+        padding:15px;
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .testimonial-grid{
+        grid-template-columns:1fr;
+    }
+
+    .toolbar select{
+        width:100%;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+    <div>
+
+        <h1>
+            Testimonials Manager
+        </h1>
+
+        <span>
+            MD Kaif Web Platform
+        </span>
+
+    </div>
+
+
+    <button
+        class="btn btn-primary"
+        onclick="openModal()">
+
+        + Add Testimonial
+
+    </button>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- =========================
+     CLIENT
+========================= -->
+
+<div
+    class="client-box"
+    id="clientBox">
+
+    <label>
+        Select Client
+    </label>
+
+    <select id="clientSelect">
+
+        <option value="">
+            Select Client
+        </option>
+
+    </select>
+
+</div>
+
+
+<!-- =========================
+     INFO
+========================= -->
+
+<div class="info-box">
+
+    <h2>
+        Customer Testimonials
+    </h2>
+
+    <p>
+        Manage customer reviews and testimonials for the selected client.
+    </p>
+
+</div>
+
+
+<!-- =========================
+     TOOLBAR
+========================= -->
+
+<div class="toolbar">
+
+    <div class="toolbar-row">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search testimonials..."
+            oninput="renderTestimonials()"
+        >
+
+
+        <select
+            id="statusFilter"
+            onchange="renderTestimonials()">
+
+            <option value="">
+                All Status
+            </option>
+
+            <option value="active">
+                Active
+            </option>
+
+            <option value="inactive">
+                Inactive
+            </option>
+
+        </select>
+
+
+        <select
+            id="ratingFilter"
+            onchange="renderTestimonials()">
+
+            <option value="">
+                All Ratings
+            </option>
+
+            <option value="5">
+                ★★★★★
+            </option>
+
+            <option value="4">
+                ★★★★
+            </option>
+
+            <option value="3">
+                ★★★
+            </option>
+
+            <option value="2">
+                ★★
+            </option>
+
+            <option value="1">
+                ★
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<div class="stats">
+
+    <div class="stat">
+
+        <small>
+            Total
+        </small>
+
+        <strong id="totalCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            Active
+        </small>
+
+        <strong id="activeCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            Inactive
+        </small>
+
+        <strong id="inactiveCount">
+            0
+        </strong>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     CONTAINER
+========================= -->
+
+<div id="testimonialContainer">
+
+    <div class="empty">
+
+        <h3>
+            Select a client
+        </h3>
+
+        <p>
+            Select a client to view testimonials.
+        </p>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div
+    class="modal"
+    id="testimonialModal">
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Add Testimonial
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- CUSTOMER -->
+
+        <div class="form-group">
+
+            <label>
+                Customer Name *
+            </label>
+
+            <input
+                type="text"
+                id="customerName"
+                placeholder="Enter customer name"
+            >
+
+        </div>
+
+
+        <!-- DESIGNATION + COMPANY -->
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>
+                    Designation
+                </label>
+
+                <input
+                    type="text"
+                    id="designation"
+                    placeholder="e.g. Director"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Company
+                </label>
+
+                <input
+                    type="text"
+                    id="company"
+                    placeholder="Company name"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div class="form-group">
+
+            <label>
+                Message *
+            </label>
+
+            <textarea
+                id="testimonialMessage"
+                placeholder="Enter customer testimonial..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- RATING -->
+
+        <div class="form-group">
+
+            <label>
+                Rating
+            </label>
+
+            <div
+                class="rating-select"
+                id="ratingSelect">
+
+                <span
+                    class="rating-star"
+                    data-rating="1">
+                    ★
+                </span>
+
+                <span
+                    class="rating-star"
+                    data-rating="2">
+                    ★
+                </span>
+
+                <span
+                    class="rating-star"
+                    data-rating="3">
+                    ★
+                </span>
+
+                <span
+                    class="rating-star"
+                    data-rating="4">
+                    ★
+                </span>
+
+                <span
+                    class="rating-star"
+                    data-rating="5">
+                    ★
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE -->
+
+        <div class="form-group">
+
+            <label>
+                Customer Image
+            </label>
+
+            <input
+                type="file"
+                id="testimonialImage"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+            >
+
+            <div
+                style="margin-top:7px;font-size:12px;color:#6b7280;">
+
+                JPG, PNG, WEBP or GIF — Maximum 10 MB
+
+            </div>
+
+        </div>
+
+
+        <!-- PREVIEW -->
+
+        <div
+            class="preview"
+            id="previewBox">
+
+            <div
+                class="preview-placeholder"
+                id="previewPlaceholder">
+
+                Image preview will appear here
+
+            </div>
+
+            <img
+                id="previewImage"
+                class="hidden"
+                alt="Preview">
+
+        </div>
+
+
+        <!-- SORT ORDER + STATUS -->
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    type="number"
+                    id="sortOrder"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Status
+                </label>
+
+                <select id="testimonialStatus">
+
+                    <option value="active">
+                        Active
+                    </option>
+
+                    <option value="inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div
+            class="progress-wrap"
+            id="progressWrap">
+
+            <div
+                class="progress-bar"
+                id="progressBar">
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="upload-status"
+            id="uploadStatus">
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="modal-footer">
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeModal()">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                class="btn btn-primary"
+                id="saveBtn"
+                onclick="saveTestimonial()">
+
+                Upload & Save
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- MESSAGE -->
+
+<div
+    id="message"
+    class="message">
+</div>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+"https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const STORAGE_BUCKET =
+"product-images";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =====================================================
+   GLOBALS
+===================================================== */
+
+let currentUser = null;
+
+let currentRole = null;
+
+let currentClientId = null;
+
+let clients = [];
+
+let testimonials = [];
+
+let editingId = null;
+
+let editingImageUrl = null;
+
+let selectedRating = 5;
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const clientSelect =
+document.getElementById(
+    "clientSelect"
+);
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+async function initialize(){
+
+    try{
+
+        const {
+            data:{user},
+            error
+        } =
+        await supabaseClient
+        .auth
+        .getUser();
+
+
+        if(error)
+            throw error;
+
+
+        if(!user){
+
+            window.location.href =
+                "admin.html";
+
+            return;
+        }
+
+
+        currentUser =
+            user;
+
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
+        .from("profiles")
+        .select(
+            "id,role,client_id,full_name"
+        )
+        .eq(
+            "id",
+            user.id
+        )
+        .single();
+
+
+        if(profileError)
+            throw profileError;
+
+
+        currentRole =
+            profile.role;
+
+
+        if(currentRole === "super_admin"){
+
+            document.getElementById(
+                "clientBox"
+            ).style.display =
+                "block";
+
+
+            await loadClients();
+
+        }
+        else{
+
+            currentClientId =
+                profile.client_id;
+
+
+            if(!currentClientId){
+
+                showMessage(
+                    "No client assigned to this user.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            await loadTestimonials();
+
+        }
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showMessage(
+            error.message ||
+            "Initialization failed.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD CLIENTS
+===================================================== */
+
+async function loadClients(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,domain,status"
+    )
+    .order(
+        "company_name",
+        {
+            ascending:true
+        }
+    );
+
+
+    if(error)
+        throw error;
+
+
+    clients =
+        data || [];
+
+
+    clientSelect.innerHTML =
+    `
+    <option value="">
+        Select Client
+    </option>
+    `;
+
+
+    clients.forEach(client => {
+
+        const option =
+        document.createElement(
+            "option"
+        );
+
+
+        option.value =
+            client.id;
+
+
+        option.textContent =
+            client.company_name;
+
+
+        clientSelect.appendChild(
+            option
+        );
+
+    });
+
+
+    clientSelect.onchange =
+    async function(){
+
+        currentClientId =
+            this.value || null;
+
+
+        testimonials = [];
+
+
+        if(!currentClientId){
+
+            resetTestimonials();
+
+            return;
+        }
+
+
+        await loadTestimonials();
+
+    };
+
+}
+
+
+/* =====================================================
+   LOAD TESTIMONIALS
+===================================================== */
+
+async function loadTestimonials(){
+
+    if(!currentClientId){
+
+        resetTestimonials();
+
+        return;
+    }
+
+
+    document.getElementById(
+        "testimonialContainer"
+    ).innerHTML =
+    `
+    <div class="loading">
+        Loading testimonials...
+    </div>
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("testimonials")
+    .select("*")
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .order(
+        "sort_order",
+        {
+            ascending:true
+        }
+    )
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+
+        document.getElementById(
+            "testimonialContainer"
+        ).innerHTML =
+        `
+        <div class="empty">
+
+            <h3>
+                Unable to load testimonials
+            </h3>
+
+            <p>
+                ${escapeHtml(
+                    error.message
+                )}
+            </p>
+
+        </div>
+        `;
+
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+
+        return;
+    }
+
+
+    testimonials =
+        data || [];
+
+
+    renderTestimonials();
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetTestimonials(){
+
+    document.getElementById(
+        "testimonialContainer"
+    ).innerHTML =
+    `
+    <div class="empty">
+
+        <h3>
+            Select a client
+        </h3>
+
+        <p>
+            Select a client to view testimonials.
+        </p>
+
+    </div>
+    `;
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        "0";
+
+
+    document.getElementById(
+        "activeCount"
+    ).textContent =
+        "0";
+
+
+    document.getElementById(
+        "inactiveCount"
+    ).textContent =
+        "0";
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderTestimonials(){
+
+    const search =
+    document.getElementById(
+        "search"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
+
+    const status =
+    document.getElementById(
+        "statusFilter"
+    ).value;
+
+
+    const rating =
+    document.getElementById(
+        "ratingFilter"
+    ).value;
+
+
+    const filtered =
+    testimonials.filter(item => {
+
+        const text =
+        (
+            (item.customer_name || "") +
+            " " +
+            (item.designation || "") +
+            " " +
+            (item.company || "") +
+            " " +
+            (item.message || "")
+        )
+        .toLowerCase();
+
+
+        return (
+
+            (
+                !search ||
+                text.includes(search)
+            )
+
+            &&
+
+            (
+                !status ||
+                item.status === status
+            )
+
+            &&
+
+            (
+                !rating ||
+                String(item.rating) === String(rating)
+            )
+
+        );
+
+    });
+
+
+    updateStats();
+
+
+    const container =
+    document.getElementById(
+        "testimonialContainer"
+    );
+
+
+    if(!currentClientId){
+
+        resetTestimonials();
+
+        return;
+    }
+
+
+    if(filtered.length === 0){
+
+        container.innerHTML =
+        `
+        <div class="empty">
+
+            <h3>
+                No testimonials found
+            </h3>
+
+            <p>
+                Click "+ Add Testimonial" to add one.
+            </p>
+
+        </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+    `
+    <div class="testimonial-grid">
+
+        ${
+            filtered
+            .map(
+                item =>
+                    createCard(item)
+            )
+            .join("")
+        }
+
+    </div>
+    `;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+function createCard(item){
+
+    const customerName =
+        escapeHtml(
+            item.customer_name ||
+            "Unknown Customer"
+        );
+
+
+    const designation =
+        escapeHtml(
+            item.designation ||
+            ""
+        );
+
+
+    const company =
+        escapeHtml(
+            item.company ||
+            ""
+        );
+
+
+    const message =
+        escapeHtml(
+            item.message ||
+            ""
+        );
+
+
+    const rating =
+        Math.min(
+            5,
+            Math.max(
+                0,
+                Number(
+                    item.rating || 0
+                )
+            )
+        );
+
+
+    const stars =
+        "★".repeat(rating) +
+        "☆".repeat(5-rating);
+
+
+    const statusClass =
+        item.status === "active"
+        ? "status-active"
+        : "status-inactive";
+
+
+    const imageHtml =
+        item.image_url
+        ?
+        `
+        <img
+            src="${escapeAttribute(
+                item.image_url
+            )}"
+            alt="${customerName}"
+            loading="lazy"
+            onerror="this.style.display='none';"
+        >
+        `
+        :
+        `
+        <div class="no-image">
+            No customer image
+        </div>
+        `;
+
+
+    return `
+    <div class="card">
+
+        <div class="card-image">
+
+            ${imageHtml}
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="customer-name">
+                ${customerName}
+            </div>
+
+
+            ${
+                designation
+                ?
+                `<div class="designation">
+                    ${designation}
+                </div>`
+                :
+                ""
+            }
+
+
+            ${
+                company
+                ?
+                `<div class="company">
+                    ${company}
+                </div>`
+                :
+                ""
+            }
+
+
+            <div class="rating">
+                ${stars}
+            </div>
+
+
+            <div class="message-text">
+                ${message}
+            </div>
+
+
+            <div class="card-footer">
+
+                <div>
+
+                    <div class="order">
+                        Order: ${item.sort_order ?? 0}
+                    </div>
+
+                    <div
+                        class="status ${statusClass}"
+                        style="margin-top:6px;display:inline-block;">
+
+                        ${escapeHtml(
+                            item.status ||
+                            "active"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-edit"
+                        onclick="editTestimonial('${item.id}')">
+
+                        Edit
+
+                    </button>
+
+
+                    <button
+                        class="btn btn-danger"
+                        onclick="deleteTestimonial('${item.id}')">
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    `;
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function updateStats(){
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        testimonials.length;
+
+
+    document.getElementById(
+        "activeCount"
+    ).textContent =
+        testimonials.filter(
+            x =>
+                x.status === "active"
+        ).length;
+
+
+    document.getElementById(
+        "inactiveCount"
+    ).textContent =
+        testimonials.filter(
+            x =>
+                x.status === "inactive"
+        ).length;
+
+}
+
+
+/* =====================================================
+   OPEN MODAL
+===================================================== */
+
+function openModal(
+    id = null
+){
+
+    if(!currentClientId){
+
+        showMessage(
+            "Please select a client first.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    editingId =
+        id;
+
+
+    document.getElementById(
+        "testimonialModal"
+    ).style.display =
+        "flex";
+
+
+    if(id){
+
+        const item =
+        testimonials.find(
+            x =>
+                x.id === id
+        );
+
+
+        if(!item)
+            return;
+
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            "Edit Testimonial";
+
+
+        document.getElementById(
+            "customerName"
+        ).value =
+            item.customer_name ||
+            "";
+
+
+        document.getElementById(
+            "designation"
+        ).value =
+            item.designation ||
+            "";
+
+
+        document.getElementById(
+            "company"
+        ).value =
+            item.company ||
+            "";
+
+
+        document.getElementById(
+            "testimonialMessage"
+        ).value =
+            item.message ||
+            "";
+
+
+        document.getElementById(
+            "sortOrder"
+        ).value =
+            item.sort_order ??
+            0;
+
+
+        document.getElementById(
+            "testimonialStatus"
+        ).value =
+            item.status ||
+            "active";
+
+
+        editingImageUrl =
+            item.image_url ||
+            null;
+
+
+        selectedRating =
+            Number(
+                item.rating || 5
+            );
+
+
+        document.getElementById(
+            "previewImage"
+        ).src =
+            item.image_url ||
+            "";
+
+
+        if(item.image_url){
+
+            document.getElementById(
+                "previewImage"
+            ).classList.remove(
+                "hidden"
+            );
+
+
+            document.getElementById(
+                "previewPlaceholder"
+            ).classList.add(
+                "hidden"
+            );
+
+        }
+        else{
+
+            resetPreview();
+
+        }
+
+
+        document.getElementById(
+            "testimonialImage"
+        ).value =
+            "";
+
+
+        document.getElementById(
+            "saveBtn"
+        ).textContent =
+            "Update Testimonial";
+
+
+        updateRatingStars();
+
+        clearUploadStatus();
+
+    }
+    else{
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            "Add Testimonial";
+
+
+        document.getElementById(
+            "saveBtn"
+        ).textContent =
+            "Upload & Save";
+
+
+        editingImageUrl =
+            null;
+
+
+        selectedRating =
+            5;
+
+
+        clearForm();
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal(){
+
+    document.getElementById(
+        "testimonialModal"
+    ).style.display =
+        "none";
+
+
+    editingId =
+        null;
+
+
+    editingImageUrl =
+        null;
+
+
+    clearForm();
+
+}
+
+
+/* =====================================================
+   CLEAR FORM
+===================================================== */
+
+function clearForm(){
+
+    document.getElementById(
+        "customerName"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "designation"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "company"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "testimonialMessage"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "testimonialImage"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "sortOrder"
+    ).value =
+        0;
+
+
+    document.getElementById(
+        "testimonialStatus"
+    ).value =
+        "active";
+
+
+    selectedRating =
+        5;
+
+
+    resetPreview();
+
+    clearUploadStatus();
+
+    updateRatingStars();
+
+}
+
+
+/* =====================================================
+   RATING
+===================================================== */
+
+document
+.querySelectorAll(
+    ".rating-star"
+)
+.forEach(
+    star => {
+
+        star.addEventListener(
+            "click",
+            function(){
+
+                selectedRating =
+                    Number(
+                        this.dataset.rating
+                    );
+
+
+                updateRatingStars();
+
+            }
+        );
+
+    }
+);
+
+
+function updateRatingStars(){
+
+    document
+    .querySelectorAll(
+        ".rating-star"
+    )
+    .forEach(
+        star => {
+
+            const value =
+                Number(
+                    star.dataset.rating
+                );
+
+
+            star.classList.toggle(
+                "active",
+                value <= selectedRating
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   IMAGE PREVIEW
+===================================================== */
+
+document
+.getElementById(
+    "testimonialImage"
+)
+.addEventListener(
+    "change",
+    function(){
+
+        const file =
+            this.files[0];
+
+
+        if(!file){
+
+            return;
+        }
+
+
+        if(
+            !file.type.startsWith(
+                "image/"
+            )
+        ){
+
+            showMessage(
+                "Please select a valid image.",
+                "error"
+            );
+
+
+            this.value =
+                "";
+
+
+            resetPreview();
+
+            return;
+        }
+
+
+        const maxSize =
+            10 * 1024 * 1024;
+
+
+        if(
+            file.size >
+            maxSize
+        ){
+
+            showMessage(
+                "Image size must be less than 10 MB.",
+                "error"
+            );
+
+
+            this.value =
+                "";
+
+
+            resetPreview();
+
+            return;
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+        function(e){
+
+            document.getElementById(
+                "previewImage"
+            ).src =
+                e.target.result;
+
+
+            document.getElementById(
+                "previewImage"
+            ).classList.remove(
+                "hidden"
+            );
+
+
+            document.getElementById(
+                "previewPlaceholder"
+            ).classList.add(
+                "hidden"
+            );
+
+        };
+
+
+        reader.readAsDataURL(
+            file
+        );
+
+    }
+);
+
+
+/* =====================================================
+   SAVE TESTIMONIAL
+===================================================== */
+
+async function saveTestimonial(){
+
+    if(!currentClientId){
+
+        showMessage(
+            "Please select a client.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const customerName =
+        document.getElementById(
+            "customerName"
+        ).value.trim();
+
+
+    const message =
+        document.getElementById(
+            "testimonialMessage"
+        ).value.trim();
+
+
+    const file =
+        document.getElementById(
+            "testimonialImage"
+        ).files[0];
+
+
+    if(!customerName){
+
+        showMessage(
+            "Customer name is required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!message){
+
+        showMessage(
+            "Testimonial message is required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(
+        !editingId &&
+        !file
+    ){
+
+        /*
+           Image is optional.
+           So no error here.
+        */
+
+    }
+
+
+    const saveBtn =
+        document.getElementById(
+            "saveBtn"
+        );
+
+
+    saveBtn.disabled =
+        true;
+
+
+    saveBtn.textContent =
+        editingId
+        ? "Updating..."
+        : "Saving...";
+
+
+    try{
+
+        let imageUrl =
+            editingImageUrl;
+
+
+        /* ==========================================
+           IMAGE UPLOAD
+        ========================================== */
+
+        if(file){
+
+            setUploadStatus(
+                "Uploading customer image...",
+                "info"
+            );
+
+
+            setProgress(
+                15
+            );
+
+
+            const extension =
+                file.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+
+            const safeExtension =
+                extension ||
+                "jpg";
+
+
+            const uniqueName =
+                `${crypto.randomUUID()}.${safeExtension}`;
+
+
+            const storagePath =
+                `testimonials/${currentClientId}/${uniqueName}`;
+
+
+            const {
+                error:uploadError
+            } =
+            await supabaseClient
+            .storage
+            .from(
+                STORAGE_BUCKET
+            )
+            .upload(
+                storagePath,
+                file,
+                {
+                    cacheControl:"3600",
+                    upsert:false,
+                    contentType:file.type
+                }
+            );
+
+
+            if(uploadError)
+                throw uploadError;
+
+
+            setProgress(
+                60
+            );
+
+
+            const {
+                data:publicData
+            } =
+            supabaseClient
+            .storage
+            .from(
+                STORAGE_BUCKET
+            )
+            .getPublicUrl(
+                storagePath
+            );
+
+
+            if(
+                !publicData ||
+                !publicData.publicUrl
+            ){
+
+                throw new Error(
+                    "Unable to generate image URL."
+                );
+
+            }
+
+
+            imageUrl =
+                publicData.publicUrl;
+
+
+            setProgress(
+                75
+            );
+
+        }
+
+
+        /* ==========================================
+           PAYLOAD
+        ========================================== */
+
+        const payload = {
+
+            client_id:
+                currentClientId,
+
+            customer_name:
+                customerName,
+
+            designation:
+                document.getElementById(
+                    "designation"
+                ).value.trim()
+                || null,
+
+            company:
+                document.getElementById(
+                    "company"
+                ).value.trim()
+                || null,
+
+            message:
+                message,
+
+            rating:
+                selectedRating,
+
+            image_url:
+                imageUrl ||
+                null,
+
+            sort_order:
+                parseInt(
+                    document.getElementById(
+                        "sortOrder"
+                    ).value
+                ) || 0,
+
+            status:
+                document.getElementById(
+                    "testimonialStatus"
+                ).value
+
+        };
+
+
+        /* ==========================================
+           UPDATE
+        ========================================== */
+
+        if(editingId){
+
+            setUploadStatus(
+                "Updating testimonial...",
+                "info"
+            );
+
+
+            const {
+                error
+            } =
+            await supabaseClient
+            .from("testimonials")
+            .update(
+                payload
+            )
+            .eq(
+                "id",
+                editingId
+            )
+            .eq(
+                "client_id",
+                currentClientId
+            );
+
+
+            if(error)
+                throw error;
+
+
+            setProgress(
+                100
+            );
+
+
+            showMessage(
+                "Testimonial updated successfully.",
+                "success"
+            );
+
+        }
+
+
+        /* ==========================================
+           INSERT
+        ========================================== */
+
+        else{
+
+            setUploadStatus(
+                "Saving testimonial...",
+                "info"
+            );
+
+
+            const {
+                error
+            } =
+            await supabaseClient
+            .from("testimonials")
+            .insert(
+                payload
+            );
+
+
+            if(error)
+                throw error;
+
+
+            setProgress(
+                100
+            );
+
+
+            showMessage(
+                "Testimonial added successfully.",
+                "success"
+            );
+
+        }
+
+
+        await loadTestimonials();
+
+
+        setTimeout(
+            () => {
+
+                closeModal();
+
+            },
+            500
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        setUploadStatus(
+            error.message ||
+            "Unable to save testimonial.",
+            "error"
+        );
+
+
+        showMessage(
+            error.message ||
+            "Unable to save testimonial.",
+            "error"
+        );
+
+    }
+    finally{
+
+        saveBtn.disabled =
+            false;
+
+
+        saveBtn.textContent =
+            editingId
+            ? "Update Testimonial"
+            : "Upload & Save";
+
+    }
+
+}
+
+
+/* =====================================================
+   EDIT
+===================================================== */
+
+function editTestimonial(id){
+
+    openModal(id);
+
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+async function deleteTestimonial(id){
+
+    const item =
+        testimonials.find(
+            x =>
+                x.id === id
+        );
+
+
+    if(!item)
+        return;
+
+
+    const confirmed =
+        confirm(
+            `Delete testimonial from "${item.customer_name || "this customer"}"?`
+        );
+
+
+    if(!confirmed)
+        return;
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+        .from("testimonials")
+        .delete()
+        .eq(
+            "id",
+            id
+        )
+        .eq(
+            "client_id",
+            currentClientId
+        );
+
+
+        if(error)
+            throw error;
+
+
+        /*
+           Delete storage image too
+        */
+
+        const storagePath =
+            getStoragePathFromUrl(
+                item.image_url
+            );
+
+
+        if(storagePath){
+
+            const {
+                error:storageError
+            } =
+            await supabaseClient
+            .storage
+            .from(
+                STORAGE_BUCKET
+            )
+            .remove([
+                storagePath
+            ]);
+
+
+            if(storageError){
+
+                console.warn(
+                    "Storage delete warning:",
+                    storageError
+                );
+
+            }
+
+        }
+
+
+        showMessage(
+            "Testimonial deleted successfully.",
+            "success"
+        );
+
+
+        await loadTestimonials();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        showMessage(
+            error.message ||
+            "Unable to delete testimonial.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   STORAGE PATH
+===================================================== */
+
+function getStoragePathFromUrl(
+    url
+){
+
+    if(!url)
+        return null;
+
+
+    try{
+
+        const marker =
+            `/storage/v1/object/public/${STORAGE_BUCKET}/`;
+
+
+        const index =
+            url.indexOf(
+                marker
+            );
+
+
+        if(index === -1)
+            return null;
+
+
+        return decodeURIComponent(
+            url.substring(
+                index +
+                marker.length
+            )
+        );
+
+    }
+    catch(error){
+
+        return null;
+    }
+
+}
+
+
+/* =====================================================
+   PREVIEW RESET
+===================================================== */
+
+function resetPreview(){
+
+    document.getElementById(
+        "previewImage"
+    ).src =
+        "";
+
+
+    document.getElementById(
+        "previewImage"
+    ).classList.add(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "previewPlaceholder"
+    ).classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =====================================================
+   UPLOAD STATUS
+===================================================== */
+
+function setUploadStatus(
+    text,
+    type="info"
+){
+
+    const status =
+        document.getElementById(
+            "uploadStatus"
+        );
+
+
+    status.textContent =
+        text;
+
+
+    status.className =
+        "upload-status " +
+        type;
+
+}
+
+
+function clearUploadStatus(){
+
+    const status =
+        document.getElementById(
+            "uploadStatus"
+        );
+
+
+    status.textContent =
+        "";
+
+
+    status.className =
+        "upload-status";
+
+
+    document.getElementById(
+        "progressWrap"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        "0%";
+
+}
+
+
+function setProgress(
+    value
+){
+
+    document.getElementById(
+        "progressWrap"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        `${value}%`;
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+    text,
+    type
+){
+
+    const box =
+        document.getElementById(
+            "message"
+        );
+
+
+    box.textContent =
+        text;
+
+
+    box.className =
+        "message " +
+        type;
+
+
+    box.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            box.style.display =
+                "none";
+
+        },
+        3500
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function escapeHtml(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function escapeAttribute(
+    value
+){
+
+    return escapeHtml(
+        value
+    );
+
+}
+
+
+/* =====================================================
+   MODAL OUTSIDE CLICK
+===================================================== */
+
+document
+.getElementById(
+    "testimonialModal"
+)
+.addEventListener(
+    "click",
+    function(e){
+
+        if(
+            e.target === this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.key === "Escape"
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+initialize();
+
+</script>
+
+</body>
+</html>
+```
