@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -289,15 +290,6 @@ body{
 }
 
 /* =========================
-   LOADING
-========================= */
-
-.loading{
-    color:#64748b;
-    font-size:13px;
-}
-
-/* =========================
    MOBILE
 ========================= */
 
@@ -483,6 +475,8 @@ body{
         </div>
 
 
+        <!-- Product Images -->
+
         <a
             href="product-image-manager.html"
             class="menu">
@@ -496,10 +490,11 @@ body{
         </a>
 
 
+        <!-- Gallery - CONNECTED -->
+
         <a
-            href="#"
-            class="menu"
-            onclick="comingSoon('Gallery');return false;">
+            href="gallery-manager.html"
+            class="menu">
 
             <span class="menu-icon">🌄</span>
 
@@ -509,6 +504,8 @@ body{
 
         </a>
 
+
+        <!-- Testimonials -->
 
         <a
             href="#"
@@ -523,6 +520,8 @@ body{
 
         </a>
 
+
+        <!-- FAQs -->
 
         <a
             href="#"
@@ -547,6 +546,8 @@ body{
         </div>
 
 
+        <!-- Enquiries -->
+
         <a
             href="#"
             class="menu"
@@ -560,6 +561,8 @@ body{
 
         </a>
 
+
+        <!-- Company Settings -->
 
         <a
             href="#"
@@ -704,7 +707,7 @@ body{
                     </div>
 
                     <div class="stat-icon">
-                        🖼️
+                        🌄
                     </div>
 
                 </div>
@@ -845,12 +848,11 @@ body{
             </a>
 
 
-            <!-- GALLERY -->
+            <!-- GALLERY - CONNECTED -->
 
             <a
-                href="#"
-                class="module"
-                onclick="comingSoon('Gallery');return false;">
+                href="gallery-manager.html"
+                class="module">
 
                 <div class="module-icon">
                     🌄
@@ -861,7 +863,7 @@ body{
                 </h3>
 
                 <p>
-                    Manage your business website photo gallery.
+                    Manage product-wise gallery images for your business website.
                 </p>
 
             </a>
@@ -973,6 +975,7 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
+
 const supabaseClient =
 window.supabase.createClient(
     SUPABASE_URL,
@@ -984,10 +987,14 @@ window.supabase.createClient(
    HELPER
 ========================================== */
 
-function setText(id,value){
+function setText(
+    id,
+    value
+){
 
     const element =
         document.getElementById(id);
+
 
     if(element){
 
@@ -1010,15 +1017,20 @@ async function initialize(){
         const {
             data:{
                 user
-            }
+            },
+            error:userError
         } =
         await supabaseClient
         .auth
         .getUser();
 
 
+        if(userError)
+            throw userError;
+
+
         /*
-           User login check
+           Login check
         */
 
         if(!user){
@@ -1027,7 +1039,6 @@ async function initialize(){
                 "admin.html";
 
             return;
-
         }
 
 
@@ -1058,18 +1069,20 @@ async function initialize(){
                 profileError
             );
 
+
             setText(
                 "userName",
                 user.email
             );
+
 
             setText(
                 "userRole",
                 "Profile not found"
             );
 
-            return;
 
+            return;
         }
 
 
@@ -1091,7 +1104,7 @@ async function initialize(){
 
 
         /*
-           Client specific dashboard
+           Client Dashboard
         */
 
         if(profile.client_id){
@@ -1100,11 +1113,13 @@ async function initialize(){
                 profile.client_id
             );
 
+
             await loadStats(
                 profile.client_id
             );
 
         }
+
 
         /*
            Super Admin
@@ -1117,17 +1132,18 @@ async function initialize(){
                 "All Clients"
             );
 
+
             setText(
                 "clientDomain",
                 "Super Admin"
             );
+
 
             await loadAllStats();
 
         }
 
     }
-
     catch(error){
 
         console.error(
@@ -1171,18 +1187,20 @@ async function loadClient(
             error
         );
 
+
         setText(
             "clientName",
             "Client not found"
         );
+
 
         setText(
             "clientDomain",
             "—"
         );
 
-        return;
 
+        return;
     }
 
 
@@ -1231,6 +1249,7 @@ async function loadStats(
             clientId
         ),
 
+
         supabaseClient
         .from("products")
         .select(
@@ -1245,6 +1264,7 @@ async function loadStats(
             clientId
         ),
 
+
         supabaseClient
         .from("gallery")
         .select(
@@ -1258,6 +1278,7 @@ async function loadStats(
             "client_id",
             clientId
         ),
+
 
         supabaseClient
         .from("enquiries")
@@ -1276,10 +1297,6 @@ async function loadStats(
     ]);
 
 
-    /*
-       Categories
-    */
-
     setText(
         "categoryCount",
         categories.error
@@ -1287,10 +1304,6 @@ async function loadStats(
         : categories.count ?? 0
     );
 
-
-    /*
-       Products
-    */
 
     setText(
         "productCount",
@@ -1300,10 +1313,6 @@ async function loadStats(
     );
 
 
-    /*
-       Gallery
-    */
-
     setText(
         "galleryCount",
         gallery.error
@@ -1311,10 +1320,6 @@ async function loadStats(
         : gallery.count ?? 0
     );
 
-
-    /*
-       Enquiries
-    */
 
     setText(
         "enquiryCount",
@@ -1350,6 +1355,7 @@ async function loadAllStats(){
             }
         ),
 
+
         supabaseClient
         .from("products")
         .select(
@@ -1360,6 +1366,7 @@ async function loadAllStats(){
             }
         ),
 
+
         supabaseClient
         .from("gallery")
         .select(
@@ -1369,6 +1376,7 @@ async function loadAllStats(){
                 head:true
             }
         ),
+
 
         supabaseClient
         .from("enquiries")
@@ -1450,7 +1458,6 @@ document
             .signOut();
 
         }
-
         catch(error){
 
             console.error(
@@ -1460,6 +1467,7 @@ document
 
         }
 
+
         window.location.href =
             "admin.html";
 
@@ -1468,7 +1476,7 @@ document
 
 
 /* ==========================================
-   START DASHBOARD
+   START
 ========================================== */
 
 initialize();
@@ -1477,3 +1485,4 @@ initialize();
 
 </body>
 </html>
+```
