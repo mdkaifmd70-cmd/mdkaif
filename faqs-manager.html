@@ -24,6 +24,10 @@ body{
     color:#1f2937;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 .header{
     background:#111827;
     color:white;
@@ -43,11 +47,21 @@ body{
     color:#cbd5e1;
 }
 
+
+/* =========================
+   CONTAINER
+========================= */
+
 .container{
     max-width:1300px;
     margin:25px auto;
     padding:0 20px;
 }
+
+
+/* =========================
+   CLIENT BOX
+========================= */
 
 .client-box{
     display:none;
@@ -70,16 +84,10 @@ body{
     max-width:500px;
 }
 
-.current-client{
-    background:#eff6ff;
-    border:1px solid #bfdbfe;
-    color:#1e40af;
-    padding:10px 12px;
-    border-radius:8px;
-    font-size:13px;
-    margin-bottom:20px;
-    display:none;
-}
+
+/* =========================
+   INFO
+========================= */
 
 .info-box{
     background:white;
@@ -98,6 +106,11 @@ body{
     color:#64748b;
     font-size:13px;
 }
+
+
+/* =========================
+   TOOLBAR
+========================= */
 
 .toolbar{
     background:white;
@@ -122,6 +135,11 @@ body{
     width:200px;
 }
 
+
+/* =========================
+   FORM
+========================= */
+
 input,
 select,
 textarea{
@@ -144,6 +162,11 @@ textarea{
     min-height:150px;
     resize:vertical;
 }
+
+
+/* =========================
+   BUTTONS
+========================= */
 
 .btn{
     border:0;
@@ -183,6 +206,11 @@ textarea{
     color:white;
 }
 
+
+/* =========================
+   STATS
+========================= */
+
 .stats{
     display:flex;
     gap:15px;
@@ -208,11 +236,21 @@ textarea{
     font-size:25px;
 }
 
+
+/* =========================
+   FAQ LIST
+========================= */
+
 .faq-list{
     display:flex;
     flex-direction:column;
     gap:15px;
 }
+
+
+/* =========================
+   FAQ CARD
+========================= */
 
 .faq-card{
     background:white;
@@ -291,6 +329,11 @@ textarea{
     padding:8px 12px;
 }
 
+
+/* =========================
+   EMPTY
+========================= */
+
 .empty{
     background:white;
     padding:60px 20px;
@@ -304,6 +347,11 @@ textarea{
     margin-bottom:7px;
 }
 
+
+/* =========================
+   LOADING
+========================= */
+
 .loading{
     background:white;
     padding:50px;
@@ -311,6 +359,11 @@ textarea{
     text-align:center;
     color:#64748b;
 }
+
+
+/* =========================
+   MODAL
+========================= */
 
 .modal{
     display:none;
@@ -376,6 +429,11 @@ textarea{
     margin-top:20px;
 }
 
+
+/* =========================
+   MESSAGE
+========================= */
+
 .message{
     position:fixed;
     right:20px;
@@ -396,9 +454,10 @@ textarea{
     background:#dc2626;
 }
 
-.hidden{
-    display:none !important;
-}
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:650px){
 
@@ -433,6 +492,11 @@ textarea{
 
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <div class="header">
 
     <div>
@@ -446,6 +510,7 @@ textarea{
         </span>
 
     </div>
+
 
     <button
         class="btn btn-primary"
@@ -461,150 +526,151 @@ textarea{
 <div class="container">
 
 
-    <!-- SUPER ADMIN CLIENT SELECT -->
+<!-- =========================
+     CLIENT
+========================= -->
 
-    <div
-        class="client-box"
-        id="clientBox">
+<div
+    class="client-box"
+    id="clientBox">
 
-        <label>
+    <label>
+        Select Client
+    </label>
+
+    <select id="clientSelect">
+
+        <option value="">
             Select Client
-        </label>
+        </option>
 
-        <select id="clientSelect">
+    </select>
+
+</div>
+
+
+<!-- =========================
+     INFO
+========================= -->
+
+<div class="info-box">
+
+    <h2>
+        Frequently Asked Questions
+    </h2>
+
+    <p>
+        Create and manage FAQs for the selected client website.
+    </p>
+
+</div>
+
+
+<!-- =========================
+     TOOLBAR
+========================= -->
+
+<div class="toolbar">
+
+    <div class="toolbar-row">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search questions and answers..."
+            oninput="renderFAQs()"
+        >
+
+
+        <select
+            id="statusFilter"
+            onchange="renderFAQs()">
 
             <option value="">
-                Loading clients...
+                All Status
+            </option>
+
+            <option value="active">
+                Active
+            </option>
+
+            <option value="inactive">
+                Inactive
             </option>
 
         </select>
 
     </div>
 
+</div>
 
-    <!-- CURRENT CLIENT -->
 
-    <div
-        class="current-client"
-        id="currentClientInfo">
+<!-- =========================
+     STATS
+========================= -->
+
+<div class="stats">
+
+    <div class="stat">
+
+        <small>
+            Total FAQs
+        </small>
+
+        <strong id="totalCount">
+            0
+        </strong>
 
     </div>
 
 
-    <!-- INFO -->
+    <div class="stat">
 
-    <div class="info-box">
+        <small>
+            Active
+        </small>
 
-        <h2>
-            Frequently Asked Questions
-        </h2>
+        <strong id="activeCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            Inactive
+        </small>
+
+        <strong id="inactiveCount">
+            0
+        </strong>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     FAQ CONTAINER
+========================= -->
+
+<div id="faqContainer">
+
+    <div class="empty">
+
+        <h3>
+            Select a client
+        </h3>
 
         <p>
-            Create and manage FAQs for the selected client website.
+            Select a client to view FAQs.
         </p>
 
     </div>
 
-
-    <!-- TOOLBAR -->
-
-    <div class="toolbar">
-
-        <div class="toolbar-row">
-
-            <input
-                type="text"
-                id="search"
-                placeholder="Search questions and answers..."
-                oninput="renderFAQs()"
-            >
-
-
-            <select
-                id="statusFilter"
-                onchange="renderFAQs()">
-
-                <option value="">
-                    All Status
-                </option>
-
-                <option value="active">
-                    Active
-                </option>
-
-                <option value="inactive">
-                    Inactive
-                </option>
-
-            </select>
-
-        </div>
-
-    </div>
-
-
-    <!-- STATS -->
-
-    <div class="stats">
-
-        <div class="stat">
-
-            <small>
-                Total FAQs
-            </small>
-
-            <strong id="totalCount">
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="stat">
-
-            <small>
-                Active
-            </small>
-
-            <strong id="activeCount">
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="stat">
-
-            <small>
-                Inactive
-            </small>
-
-            <strong id="inactiveCount">
-                0
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <!-- FAQ CONTAINER -->
-
-    <div id="faqContainer">
-
-        <div class="empty">
-
-            <h3>
-                Loading...
-            </h3>
-
-            <p>
-                Loading your FAQ data.
-            </p>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
@@ -671,7 +737,7 @@ textarea{
         </div>
 
 
-        <!-- SORT / STATUS -->
+        <!-- SORT + STATUS -->
 
         <div class="form-row">
 
@@ -685,7 +751,6 @@ textarea{
                     type="number"
                     id="sortOrder"
                     value="0"
-                    min="0"
                 >
 
             </div>
@@ -743,12 +808,15 @@ textarea{
 </div>
 
 
-<!-- MESSAGE -->
+<!-- =========================
+     MESSAGE
+========================= -->
 
 <div
     id="message"
     class="message">
 </div>
+
 
 
 <script>
@@ -772,7 +840,7 @@ window.supabase.createClient(
 
 
 /* =====================================================
-   GLOBALS
+   GLOBAL VARIABLES
 ===================================================== */
 
 let currentUser = null;
@@ -789,7 +857,7 @@ let editingId = null;
 
 
 /* =====================================================
-   ELEMENTS
+   ELEMENT
 ===================================================== */
 
 const clientSelect =
@@ -805,10 +873,6 @@ document.getElementById(
 async function initialize(){
 
     try{
-
-        /*
-           Get logged-in user
-        */
 
         const {
             data:{
@@ -838,9 +902,9 @@ async function initialize(){
             user;
 
 
-        /*
-           Get profile
-        */
+        /* =============================================
+           LOAD PROFILE
+        ============================================= */
 
         const {
             data:profile,
@@ -867,8 +931,10 @@ async function initialize(){
 
 
         /*
-           IMPORTANT:
-           Always store profile client_id first.
+           VERY IMPORTANT
+
+           Always take client_id from profile
+           when it exists.
         */
 
         currentClientId =
@@ -876,9 +942,9 @@ async function initialize(){
             null;
 
 
-        /*
+        /* =============================================
            SUPER ADMIN
-        */
+        ============================================= */
 
         if(
             currentRole ===
@@ -895,7 +961,8 @@ async function initialize(){
 
 
             /*
-               Existing client assignment?
+               If Super Admin has an assigned client,
+               automatically select it.
             */
 
             if(currentClientId){
@@ -904,53 +971,21 @@ async function initialize(){
                     currentClientId;
 
 
-                showCurrentClient();
-
-
                 await loadFAQs();
 
             }
-
-
-            /*
-               No client assignment?
-               Select first client available.
-            */
-
-            else if(
-                clients.length > 0
-            ){
-
-                currentClientId =
-                    clients[0].id;
-
-
-                clientSelect.value =
-                    currentClientId;
-
-
-                showCurrentClient();
-
-
-                await loadFAQs();
-
-            }
-
-
             else{
 
-                resetFAQs(
-                    "No clients found"
-                );
+                resetFAQs();
 
             }
 
         }
 
 
-        /*
-           NORMAL USER
-        */
+        /* =============================================
+           NORMAL CLIENT USER
+        ============================================= */
 
         else{
 
@@ -962,16 +997,10 @@ async function initialize(){
                 );
 
 
-                resetFAQs(
-                    "No client assigned"
-                );
-
+                resetFAQs();
 
                 return;
             }
-
-
-            showCurrentClient();
 
 
             await loadFAQs();
@@ -991,11 +1020,6 @@ async function initialize(){
             error.message ||
             "Initialization failed.",
             "error"
-        );
-
-
-        resetFAQs(
-            "Unable to initialize"
         );
 
     }
@@ -1068,7 +1092,7 @@ async function loadClients(){
 
 
     /*
-       Keep assigned client selected
+       Re-select already assigned client
     */
 
     if(currentClientId){
@@ -1082,100 +1106,26 @@ async function loadClients(){
     clientSelect.onchange =
     async function(){
 
-        const selected =
-            this.value;
-
-
         currentClientId =
-            selected ||
+            this.value ||
             null;
 
 
         faqs = [];
 
 
-        editingId =
-            null;
-
-
         if(currentClientId){
-
-            showCurrentClient();
-
 
             await loadFAQs();
 
         }
         else{
 
-            hideCurrentClient();
-
-
-            resetFAQs(
-                "Select a client"
-            );
+            resetFAQs();
 
         }
 
     };
-
-}
-
-
-/* =====================================================
-   CURRENT CLIENT DISPLAY
-===================================================== */
-
-function showCurrentClient(){
-
-    const box =
-        document.getElementById(
-            "currentClientInfo"
-        );
-
-
-    if(!currentClientId){
-
-        hideCurrentClient();
-
-        return;
-    }
-
-
-    const client =
-        clients.find(
-            item =>
-                item.id ===
-                currentClientId
-        );
-
-
-    if(client){
-
-        box.textContent =
-            `Current Client: ${client.company_name}`;
-
-    }
-    else{
-
-        box.textContent =
-            `Current Client ID: ${currentClientId}`;
-
-    }
-
-
-    box.style.display =
-        "block";
-
-}
-
-
-function hideCurrentClient(){
-
-    document.getElementById(
-        "currentClientInfo"
-    ).style.display =
-        "none";
 
 }
 
@@ -1188,9 +1138,7 @@ async function loadFAQs(){
 
     if(!currentClientId){
 
-        resetFAQs(
-            "Select a client"
-        );
+        resetFAQs();
 
         return;
     }
@@ -1265,9 +1213,6 @@ async function loadFAQs(){
         );
 
 
-        updateStats();
-
-
         return;
     }
 
@@ -1285,9 +1230,7 @@ async function loadFAQs(){
    RESET FAQS
 ===================================================== */
 
-function resetFAQs(
-    title = "Select a client"
-){
+function resetFAQs(){
 
     document.getElementById(
         "faqContainer"
@@ -1296,7 +1239,7 @@ function resetFAQs(
     <div class="empty">
 
         <h3>
-            ${escapeHtml(title)}
+            Select a client
         </h3>
 
         <p>
@@ -1334,70 +1277,67 @@ function resetFAQs(
 function renderFAQs(){
 
     const search =
-        document.getElementById(
-            "search"
-        )
-        .value
-        .toLowerCase()
-        .trim();
+    document.getElementById(
+        "search"
+    )
+    .value
+    .toLowerCase()
+    .trim();
 
 
     const status =
-        document.getElementById(
-            "statusFilter"
-        ).value;
+    document.getElementById(
+        "statusFilter"
+    ).value;
 
 
     const filtered =
-        faqs.filter(
-            item => {
+    faqs.filter(
+        item => {
 
-                const text =
+            const text =
+            (
+                (item.question || "") +
+                " " +
+                (item.answer || "")
+            )
+            .toLowerCase();
+
+
+            return (
+
                 (
-                    (item.question || "") +
-                    " " +
-                    (item.answer || "")
+                    !search ||
+                    text.includes(
+                        search
+                    )
                 )
-                .toLowerCase();
 
+                &&
 
-                return (
+                (
+                    !status ||
+                    item.status === status
+                )
 
-                    (
-                        !search ||
-                        text.includes(
-                            search
-                        )
-                    )
+            );
 
-                    &&
-
-                    (
-                        !status ||
-                        item.status ===
-                        status
-                    )
-
-                );
-
-            }
-        );
+        }
+    );
 
 
     updateStats();
 
 
     const container =
-        document.getElementById(
-            "faqContainer"
-        );
+    document.getElementById(
+        "faqContainer"
+    );
 
 
     if(!currentClientId){
 
-        resetFAQs(
-            "Select a client"
-        );
+        resetFAQs();
 
         return;
     }
@@ -1447,9 +1387,7 @@ function renderFAQs(){
    CREATE CARD
 ===================================================== */
 
-function createCard(
-    item
-){
+function createCard(item){
 
     const question =
         escapeHtml(
@@ -1465,13 +1403,8 @@ function createCard(
         );
 
 
-    const status =
-        item.status ||
-        "active";
-
-
     const statusClass =
-        status === "active"
+        item.status === "active"
         ? "status-active"
         : "status-inactive";
 
@@ -1485,10 +1418,14 @@ function createCard(
                 ${question}
             </div>
 
+
             <span
                 class="status ${statusClass}">
 
-                ${escapeHtml(status)}
+                ${escapeHtml(
+                    item.status ||
+                    "active"
+                )}
 
             </span>
 
@@ -1505,10 +1442,8 @@ function createCard(
             <div class="faq-meta">
 
                 <span class="order">
-
                     Sort Order:
                     ${item.sort_order ?? 0}
-
                 </span>
 
             </div>
@@ -1560,8 +1495,7 @@ function updateStats(){
     ).textContent =
         faqs.filter(
             x =>
-                x.status ===
-                "active"
+                x.status === "active"
         ).length;
 
 
@@ -1570,8 +1504,7 @@ function updateStats(){
     ).textContent =
         faqs.filter(
             x =>
-                x.status ===
-                "inactive"
+                x.status === "inactive"
         ).length;
 
 }
@@ -1585,15 +1518,10 @@ function openModal(
     id = null
 ){
 
-    /*
-       Safety check:
-       If client not loaded yet, try to use profile client.
-    */
-
     if(!currentClientId){
 
         showMessage(
-            "Client is not loaded yet. Please refresh the page.",
+            "Please select a client first.",
             "error"
         );
 
@@ -1614,10 +1542,10 @@ function openModal(
     if(id){
 
         const item =
-            faqs.find(
-                x =>
-                    x.id === id
-            );
+        faqs.find(
+            x =>
+                x.id === id
+        );
 
 
         if(!item){
@@ -1676,13 +1604,13 @@ function openModal(
             "Add FAQ";
 
 
-        clearForm();
-
-
         document.getElementById(
             "saveBtn"
         ).textContent =
             "Save FAQ";
+
+
+        clearForm();
 
     }
 
@@ -1706,12 +1634,6 @@ function closeModal(){
 
 
     clearForm();
-
-
-    document.getElementById(
-        "saveBtn"
-    ).textContent =
-        "Save FAQ";
 
 }
 
@@ -1754,14 +1676,10 @@ function clearForm(){
 
 async function saveFAQ(){
 
-    /*
-       Final client verification
-    */
-
     if(!currentClientId){
 
         showMessage(
-            "No client selected.",
+            "Please select a client.",
             "error"
         );
 
@@ -1770,33 +1688,19 @@ async function saveFAQ(){
 
 
     const question =
-        document.getElementById(
-            "question"
-        )
-        .value
-        .trim();
+    document.getElementById(
+        "question"
+    )
+    .value
+    .trim();
 
 
     const answer =
-        document.getElementById(
-            "answer"
-        )
-        .value
-        .trim();
-
-
-    const sortOrder =
-        parseInt(
-            document.getElementById(
-                "sortOrder"
-            ).value
-        ) || 0;
-
-
-    const status =
-        document.getElementById(
-            "faqStatus"
-        ).value;
+    document.getElementById(
+        "answer"
+    )
+    .value
+    .trim();
 
 
     if(!question){
@@ -1833,21 +1737,27 @@ async function saveFAQ(){
             answer,
 
         sort_order:
-            sortOrder,
+            parseInt(
+                document.getElementById(
+                    "sortOrder"
+                ).value
+            ) || 0,
 
         status:
-            status
+            document.getElementById(
+                "faqStatus"
+            ).value
 
     };
 
 
     const saveBtn =
-        document.getElementById(
-            "saveBtn"
-        );
+    document.getElementById(
+        "saveBtn"
+    );
 
 
-    const editing =
+    const wasEditing =
         Boolean(
             editingId
         );
@@ -1858,14 +1768,18 @@ async function saveFAQ(){
 
 
     saveBtn.textContent =
-        editing
+        wasEditing
         ? "Updating..."
         : "Saving...";
 
 
     try{
 
-        if(editing){
+        /* =========================
+           UPDATE
+        ========================= */
+
+        if(editingId){
 
             const {
                 error
@@ -1895,6 +1809,12 @@ async function saveFAQ(){
             );
 
         }
+
+
+        /* =========================
+           INSERT
+        ========================= */
+
         else{
 
             const {
@@ -1946,7 +1866,7 @@ async function saveFAQ(){
 
 
         saveBtn.textContent =
-            editing
+            wasEditing
             ? "Update FAQ"
             : "Save FAQ";
 
@@ -1956,7 +1876,7 @@ async function saveFAQ(){
 
 
 /* =====================================================
-   EDIT
+   EDIT FAQ
 ===================================================== */
 
 function editFAQ(id){
@@ -1967,21 +1887,10 @@ function editFAQ(id){
 
 
 /* =====================================================
-   DELETE
+   DELETE FAQ
 ===================================================== */
 
 async function deleteFAQ(id){
-
-    if(!currentClientId){
-
-        showMessage(
-            "No client selected.",
-            "error"
-        );
-
-        return;
-    }
-
 
     const item =
         faqs.find(
@@ -2096,7 +2005,7 @@ function showMessage(
 
 
 /* =====================================================
-   ESCAPE
+   ESCAPE HTML
 ===================================================== */
 
 function escapeHtml(
