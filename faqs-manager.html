@@ -1,0 +1,2030 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FAQ Manager - MD Kaif Web Platform</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#1f2937;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    background:#111827;
+    color:white;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.header h1{
+    font-size:22px;
+}
+
+.header span{
+    font-size:13px;
+    color:#cbd5e1;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+    max-width:1300px;
+    margin:25px auto;
+    padding:0 20px;
+}
+
+
+/* =========================
+   CLIENT BOX
+========================= */
+
+.client-box{
+    display:none;
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.client-box label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.client-box select{
+    width:100%;
+    max-width:500px;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.info-box h2{
+    font-size:20px;
+    margin-bottom:6px;
+}
+
+.info-box p{
+    color:#64748b;
+    font-size:13px;
+}
+
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+    margin-bottom:20px;
+}
+
+.toolbar-row{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.toolbar input{
+    flex:1;
+    min-width:250px;
+}
+
+.toolbar select{
+    width:200px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:14px;
+    outline:none;
+    background:white;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#2563eb;
+}
+
+textarea{
+    min-height:150px;
+    resize:vertical;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+    border:0;
+    border-radius:8px;
+    padding:11px 17px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+}
+
+.btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+}
+
+.btn-secondary{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.btn-edit{
+    background:#f59e0b;
+    color:white;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:white;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    min-width:170px;
+    padding:18px 22px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.stat small{
+    display:block;
+    color:#64748b;
+    margin-bottom:6px;
+}
+
+.stat strong{
+    font-size:25px;
+}
+
+
+/* =========================
+   FAQ LIST
+========================= */
+
+.faq-list{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+
+/* =========================
+   FAQ CARD
+========================= */
+
+.faq-card{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+    padding:20px;
+}
+
+.faq-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.faq-question{
+    font-size:17px;
+    font-weight:800;
+    line-height:1.4;
+}
+
+.faq-answer{
+    color:#64748b;
+    font-size:14px;
+    line-height:1.7;
+    margin-top:12px;
+    white-space:pre-wrap;
+}
+
+.faq-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:17px;
+    padding-top:13px;
+    border-top:1px solid #e5e7eb;
+}
+
+.faq-meta{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.order{
+    font-size:12px;
+    color:#64748b;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.status-active{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-inactive{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    background:white;
+    padding:60px 20px;
+    text-align:center;
+    border-radius:12px;
+    color:#64748b;
+}
+
+.empty h3{
+    color:#334155;
+    margin-bottom:7px;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+    background:white;
+    padding:50px;
+    border-radius:12px;
+    text-align:center;
+    color:#64748b;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-box{
+    width:100%;
+    max-width:700px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:14px;
+    padding:25px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:20px;
+}
+
+.close{
+    border:0;
+    background:none;
+    font-size:26px;
+    cursor:pointer;
+    color:#64748b;
+}
+
+.form-group{
+    margin-bottom:17px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.modal-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:20px;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:2000;
+    display:none;
+    color:white;
+    padding:13px 18px;
+    border-radius:9px;
+    box-shadow:0 4px 15px rgba(0,0,0,.2);
+}
+
+.message.success{
+    background:#16a34a;
+}
+
+.message.error{
+    background:#dc2626;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:650px){
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+        padding:15px;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .toolbar select{
+        width:100%;
+    }
+
+    .faq-top{
+        flex-direction:column;
+    }
+
+    .faq-bottom{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+    <div>
+
+        <h1>
+            FAQ Manager
+        </h1>
+
+        <span>
+            MD Kaif Web Platform
+        </span>
+
+    </div>
+
+
+    <button
+        class="btn btn-primary"
+        onclick="openModal()">
+
+        + Add FAQ
+
+    </button>
+
+</div>
+
+
+
+<div class="container">
+
+
+<!-- =========================
+     CLIENT
+========================= -->
+
+<div
+    class="client-box"
+    id="clientBox">
+
+    <label>
+        Select Client
+    </label>
+
+    <select id="clientSelect">
+
+        <option value="">
+            Select Client
+        </option>
+
+    </select>
+
+</div>
+
+
+
+<!-- =========================
+     INFO
+========================= -->
+
+<div class="info-box">
+
+    <h2>
+        Frequently Asked Questions
+    </h2>
+
+    <p>
+        Create and manage FAQs for the selected client website.
+    </p>
+
+</div>
+
+
+
+<!-- =========================
+     TOOLBAR
+========================= -->
+
+<div class="toolbar">
+
+    <div class="toolbar-row">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search questions and answers..."
+            oninput="renderFAQs()"
+        >
+
+
+        <select
+            id="statusFilter"
+            onchange="renderFAQs()">
+
+            <option value="">
+                All Status
+            </option>
+
+            <option value="active">
+                Active
+            </option>
+
+            <option value="inactive">
+                Inactive
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<div class="stats">
+
+    <div class="stat">
+
+        <small>
+            Total FAQs
+        </small>
+
+        <strong id="totalCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            Active
+        </small>
+
+        <strong id="activeCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <small>
+            Inactive
+        </small>
+
+        <strong id="inactiveCount">
+            0
+        </strong>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     FAQ CONTAINER
+========================= -->
+
+<div id="faqContainer">
+
+    <div class="empty">
+
+        <h3>
+            Select a client
+        </h3>
+
+        <p>
+            Select a client to view FAQs.
+        </p>
+
+    </div>
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div
+    class="modal"
+    id="faqModal">
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Add FAQ
+            </h2>
+
+
+            <button
+                class="close"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- QUESTION -->
+
+        <div class="form-group">
+
+            <label>
+                Question *
+            </label>
+
+            <input
+                type="text"
+                id="question"
+                placeholder="Enter frequently asked question"
+            >
+
+        </div>
+
+
+        <!-- ANSWER -->
+
+        <div class="form-group">
+
+            <label>
+                Answer *
+            </label>
+
+            <textarea
+                id="answer"
+                placeholder="Enter the answer..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- SORT + STATUS -->
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    type="number"
+                    id="sortOrder"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Status
+                </label>
+
+                <select id="faqStatus">
+
+                    <option value="active">
+                        Active
+                    </option>
+
+                    <option value="inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="modal-footer">
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeModal()">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                class="btn btn-primary"
+                id="saveBtn"
+                onclick="saveFAQ()">
+
+                Save FAQ
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     MESSAGE
+========================= -->
+
+<div
+    id="message"
+    class="message">
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+"https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
+
+let currentUser = null;
+
+let currentRole = null;
+
+let currentClientId = null;
+
+let clients = [];
+
+let faqs = [];
+
+let editingId = null;
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const clientSelect =
+document.getElementById(
+    "clientSelect"
+);
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+async function initialize(){
+
+    try{
+
+        const {
+            data:{
+                user
+            },
+            error
+        } =
+        await supabaseClient
+        .auth
+        .getUser();
+
+
+        if(error)
+            throw error;
+
+
+        if(!user){
+
+            window.location.href =
+                "admin.html";
+
+            return;
+        }
+
+
+        currentUser =
+            user;
+
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
+        .from("profiles")
+        .select(
+            "id,role,client_id,full_name"
+        )
+        .eq(
+            "id",
+            user.id
+        )
+        .single();
+
+
+        if(profileError)
+            throw profileError;
+
+
+        currentRole =
+            profile.role;
+
+
+        /*
+           Super Admin
+        */
+
+        if(
+            currentRole ===
+            "super_admin"
+        ){
+
+            document.getElementById(
+                "clientBox"
+            ).style.display =
+                "block";
+
+
+            await loadClients();
+
+        }
+
+
+        /*
+           Client User
+        */
+
+        else{
+
+            currentClientId =
+                profile.client_id;
+
+
+            if(!currentClientId){
+
+                showMessage(
+                    "No client assigned to this user.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            await loadFAQs();
+
+        }
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        showMessage(
+            error.message ||
+            "Initialization failed.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD CLIENTS
+===================================================== */
+
+async function loadClients(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,domain,status"
+    )
+    .order(
+        "company_name",
+        {
+            ascending:true
+        }
+    );
+
+
+    if(error)
+        throw error;
+
+
+    clients =
+        data || [];
+
+
+    clientSelect.innerHTML =
+    `
+    <option value="">
+        Select Client
+    </option>
+    `;
+
+
+    clients.forEach(
+        client => {
+
+            const option =
+            document.createElement(
+                "option"
+            );
+
+
+            option.value =
+                client.id;
+
+
+            option.textContent =
+                client.company_name;
+
+
+            clientSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    clientSelect.onchange =
+    async function(){
+
+        currentClientId =
+            this.value || null;
+
+
+        faqs = [];
+
+
+        if(
+            currentClientId
+        ){
+
+            await loadFAQs();
+
+        }
+        else{
+
+            resetFAQs();
+
+        }
+
+    };
+
+}
+
+
+/* =====================================================
+   LOAD FAQS
+===================================================== */
+
+async function loadFAQs(){
+
+    if(!currentClientId){
+
+        resetFAQs();
+
+        return;
+    }
+
+
+    document.getElementById(
+        "faqContainer"
+    ).innerHTML =
+    `
+    <div class="loading">
+        Loading FAQs...
+    </div>
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("faqs")
+    .select("*")
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .order(
+        "sort_order",
+        {
+            ascending:true
+        }
+    )
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+
+        document.getElementById(
+            "faqContainer"
+        ).innerHTML =
+        `
+        <div class="empty">
+
+            <h3>
+                Unable to load FAQs
+            </h3>
+
+            <p>
+                ${escapeHtml(
+                    error.message
+                )}
+            </p>
+
+        </div>
+        `;
+
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+
+        return;
+    }
+
+
+    faqs =
+        data || [];
+
+
+    renderFAQs();
+
+}
+
+
+/* =====================================================
+   RESET FAQS
+===================================================== */
+
+function resetFAQs(){
+
+    document.getElementById(
+        "faqContainer"
+    ).innerHTML =
+    `
+    <div class="empty">
+
+        <h3>
+            Select a client
+        </h3>
+
+        <p>
+            Select a client to view FAQs.
+        </p>
+
+    </div>
+    `;
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        "0";
+
+
+    document.getElementById(
+        "activeCount"
+    ).textContent =
+        "0";
+
+
+    document.getElementById(
+        "inactiveCount"
+    ).textContent =
+        "0";
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderFAQs(){
+
+    const search =
+    document.getElementById(
+        "search"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
+
+    const status =
+    document.getElementById(
+        "statusFilter"
+    ).value;
+
+
+    const filtered =
+    faqs.filter(
+        item => {
+
+            const text =
+            (
+                (item.question || "") +
+                " " +
+                (item.answer || "")
+            )
+            .toLowerCase();
+
+
+            return (
+
+                (
+                    !search ||
+                    text.includes(
+                        search
+                    )
+                )
+
+                &&
+
+                (
+                    !status ||
+                    item.status === status
+                )
+
+            );
+
+        }
+    );
+
+
+    updateStats();
+
+
+    const container =
+    document.getElementById(
+        "faqContainer"
+    );
+
+
+    if(!currentClientId){
+
+        resetFAQs();
+
+        return;
+    }
+
+
+    if(filtered.length === 0){
+
+        container.innerHTML =
+        `
+        <div class="empty">
+
+            <h3>
+                No FAQs found
+            </h3>
+
+            <p>
+                Click "+ Add FAQ" to create your first FAQ.
+            </p>
+
+        </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+    `
+    <div class="faq-list">
+
+        ${
+            filtered
+            .map(
+                item =>
+                    createCard(item)
+            )
+            .join("")
+        }
+
+    </div>
+    `;
+
+}
+
+
+/* =====================================================
+   CREATE CARD
+===================================================== */
+
+function createCard(item){
+
+    const question =
+        escapeHtml(
+            item.question ||
+            "Untitled Question"
+        );
+
+
+    const answer =
+        escapeHtml(
+            item.answer ||
+            ""
+        );
+
+
+    const statusClass =
+        item.status === "active"
+        ? "status-active"
+        : "status-inactive";
+
+
+    return `
+    <div class="faq-card">
+
+        <div class="faq-top">
+
+            <div class="faq-question">
+                ${question}
+            </div>
+
+
+            <span
+                class="status ${statusClass}">
+
+                ${escapeHtml(
+                    item.status ||
+                    "active"
+                )}
+
+            </span>
+
+        </div>
+
+
+        <div class="faq-answer">
+            ${answer}
+        </div>
+
+
+        <div class="faq-bottom">
+
+            <div class="faq-meta">
+
+                <span class="order">
+                    Sort Order:
+                    ${item.sort_order ?? 0}
+                </span>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn btn-edit"
+                    onclick="editFAQ('${item.id}')">
+
+                    Edit
+
+                </button>
+
+
+                <button
+                    class="btn btn-danger"
+                    onclick="deleteFAQ('${item.id}')">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+    `;
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function updateStats(){
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        faqs.length;
+
+
+    document.getElementById(
+        "activeCount"
+    ).textContent =
+        faqs.filter(
+            x =>
+                x.status === "active"
+        ).length;
+
+
+    document.getElementById(
+        "inactiveCount"
+    ).textContent =
+        faqs.filter(
+            x =>
+                x.status === "inactive"
+        ).length;
+
+}
+
+
+/* =====================================================
+   OPEN MODAL
+===================================================== */
+
+function openModal(
+    id = null
+){
+
+    if(!currentClientId){
+
+        showMessage(
+            "Please select a client first.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    editingId =
+        id;
+
+
+    document.getElementById(
+        "faqModal"
+    ).style.display =
+        "flex";
+
+
+    if(id){
+
+        const item =
+        faqs.find(
+            x =>
+                x.id === id
+        );
+
+
+        if(!item)
+            return;
+
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            "Edit FAQ";
+
+
+        document.getElementById(
+            "question"
+        ).value =
+            item.question ||
+            "";
+
+
+        document.getElementById(
+            "answer"
+        ).value =
+            item.answer ||
+            "";
+
+
+        document.getElementById(
+            "sortOrder"
+        ).value =
+            item.sort_order ??
+            0;
+
+
+        document.getElementById(
+            "faqStatus"
+        ).value =
+            item.status ||
+            "active";
+
+
+        document.getElementById(
+            "saveBtn"
+        ).textContent =
+            "Update FAQ";
+
+    }
+    else{
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            "Add FAQ";
+
+
+        document.getElementById(
+            "saveBtn"
+        ).textContent =
+            "Save FAQ";
+
+
+        clearForm();
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal(){
+
+    document.getElementById(
+        "faqModal"
+    ).style.display =
+        "none";
+
+
+    editingId =
+        null;
+
+
+    clearForm();
+
+}
+
+
+/* =====================================================
+   CLEAR FORM
+===================================================== */
+
+function clearForm(){
+
+    document.getElementById(
+        "question"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "answer"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "sortOrder"
+    ).value =
+        0;
+
+
+    document.getElementById(
+        "faqStatus"
+    ).value =
+        "active";
+
+}
+
+
+/* =====================================================
+   SAVE FAQ
+===================================================== */
+
+async function saveFAQ(){
+
+    if(!currentClientId){
+
+        showMessage(
+            "Please select a client.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const question =
+    document.getElementById(
+        "question"
+    )
+    .value
+    .trim();
+
+
+    const answer =
+    document.getElementById(
+        "answer"
+    )
+    .value
+    .trim();
+
+
+    if(!question){
+
+        showMessage(
+            "Question is required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!answer){
+
+        showMessage(
+            "Answer is required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const payload = {
+
+        client_id:
+            currentClientId,
+
+        question:
+            question,
+
+        answer:
+            answer,
+
+        sort_order:
+            parseInt(
+                document.getElementById(
+                    "sortOrder"
+                ).value
+            ) || 0,
+
+        status:
+            document.getElementById(
+                "faqStatus"
+            ).value
+
+    };
+
+
+    const saveBtn =
+    document.getElementById(
+        "saveBtn"
+    );
+
+
+    saveBtn.disabled =
+        true;
+
+
+    saveBtn.textContent =
+        editingId
+        ? "Updating..."
+        : "Saving...";
+
+
+    try{
+
+        /* =========================
+           UPDATE
+        ========================= */
+
+        if(editingId){
+
+            const {
+                error
+            } =
+            await supabaseClient
+            .from("faqs")
+            .update(
+                payload
+            )
+            .eq(
+                "id",
+                editingId
+            )
+            .eq(
+                "client_id",
+                currentClientId
+            );
+
+
+            if(error)
+                throw error;
+
+
+            showMessage(
+                "FAQ updated successfully.",
+                "success"
+            );
+
+        }
+
+
+        /* =========================
+           INSERT
+        ========================= */
+
+        else{
+
+            const {
+                error
+            } =
+            await supabaseClient
+            .from("faqs")
+            .insert(
+                payload
+            );
+
+
+            if(error)
+                throw error;
+
+
+            showMessage(
+                "FAQ added successfully.",
+                "success"
+            );
+
+        }
+
+
+        closeModal();
+
+        await loadFAQs();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        showMessage(
+            error.message ||
+            "Unable to save FAQ.",
+            "error"
+        );
+
+    }
+    finally{
+
+        saveBtn.disabled =
+            false;
+
+
+        saveBtn.textContent =
+            editingId
+            ? "Update FAQ"
+            : "Save FAQ";
+
+    }
+
+}
+
+
+/* =====================================================
+   EDIT FAQ
+===================================================== */
+
+function editFAQ(id){
+
+    openModal(id);
+
+}
+
+
+/* =====================================================
+   DELETE FAQ
+===================================================== */
+
+async function deleteFAQ(id){
+
+    const item =
+        faqs.find(
+            x =>
+                x.id === id
+        );
+
+
+    if(!item)
+        return;
+
+
+    const confirmed =
+        confirm(
+            `Delete this FAQ?\n\n${item.question || ""}`
+        );
+
+
+    if(!confirmed)
+        return;
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+        .from("faqs")
+        .delete()
+        .eq(
+            "id",
+            id
+        )
+        .eq(
+            "client_id",
+            currentClientId
+        );
+
+
+        if(error)
+            throw error;
+
+
+        showMessage(
+            "FAQ deleted successfully.",
+            "success"
+        );
+
+
+        await loadFAQs();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        showMessage(
+            error.message ||
+            "Unable to delete FAQ.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+    text,
+    type
+){
+
+    const box =
+        document.getElementById(
+            "message"
+        );
+
+
+    box.textContent =
+        text;
+
+
+    box.className =
+        "message " +
+        type;
+
+
+    box.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            box.style.display =
+                "none";
+
+        },
+        3500
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   MODAL OUTSIDE CLICK
+===================================================== */
+
+document
+.getElementById(
+    "faqModal"
+)
+.addEventListener(
+    "click",
+    function(e){
+
+        if(
+            e.target === this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.key === "Escape"
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+initialize();
+
+</script>
+
+</body>
+</html>
+```
