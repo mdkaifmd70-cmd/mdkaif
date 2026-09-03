@@ -5,12 +5,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Testimonials Manager - MD Kaif Web Platform</title>
+<title>Dashboard - MD Kaif Web Platform</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -19,8 +18,8 @@
 
 body{
     font-family:Arial,Helvetica,sans-serif;
-    background:#f5f7fb;
-    color:#1f2937;
+    background:#f1f5f9;
+    color:#0f172a;
 }
 
 /* =========================
@@ -28,1097 +27,951 @@ body{
 ========================= */
 
 .header{
-    background:#111827;
+    height:70px;
+    background:#0f172a;
     color:white;
-    padding:18px 25px;
     display:flex;
+    align-items:center;
     justify-content:space-between;
+    padding:0 25px;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#60a5fa;
+}
+
+.header-right{
+    display:flex;
     align-items:center;
     gap:15px;
 }
 
-.header h1{
-    font-size:22px;
+.user-info{
+    text-align:right;
 }
 
-.header span{
-    font-size:13px;
-    color:#cbd5e1;
+.user-name{
+    font-size:14px;
+    font-weight:700;
 }
 
+.user-role{
+    font-size:11px;
+    color:#94a3b8;
+    margin-top:3px;
+}
+
+.logout{
+    background:#334155;
+    color:white;
+    border:0;
+    padding:9px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.logout:hover{
+    background:#475569;
+}
 
 /* =========================
-   CONTAINER
+   LAYOUT
 ========================= */
 
-.container{
-    max-width:1400px;
-    margin:25px auto;
-    padding:0 20px;
+.layout{
+    display:flex;
+    min-height:calc(100vh - 70px);
 }
 
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:240px;
+    background:white;
+    border-right:1px solid #e2e8f0;
+    padding:20px 12px;
+}
+
+.menu-title{
+    font-size:11px;
+    font-weight:800;
+    color:#94a3b8;
+    text-transform:uppercase;
+    padding:10px 12px;
+}
+
+.menu{
+    display:block;
+    width:100%;
+    text-decoration:none;
+    color:#334155;
+    padding:12px;
+    border-radius:9px;
+    margin-bottom:4px;
+    font-size:14px;
+    font-weight:700;
+}
+
+.menu:hover{
+    background:#eff6ff;
+    color:#2563eb;
+}
+
+.menu.active{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.menu-icon{
+    width:25px;
+    display:inline-block;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    flex:1;
+    padding:25px;
+    min-width:0;
+}
+
+.page-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.page-title h1{
+    font-size:28px;
+}
+
+.page-title p{
+    color:#64748b;
+    font-size:14px;
+    margin-top:5px;
+}
 
 /* =========================
    CLIENT BOX
 ========================= */
 
 .client-box{
-    display:none;
     background:white;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
     padding:18px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-    margin-bottom:20px;
+    margin-bottom:22px;
 }
 
-.client-box label{
-    display:block;
-    margin-bottom:7px;
-    font-size:13px;
-    font-weight:700;
-}
-
-.client-box select{
-    width:100%;
-    max-width:500px;
-}
-
-
-/* =========================
-   PRODUCT / INFO
-========================= */
-
-.info-box{
-    background:white;
-    padding:18px;
-    border-radius:12px;
-    margin-bottom:20px;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-
-.info-box h2{
-    font-size:18px;
-    margin-bottom:5px;
-}
-
-.info-box p{
+.client-label{
+    font-size:12px;
+    font-weight:800;
     color:#64748b;
-    font-size:13px;
-}
-
-
-/* =========================
-   TOOLBAR
-========================= */
-
-.toolbar{
-    background:white;
-    padding:18px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,.06);
-    margin-bottom:20px;
-}
-
-.toolbar-row{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-}
-
-.toolbar input{
-    flex:1;
-    min-width:220px;
-}
-
-.toolbar select{
-    width:200px;
-}
-
-
-/* =========================
-   FORM
-========================= */
-
-input,
-select,
-textarea{
-    width:100%;
-    padding:11px 12px;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    font-size:14px;
-    outline:none;
-    background:white;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-    border-color:#2563eb;
-}
-
-textarea{
-    min-height:110px;
-    resize:vertical;
-}
-
-.form-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.form-group{
-    margin-bottom:15px;
-}
-
-.form-group label{
-    display:block;
     margin-bottom:6px;
+}
+
+.client-name{
+    font-size:18px;
+    font-weight:900;
+}
+
+.client-domain{
     font-size:13px;
-    font-weight:700;
+    color:#64748b;
+    margin-top:4px;
 }
-
-
-/* =========================
-   BUTTONS
-========================= */
-
-.btn{
-    border:0;
-    border-radius:8px;
-    padding:11px 17px;
-    cursor:pointer;
-    font-weight:600;
-    font-size:14px;
-}
-
-.btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
-
-.btn-primary{
-    background:#2563eb;
-    color:white;
-}
-
-.btn-primary:hover{
-    background:#1d4ed8;
-}
-
-.btn-secondary{
-    background:#e5e7eb;
-    color:#111827;
-}
-
-.btn-danger{
-    background:#dc2626;
-    color:white;
-}
-
-.btn-edit{
-    background:#f59e0b;
-    color:white;
-}
-
 
 /* =========================
    STATS
 ========================= */
 
 .stats{
-    display:flex;
-    gap:15px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
-}
-
-.stat{
-    background:white;
-    border-radius:12px;
-    padding:17px 22px;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-    min-width:160px;
-}
-
-.stat small{
-    color:#6b7280;
-    display:block;
-    margin-bottom:6px;
-}
-
-.stat strong{
-    font-size:24px;
-}
-
-
-/* =========================
-   GRID
-========================= */
-
-.testimonial-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-    gap:20px;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
 }
 
-
-/* =========================
-   CARD
-========================= */
-
-.card{
+.stat-card{
     background:white;
+    border:1px solid #e2e8f0;
     border-radius:14px;
-    overflow:hidden;
-    box-shadow:0 3px 12px rgba(0,0,0,.07);
+    padding:20px;
 }
 
-.card-image{
-    width:100%;
-    height:230px;
-    background:#e5e7eb;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-}
-
-.card-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.no-image{
-    color:#9ca3af;
-    font-size:13px;
-}
-
-.card-body{
-    padding:17px;
-}
-
-.customer-name{
-    font-size:18px;
-    font-weight:800;
-    margin-bottom:5px;
-}
-
-.designation{
-    color:#2563eb;
-    font-size:13px;
-    margin-bottom:3px;
-}
-
-.company{
-    color:#6b7280;
-    font-size:13px;
-    margin-bottom:10px;
-}
-
-.rating{
-    font-size:18px;
-    letter-spacing:2px;
-    margin-bottom:10px;
-}
-
-.message-text{
-    color:#475569;
-    font-size:14px;
-    line-height:1.6;
-    min-height:65px;
-}
-
-.card-footer{
-    margin-top:15px;
+.stat-top{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:8px;
 }
 
-.order{
+.stat-title{
     color:#64748b;
-    font-size:12px;
-}
-
-.status{
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:11px;
+    font-size:13px;
     font-weight:700;
 }
 
-.status-active{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.status-inactive{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-.actions{
-    display:flex;
-    gap:6px;
-}
-
-.actions button{
-    padding:7px 10px;
-    font-size:12px;
-}
-
-
-/* =========================
-   EMPTY / LOADING
-========================= */
-
-.empty{
-    background:white;
-    padding:60px 20px;
-    text-align:center;
-    border-radius:12px;
-    color:#6b7280;
-}
-
-.loading{
-    text-align:center;
-    padding:50px;
-    color:#6b7280;
-}
-
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    z-index:1000;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.modal-box{
-    background:white;
-    width:100%;
-    max-width:650px;
-    max-height:90vh;
-    overflow-y:auto;
-    border-radius:14px;
-    padding:24px;
-}
-
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.modal-header h2{
-    font-size:20px;
-}
-
-.close{
-    border:0;
-    background:none;
-    font-size:25px;
-    cursor:pointer;
-    color:#6b7280;
-}
-
-
-/* =========================
-   IMAGE PREVIEW
-========================= */
-
-.preview{
-    margin-top:10px;
-    width:100%;
-    height:220px;
-    border:2px dashed #d1d5db;
-    border-radius:10px;
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#f9fafb;
-}
-
-.preview img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
-
-.preview-placeholder{
-    color:#9ca3af;
-    font-size:13px;
-    text-align:center;
-    padding:20px;
-}
-
-
-/* =========================
-   RATING
-========================= */
-
-.rating-select{
-    display:flex;
-    gap:7px;
-}
-
-.rating-star{
-    font-size:30px;
-    cursor:pointer;
-    color:#cbd5e1;
-    transition:.15s;
-    user-select:none;
-}
-
-.rating-star.active{
-    color:#f59e0b;
-}
-
-
-/* =========================
-   PROGRESS
-========================= */
-
-.progress-wrap{
-    margin-top:12px;
-    height:8px;
-    width:100%;
-    background:#e5e7eb;
-    border-radius:20px;
-    overflow:hidden;
-    display:none;
-}
-
-.progress-bar{
-    height:100%;
-    width:0%;
-    background:#2563eb;
-    transition:.2s;
-}
-
-.upload-status{
-    margin-top:10px;
-    font-size:13px;
-    font-weight:600;
-}
-
-.upload-status.info{
-    color:#2563eb;
-}
-
-.upload-status.success{
-    color:#15803d;
-}
-
-.upload-status.error{
-    color:#dc2626;
-}
-
-
-/* =========================
-   MODAL FOOTER
-========================= */
-
-.modal-footer{
-    display:flex;
-    justify-content:flex-end;
-    gap:10px;
-    margin-top:20px;
-}
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-.message{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    padding:13px 18px;
+.stat-icon{
+    width:38px;
+    height:38px;
     border-radius:9px;
-    color:white;
-    display:none;
-    z-index:2000;
-    box-shadow:0 4px 15px rgba(0,0,0,.2);
+    background:#eff6ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
 }
 
-.message.success{
-    background:#16a34a;
+.stat-number{
+    font-size:30px;
+    font-weight:900;
+    margin-top:15px;
 }
 
-.message.error{
-    background:#dc2626;
+/* =========================
+   MODULES
+========================= */
+
+.section-title{
+    font-size:19px;
+    font-weight:900;
+    margin-bottom:15px;
 }
 
+.modules{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.module{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    padding:22px;
+    text-decoration:none;
+    color:#0f172a;
+    transition:.15s;
+}
+
+.module:hover{
+    border-color:#93c5fd;
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(15,23,42,.06);
+}
+
+.module-icon{
+    font-size:27px;
+    margin-bottom:12px;
+}
+
+.module h3{
+    font-size:16px;
+    margin-bottom:7px;
+}
+
+.module p{
+    color:#64748b;
+    font-size:13px;
+    line-height:1.5;
+}
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:650px){
+@media(max-width:1000px){
 
-    .form-row{
-        grid-template-columns:1fr;
+    .stats{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .header{
-        padding:15px;
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .testimonial-grid{
-        grid-template-columns:1fr;
-    }
-
-    .toolbar select{
-        width:100%;
+    .modules{
+        grid-template-columns:repeat(2,1fr);
     }
 
 }
 
+@media(max-width:700px){
+
+    .sidebar{
+        width:65px;
+        padding:15px 8px;
+    }
+
+    .menu-title,
+    .menu-text{
+        display:none;
+    }
+
+    .menu{
+        text-align:center;
+        padding:12px 5px;
+    }
+
+    .menu-icon{
+        width:auto;
+        font-size:18px;
+    }
+
+    .main{
+        padding:15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .modules{
+        grid-template-columns:1fr;
+    }
+
+    .user-info{
+        display:none;
+    }
+
+    .header{
+        padding:0 15px;
+    }
+
+}
 </style>
 </head>
 
-
 <body>
-
 
 <!-- =========================
      HEADER
 ========================= -->
 
-<div class="header">
+<header class="header">
 
-    <div>
-
-        <h1>
-            Testimonials Manager
-        </h1>
-
-        <span>
-            MD Kaif Web Platform
-        </span>
-
+    <div class="logo">
+        MD <span>KAIF</span>
     </div>
 
+    <div class="header-right">
 
-    <button
-        class="btn btn-primary"
-        onclick="openModal()">
-
-        + Add Testimonial
-
-    </button>
-
-</div>
-
-
-<div class="container">
-
-
-<!-- =========================
-     CLIENT
-========================= -->
-
-<div
-    class="client-box"
-    id="clientBox">
-
-    <label>
-        Select Client
-    </label>
-
-    <select id="clientSelect">
-
-        <option value="">
-            Select Client
-        </option>
-
-    </select>
-
-</div>
-
-
-<!-- =========================
-     INFO
-========================= -->
-
-<div class="info-box">
-
-    <h2>
-        Customer Testimonials
-    </h2>
-
-    <p>
-        Manage customer reviews and testimonials for the selected client.
-    </p>
-
-</div>
-
-
-<!-- =========================
-     TOOLBAR
-========================= -->
-
-<div class="toolbar">
-
-    <div class="toolbar-row">
-
-        <input
-            type="text"
-            id="search"
-            placeholder="Search testimonials..."
-            oninput="renderTestimonials()"
-        >
-
-
-        <select
-            id="statusFilter"
-            onchange="renderTestimonials()">
-
-            <option value="">
-                All Status
-            </option>
-
-            <option value="active">
-                Active
-            </option>
-
-            <option value="inactive">
-                Inactive
-            </option>
-
-        </select>
-
-
-        <select
-            id="ratingFilter"
-            onchange="renderTestimonials()">
-
-            <option value="">
-                All Ratings
-            </option>
-
-            <option value="5">
-                ★★★★★
-            </option>
-
-            <option value="4">
-                ★★★★
-            </option>
-
-            <option value="3">
-                ★★★
-            </option>
-
-            <option value="2">
-                ★★
-            </option>
-
-            <option value="1">
-                ★
-            </option>
-
-        </select>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     STATS
-========================= -->
-
-<div class="stats">
-
-    <div class="stat">
-
-        <small>
-            Total
-        </small>
-
-        <strong id="totalCount">
-            0
-        </strong>
-
-    </div>
-
-
-    <div class="stat">
-
-        <small>
-            Active
-        </small>
-
-        <strong id="activeCount">
-            0
-        </strong>
-
-    </div>
-
-
-    <div class="stat">
-
-        <small>
-            Inactive
-        </small>
-
-        <strong id="inactiveCount">
-            0
-        </strong>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     CONTAINER
-========================= -->
-
-<div id="testimonialContainer">
-
-    <div class="empty">
-
-        <h3>
-            Select a client
-        </h3>
-
-        <p>
-            Select a client to view testimonials.
-        </p>
-
-    </div>
-
-</div>
-
-
-</div>
-
-
-<!-- =========================
-     MODAL
-========================= -->
-
-<div
-    class="modal"
-    id="testimonialModal">
-
-    <div class="modal-box">
-
-
-        <div class="modal-header">
-
-            <h2 id="modalTitle">
-                Add Testimonial
-            </h2>
-
-            <button
-                class="close"
-                onclick="closeModal()">
-
-                ×
-
-            </button>
-
-        </div>
-
-
-        <!-- CUSTOMER -->
-
-        <div class="form-group">
-
-            <label>
-                Customer Name *
-            </label>
-
-            <input
-                type="text"
-                id="customerName"
-                placeholder="Enter customer name"
-            >
-
-        </div>
-
-
-        <!-- DESIGNATION + COMPANY -->
-
-        <div class="form-row">
-
-            <div class="form-group">
-
-                <label>
-                    Designation
-                </label>
-
-                <input
-                    type="text"
-                    id="designation"
-                    placeholder="e.g. Director"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Company
-                </label>
-
-                <input
-                    type="text"
-                    id="company"
-                    placeholder="Company name"
-                >
-
-            </div>
-
-        </div>
-
-
-        <!-- MESSAGE -->
-
-        <div class="form-group">
-
-            <label>
-                Message *
-            </label>
-
-            <textarea
-                id="testimonialMessage"
-                placeholder="Enter customer testimonial..."
-            ></textarea>
-
-        </div>
-
-
-        <!-- RATING -->
-
-        <div class="form-group">
-
-            <label>
-                Rating
-            </label>
+        <div class="user-info">
 
             <div
-                class="rating-select"
-                id="ratingSelect">
-
-                <span
-                    class="rating-star"
-                    data-rating="1">
-                    ★
-                </span>
-
-                <span
-                    class="rating-star"
-                    data-rating="2">
-                    ★
-                </span>
-
-                <span
-                    class="rating-star"
-                    data-rating="3">
-                    ★
-                </span>
-
-                <span
-                    class="rating-star"
-                    data-rating="4">
-                    ★
-                </span>
-
-                <span
-                    class="rating-star"
-                    data-rating="5">
-                    ★
-                </span>
-
+                class="user-name"
+                id="userName">
+                Loading...
             </div>
-
-        </div>
-
-
-        <!-- IMAGE -->
-
-        <div class="form-group">
-
-            <label>
-                Customer Image
-            </label>
-
-            <input
-                type="file"
-                id="testimonialImage"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-            >
 
             <div
-                style="margin-top:7px;font-size:12px;color:#6b7280;">
-
-                JPG, PNG, WEBP or GIF — Maximum 10 MB
-
+                class="user-role"
+                id="userRole">
+                Loading...
             </div>
 
         </div>
 
-
-        <!-- PREVIEW -->
-
-        <div
-            class="preview"
-            id="previewBox">
-
-            <div
-                class="preview-placeholder"
-                id="previewPlaceholder">
-
-                Image preview will appear here
-
-            </div>
-
-            <img
-                id="previewImage"
-                class="hidden"
-                alt="Preview">
-
-        </div>
-
-
-        <!-- SORT ORDER + STATUS -->
-
-        <div class="form-row">
-
-            <div class="form-group">
-
-                <label>
-                    Sort Order
-                </label>
-
-                <input
-                    type="number"
-                    id="sortOrder"
-                    value="0"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Status
-                </label>
-
-                <select id="testimonialStatus">
-
-                    <option value="active">
-                        Active
-                    </option>
-
-                    <option value="inactive">
-                        Inactive
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <!-- PROGRESS -->
-
-        <div
-            class="progress-wrap"
-            id="progressWrap">
-
-            <div
-                class="progress-bar"
-                id="progressBar">
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="upload-status"
-            id="uploadStatus">
-
-        </div>
-
-
-        <!-- FOOTER -->
-
-        <div class="modal-footer">
-
-            <button
-                class="btn btn-secondary"
-                onclick="closeModal()">
-
-                Cancel
-
-            </button>
-
-
-            <button
-                class="btn btn-primary"
-                id="saveBtn"
-                onclick="saveTestimonial()">
-
-                Upload & Save
-
-            </button>
-
-        </div>
-
+        <button
+            class="logout"
+            id="logoutBtn">
+            Logout
+        </button>
 
     </div>
 
-</div>
+</header>
 
 
-<!-- MESSAGE -->
+<div class="layout">
 
-<div
-    id="message"
-    class="message">
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="menu-title">
+            Management
+        </div>
+
+
+        <!-- Dashboard -->
+
+        <a
+            href="dashboard.html"
+            class="menu active">
+
+            <span class="menu-icon">📊</span>
+
+            <span class="menu-text">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- Clients -->
+
+        <a
+            href="client-manager.html"
+            class="menu">
+
+            <span class="menu-icon">👥</span>
+
+            <span class="menu-text">
+                Clients
+            </span>
+
+        </a>
+
+
+        <!-- Categories -->
+
+        <a
+            href="category-manager.html"
+            class="menu">
+
+            <span class="menu-icon">📁</span>
+
+            <span class="menu-text">
+                Categories
+            </span>
+
+        </a>
+
+
+        <!-- Products -->
+
+        <a
+            href="product-manager.html"
+            class="menu">
+
+            <span class="menu-icon">📦</span>
+
+            <span class="menu-text">
+                Products
+            </span>
+
+        </a>
+
+
+        <!-- =========================
+             WEBSITE
+        ========================== -->
+
+        <div class="menu-title">
+            Website
+        </div>
+
+
+        <!-- Product Images -->
+
+        <a
+            href="product-image-manager.html"
+            class="menu">
+
+            <span class="menu-icon">🖼️</span>
+
+            <span class="menu-text">
+                Product Images
+            </span>
+
+        </a>
+
+
+        <!-- Gallery -->
+
+        <a
+            href="gallery-manager.html"
+            class="menu">
+
+            <span class="menu-icon">🌄</span>
+
+            <span class="menu-text">
+                Gallery
+            </span>
+
+        </a>
+
+
+        <!-- Testimonials - CONNECTED -->
+
+        <a
+            href="testimonials-manager.html"
+            class="menu">
+
+            <span class="menu-icon">⭐</span>
+
+            <span class="menu-text">
+                Testimonials
+            </span>
+
+        </a>
+
+
+        <!-- FAQs -->
+
+        <a
+            href="#"
+            class="menu"
+            onclick="comingSoon('FAQs');return false;">
+
+            <span class="menu-icon">❓</span>
+
+            <span class="menu-text">
+                FAQs
+            </span>
+
+        </a>
+
+
+        <!-- =========================
+             BUSINESS
+        ========================== -->
+
+        <div class="menu-title">
+            Business
+        </div>
+
+
+        <!-- Enquiries -->
+
+        <a
+            href="#"
+            class="menu"
+            onclick="comingSoon('Enquiries');return false;">
+
+            <span class="menu-icon">📩</span>
+
+            <span class="menu-text">
+                Enquiries
+            </span>
+
+        </a>
+
+
+        <!-- Company Settings -->
+
+        <a
+            href="#"
+            class="menu"
+            onclick="comingSoon('Company Settings');return false;">
+
+            <span class="menu-icon">⚙️</span>
+
+            <span class="menu-text">
+                Company Settings
+            </span>
+
+        </a>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="page-title">
+
+            <div>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Manage your business website from one place.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             CURRENT CLIENT
+        ========================== -->
+
+        <div class="client-box">
+
+            <div class="client-label">
+                CURRENT WEBSITE
+            </div>
+
+            <div
+                class="client-name"
+                id="clientName">
+
+                Loading...
+
+            </div>
+
+            <div
+                class="client-domain"
+                id="clientDomain">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             STATISTICS
+        ========================== -->
+
+        <div class="stats">
+
+
+            <!-- Categories -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-title">
+                        Categories
+                    </div>
+
+                    <div class="stat-icon">
+                        📁
+                    </div>
+
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="categoryCount">
+
+                    —
+
+                </div>
+
+            </div>
+
+
+            <!-- Products -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-title">
+                        Products
+                    </div>
+
+                    <div class="stat-icon">
+                        📦
+                    </div>
+
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="productCount">
+
+                    —
+
+                </div>
+
+            </div>
+
+
+            <!-- Gallery -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-title">
+                        Gallery
+                    </div>
+
+                    <div class="stat-icon">
+                        🌄
+                    </div>
+
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="galleryCount">
+
+                    —
+
+                </div>
+
+            </div>
+
+
+            <!-- Enquiries -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-title">
+                        Enquiries
+                    </div>
+
+                    <div class="stat-icon">
+                        📩
+                    </div>
+
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="enquiryCount">
+
+                    —
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             WEBSITE MANAGEMENT
+        ========================== -->
+
+        <div class="section-title">
+            Website Management
+        </div>
+
+
+        <div class="modules">
+
+
+            <!-- CLIENT MANAGER -->
+
+            <a
+                href="client-manager.html"
+                class="module">
+
+                <div class="module-icon">
+                    👥
+                </div>
+
+                <h3>
+                    Client Manager
+                </h3>
+
+                <p>
+                    Create, edit and manage all website clients and their details.
+                </p>
+
+            </a>
+
+
+            <!-- CATEGORIES -->
+
+            <a
+                href="category-manager.html"
+                class="module">
+
+                <div class="module-icon">
+                    📁
+                </div>
+
+                <h3>
+                    Categories
+                </h3>
+
+                <p>
+                    Create, edit, delete and manage product categories.
+                </p>
+
+            </a>
+
+
+            <!-- PRODUCTS -->
+
+            <a
+                href="product-manager.html"
+                class="module">
+
+                <div class="module-icon">
+                    📦
+                </div>
+
+                <h3>
+                    Products
+                </h3>
+
+                <p>
+                    Manage products, descriptions, prices and categories.
+                </p>
+
+            </a>
+
+
+            <!-- PRODUCT IMAGES -->
+
+            <a
+                href="product-image-manager.html"
+                class="module">
+
+                <div class="module-icon">
+                    🖼️
+                </div>
+
+                <h3>
+                    Product Images
+                </h3>
+
+                <p>
+                    Upload and manage multiple images for products.
+                </p>
+
+            </a>
+
+
+            <!-- GALLERY -->
+
+            <a
+                href="gallery-manager.html"
+                class="module">
+
+                <div class="module-icon">
+                    🌄
+                </div>
+
+                <h3>
+                    Gallery
+                </h3>
+
+                <p>
+                    Manage product-wise gallery images for your business website.
+                </p>
+
+            </a>
+
+
+            <!-- TESTIMONIALS - CONNECTED -->
+
+            <a
+                href="testimonials-manager.html"
+                class="module">
+
+                <div class="module-icon">
+                    ⭐
+                </div>
+
+                <h3>
+                    Testimonials
+                </h3>
+
+                <p>
+                    Add and manage customer testimonials and reviews.
+                </p>
+
+            </a>
+
+
+            <!-- FAQ -->
+
+            <a
+                href="#"
+                class="module"
+                onclick="comingSoon('FAQs');return false;">
+
+                <div class="module-icon">
+                    ❓
+                </div>
+
+                <h3>
+                    FAQs
+                </h3>
+
+                <p>
+                    Manage frequently asked questions.
+                </p>
+
+            </a>
+
+
+            <!-- ENQUIRIES -->
+
+            <a
+                href="#"
+                class="module"
+                onclick="comingSoon('Enquiries');return false;">
+
+                <div class="module-icon">
+                    📩
+                </div>
+
+                <h3>
+                    Enquiries
+                </h3>
+
+                <p>
+                    View and manage customer enquiries.
+                </p>
+
+            </a>
+
+
+            <!-- COMPANY SETTINGS -->
+
+            <a
+                href="#"
+                class="module"
+                onclick="comingSoon('Company Settings');return false;">
+
+                <div class="module-icon">
+                    ⚙️
+                </div>
+
+                <h3>
+                    Company Settings
+                </h3>
+
+                <p>
+                    Manage logo, company information, contact details and website settings.
+                </p>
+
+            </a>
+
+        </div>
+
+    </main>
+
 </div>
 
 
 <script>
 
-/* =====================================================
+/* ==========================================
    SUPABASE
-===================================================== */
+========================================== */
 
 const SUPABASE_URL =
 "https://ywvdozdoanmcxscfofcf.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
-
-const STORAGE_BUCKET =
-"product-images";
 
 
 const supabaseClient =
@@ -1128,56 +981,50 @@ window.supabase.createClient(
 );
 
 
-/* =====================================================
-   GLOBALS
-===================================================== */
+/* ==========================================
+   HELPER
+========================================== */
 
-let currentUser = null;
+function setText(
+    id,
+    value
+){
 
-let currentRole = null;
-
-let currentClientId = null;
-
-let clients = [];
-
-let testimonials = [];
-
-let editingId = null;
-
-let editingImageUrl = null;
-
-let selectedRating = 5;
+    const element =
+        document.getElementById(id);
 
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+    if(element){
 
-const clientSelect =
-document.getElementById(
-    "clientSelect"
-);
+        element.textContent =
+            value ?? "—";
+
+    }
+
+}
 
 
-/* =====================================================
+/* ==========================================
    INITIALIZE
-===================================================== */
+========================================== */
 
 async function initialize(){
 
     try{
 
         const {
-            data:{user},
-            error
+            data:{
+                user
+            },
+            error:userError
         } =
         await supabaseClient
         .auth
         .getUser();
 
 
-        if(error)
-            throw error;
+        if(userError)
+            throw userError;
 
 
         if(!user){
@@ -1187,10 +1034,6 @@ async function initialize(){
 
             return;
         }
-
-
-        currentUser =
-            user;
 
 
         const {
@@ -1209,55 +1052,80 @@ async function initialize(){
         .single();
 
 
-        if(profileError)
-            throw profileError;
+        if(profileError){
+
+            console.error(
+                "Profile Error:",
+                profileError
+            );
 
 
-        currentRole =
-            profile.role;
+            setText(
+                "userName",
+                user.email
+            );
 
 
-        if(currentRole === "super_admin"){
-
-            document.getElementById(
-                "clientBox"
-            ).style.display =
-                "block";
+            setText(
+                "userRole",
+                "Profile not found"
+            );
 
 
-            await loadClients();
+            return;
+        }
+
+
+        setText(
+            "userName",
+            profile.full_name ||
+            user.email
+        );
+
+
+        setText(
+            "userRole",
+            profile.role
+        );
+
+
+        if(profile.client_id){
+
+            await loadClient(
+                profile.client_id
+            );
+
+
+            await loadStats(
+                profile.client_id
+            );
 
         }
+
         else{
 
-            currentClientId =
-                profile.client_id;
+            setText(
+                "clientName",
+                "All Clients"
+            );
 
 
-            if(!currentClientId){
-
-                showMessage(
-                    "No client assigned to this user.",
-                    "error"
-                );
-
-                return;
-            }
+            setText(
+                "clientDomain",
+                "Super Admin"
+            );
 
 
-            await loadTestimonials();
+            await loadAllStats();
 
         }
 
     }
     catch(error){
 
-        console.error(error);
-
-        showMessage(
-            error.message ||
-            "Initialization failed.",
-            "error"
+        console.error(
+            "Dashboard Error:",
+            error
         );
 
     }
@@ -1265,11 +1133,13 @@ async function initialize(){
 }
 
 
-/* =====================================================
-   LOAD CLIENTS
-===================================================== */
+/* ==========================================
+   LOAD CLIENT
+========================================== */
 
-async function loadClients(){
+async function loadClient(
+    clientId
+){
 
     const {
         data,
@@ -1280,155 +1150,30 @@ async function loadClients(){
     .select(
         "id,company_name,domain,status"
     )
-    .order(
-        "company_name",
-        {
-            ascending:true
-        }
-    );
-
-
-    if(error)
-        throw error;
-
-
-    clients =
-        data || [];
-
-
-    clientSelect.innerHTML =
-    `
-    <option value="">
-        Select Client
-    </option>
-    `;
-
-
-    clients.forEach(client => {
-
-        const option =
-        document.createElement(
-            "option"
-        );
-
-
-        option.value =
-            client.id;
-
-
-        option.textContent =
-            client.company_name;
-
-
-        clientSelect.appendChild(
-            option
-        );
-
-    });
-
-
-    clientSelect.onchange =
-    async function(){
-
-        currentClientId =
-            this.value || null;
-
-
-        testimonials = [];
-
-
-        if(!currentClientId){
-
-            resetTestimonials();
-
-            return;
-        }
-
-
-        await loadTestimonials();
-
-    };
-
-}
-
-
-/* =====================================================
-   LOAD TESTIMONIALS
-===================================================== */
-
-async function loadTestimonials(){
-
-    if(!currentClientId){
-
-        resetTestimonials();
-
-        return;
-    }
-
-
-    document.getElementById(
-        "testimonialContainer"
-    ).innerHTML =
-    `
-    <div class="loading">
-        Loading testimonials...
-    </div>
-    `;
-
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("testimonials")
-    .select("*")
     .eq(
-        "client_id",
-        currentClientId
+        "id",
+        clientId
     )
-    .order(
-        "sort_order",
-        {
-            ascending:true
-        }
-    )
-    .order(
-        "created_at",
-        {
-            ascending:false
-        }
-    );
+    .single();
 
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "Client Error:",
+            error
+        );
 
 
-        document.getElementById(
-            "testimonialContainer"
-        ).innerHTML =
-        `
-        <div class="empty">
-
-            <h3>
-                Unable to load testimonials
-            </h3>
-
-            <p>
-                ${escapeHtml(
-                    error.message
-                )}
-            </p>
-
-        </div>
-        `;
+        setText(
+            "clientName",
+            "Client not found"
+        );
 
 
-        showMessage(
-            error.message,
-            "error"
+        setText(
+            "clientDomain",
+            "—"
         );
 
 
@@ -1436,1600 +1181,280 @@ async function loadTestimonials(){
     }
 
 
-    testimonials =
-        data || [];
-
-
-    renderTestimonials();
-
-}
-
-
-/* =====================================================
-   RESET
-===================================================== */
-
-function resetTestimonials(){
-
-    document.getElementById(
-        "testimonialContainer"
-    ).innerHTML =
-    `
-    <div class="empty">
-
-        <h3>
-            Select a client
-        </h3>
-
-        <p>
-            Select a client to view testimonials.
-        </p>
-
-    </div>
-    `;
-
-
-    document.getElementById(
-        "totalCount"
-    ).textContent =
-        "0";
-
-
-    document.getElementById(
-        "activeCount"
-    ).textContent =
-        "0";
-
-
-    document.getElementById(
-        "inactiveCount"
-    ).textContent =
-        "0";
-
-}
-
-
-/* =====================================================
-   RENDER
-===================================================== */
-
-function renderTestimonials(){
-
-    const search =
-    document.getElementById(
-        "search"
-    )
-    .value
-    .toLowerCase()
-    .trim();
-
-
-    const status =
-    document.getElementById(
-        "statusFilter"
-    ).value;
-
-
-    const rating =
-    document.getElementById(
-        "ratingFilter"
-    ).value;
-
-
-    const filtered =
-    testimonials.filter(item => {
-
-        const text =
-        (
-            (item.customer_name || "") +
-            " " +
-            (item.designation || "") +
-            " " +
-            (item.company || "") +
-            " " +
-            (item.message || "")
-        )
-        .toLowerCase();
-
-
-        return (
-
-            (
-                !search ||
-                text.includes(search)
-            )
-
-            &&
-
-            (
-                !status ||
-                item.status === status
-            )
-
-            &&
-
-            (
-                !rating ||
-                String(item.rating) === String(rating)
-            )
-
-        );
-
-    });
-
-
-    updateStats();
-
-
-    const container =
-    document.getElementById(
-        "testimonialContainer"
+    setText(
+        "clientName",
+        data.company_name
     );
 
 
-    if(!currentClientId){
-
-        resetTestimonials();
-
-        return;
-    }
-
-
-    if(filtered.length === 0){
-
-        container.innerHTML =
-        `
-        <div class="empty">
-
-            <h3>
-                No testimonials found
-            </h3>
-
-            <p>
-                Click "+ Add Testimonial" to add one.
-            </p>
-
-        </div>
-        `;
-
-        return;
-    }
-
-
-    container.innerHTML =
-    `
-    <div class="testimonial-grid">
-
-        ${
-            filtered
-            .map(
-                item =>
-                    createCard(item)
-            )
-            .join("")
-        }
-
-    </div>
-    `;
+    setText(
+        "clientDomain",
+        data.domain ||
+        "No domain configured"
+    );
 
 }
 
 
-/* =====================================================
-   CARD
-===================================================== */
-
-function createCard(item){
-
-    const customerName =
-        escapeHtml(
-            item.customer_name ||
-            "Unknown Customer"
-        );
-
-
-    const designation =
-        escapeHtml(
-            item.designation ||
-            ""
-        );
-
-
-    const company =
-        escapeHtml(
-            item.company ||
-            ""
-        );
-
-
-    const message =
-        escapeHtml(
-            item.message ||
-            ""
-        );
-
-
-    const rating =
-        Math.min(
-            5,
-            Math.max(
-                0,
-                Number(
-                    item.rating || 0
-                )
-            )
-        );
-
-
-    const stars =
-        "★".repeat(rating) +
-        "☆".repeat(5-rating);
-
-
-    const statusClass =
-        item.status === "active"
-        ? "status-active"
-        : "status-inactive";
-
-
-    const imageHtml =
-        item.image_url
-        ?
-        `
-        <img
-            src="${escapeAttribute(
-                item.image_url
-            )}"
-            alt="${customerName}"
-            loading="lazy"
-            onerror="this.style.display='none';"
-        >
-        `
-        :
-        `
-        <div class="no-image">
-            No customer image
-        </div>
-        `;
-
-
-    return `
-    <div class="card">
-
-        <div class="card-image">
-
-            ${imageHtml}
-
-        </div>
-
-
-        <div class="card-body">
-
-            <div class="customer-name">
-                ${customerName}
-            </div>
-
-
-            ${
-                designation
-                ?
-                `<div class="designation">
-                    ${designation}
-                </div>`
-                :
-                ""
-            }
-
-
-            ${
-                company
-                ?
-                `<div class="company">
-                    ${company}
-                </div>`
-                :
-                ""
-            }
-
-
-            <div class="rating">
-                ${stars}
-            </div>
-
-
-            <div class="message-text">
-                ${message}
-            </div>
-
-
-            <div class="card-footer">
-
-                <div>
-
-                    <div class="order">
-                        Order: ${item.sort_order ?? 0}
-                    </div>
-
-                    <div
-                        class="status ${statusClass}"
-                        style="margin-top:6px;display:inline-block;">
-
-                        ${escapeHtml(
-                            item.status ||
-                            "active"
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="actions">
-
-                    <button
-                        class="btn btn-edit"
-                        onclick="editTestimonial('${item.id}')">
-
-                        Edit
-
-                    </button>
-
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="deleteTestimonial('${item.id}')">
-
-                        Delete
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-    `;
-
-}
-
-
-/* =====================================================
-   STATS
-===================================================== */
-
-function updateStats(){
-
-    document.getElementById(
-        "totalCount"
-    ).textContent =
-        testimonials.length;
-
-
-    document.getElementById(
-        "activeCount"
-    ).textContent =
-        testimonials.filter(
-            x =>
-                x.status === "active"
-        ).length;
-
-
-    document.getElementById(
-        "inactiveCount"
-    ).textContent =
-        testimonials.filter(
-            x =>
-                x.status === "inactive"
-        ).length;
-
-}
-
-
-/* =====================================================
-   OPEN MODAL
-===================================================== */
-
-function openModal(
-    id = null
+/* ==========================================
+   CLIENT STATS
+========================================== */
+
+async function loadStats(
+    clientId
 ){
 
-    if(!currentClientId){
-
-        showMessage(
-            "Please select a client first.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    editingId =
-        id;
-
-
-    document.getElementById(
-        "testimonialModal"
-    ).style.display =
-        "flex";
-
-
-    if(id){
-
-        const item =
-        testimonials.find(
-            x =>
-                x.id === id
-        );
-
-
-        if(!item)
-            return;
-
-
-        document.getElementById(
-            "modalTitle"
-        ).textContent =
-            "Edit Testimonial";
-
-
-        document.getElementById(
-            "customerName"
-        ).value =
-            item.customer_name ||
-            "";
-
-
-        document.getElementById(
-            "designation"
-        ).value =
-            item.designation ||
-            "";
-
-
-        document.getElementById(
-            "company"
-        ).value =
-            item.company ||
-            "";
-
-
-        document.getElementById(
-            "testimonialMessage"
-        ).value =
-            item.message ||
-            "";
-
-
-        document.getElementById(
-            "sortOrder"
-        ).value =
-            item.sort_order ??
-            0;
-
-
-        document.getElementById(
-            "testimonialStatus"
-        ).value =
-            item.status ||
-            "active";
-
-
-        editingImageUrl =
-            item.image_url ||
-            null;
-
-
-        selectedRating =
-            Number(
-                item.rating || 5
-            );
-
-
-        document.getElementById(
-            "previewImage"
-        ).src =
-            item.image_url ||
-            "";
-
-
-        if(item.image_url){
-
-            document.getElementById(
-                "previewImage"
-            ).classList.remove(
-                "hidden"
-            );
-
-
-            document.getElementById(
-                "previewPlaceholder"
-            ).classList.add(
-                "hidden"
-            );
-
-        }
-        else{
-
-            resetPreview();
-
-        }
-
-
-        document.getElementById(
-            "testimonialImage"
-        ).value =
-            "";
-
-
-        document.getElementById(
-            "saveBtn"
-        ).textContent =
-            "Update Testimonial";
-
-
-        updateRatingStars();
-
-        clearUploadStatus();
-
-    }
-    else{
-
-        document.getElementById(
-            "modalTitle"
-        ).textContent =
-            "Add Testimonial";
-
-
-        document.getElementById(
-            "saveBtn"
-        ).textContent =
-            "Upload & Save";
-
-
-        editingImageUrl =
-            null;
-
-
-        selectedRating =
-            5;
-
-
-        clearForm();
-
-    }
-
-}
-
-
-/* =====================================================
-   CLOSE MODAL
-===================================================== */
-
-function closeModal(){
-
-    document.getElementById(
-        "testimonialModal"
-    ).style.display =
-        "none";
-
-
-    editingId =
-        null;
-
-
-    editingImageUrl =
-        null;
-
-
-    clearForm();
-
-}
-
-
-/* =====================================================
-   CLEAR FORM
-===================================================== */
-
-function clearForm(){
-
-    document.getElementById(
-        "customerName"
-    ).value =
-        "";
-
-
-    document.getElementById(
-        "designation"
-    ).value =
-        "";
-
-
-    document.getElementById(
-        "company"
-    ).value =
-        "";
-
-
-    document.getElementById(
-        "testimonialMessage"
-    ).value =
-        "";
-
-
-    document.getElementById(
-        "testimonialImage"
-    ).value =
-        "";
-
-
-    document.getElementById(
-        "sortOrder"
-    ).value =
-        0;
-
-
-    document.getElementById(
-        "testimonialStatus"
-    ).value =
-        "active";
-
-
-    selectedRating =
-        5;
-
-
-    resetPreview();
-
-    clearUploadStatus();
-
-    updateRatingStars();
-
-}
-
-
-/* =====================================================
-   RATING
-===================================================== */
-
-document
-.querySelectorAll(
-    ".rating-star"
-)
-.forEach(
-    star => {
-
-        star.addEventListener(
-            "click",
-            function(){
-
-                selectedRating =
-                    Number(
-                        this.dataset.rating
-                    );
-
-
-                updateRatingStars();
-
-            }
-        );
-
-    }
-);
-
-
-function updateRatingStars(){
-
-    document
-    .querySelectorAll(
-        ".rating-star"
-    )
-    .forEach(
-        star => {
-
-            const value =
-                Number(
-                    star.dataset.rating
-                );
-
-
-            star.classList.toggle(
-                "active",
-                value <= selectedRating
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   IMAGE PREVIEW
-===================================================== */
-
-document
-.getElementById(
-    "testimonialImage"
-)
-.addEventListener(
-    "change",
-    function(){
-
-        const file =
-            this.files[0];
-
-
-        if(!file){
-
-            return;
-        }
-
-
-        if(
-            !file.type.startsWith(
-                "image/"
-            )
-        ){
-
-            showMessage(
-                "Please select a valid image.",
-                "error"
-            );
-
-
-            this.value =
-                "";
-
-
-            resetPreview();
-
-            return;
-        }
-
-
-        const maxSize =
-            10 * 1024 * 1024;
-
-
-        if(
-            file.size >
-            maxSize
-        ){
-
-            showMessage(
-                "Image size must be less than 10 MB.",
-                "error"
-            );
-
-
-            this.value =
-                "";
-
-
-            resetPreview();
-
-            return;
-        }
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-        function(e){
-
-            document.getElementById(
-                "previewImage"
-            ).src =
-                e.target.result;
-
-
-            document.getElementById(
-                "previewImage"
-            ).classList.remove(
-                "hidden"
-            );
-
-
-            document.getElementById(
-                "previewPlaceholder"
-            ).classList.add(
-                "hidden"
-            );
-
-        };
-
-
-        reader.readAsDataURL(
-            file
-        );
-
-    }
-);
-
-
-/* =====================================================
-   SAVE TESTIMONIAL
-===================================================== */
-
-async function saveTestimonial(){
-
-    if(!currentClientId){
-
-        showMessage(
-            "Please select a client.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    const customerName =
-        document.getElementById(
-            "customerName"
-        ).value.trim();
-
-
-    const message =
-        document.getElementById(
-            "testimonialMessage"
-        ).value.trim();
-
-
-    const file =
-        document.getElementById(
-            "testimonialImage"
-        ).files[0];
-
-
-    if(!customerName){
-
-        showMessage(
-            "Customer name is required.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(!message){
-
-        showMessage(
-            "Testimonial message is required.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(
-        !editingId &&
-        !file
-    ){
-
-        /*
-           Image is optional.
-           So no error here.
-        */
-
-    }
-
-
-    const saveBtn =
-        document.getElementById(
-            "saveBtn"
-        );
-
-
-    saveBtn.disabled =
-        true;
-
-
-    saveBtn.textContent =
-        editingId
-        ? "Updating..."
-        : "Saving...";
-
-
-    try{
-
-        let imageUrl =
-            editingImageUrl;
-
-
-        /* ==========================================
-           IMAGE UPLOAD
-        ========================================== */
-
-        if(file){
-
-            setUploadStatus(
-                "Uploading customer image...",
-                "info"
-            );
-
-
-            setProgress(
-                15
-            );
-
-
-            const extension =
-                file.name
-                .split(".")
-                .pop()
-                .toLowerCase();
-
-
-            const safeExtension =
-                extension ||
-                "jpg";
-
-
-            const uniqueName =
-                `${crypto.randomUUID()}.${safeExtension}`;
-
-
-            const storagePath =
-                `testimonials/${currentClientId}/${uniqueName}`;
-
-
-            const {
-                error:uploadError
-            } =
-            await supabaseClient
-            .storage
-            .from(
-                STORAGE_BUCKET
-            )
-            .upload(
-                storagePath,
-                file,
-                {
-                    cacheControl:"3600",
-                    upsert:false,
-                    contentType:file.type
-                }
-            );
-
-
-            if(uploadError)
-                throw uploadError;
-
-
-            setProgress(
-                60
-            );
-
-
-            const {
-                data:publicData
-            } =
-            supabaseClient
-            .storage
-            .from(
-                STORAGE_BUCKET
-            )
-            .getPublicUrl(
-                storagePath
-            );
-
-
-            if(
-                !publicData ||
-                !publicData.publicUrl
-            ){
-
-                throw new Error(
-                    "Unable to generate image URL."
-                );
-
-            }
-
-
-            imageUrl =
-                publicData.publicUrl;
-
-
-            setProgress(
-                75
-            );
-
-        }
-
-
-        /* ==========================================
-           PAYLOAD
-        ========================================== */
-
-        const payload = {
-
-            client_id:
-                currentClientId,
-
-            customer_name:
-                customerName,
-
-            designation:
-                document.getElementById(
-                    "designation"
-                ).value.trim()
-                || null,
-
-            company:
-                document.getElementById(
-                    "company"
-                ).value.trim()
-                || null,
-
-            message:
-                message,
-
-            rating:
-                selectedRating,
-
-            image_url:
-                imageUrl ||
-                null,
-
-            sort_order:
-                parseInt(
-                    document.getElementById(
-                        "sortOrder"
-                    ).value
-                ) || 0,
-
-            status:
-                document.getElementById(
-                    "testimonialStatus"
-                ).value
-
-        };
-
-
-        /* ==========================================
-           UPDATE
-        ========================================== */
-
-        if(editingId){
-
-            setUploadStatus(
-                "Updating testimonial...",
-                "info"
-            );
-
-
-            const {
-                error
-            } =
-            await supabaseClient
-            .from("testimonials")
-            .update(
-                payload
-            )
-            .eq(
-                "id",
-                editingId
-            )
-            .eq(
-                "client_id",
-                currentClientId
-            );
-
-
-            if(error)
-                throw error;
-
-
-            setProgress(
-                100
-            );
-
-
-            showMessage(
-                "Testimonial updated successfully.",
-                "success"
-            );
-
-        }
-
-
-        /* ==========================================
-           INSERT
-        ========================================== */
-
-        else{
-
-            setUploadStatus(
-                "Saving testimonial...",
-                "info"
-            );
-
-
-            const {
-                error
-            } =
-            await supabaseClient
-            .from("testimonials")
-            .insert(
-                payload
-            );
-
-
-            if(error)
-                throw error;
-
-
-            setProgress(
-                100
-            );
-
-
-            showMessage(
-                "Testimonial added successfully.",
-                "success"
-            );
-
-        }
-
-
-        await loadTestimonials();
-
-
-        setTimeout(
-            () => {
-
-                closeModal();
-
-            },
-            500
-        );
-
-    }
-    catch(error){
-
-        console.error(error);
-
-
-        setUploadStatus(
-            error.message ||
-            "Unable to save testimonial.",
-            "error"
-        );
-
-
-        showMessage(
-            error.message ||
-            "Unable to save testimonial.",
-            "error"
-        );
-
-    }
-    finally{
-
-        saveBtn.disabled =
-            false;
-
-
-        saveBtn.textContent =
-            editingId
-            ? "Update Testimonial"
-            : "Upload & Save";
-
-    }
-
-}
-
-
-/* =====================================================
-   EDIT
-===================================================== */
-
-function editTestimonial(id){
-
-    openModal(id);
-
-}
-
-
-/* =====================================================
-   DELETE
-===================================================== */
-
-async function deleteTestimonial(id){
-
-    const item =
-        testimonials.find(
-            x =>
-                x.id === id
-        );
-
-
-    if(!item)
-        return;
-
-
-    const confirmed =
-        confirm(
-            `Delete testimonial from "${item.customer_name || "this customer"}"?`
-        );
-
-
-    if(!confirmed)
-        return;
-
-
-    try{
-
-        const {
-            error
-        } =
-        await supabaseClient
-        .from("testimonials")
-        .delete()
-        .eq(
+    const [
+        categories,
+        products,
+        gallery,
+        enquiries
+    ] =
+    await Promise.all([
+
+        supabaseClient
+        .from("categories")
+        .select(
             "id",
-            id
+            {
+                count:"exact",
+                head:true
+            }
         )
         .eq(
             "client_id",
-            currentClientId
-        );
+            clientId
+        ),
 
 
-        if(error)
-            throw error;
-
-
-        /*
-           Delete storage image too
-        */
-
-        const storagePath =
-            getStoragePathFromUrl(
-                item.image_url
-            );
-
-
-        if(storagePath){
-
-            const {
-                error:storageError
-            } =
-            await supabaseClient
-            .storage
-            .from(
-                STORAGE_BUCKET
-            )
-            .remove([
-                storagePath
-            ]);
-
-
-            if(storageError){
-
-                console.warn(
-                    "Storage delete warning:",
-                    storageError
-                );
-
+        supabaseClient
+        .from("products")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
             }
-
-        }
-
-
-        showMessage(
-            "Testimonial deleted successfully.",
-            "success"
-        );
+        )
+        .eq(
+            "client_id",
+            clientId
+        ),
 
 
-        await loadTestimonials();
-
-    }
-    catch(error){
-
-        console.error(error);
-
-
-        showMessage(
-            error.message ||
-            "Unable to delete testimonial.",
-            "error"
-        );
-
-    }
-
-}
+        supabaseClient
+        .from("gallery")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        ),
 
 
-/* =====================================================
-   STORAGE PATH
-===================================================== */
+        supabaseClient
+        .from("enquiries")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        )
 
-function getStoragePathFromUrl(
-    url
-){
-
-    if(!url)
-        return null;
-
-
-    try{
-
-        const marker =
-            `/storage/v1/object/public/${STORAGE_BUCKET}/`;
-
-
-        const index =
-            url.indexOf(
-                marker
-            );
+    ]);
 
 
-        if(index === -1)
-            return null;
-
-
-        return decodeURIComponent(
-            url.substring(
-                index +
-                marker.length
-            )
-        );
-
-    }
-    catch(error){
-
-        return null;
-    }
-
-}
-
-
-/* =====================================================
-   PREVIEW RESET
-===================================================== */
-
-function resetPreview(){
-
-    document.getElementById(
-        "previewImage"
-    ).src =
-        "";
-
-
-    document.getElementById(
-        "previewImage"
-    ).classList.add(
-        "hidden"
+    setText(
+        "categoryCount",
+        categories.error
+        ? 0
+        : categories.count ?? 0
     );
 
 
-    document.getElementById(
-        "previewPlaceholder"
-    ).classList.remove(
-        "hidden"
+    setText(
+        "productCount",
+        products.error
+        ? 0
+        : products.count ?? 0
+    );
+
+
+    setText(
+        "galleryCount",
+        gallery.error
+        ? 0
+        : gallery.count ?? 0
+    );
+
+
+    setText(
+        "enquiryCount",
+        enquiries.error
+        ? 0
+        : enquiries.count ?? 0
     );
 
 }
 
 
-/* =====================================================
-   UPLOAD STATUS
-===================================================== */
+/* ==========================================
+   ALL CLIENTS STATS
+========================================== */
 
-function setUploadStatus(
-    text,
-    type="info"
-){
+async function loadAllStats(){
 
-    const status =
-        document.getElementById(
-            "uploadStatus"
-        );
+    const [
+        categories,
+        products,
+        gallery,
+        enquiries
+    ] =
+    await Promise.all([
 
-
-    status.textContent =
-        text;
-
-
-    status.className =
-        "upload-status " +
-        type;
-
-}
-
-
-function clearUploadStatus(){
-
-    const status =
-        document.getElementById(
-            "uploadStatus"
-        );
+        supabaseClient
+        .from("categories")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        ),
 
 
-    status.textContent =
-        "";
+        supabaseClient
+        .from("products")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        ),
 
 
-    status.className =
-        "upload-status";
+        supabaseClient
+        .from("gallery")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        ),
 
 
-    document.getElementById(
-        "progressWrap"
-    ).style.display =
-        "none";
+        supabaseClient
+        .from("enquiries")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+
+    ]);
 
 
-    document.getElementById(
-        "progressBar"
-    ).style.width =
-        "0%";
-
-}
-
-
-function setProgress(
-    value
-){
-
-    document.getElementById(
-        "progressWrap"
-    ).style.display =
-        "block";
+    setText(
+        "categoryCount",
+        categories.error
+        ? 0
+        : categories.count ?? 0
+    );
 
 
-    document.getElementById(
-        "progressBar"
-    ).style.width =
-        `${value}%`;
-
-}
-
-
-/* =====================================================
-   MESSAGE
-===================================================== */
-
-function showMessage(
-    text,
-    type
-){
-
-    const box =
-        document.getElementById(
-            "message"
-        );
+    setText(
+        "productCount",
+        products.error
+        ? 0
+        : products.count ?? 0
+    );
 
 
-    box.textContent =
-        text;
+    setText(
+        "galleryCount",
+        gallery.error
+        ? 0
+        : gallery.count ?? 0
+    );
 
 
-    box.className =
-        "message " +
-        type;
-
-
-    box.style.display =
-        "block";
-
-
-    setTimeout(
-        () => {
-
-            box.style.display =
-                "none";
-
-        },
-        3500
+    setText(
+        "enquiryCount",
+        enquiries.error
+        ? 0
+        : enquiries.count ?? 0
     );
 
 }
 
 
-/* =====================================================
-   ESCAPE
-===================================================== */
+/* ==========================================
+   COMING SOON
+========================================== */
 
-function escapeHtml(
-    value
+function comingSoon(
+    moduleName
 ){
 
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
+    alert(
+        moduleName +
+        " module will be connected next."
     );
 
 }
 
 
-function escapeAttribute(
-    value
-){
-
-    return escapeHtml(
-        value
-    );
-
-}
-
-
-/* =====================================================
-   MODAL OUTSIDE CLICK
-===================================================== */
+/* ==========================================
+   LOGOUT
+========================================== */
 
 document
-.getElementById(
-    "testimonialModal"
-)
+.getElementById("logoutBtn")
 .addEventListener(
     "click",
-    function(e){
+    async function(){
 
-        if(
-            e.target === this
-        ){
+        try{
 
-            closeModal();
+            await supabaseClient
+            .auth
+            .signOut();
 
         }
+        catch(error){
+
+            console.error(
+                "Logout Error:",
+                error
+            );
+
+        }
+
+
+        window.location.href =
+            "admin.html";
 
     }
 );
 
 
-/* =====================================================
-   ESC KEY
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(e){
-
-        if(
-            e.key === "Escape"
-        ){
-
-            closeModal();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
+/* ==========================================
    START
-===================================================== */
+========================================== */
 
 initialize();
 
