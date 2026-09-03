@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -44,6 +46,37 @@ body{
     max-width:1400px;
     margin:25px auto;
     padding:0 20px;
+}
+
+.client-box{
+    display:none;
+    margin-bottom:15px;
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.client-box label,
+.product-box label{
+    display:block;
+    margin-bottom:6px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.client-box select,
+.product-box select{
+    width:100%;
+    max-width:500px;
+}
+
+.product-box{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+    margin-bottom:20px;
 }
 
 .toolbar{
@@ -123,26 +156,6 @@ textarea:focus{
 .btn-edit{
     background:#f59e0b;
     color:white;
-}
-
-.client-box{
-    display:none;
-    margin-bottom:15px;
-    background:white;
-    padding:18px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-
-.client-box label{
-    display:block;
-    margin-bottom:6px;
-    font-size:13px;
-    font-weight:600;
-}
-
-.client-box select{
-    max-width:450px;
 }
 
 .stats{
@@ -233,7 +246,7 @@ textarea:focus{
     margin-bottom:8px;
 }
 
-.card-description{
+.card-caption{
     font-size:13px;
     color:#6b7280;
     min-height:38px;
@@ -329,7 +342,7 @@ textarea:focus{
 }
 
 textarea{
-    min-height:90px;
+    min-height:100px;
     resize:vertical;
 }
 
@@ -457,6 +470,11 @@ textarea{
         grid-template-columns:1fr;
     }
 }
+
+.hidden{
+    display:none !important;
+}
+
 </style>
 </head>
 
@@ -472,24 +490,55 @@ textarea{
     <button
         class="btn btn-primary"
         onclick="openModal()">
+
         + Add Image
+
     </button>
 
 </div>
 
+
 <div class="container">
 
-    <div class="client-box" id="clientBox">
+    <!-- SUPER ADMIN CLIENT -->
+    <div
+        class="client-box"
+        id="clientBox">
 
-        <label>Select Client</label>
+        <label>
+            Select Client
+        </label>
 
         <select id="clientSelect">
-            <option value="">Select Client</option>
+
+            <option value="">
+                Select Client
+            </option>
+
         </select>
 
     </div>
 
 
+    <!-- PRODUCT -->
+    <div class="product-box">
+
+        <label>
+            Select Product
+        </label>
+
+        <select id="productSelect">
+
+            <option value="">
+                -- Select Product --
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- SEARCH -->
     <div class="toolbar">
 
         <div class="toolbar-row">
@@ -501,6 +550,7 @@ textarea{
                 oninput="renderGallery()"
             >
 
+
             <select
                 id="categoryFilter"
                 onchange="renderGallery()">
@@ -510,6 +560,7 @@ textarea{
                 </option>
 
             </select>
+
 
             <select
                 id="statusFilter"
@@ -534,21 +585,45 @@ textarea{
     </div>
 
 
+    <!-- STATS -->
     <div class="stats">
 
         <div class="stat">
-            <small>Total Images</small>
-            <strong id="totalCount">0</strong>
+
+            <small>
+                Total Images
+            </small>
+
+            <strong id="totalCount">
+                0
+            </strong>
+
         </div>
 
-        <div class="stat">
-            <small>Active</small>
-            <strong id="activeCount">0</strong>
-        </div>
 
         <div class="stat">
-            <small>Inactive</small>
-            <strong id="inactiveCount">0</strong>
+
+            <small>
+                Active
+            </small>
+
+            <strong id="activeCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                Inactive
+            </small>
+
+            <strong id="inactiveCount">
+                0
+            </strong>
+
         </div>
 
     </div>
@@ -556,8 +631,16 @@ textarea{
 
     <div id="galleryContainer">
 
-        <div class="loading">
-            Loading gallery...
+        <div class="empty">
+
+            <h3>
+                Select a product
+            </h3>
+
+            <p>
+                Select a product to view gallery images.
+            </p>
+
         </div>
 
     </div>
@@ -569,7 +652,9 @@ textarea{
      MODAL
 ========================= -->
 
-<div class="modal" id="galleryModal">
+<div
+    class="modal"
+    id="galleryModal">
 
     <div class="modal-box">
 
@@ -582,12 +667,15 @@ textarea{
             <button
                 class="close"
                 onclick="closeModal()">
+
                 ×
+
             </button>
 
         </div>
 
 
+        <!-- TITLE -->
         <div class="form-group">
 
             <label>
@@ -603,6 +691,7 @@ textarea{
         </div>
 
 
+        <!-- FILE -->
         <div class="form-group">
 
             <label>
@@ -616,12 +705,16 @@ textarea{
             >
 
             <div class="upload-info">
-                JPG, PNG, WEBP or GIF — Maximum 10 MB
+
+                JPG, PNG, WEBP or GIF —
+                Maximum 10 MB
+
             </div>
 
         </div>
 
 
+        <!-- PREVIEW -->
         <div
             class="preview"
             id="previewBox">
@@ -642,6 +735,7 @@ textarea{
         </div>
 
 
+        <!-- PROGRESS -->
         <div
             class="progress-wrap"
             id="progressWrap">
@@ -649,17 +743,21 @@ textarea{
             <div
                 class="progress-bar"
                 id="progressBar">
+
             </div>
 
         </div>
 
 
+        <!-- STATUS -->
         <div
             class="upload-status"
             id="uploadStatus">
+
         </div>
 
 
+        <!-- CATEGORY + ORDER -->
         <div class="form-row">
 
             <div class="form-group">
@@ -694,20 +792,22 @@ textarea{
         </div>
 
 
+        <!-- CAPTION -->
         <div class="form-group">
 
             <label>
-                Description
+                Caption
             </label>
 
             <textarea
-                id="imageDescription"
-                placeholder="Enter image description..."
+                id="imageCaption"
+                placeholder="Enter image caption..."
             ></textarea>
 
         </div>
 
 
+        <!-- STATUS -->
         <div class="form-group">
 
             <label>
@@ -729,6 +829,7 @@ textarea{
         </div>
 
 
+        <!-- FOOTER -->
         <div class="modal-footer">
 
             <button
@@ -786,18 +887,39 @@ window.supabase.createClient(
 
 
 /* =========================
-   VARIABLES
+   GLOBAL VARIABLES
 ========================= */
 
 let currentUser = null;
+
 let currentRole = null;
+
 let currentClientId = null;
 
 let clients = [];
+
+let products = [];
+
 let gallery = [];
 
 let editingId = null;
+
 let editingImageUrl = null;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const clientSelect =
+document.getElementById(
+    "clientSelect"
+);
+
+const productSelect =
+document.getElementById(
+    "productSelect"
+);
 
 
 /* =========================
@@ -823,16 +945,15 @@ async function initialize(){
 
         if(!user){
 
-            showMessage(
-                "Please login first.",
-                "error"
-            );
+            window.location.href =
+                "admin.html";
 
             return;
         }
 
 
-        currentUser = user;
+        currentUser =
+            user;
 
 
         const {
@@ -841,8 +962,13 @@ async function initialize(){
         } =
         await supabaseClient
         .from("profiles")
-        .select("id,role,client_id,full_name")
-        .eq("id",user.id)
+        .select(
+            "id,role,client_id,full_name"
+        )
+        .eq(
+            "id",
+            user.id
+        )
         .single();
 
 
@@ -858,7 +984,8 @@ async function initialize(){
 
             document.getElementById(
                 "clientBox"
-            ).style.display = "block";
+            ).style.display =
+                "block";
 
 
             await loadClients();
@@ -881,7 +1008,7 @@ async function initialize(){
             }
 
 
-            await loadGallery();
+            await loadProducts();
 
         }
 
@@ -902,7 +1029,7 @@ async function initialize(){
 
 
 /* =========================
-   LOAD CLIENTS
+   CLIENTS
 ========================= */
 
 async function loadClients(){
@@ -918,39 +1045,32 @@ async function loadClients(){
     )
     .order(
         "company_name",
-        {ascending:true}
+        {
+            ascending:true
+        }
     );
 
 
-    if(error){
-
-        showMessage(
-            error.message,
-            "error"
-        );
-
-        return;
-    }
+    if(error)
+        throw error;
 
 
     clients =
         data || [];
 
 
-    const select =
-        document.getElementById(
-            "clientSelect"
-        );
-
-
-    select.innerHTML =
-        '<option value="">Select Client</option>';
+    clientSelect.innerHTML =
+    `<option value="">
+        Select Client
+    </option>`;
 
 
     clients.forEach(client => {
 
         const option =
-            document.createElement("option");
+        document.createElement(
+            "option"
+        );
 
 
         option.value =
@@ -961,27 +1081,37 @@ async function loadClients(){
             client.company_name;
 
 
-        select.appendChild(option);
+        clientSelect.appendChild(
+            option
+        );
 
     });
 
 
-    select.onchange =
+    clientSelect.onchange =
     async function(){
 
         currentClientId =
             this.value || null;
 
 
+        products = [];
+
         gallery = [];
 
 
-        renderGallery();
+        productSelect.innerHTML =
+        `<option value="">
+            -- Select Product --
+        </option>`;
+
+
+        resetGallery();
 
 
         if(currentClientId){
 
-            await loadGallery();
+            await loadProducts();
 
         }
 
@@ -991,16 +1121,143 @@ async function loadClients(){
 
 
 /* =========================
+   LOAD PRODUCTS
+========================= */
+
+async function loadProducts(){
+
+    if(!currentClientId){
+
+        productSelect.innerHTML =
+        `<option value="">
+            -- Select Product --
+        </option>`;
+
+        return;
+    }
+
+
+    productSelect.innerHTML =
+    `<option value="">
+        Loading products...
+    </option>`;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("products")
+    .select(
+        "id,name,product_code"
+    )
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .order(
+        "name",
+        {
+            ascending:true
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        productSelect.innerHTML =
+        `<option value="">
+            Error loading products
+        </option>`;
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    products =
+        data || [];
+
+
+    productSelect.innerHTML =
+    `<option value="">
+        -- Select Product --
+    </option>`;
+
+
+    products.forEach(product => {
+
+        const option =
+        document.createElement(
+            "option"
+        );
+
+
+        option.value =
+            product.id;
+
+
+        option.textContent =
+            product.product_code
+            ? `${product.name} (${product.product_code})`
+            : product.name;
+
+
+        productSelect.appendChild(
+            option
+        );
+
+    });
+
+}
+
+
+/* =========================
+   PRODUCT CHANGE
+========================= */
+
+productSelect.addEventListener(
+    "change",
+    async function(){
+
+        gallery = [];
+
+        renderGallery();
+
+
+        if(!this.value){
+
+            resetGallery();
+
+            return;
+        }
+
+
+        await loadGallery();
+
+    }
+);
+
+
+/* =========================
    LOAD GALLERY
 ========================= */
 
 async function loadGallery(){
 
-    if(!currentClientId){
+    if(
+        !currentClientId ||
+        !productSelect.value
+    ){
 
-        gallery = [];
-
-        renderGallery();
+        resetGallery();
 
         return;
     }
@@ -1009,7 +1266,9 @@ async function loadGallery(){
     document.getElementById(
         "galleryContainer"
     ).innerHTML =
-    '<div class="loading">Loading gallery...</div>';
+    `<div class="loading">
+        Loading gallery...
+    </div>`;
 
 
     const {
@@ -1023,13 +1282,21 @@ async function loadGallery(){
         "client_id",
         currentClientId
     )
+    .eq(
+        "product_id",
+        productSelect.value
+    )
     .order(
         "sort_order",
-        {ascending:true}
+        {
+            ascending:true
+        }
     )
     .order(
         "created_at",
-        {ascending:false}
+        {
+            ascending:false
+        }
     );
 
 
@@ -1037,20 +1304,29 @@ async function loadGallery(){
 
         console.error(error);
 
-        showMessage(
-            error.message,
-            "error"
-        );
-
         document.getElementById(
             "galleryContainer"
         ).innerHTML =
         `
         <div class="empty">
-            Unable to load gallery.<br><br>
-            ${escapeHtml(error.message)}
+
+            <h3>
+                Unable to load gallery
+            </h3>
+
+            <p>
+                ${escapeHtml(
+                    error.message
+                )}
+            </p>
+
         </div>
         `;
+
+        showMessage(
+            error.message,
+            "error"
+        );
 
         return;
     }
@@ -1068,38 +1344,89 @@ async function loadGallery(){
 
 
 /* =========================
+   RESET GALLERY
+========================= */
+
+function resetGallery(){
+
+    document.getElementById(
+        "galleryContainer"
+    ).innerHTML =
+    `
+    <div class="empty">
+
+        <h3>
+            Select a product
+        </h3>
+
+        <p>
+            Select a product to view gallery images.
+        </p>
+
+    </div>
+    `;
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        "0";
+
+
+    document.getElementById(
+        "activeCount"
+    ).textContent =
+        "0";
+
+
+    document.getElementById(
+        "inactiveCount"
+    ).textContent =
+        "0";
+
+}
+
+
+/* =========================
    CATEGORY FILTER
 ========================= */
 
 function populateCategoryFilter(){
 
     const select =
-        document.getElementById(
-            "categoryFilter"
-        );
+    document.getElementById(
+        "categoryFilter"
+    );
 
 
     const categories =
-        [
-            ...new Set(
-                gallery
-                .map(
-                    item => item.category
-                )
-                .filter(Boolean)
+    [
+        ...new Set(
+            gallery
+            .map(
+                item =>
+                    item.category
             )
-        ]
-        .sort();
+            .filter(Boolean)
+        )
+    ]
+    .sort();
 
 
     select.innerHTML =
-    '<option value="">All Categories</option>';
+    `
+    <option value="">
+        All Categories
+    </option>
+    `;
 
 
     categories.forEach(category => {
 
         const option =
-            document.createElement("option");
+        document.createElement(
+            "option"
+        );
 
 
         option.value =
@@ -1110,7 +1437,9 @@ function populateCategoryFilter(){
             category;
 
 
-        select.appendChild(option);
+        select.appendChild(
+            option
+        );
 
     });
 
@@ -1118,89 +1447,87 @@ function populateCategoryFilter(){
 
 
 /* =========================
-   RENDER GALLERY
+   RENDER
 ========================= */
 
 function renderGallery(){
 
     const search =
-        document.getElementById(
-            "search"
-        )
-        .value
-        .toLowerCase()
-        .trim();
+    document.getElementById(
+        "search"
+    )
+    .value
+    .toLowerCase()
+    .trim();
 
 
     const category =
-        document.getElementById(
-            "categoryFilter"
-        ).value;
+    document.getElementById(
+        "categoryFilter"
+    ).value;
 
 
     const status =
-        document.getElementById(
-            "statusFilter"
-        ).value;
+    document.getElementById(
+        "statusFilter"
+    ).value;
 
 
     const filtered =
-        gallery.filter(item => {
+    gallery.filter(item => {
 
-            const text =
+        const text =
+        (
+            (item.title || "") +
+            " " +
+            (item.caption || "") +
+            " " +
+            (item.category || "")
+        )
+        .toLowerCase();
+
+
+        return (
+
             (
-                (item.title || "") +
-                " " +
-                (item.description || "") +
-                " " +
-                (item.category || "")
+                !search ||
+                text.includes(search)
             )
-            .toLowerCase();
 
+            &&
 
-            return (
+            (
+                !category ||
+                item.category === category
+            )
 
-                (!search ||
-                    text.includes(search))
+            &&
 
-                &&
+            (
+                !status ||
+                item.status === status
+            )
 
-                (!category ||
-                    item.category === category)
+        );
 
-                &&
-
-                (!status ||
-                    item.status === status)
-
-            );
-
-        });
+    });
 
 
     updateStats();
 
 
     const container =
-        document.getElementById(
-            "galleryContainer"
-        );
+    document.getElementById(
+        "galleryContainer"
+    );
 
 
-    if(!currentClientId){
+    if(
+        !currentClientId ||
+        !productSelect.value
+    ){
 
-        container.innerHTML =
-        `
-        <div class="empty">
-
-            <h3>Select a client</h3>
-
-            <p>
-                Please select a client to view gallery.
-            </p>
-
-        </div>
-        `;
+        resetGallery();
 
         return;
     }
@@ -1212,10 +1539,12 @@ function renderGallery(){
         `
         <div class="empty">
 
-            <h3>No gallery images found</h3>
+            <h3>
+                No gallery images found
+            </h3>
 
             <p>
-                Add your first gallery image.
+                Click "+ Add Image" to upload one.
             </p>
 
         </div>
@@ -1231,7 +1560,10 @@ function renderGallery(){
 
         ${
             filtered
-            .map(item => createCard(item))
+            .map(
+                item =>
+                    createCard(item)
+            )
             .join("")
         }
 
@@ -1247,21 +1579,24 @@ function renderGallery(){
 
 function createCard(item){
 
-    const safeTitle =
+    const title =
         escapeHtml(
-            item.title || "Untitled"
+            item.title ||
+            "Untitled"
         );
 
 
-    const safeDescription =
+    const caption =
         escapeHtml(
-            item.description || ""
+            item.caption ||
+            ""
         );
 
 
-    const safeCategory =
+    const category =
         escapeHtml(
-            item.category || "Uncategorized"
+            item.category ||
+            "Uncategorized"
         );
 
 
@@ -1277,14 +1612,22 @@ function createCard(item){
         <div class="image-box">
 
             <img
-                src="${escapeAttribute(item.image_url)}"
-                alt="${safeTitle}"
+                src="${escapeAttribute(
+                    item.image_url
+                )}"
+                alt="${title}"
                 loading="lazy"
                 onerror="this.style.display='none';"
             >
 
-            <span class="status ${statusClass}">
-                ${escapeHtml(item.status || "active")}
+            <span
+                class="status ${statusClass}">
+
+                ${escapeHtml(
+                    item.status ||
+                    "active"
+                )}
+
             </span>
 
         </div>
@@ -1293,24 +1636,32 @@ function createCard(item){
         <div class="card-body">
 
             <div class="card-title">
-                ${safeTitle}
+                ${title}
             </div>
 
 
             <div class="card-category">
-                ${safeCategory}
+                ${category}
             </div>
 
 
-            <div class="card-description">
-                ${safeDescription}
+            <div class="card-caption">
+
+                ${
+                    caption ||
+                    "No caption"
+                }
+
             </div>
 
 
             <div class="card-footer">
 
                 <div class="order">
-                    Order: ${item.sort_order ?? 0}
+
+                    Order:
+                    ${item.sort_order ?? 0}
+
                 </div>
 
 
@@ -1357,13 +1708,15 @@ function updateStats(){
 
     const active =
         gallery.filter(
-            x => x.status === "active"
+            x =>
+                x.status === "active"
         ).length;
 
 
     const inactive =
         gallery.filter(
-            x => x.status === "inactive"
+            x =>
+                x.status === "inactive"
         ).length;
 
 
@@ -1391,12 +1744,29 @@ function updateStats(){
    OPEN MODAL
 ========================= */
 
-function openModal(id = null){
+function openModal(
+    id = null
+){
 
-    if(!currentClientId){
+    if(
+        !currentClientId
+    ){
 
         showMessage(
             "Please select a client first.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(
+        !productSelect.value
+    ){
+
+        showMessage(
+            "Please select a product first.",
             "error"
         );
 
@@ -1417,9 +1787,10 @@ function openModal(id = null){
     if(id){
 
         const item =
-            gallery.find(
-                x => x.id === id
-            );
+        gallery.find(
+            x =>
+                x.id === id
+        );
 
 
         if(!item)
@@ -1435,35 +1806,41 @@ function openModal(id = null){
         document.getElementById(
             "imageTitle"
         ).value =
-            item.title || "";
+            item.title ||
+            "";
 
 
         document.getElementById(
             "imageCategory"
         ).value =
-            item.category || "";
+            item.category ||
+            "";
 
 
         document.getElementById(
             "sortOrder"
         ).value =
-            item.sort_order ?? 0;
+            item.sort_order ??
+            0;
 
 
         document.getElementById(
-            "imageDescription"
+            "imageCaption"
         ).value =
-            item.description || "";
+            item.caption ||
+            "";
 
 
         document.getElementById(
             "imageStatus"
         ).value =
-            item.status || "active";
+            item.status ||
+            "active";
 
 
         editingImageUrl =
-            item.image_url || null;
+            item.image_url ||
+            null;
 
 
         document.getElementById(
@@ -1488,7 +1865,8 @@ function openModal(id = null){
 
         document.getElementById(
             "imageFile"
-        ).value = "";
+        ).value =
+            "";
 
 
         document.getElementById(
@@ -1581,7 +1959,7 @@ function clearForm(){
 
 
     document.getElementById(
-        "imageDescription"
+        "imageCaption"
     ).value =
         "";
 
@@ -1600,7 +1978,7 @@ function clearForm(){
 
 
 /* =========================
-   IMAGE PREVIEW
+   FILE PREVIEW
 ========================= */
 
 document.getElementById(
@@ -1619,14 +1997,21 @@ document.getElementById(
         }
 
 
-        if(!file.type.startsWith("image/")){
+        if(
+            !file.type.startsWith(
+                "image/"
+            )
+        ){
 
             showMessage(
                 "Please select a valid image.",
                 "error"
             );
 
-            this.value = "";
+            this.value =
+                "";
+
+            resetPreview();
 
             return;
         }
@@ -1636,14 +2021,20 @@ document.getElementById(
             10 * 1024 * 1024;
 
 
-        if(file.size > maxSize){
+        if(
+            file.size >
+            maxSize
+        ){
 
             showMessage(
                 "Image size must be less than 10 MB.",
                 "error"
             );
 
-            this.value = "";
+            this.value =
+                "";
+
+            resetPreview();
 
             return;
         }
@@ -1678,7 +2069,9 @@ document.getElementById(
         };
 
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(
+            file
+        );
 
     }
 );
@@ -1690,10 +2083,25 @@ document.getElementById(
 
 async function saveGallery(){
 
-    if(!currentClientId){
+    if(
+        !currentClientId
+    ){
 
         showMessage(
             "Please select a client.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(
+        !productSelect.value
+    ){
+
+        showMessage(
+            "Please select a product.",
             "error"
         );
 
@@ -1724,12 +2132,10 @@ async function saveGallery(){
     }
 
 
-    /*
-       New image requires a file.
-       Edit does not require a new file.
-    */
-
-    if(!editingId && !file){
+    if(
+        !editingId &&
+        !file
+    ){
 
         showMessage(
             "Please choose an image.",
@@ -1763,7 +2169,7 @@ async function saveGallery(){
 
 
         /* =========================
-           UPLOAD NEW FILE
+           UPLOAD
         ========================= */
 
         if(file){
@@ -1774,7 +2180,9 @@ async function saveGallery(){
             );
 
 
-            setProgress(15);
+            setProgress(
+                15
+            );
 
 
             const extension =
@@ -1785,24 +2193,16 @@ async function saveGallery(){
 
 
             const safeExtension =
-                extension || "jpg";
+                extension ||
+                "jpg";
 
 
             const uniqueName =
                 `${crypto.randomUUID()}.${safeExtension}`;
 
 
-            /*
-               Folder structure:
-
-               product-images/
-                 gallery/
-                   client_id/
-                     random-file.jpg
-            */
-
             const storagePath =
-                `gallery/${currentClientId}/${uniqueName}`;
+                `gallery/${currentClientId}/${productSelect.value}/${uniqueName}`;
 
 
             const {
@@ -1810,7 +2210,9 @@ async function saveGallery(){
             } =
             await supabaseClient
             .storage
-            .from(STORAGE_BUCKET)
+            .from(
+                STORAGE_BUCKET
+            )
             .upload(
                 storagePath,
                 file,
@@ -1826,7 +2228,9 @@ async function saveGallery(){
                 throw uploadError;
 
 
-            setProgress(65);
+            setProgress(
+                60
+            );
 
 
             const {
@@ -1834,7 +2238,9 @@ async function saveGallery(){
             } =
             supabaseClient
             .storage
-            .from(STORAGE_BUCKET)
+            .from(
+                STORAGE_BUCKET
+            )
             .getPublicUrl(
                 storagePath
             );
@@ -1856,13 +2262,15 @@ async function saveGallery(){
                 publicData.publicUrl;
 
 
-            setProgress(75);
+            setProgress(
+                75
+            );
 
         }
 
 
         /* =========================
-           DATABASE PAYLOAD
+           PAYLOAD
         ========================= */
 
         const payload = {
@@ -1870,13 +2278,17 @@ async function saveGallery(){
             client_id:
                 currentClientId,
 
+            product_id:
+                productSelect.value,
+
             title:
                 title,
 
-            description:
+            caption:
                 document.getElementById(
-                    "imageDescription"
-                ).value.trim() || null,
+                    "imageCaption"
+                ).value.trim()
+                || null,
 
             image_url:
                 imageUrl,
@@ -1884,7 +2296,8 @@ async function saveGallery(){
             category:
                 document.getElementById(
                     "imageCategory"
-                ).value.trim() || null,
+                ).value.trim()
+                || null,
 
             sort_order:
                 parseInt(
@@ -1918,7 +2331,9 @@ async function saveGallery(){
             } =
             await supabaseClient
             .from("gallery")
-            .update(payload)
+            .update(
+                payload
+            )
             .eq(
                 "id",
                 editingId
@@ -1926,6 +2341,10 @@ async function saveGallery(){
             .eq(
                 "client_id",
                 currentClientId
+            )
+            .eq(
+                "product_id",
+                productSelect.value
             );
 
 
@@ -1933,7 +2352,9 @@ async function saveGallery(){
                 throw error;
 
 
-            setProgress(100);
+            setProgress(
+                100
+            );
 
 
             showMessage(
@@ -1961,14 +2382,18 @@ async function saveGallery(){
             } =
             await supabaseClient
             .from("gallery")
-            .insert(payload);
+            .insert(
+                payload
+            );
 
 
             if(error)
                 throw error;
 
 
-            setProgress(100);
+            setProgress(
+                100
+            );
 
 
             showMessage(
@@ -1979,19 +2404,17 @@ async function saveGallery(){
         }
 
 
-        /*
-           Reload gallery
-        */
-
         await loadGallery();
 
 
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            closeModal();
+                closeModal();
 
-        },500);
-
+            },
+            500
+        );
 
     }
     catch(error){
@@ -2048,7 +2471,8 @@ async function deleteGallery(id){
 
     const item =
         gallery.find(
-            x => x.id === id
+            x =>
+                x.id === id
         );
 
 
@@ -2056,13 +2480,13 @@ async function deleteGallery(id){
         return;
 
 
-    const confirmDelete =
+    const confirmed =
         confirm(
             `Delete "${item.title || "this image"}"?`
         );
 
 
-    if(!confirmDelete)
+    if(!confirmed)
         return;
 
 
@@ -2081,6 +2505,10 @@ async function deleteGallery(id){
         .eq(
             "client_id",
             currentClientId
+        )
+        .eq(
+            "product_id",
+            productSelect.value
         );
 
 
@@ -2089,8 +2517,7 @@ async function deleteGallery(id){
 
 
         /*
-           Database delete successful.
-           Now attempt Storage delete.
+           Delete storage file too
         */
 
         const storagePath =
@@ -2102,21 +2529,23 @@ async function deleteGallery(id){
         if(storagePath){
 
             const {
-                error:storageDeleteError
+                error:storageError
             } =
             await supabaseClient
             .storage
-            .from(STORAGE_BUCKET)
+            .from(
+                STORAGE_BUCKET
+            )
             .remove([
                 storagePath
             ]);
 
 
-            if(storageDeleteError){
+            if(storageError){
 
                 console.warn(
                     "Storage delete warning:",
-                    storageDeleteError
+                    storageError
                 );
 
             }
@@ -2150,10 +2579,12 @@ async function deleteGallery(id){
 
 
 /* =========================
-   STORAGE PATH FROM URL
+   STORAGE PATH
 ========================= */
 
-function getStoragePathFromUrl(url){
+function getStoragePathFromUrl(
+    url
+){
 
     if(!url)
         return null;
@@ -2166,16 +2597,23 @@ function getStoragePathFromUrl(url){
 
 
         const index =
-            url.indexOf(marker);
+            url.indexOf(
+                marker
+            );
 
 
-        if(index === -1)
+        if(
+            index === -1
+        ){
+
             return null;
+        }
 
 
         return decodeURIComponent(
             url.substring(
-                index + marker.length
+                index +
+                marker.length
             )
         );
 
@@ -2219,7 +2657,7 @@ function resetPreview(){
 
 
 /* =========================
-   UPLOAD STATUS
+   STATUS
 ========================= */
 
 function setUploadStatus(
@@ -2238,7 +2676,8 @@ function setUploadStatus(
 
 
     status.className =
-        "upload-status " + type;
+        "upload-status " +
+        type;
 
 }
 
@@ -2277,7 +2716,9 @@ function clearUploadStatus(){
    PROGRESS
 ========================= */
 
-function setProgress(value){
+function setProgress(
+    value
+){
 
     document.getElementById(
         "progressWrap"
@@ -2313,28 +2754,34 @@ function showMessage(
 
 
     box.className =
-        "message " + type;
+        "message " +
+        type;
 
 
     box.style.display =
         "block";
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        box.style.display =
-            "none";
+            box.style.display =
+                "none";
 
-    },3500);
+        },
+        3500
+    );
 
 }
 
 
 /* =========================
-   ESCAPE HTML
+   ESCAPE
 ========================= */
 
-function escapeHtml(value){
+function escapeHtml(
+    value
+){
 
     return String(
         value ?? ""
@@ -2363,26 +2810,15 @@ function escapeHtml(value){
 }
 
 
-function escapeAttribute(value){
+function escapeAttribute(
+    value
+){
 
-    return escapeHtml(value);
+    return escapeHtml(
+        value
+    );
 
 }
-
-
-/* =========================
-   HIDDEN CLASS
-========================= */
-
-const hiddenStyle =
-document.createElement("style");
-
-hiddenStyle.textContent =
-".hidden{display:none !important;}";
-
-document.head.appendChild(
-    hiddenStyle
-);
 
 
 /* =========================
@@ -2408,7 +2844,7 @@ document.getElementById(
 
 
 /* =========================
-   ESC KEY
+   ESC
 ========================= */
 
 document.addEventListener(
@@ -2437,3 +2873,4 @@ initialize();
 
 </body>
 </html>
+```
