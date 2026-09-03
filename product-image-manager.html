@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Product Images - MD Kaif Web Platform</title>
+<title>Product Image Manager</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -17,320 +17,289 @@
 
 body{
     font-family:Arial,Helvetica,sans-serif;
-    background:#f1f5f9;
-    color:#0f172a;
-}
-
-.header{
-    height:70px;
-    background:#0f172a;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 25px;
-}
-
-.logo{
-    font-size:21px;
-    font-weight:900;
-}
-
-.logo span{
-    color:#60a5fa;
-}
-
-.header-right{
-    display:flex;
-    gap:10px;
-    align-items:center;
-}
-
-.btn{
-    border:0;
-    border-radius:8px;
-    padding:10px 15px;
-    cursor:pointer;
-    font-weight:700;
-    text-decoration:none;
-}
-
-.dashboard-btn{
-    background:#334155;
-    color:white;
-}
-
-.logout-btn{
-    background:#dc2626;
-    color:white;
+    background:#f5f7fb;
+    color:#1f2937;
 }
 
 .container{
-    max-width:1250px;
-    margin:auto;
-    padding:25px;
+    max-width:1200px;
+    margin:30px auto;
+    padding:0 20px;
 }
 
-.topbar{
+.header{
+    background:#fff;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:20px;
     gap:15px;
 }
 
-.title h1{
-    font-size:28px;
+.header h1{
+    font-size:25px;
 }
 
-.title p{
-    color:#64748b;
-    font-size:14px;
+.header p{
     margin-top:5px;
+    color:#6b7280;
+    font-size:14px;
 }
 
-.add-btn{
-    background:#2563eb;
-    color:white;
+.logout{
+    background:#dc2626;
+    color:#fff;
+    border:0;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
 }
 
 .card{
-    background:white;
-    border:1px solid #e2e8f0;
+    background:#fff;
     border-radius:14px;
-    padding:20px;
+    padding:22px;
     margin-bottom:20px;
-}
-
-.filter-row{
-    display:grid;
-    grid-template-columns:1fr auto;
-    gap:15px;
-    align-items:end;
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
 }
 
 label{
     display:block;
-    font-size:13px;
-    font-weight:800;
+    font-size:14px;
+    font-weight:600;
     margin-bottom:7px;
 }
 
 select,
-input{
+input[type="text"],
+input[type="url"],
+input[type="file"]{
     width:100%;
     padding:12px;
-    border:1px solid #cbd5e1;
+    border:1px solid #d1d5db;
     border-radius:8px;
+    background:#fff;
     font-size:14px;
-    outline:none;
 }
 
 select:focus,
 input:focus{
+    outline:none;
     border-color:#2563eb;
 }
 
-.form-grid{
+.btn{
+    border:0;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:#fff;
+}
+
+.btn-success{
+    background:#16a34a;
+    color:#fff;
+}
+
+.btn-secondary{
+    background:#6b7280;
+    color:#fff;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:#fff;
+}
+
+.btn-warning{
+    background:#d97706;
+    color:#fff;
+}
+
+.btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.row{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:15px;
+    gap:18px;
 }
 
-.form-group.full{
-    grid-column:1 / -1;
-}
-
-.form-actions{
+.actions{
+    margin-top:18px;
     display:flex;
     gap:10px;
-    margin-top:18px;
-}
-
-.save-btn{
-    background:#16a34a;
-    color:white;
-}
-
-.cancel-btn{
-    background:#e2e8f0;
-    color:#334155;
+    flex-wrap:wrap;
 }
 
 .hidden{
-    display:none;
+    display:none !important;
 }
 
-.message{
-    display:none;
-    padding:12px;
-    border-radius:8px;
-    margin-bottom:18px;
+.preview-box{
+    margin-top:15px;
+    width:180px;
+    height:180px;
+    border:2px dashed #d1d5db;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:#f9fafb;
+}
+
+.preview-box img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.preview-placeholder{
+    color:#9ca3af;
     font-size:13px;
+    text-align:center;
+    padding:10px;
 }
 
-.message.success{
-    display:block;
-    background:#dcfce7;
-    color:#166534;
+.progress-wrap{
+    margin-top:15px;
+    background:#e5e7eb;
+    height:8px;
+    border-radius:10px;
+    overflow:hidden;
 }
 
-.message.error{
-    display:block;
-    background:#fee2e2;
-    color:#991b1b;
+.progress{
+    height:100%;
+    width:0%;
+    background:#2563eb;
+    transition:.2s;
 }
 
-.product-info{
+.status{
+    margin-top:12px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.status.success{
+    color:#15803d;
+}
+
+.status.error{
+    color:#dc2626;
+}
+
+.status.info{
+    color:#2563eb;
+}
+
+.images-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:15px;
+    margin-bottom:18px;
+    gap:10px;
 }
 
-.product-name{
-    font-size:18px;
-    font-weight:900;
-}
-
-.image-count{
-    color:#64748b;
-    font-size:13px;
+.images-header h2{
+    font-size:20px;
 }
 
 .image-grid{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
     gap:18px;
 }
 
 .image-card{
-    border:1px solid #e2e8f0;
+    border:1px solid #e5e7eb;
     border-radius:12px;
     overflow:hidden;
-    background:white;
+    background:#fff;
 }
 
-.image-preview{
+.image-card-image{
     width:100%;
-    height:190px;
-    background:#f8fafc;
+    height:210px;
+    background:#f3f4f6;
     display:flex;
     align-items:center;
     justify-content:center;
     overflow:hidden;
 }
 
-.image-preview img{
+.image-card-image img{
     width:100%;
     height:100%;
     object-fit:contain;
 }
 
-.image-body{
-    padding:13px;
+.image-info{
+    padding:14px;
 }
 
-.image-alt{
+.image-info h3{
+    font-size:15px;
+    margin-bottom:7px;
+}
+
+.image-info p{
+    color:#6b7280;
     font-size:13px;
-    font-weight:700;
-    min-height:18px;
+    margin-bottom:5px;
     word-break:break-word;
 }
 
-.image-order{
-    color:#64748b;
-    font-size:12px;
-    margin-top:5px;
-}
-
-.image-url{
-    color:#64748b;
-    font-size:11px;
-    margin-top:7px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-}
-
-.image-actions{
+.card-actions{
     display:flex;
     gap:7px;
     margin-top:12px;
 }
 
-.edit-btn,
-.delete-btn{
+.card-actions button{
+    flex:1;
+    padding:8px;
     border:0;
     border-radius:7px;
-    padding:7px 10px;
     cursor:pointer;
-    font-size:12px;
-    font-weight:700;
-}
-
-.edit-btn{
-    background:#dbeafe;
-    color:#1d4ed8;
-}
-
-.delete-btn{
-    background:#fee2e2;
-    color:#b91c1c;
+    font-size:13px;
 }
 
 .empty{
+    padding:40px 20px;
     text-align:center;
-    padding:45px;
-    color:#64748b;
+    color:#6b7280;
+    border:2px dashed #e5e7eb;
+    border-radius:12px;
 }
 
 .loading{
     text-align:center;
     padding:30px;
-    color:#64748b;
-}
-
-@media(max-width:950px){
-
-    .image-grid{
-        grid-template-columns:repeat(3,1fr);
-    }
+    color:#6b7280;
 }
 
 @media(max-width:700px){
-
-    .container{
-        padding:15px;
+    .row{
+        grid-template-columns:1fr;
     }
 
     .header{
-        padding:0 15px;
-    }
-
-    .filter-row{
-        grid-template-columns:1fr;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .form-group.full{
-        grid-column:auto;
-    }
-
-    .image-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .topbar{
-        align-items:flex-start;
         flex-direction:column;
+        align-items:flex-start;
     }
-}
-
-@media(max-width:450px){
 
     .image-grid{
         grid-template-columns:1fr;
@@ -341,223 +310,167 @@ input:focus{
 
 <body>
 
-<header class="header">
-
-    <div class="logo">
-        MD <span>KAIF</span>
-    </div>
-
-    <div class="header-right">
-
-        <a
-            href="dashboard.html"
-            class="btn dashboard-btn">
-            Dashboard
-        </a>
-
-        <button
-            class="btn logout-btn"
-            id="logoutBtn">
-            Logout
-        </button>
-
-    </div>
-
-</header>
-
-
 <div class="container">
 
-    <div class="topbar">
-
-        <div class="title">
-
-            <h1>Product Images</h1>
-
-            <p>
-                Manage multiple images for your products.
-            </p>
-
+    <div class="header">
+        <div>
+            <h1>Product Image Manager</h1>
+            <p>Upload and manage product images</p>
         </div>
 
-        <button
-            class="btn add-btn"
-            id="addImageBtn">
-            + Add Image
+        <button class="logout" id="logoutBtn">
+            Logout
         </button>
-
-    </div>
-
-
-    <div
-        id="message"
-        class="message">
     </div>
 
 
     <!-- PRODUCT SELECT -->
-
     <div class="card">
 
-        <div class="filter-row">
+        <label for="productSelect">
+            Select Product
+        </label>
 
-            <div>
+        <select id="productSelect">
+            <option value="">Loading products...</option>
+        </select>
 
-                <label>
-                    Select Product
-                </label>
-
-                <select
-                    id="productSelect">
-
-                    <option value="">
-                        Select Product
-                    </option>
-
-                </select>
-
-            </div>
-
+        <div class="actions">
+            <button
+                type="button"
+                class="btn btn-primary"
+                id="addImageBtn">
+                + Add Image
+            </button>
         </div>
 
     </div>
 
 
-    <!-- ADD / EDIT FORM -->
+    <!-- ADD / EDIT IMAGE -->
+    <div class="card hidden" id="imageFormCard">
 
-    <div
-        id="imageFormCard"
-        class="card hidden">
-
-        <h2
-            id="formTitle"
-            style="font-size:18px;margin-bottom:18px;">
+        <h2 id="formTitle">
             Add Product Image
         </h2>
 
+        <br>
 
-        <form id="imageForm">
+        <div class="row">
 
-            <input
-                type="hidden"
-                id="imageId">
+            <div>
 
+                <label for="imageFile">
+                    Choose Image *
+                </label>
 
-            <div class="form-grid">
+                <input
+                    type="file"
+                    id="imageFile"
+                    accept="image/jpeg,image/png,image/webp,image/gif">
 
-                <div class="form-group full">
-
-                    <label>
-                        Image URL *
-                    </label>
-
-                    <input
-                        type="url"
-                        id="imageUrl"
-                        placeholder="https://example.com/product-image.jpg"
-                        required>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Alt Text
-                    </label>
-
-                    <input
-                        type="text"
-                        id="altText"
-                        placeholder="Product image">
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Sort Order
-                    </label>
-
-                    <input
-                        type="number"
-                        id="sortOrder"
-                        value="0"
-                        min="0">
-
-                </div>
+                <small style="display:block;margin-top:7px;color:#6b7280;">
+                    JPG, PNG, WEBP or GIF
+                </small>
 
             </div>
 
 
-            <div class="form-actions">
+            <div>
 
-                <button
-                    type="submit"
-                    class="btn save-btn"
-                    id="saveBtn">
-                    Save Image
-                </button>
+                <label for="altText">
+                    Alt Text
+                </label>
 
-                <button
-                    type="button"
-                    class="btn cancel-btn"
-                    id="cancelBtn">
-                    Cancel
-                </button>
+                <input
+                    type="text"
+                    id="altText"
+                    placeholder="Product image description">
 
             </div>
 
-        </form>
+        </div>
+
+
+        <!-- PREVIEW -->
+        <div class="preview-box" id="previewBox">
+
+            <div class="preview-placeholder" id="previewPlaceholder">
+                Image preview will appear here
+            </div>
+
+            <img
+                id="imagePreview"
+                class="hidden"
+                alt="Preview">
+
+        </div>
+
+
+        <div
+            class="progress-wrap hidden"
+            id="progressWrap">
+
+            <div
+                class="progress"
+                id="progressBar">
+            </div>
+
+        </div>
+
+
+        <div
+            class="status"
+            id="uploadStatus">
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                type="button"
+                class="btn btn-success"
+                id="saveImageBtn">
+
+                Upload & Save
+
+            </button>
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                id="cancelBtn">
+
+                Cancel
+
+            </button>
+
+        </div>
 
     </div>
 
 
     <!-- IMAGES -->
-
     <div class="card">
 
-        <div
-            id="loading"
-            class="loading">
+        <div class="images-header">
 
-            Select a product to view images.
+            <h2>
+                Product Images
+            </h2>
+
+            <span
+                id="imageCount"
+                style="color:#6b7280;font-size:14px;">
+                0 Images
+            </span>
 
         </div>
 
+        <div id="imagesContainer">
 
-        <div
-            id="imageArea"
-            class="hidden">
-
-            <div class="product-info">
-
-                <div
-                    id="selectedProductName"
-                    class="product-name">
-                </div>
-
-                <div
-                    id="imageCount"
-                    class="image-count">
-                </div>
-
-            </div>
-
-
-            <div
-                id="imageGrid"
-                class="image-grid">
-            </div>
-
-
-            <div
-                id="emptyImages"
-                class="empty hidden">
-
-                No images found for this product.
-
+            <div class="empty">
+                Select a product to view images.
             </div>
 
         </div>
@@ -569,232 +482,190 @@ input:focus{
 
 <script>
 
-/* ==========================================
-   SUPABASE
-========================================== */
-
 const SUPABASE_URL =
-"https://ywvdozdoanmcxscfofcf.supabase.co";
+    "https://ywvdozdoanmcxscfofcf.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const STORAGE_BUCKET =
+    "product-images";
+
 
 const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
-
-/* ==========================================
-   VARIABLES
-========================================== */
 
 let currentUser = null;
 let currentClientId = null;
+
 let products = [];
 
+let editingImageId = null;
+let editingImageUrl = null;
 
-/* ==========================================
-   ELEMENTS
-========================================== */
+
+/* ================================
+   DOM
+================================ */
 
 const productSelect =
-document.getElementById("productSelect");
+    document.getElementById("productSelect");
+
+const addImageBtn =
+    document.getElementById("addImageBtn");
 
 const imageFormCard =
-document.getElementById("imageFormCard");
+    document.getElementById("imageFormCard");
 
-const imageForm =
-document.getElementById("imageForm");
+const imageFile =
+    document.getElementById("imageFile");
 
-const imageId =
-document.getElementById("imageId");
+const imagePreview =
+    document.getElementById("imagePreview");
 
-const imageUrl =
-document.getElementById("imageUrl");
+const previewPlaceholder =
+    document.getElementById("previewPlaceholder");
 
 const altText =
-document.getElementById("altText");
+    document.getElementById("altText");
 
-const sortOrder =
-document.getElementById("sortOrder");
+const saveImageBtn =
+    document.getElementById("saveImageBtn");
 
-const saveBtn =
-document.getElementById("saveBtn");
+const cancelBtn =
+    document.getElementById("cancelBtn");
 
-const formTitle =
-document.getElementById("formTitle");
-
-const imageGrid =
-document.getElementById("imageGrid");
-
-const imageArea =
-document.getElementById("imageArea");
-
-const emptyImages =
-document.getElementById("emptyImages");
-
-const selectedProductName =
-document.getElementById("selectedProductName");
+const imagesContainer =
+    document.getElementById("imagesContainer");
 
 const imageCount =
-document.getElementById("imageCount");
+    document.getElementById("imageCount");
 
-const loading =
-document.getElementById("loading");
+const uploadStatus =
+    document.getElementById("uploadStatus");
 
-const message =
-document.getElementById("message");
+const progressWrap =
+    document.getElementById("progressWrap");
 
+const progressBar =
+    document.getElementById("progressBar");
 
-/* ==========================================
-   MESSAGE
-========================================== */
+const formTitle =
+    document.getElementById("formTitle");
 
-function showMessage(
-    text,
-    type
-){
-
-    message.textContent =
-    text;
-
-    message.className =
-    "message " + type;
-
-    setTimeout(
-        () => {
-            message.className =
-            "message";
-        },
-        4000
-    );
-
-}
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
 
-/* ==========================================
-   ESCAPE
-========================================== */
-
-function escapeHtml(
-    value
-){
-
-    return String(
-        value ?? ""
-    )
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-/* ==========================================
-   LOGIN + PROFILE
-========================================== */
+/* ================================
+   INITIALIZE
+================================ */
 
 async function initialize(){
 
-    const {
-        data:{
-            user
+    try{
+
+        const {
+            data: { user },
+            error
+        } =
+        await supabaseClient.auth.getUser();
+
+
+        if(error){
+            throw error;
         }
-    } =
-    await supabaseClient
-    .auth
-    .getUser();
 
 
-    if(!user){
+        if(!user){
 
-        window.location.href =
-        "admin.html";
+            window.location.href =
+                "admin.html";
 
-        return;
+            return;
+        }
+
+
+        currentUser = user;
+
+
+        /* GET PROFILE */
+
+        const {
+            data: profile,
+            error: profileError
+        } =
+        await supabaseClient
+        .from("profiles")
+        .select("id,role,client_id")
+        .eq("id", user.id)
+        .single();
+
+
+        if(profileError){
+
+            console.error(profileError);
+
+            showStatus(
+                "Unable to load user profile.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        currentClientId =
+            profile.client_id;
+
+
+        if(!currentClientId){
+
+            showStatus(
+                "Your user is not assigned to a client yet.",
+                "error"
+            );
+
+            productSelect.innerHTML =
+                `<option value="">
+                    No client assigned
+                </option>`;
+
+            return;
+        }
+
+
+        await loadProducts();
 
     }
-
-
-    currentUser =
-    user;
-
-
-    const {
-        data:profile,
-        error
-    } =
-    await supabaseClient
-    .from("profiles")
-    .select(
-        "id,role,client_id"
-    )
-    .eq(
-        "id",
-        user.id
-    )
-    .single();
-
-
-    if(error){
+    catch(error){
 
         console.error(error);
 
-        showMessage(
-            "Unable to load user profile: " +
-            error.message,
+        showStatus(
+            error.message || "Initialization failed.",
             "error"
         );
 
-        return;
-
     }
-
-
-    currentClientId =
-    profile.client_id;
-
-
-    /*
-       Client must be assigned
-       for client-specific images.
-    */
-
-    if(!currentClientId){
-
-        showMessage(
-            "Your user is not assigned to a client yet.",
-            "error"
-        );
-
-        loading.textContent =
-        "No client assigned to this user.";
-
-        return;
-
-    }
-
-
-    await loadProducts();
 
 }
 
 
-/* ==========================================
+/* ================================
    LOAD PRODUCTS
-========================================== */
+================================ */
 
 async function loadProducts(){
 
-    productSelect.innerHTML = `
-        <option value="">
-            Select Product
-        </option>
-    `;
+    productSelect.innerHTML =
+        `<option value="">
+            Loading products...
+        </option>`;
 
 
     const {
@@ -803,134 +674,98 @@ async function loadProducts(){
     } =
     await supabaseClient
     .from("products")
-    .select(
-        "id,name,product_code"
-    )
-    .eq(
-        "client_id",
-        currentClientId
-    )
-    .order(
-        "name",
-        {
-            ascending:true
-        }
-    );
+    .select("id,name,product_code")
+    .eq("client_id", currentClientId)
+    .order("name",{ascending:true});
 
 
     if(error){
 
         console.error(error);
 
-        showMessage(
-            "Unable to load products: " +
-            error.message,
+        productSelect.innerHTML =
+            `<option value="">
+                Error loading products
+            </option>`;
+
+        showStatus(
+            "Unable to load products: " + error.message,
             "error"
         );
 
         return;
-
     }
 
 
-    products =
-    data || [];
+    products = data || [];
 
 
-    products.forEach(
-        product => {
+    productSelect.innerHTML =
+        `<option value="">
+            -- Select Product --
+        </option>`;
 
-            const option =
+
+    products.forEach(product => {
+
+        const option =
             document.createElement("option");
 
-            option.value =
+        option.value =
             product.id;
 
-            option.textContent =
+        option.textContent =
             product.product_code
             ? `${product.name} (${product.product_code})`
             : product.name;
 
-            productSelect.appendChild(
-                option
-            );
+        productSelect.appendChild(option);
 
-        }
-    );
+    });
 
 }
 
 
-/* ==========================================
+/* ================================
    PRODUCT CHANGE
-========================================== */
+================================ */
 
 productSelect.addEventListener(
     "change",
     async function(){
 
-        const productId =
-        this.value;
+        closeForm();
 
+        if(!this.value){
 
-        imageFormCard.classList.add(
-            "hidden"
-        );
+            imagesContainer.innerHTML =
+                `<div class="empty">
+                    Select a product to view images.
+                </div>`;
 
-
-        if(!productId){
-
-            imageArea.classList.add(
-                "hidden"
-            );
-
-            loading.textContent =
-            "Select a product to view images.";
-
-            loading.classList.remove(
-                "hidden"
-            );
+            imageCount.textContent =
+                "0 Images";
 
             return;
-
         }
 
 
-        const product =
-        products.find(
-            p => p.id === productId
-        );
-
-
-        selectedProductName.textContent =
-        product
-        ? product.name
-        : "";
-
-
-        await loadImages(
-            productId
-        );
+        await loadImages(this.value);
 
     }
 );
 
 
-/* ==========================================
+/* ================================
    LOAD IMAGES
-========================================== */
+================================ */
 
-async function loadImages(
-    productId
-){
+async function loadImages(productId){
 
-    loading.classList.remove(
-        "hidden"
-    );
-
-    imageArea.classList.add(
-        "hidden"
-    );
+    imagesContainer.innerHTML =
+        `<div class="loading">
+            Loading images...
+        </div>`;
 
 
     const {
@@ -939,561 +774,896 @@ async function loadImages(
     } =
     await supabaseClient
     .from("product_images")
-    .select(
-        "id,product_id,client_id,image_url,alt_text,sort_order,created_at"
-    )
-    .eq(
-        "client_id",
-        currentClientId
-    )
-    .eq(
-        "product_id",
-        productId
-    )
-    .order(
-        "sort_order",
-        {
-            ascending:true
-        }
-    );
-
-
-    loading.classList.add(
-        "hidden"
-    );
+    .select("*")
+    .eq("client_id", currentClientId)
+    .eq("product_id", productId)
+    .order("sort_order",{ascending:true})
+    .order("created_at",{ascending:false});
 
 
     if(error){
 
         console.error(error);
 
-        showMessage(
-            "Unable to load images: " +
-            error.message,
-            "error"
-        );
+        imagesContainer.innerHTML =
+            `<div class="empty">
+                Unable to load images.<br>
+                ${escapeHtml(error.message)}
+            </div>`;
 
         return;
-
     }
 
 
-    imageGrid.innerHTML = "";
-
-
-    imageArea.classList.remove(
-        "hidden"
-    );
+    const images =
+        data || [];
 
 
     imageCount.textContent =
-    `${data.length} image${data.length === 1 ? "" : "s"}`;
+        `${images.length} Image${images.length === 1 ? "" : "s"}`;
 
 
-    if(data.length === 0){
+    if(images.length === 0){
 
-        emptyImages.classList.remove(
-            "hidden"
-        );
+        imagesContainer.innerHTML =
+            `<div class="empty">
+                No images found for this product.<br><br>
+                Click <b>+ Add Image</b> to upload the first image.
+            </div>`;
 
         return;
-
     }
 
 
-    emptyImages.classList.add(
-        "hidden"
-    );
+    const grid =
+        document.createElement("div");
+
+    grid.className =
+        "image-grid";
 
 
-    data.forEach(
-        image => {
+    images.forEach(image => {
 
-            const card =
+        const card =
             document.createElement("div");
 
-            card.className =
+        card.className =
             "image-card";
 
 
-            card.innerHTML = `
+        card.innerHTML = `
 
-                <div class="image-preview">
+            <div class="image-card-image">
 
-                    <img
-                        src="${escapeHtml(image.image_url)}"
-                        alt="${escapeHtml(image.alt_text || "Product image")}"
-                        onerror="this.style.display='none';this.parentElement.innerHTML='<span style=&quot;color:#94a3b8;font-size:13px;&quot;>Image unavailable</span>'">
+                <img
+                    src="${escapeAttribute(image.image_url)}"
+                    alt="${escapeAttribute(image.alt_text || "Product Image")}"
+                    loading="lazy"
+                    onerror="this.style.display='none';">
 
-                </div>
+            </div>
 
+            <div class="image-info">
 
-                <div class="image-body">
+                <h3>
+                    ${escapeHtml(image.alt_text || "Product Image")}
+                </h3>
 
-                    <div class="image-alt">
+                <p>
+                    Sort Order:
+                    ${image.sort_order ?? 0}
+                </p>
 
-                        ${escapeHtml(
-                            image.alt_text ||
-                            "No alt text"
-                        )}
+                <p>
+                    ${escapeHtml(image.image_url)}
+                </p>
 
-                    </div>
+                <div class="card-actions">
 
+                    <button
+                        class="btn-warning"
+                        onclick="editImage('${image.id}')">
 
-                    <div class="image-order">
+                        Edit
 
-                        Sort Order:
-                        ${image.sort_order ?? 0}
+                    </button>
 
-                    </div>
+                    <button
+                        class="btn-danger"
+                        onclick="deleteImage('${image.id}','${escapeAttribute(image.image_url)}')">
 
+                        Delete
 
-                    <div
-                        class="image-url"
-                        title="${escapeHtml(image.image_url)}">
-
-                        ${escapeHtml(image.image_url)}
-
-                    </div>
-
-
-                    <div class="image-actions">
-
-                        <button
-                            class="edit-btn"
-                            onclick="editImage('${image.id}')">
-
-                            Edit
-
-                        </button>
-
-
-                        <button
-                            class="delete-btn"
-                            onclick="deleteImage('${image.id}')">
-
-                            Delete
-
-                        </button>
-
-                    </div>
+                    </button>
 
                 </div>
 
-            `;
+            </div>
+
+        `;
 
 
-            imageGrid.appendChild(
-                card
-            );
+        grid.appendChild(card);
 
-        }
-    );
+    });
+
+
+    imagesContainer.innerHTML = "";
+
+    imagesContainer.appendChild(grid);
 
 }
 
 
-/* ==========================================
+/* ================================
    ADD IMAGE
-========================================== */
+================================ */
 
-document
-.getElementById("addImageBtn")
-.addEventListener(
+addImageBtn.addEventListener(
     "click",
     function(){
 
         if(!productSelect.value){
 
-            showMessage(
-                "Please select a product first.",
-                "error"
-            );
+            alert("Please select a product first.");
 
             return;
-
         }
 
 
-        imageForm.reset();
-
-        imageId.value =
-        "";
-
-        sortOrder.value =
-        "0";
+        editingImageId = null;
+        editingImageUrl = null;
 
         formTitle.textContent =
-        "Add Product Image";
+            "Add Product Image";
 
-        saveBtn.textContent =
-        "Save Image";
+        saveImageBtn.textContent =
+            "Upload & Save";
 
-        imageFormCard.classList.remove(
-            "hidden"
-        );
+        imageFile.value = "";
 
-        imageUrl.focus();
+        altText.value = "";
 
-        window.scrollTo(
-            {
-                top:200,
-                behavior:"smooth"
-            }
-        );
+        resetPreview();
+
+        clearStatus();
+
+        imageFormCard.classList.remove("hidden");
+
+        imageFormCard.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
 
     }
 );
 
 
-/* ==========================================
-   CANCEL
-========================================== */
+/* ================================
+   IMAGE PREVIEW
+================================ */
 
-document
-.getElementById("cancelBtn")
-.addEventListener(
-    "click",
+imageFile.addEventListener(
+    "change",
     function(){
 
-        imageFormCard.classList.add(
-            "hidden"
-        );
+        const file =
+            this.files[0];
+
+
+        if(!file){
+
+            resetPreview();
+
+            return;
+        }
+
+
+        if(!file.type.startsWith("image/")){
+
+            alert("Please select a valid image file.");
+
+            this.value = "";
+
+            resetPreview();
+
+            return;
+        }
+
+
+        const maxSize =
+            10 * 1024 * 1024;
+
+
+        if(file.size > maxSize){
+
+            alert("Image size must be less than 10 MB.");
+
+            this.value = "";
+
+            resetPreview();
+
+            return;
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e){
+
+                imagePreview.src =
+                    e.target.result;
+
+                imagePreview.classList.remove(
+                    "hidden"
+                );
+
+                previewPlaceholder.classList.add(
+                    "hidden"
+                );
+
+            };
+
+
+        reader.readAsDataURL(file);
 
     }
 );
 
 
-/* ==========================================
+/* ================================
    SAVE IMAGE
-========================================== */
+================================ */
 
-imageForm.addEventListener(
-    "submit",
-    async function(e){
+saveImageBtn.addEventListener(
+    "click",
+    async function(){
 
-        e.preventDefault();
+        if(!productSelect.value){
 
-
-        const productId =
-        productSelect.value;
-
-
-        if(!productId){
-
-            showMessage(
-                "Please select a product first.",
-                "error"
-            );
+            alert("Please select a product first.");
 
             return;
-
         }
 
 
-        const url =
-        imageUrl.value.trim();
-
-        const alt =
-        altText.value.trim();
-
-        const order =
-        parseInt(
-            sortOrder.value
-        ) || 0;
+        const file =
+            imageFile.files[0];
 
 
-        if(!url){
+        /*
+            ADD MODE
+        */
 
-            showMessage(
-                "Image URL is required.",
-                "error"
-            );
+        if(!editingImageId && !file){
+
+            alert("Please choose an image.");
 
             return;
-
         }
 
 
-        saveBtn.disabled =
-        true;
+        saveImageBtn.disabled = true;
 
-        saveBtn.textContent =
-        "Saving...";
+        clearStatus();
 
-
-        let result;
-
-
-        if(imageId.value){
-
-            result =
-            await supabaseClient
-            .from("product_images")
-            .update({
-
-                image_url:
-                url,
-
-                alt_text:
-                alt || null,
-
-                sort_order:
-                order
-
-            })
-            .eq(
-                "id",
-                imageId.value
-            )
-            .eq(
-                "client_id",
-                currentClientId
-            )
-            .eq(
-                "product_id",
-                productId
-            );
-
-        }else{
-
-            result =
-            await supabaseClient
-            .from("product_images")
-            .insert({
-
-                product_id:
-                productId,
-
-                client_id:
-                currentClientId,
-
-                image_url:
-                url,
-
-                alt_text:
-                alt || null,
-
-                sort_order:
-                order
-
-            });
-
-        }
-
-
-        saveBtn.disabled =
-        false;
-
-        saveBtn.textContent =
-        imageId.value
-        ? "Update Image"
-        : "Save Image";
-
-
-        if(result.error){
-
-            console.error(
-                result.error
-            );
-
-            showMessage(
-                result.error.message,
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        showMessage(
-            imageId.value
-            ? "Image updated successfully."
-            : "Image added successfully.",
-            "success"
-        );
-
-
-        imageFormCard.classList.add(
+        progressWrap.classList.remove(
             "hidden"
         );
 
-
-        imageForm.reset();
-
-        imageId.value =
-        "";
+        progressBar.style.width =
+            "10%";
 
 
-        await loadImages(
-            productId
-        );
+        try{
+
+            let imageUrl =
+                editingImageUrl;
+
+
+            /*
+                NEW IMAGE UPLOAD
+            */
+
+            if(file){
+
+                showStatus(
+                    "Uploading image...",
+                    "info"
+                );
+
+
+                const extension =
+                    file.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+                const safeExtension =
+                    extension || "jpg";
+
+
+                const uniqueName =
+                    `${crypto.randomUUID()}.${safeExtension}`;
+
+
+                const storagePath =
+                    `${currentClientId}/${productSelect.value}/${uniqueName}`;
+
+
+                progressBar.style.width =
+                    "30%";
+
+
+                const {
+                    error: uploadError
+                } =
+                await supabaseClient
+                .storage
+                .from(STORAGE_BUCKET)
+                .upload(
+                    storagePath,
+                    file,
+                    {
+                        cacheControl:"3600",
+                        upsert:false,
+                        contentType:file.type
+                    }
+                );
+
+
+                if(uploadError){
+
+                    throw uploadError;
+                }
+
+
+                progressBar.style.width =
+                    "70%";
+
+
+                const {
+                    data: publicData
+                } =
+                supabaseClient
+                .storage
+                .from(STORAGE_BUCKET)
+                .getPublicUrl(storagePath);
+
+
+                imageUrl =
+                    publicData.publicUrl;
+
+
+                if(!imageUrl){
+
+                    throw new Error(
+                        "Unable to generate public image URL."
+                    );
+                }
+
+            }
+
+
+            /*
+                UPDATE
+            */
+
+            if(editingImageId){
+
+                showStatus(
+                    "Updating image...",
+                    "info"
+                );
+
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                .from("product_images")
+                .update({
+
+                    image_url: imageUrl,
+
+                    alt_text:
+                        altText.value.trim() || null
+
+                })
+                .eq("id", editingImageId)
+                .eq("client_id", currentClientId)
+                .eq("product_id", productSelect.value);
+
+
+                if(error){
+
+                    throw error;
+                }
+
+
+                progressBar.style.width =
+                    "100%";
+
+
+                showStatus(
+                    "Image updated successfully.",
+                    "success"
+                );
+
+            }
+
+            /*
+                INSERT
+            */
+
+            else{
+
+                showStatus(
+                    "Saving image information...",
+                    "info"
+                );
+
+
+                const {
+                    data: existingImages,
+                    error: countError
+                } =
+                await supabaseClient
+                .from("product_images")
+                .select("sort_order")
+                .eq("client_id", currentClientId)
+                .eq("product_id", productSelect.value);
+
+
+                if(countError){
+
+                    throw countError;
+                }
+
+
+                let nextSortOrder = 0;
+
+
+                if(existingImages && existingImages.length){
+
+                    nextSortOrder =
+                        Math.max(
+                            ...existingImages.map(
+                                x => Number(x.sort_order || 0)
+                            )
+                        ) + 1;
+
+                }
+
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                .from("product_images")
+                .insert({
+
+                    product_id:
+                        productSelect.value,
+
+                    client_id:
+                        currentClientId,
+
+                    image_url:
+                        imageUrl,
+
+                    alt_text:
+                        altText.value.trim() || null,
+
+                    sort_order:
+                        nextSortOrder
+
+                });
+
+
+                if(error){
+
+                    throw error;
+                }
+
+
+                progressBar.style.width =
+                    "100%";
+
+
+                showStatus(
+                    "Image uploaded and saved successfully.",
+                    "success"
+                );
+
+            }
+
+
+            await loadImages(
+                productSelect.value
+            );
+
+
+            setTimeout(() => {
+
+                closeForm();
+
+            }, 900);
+
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            showStatus(
+                error.message ||
+                "Image upload failed.",
+                "error"
+            );
+
+        }
+        finally{
+
+            saveImageBtn.disabled =
+                false;
+
+        }
 
     }
 );
 
 
-/* ==========================================
+/* ================================
    EDIT IMAGE
-========================================== */
+================================ */
 
 window.editImage =
-async function(id){
+async function(imageId){
 
-    const productId =
-    productSelect.value;
+    if(!productSelect.value){
+
+        alert("Please select a product.");
+
+        return;
+    }
 
 
     const {
-        data,
+        data: image,
         error
     } =
     await supabaseClient
     .from("product_images")
-    .select(
-        "id,image_url,alt_text,sort_order"
-    )
-    .eq(
-        "id",
-        id
-    )
-    .eq(
-        "client_id",
-        currentClientId
-    )
+    .select("*")
+    .eq("id", imageId)
+    .eq("client_id", currentClientId)
+    .eq("product_id", productSelect.value)
     .single();
 
 
     if(error){
 
-        showMessage(
-            error.message,
-            "error"
+        alert(
+            "Unable to load image: " +
+            error.message
         );
 
         return;
-
     }
 
 
-    imageId.value =
-    data.id;
+    editingImageId =
+        image.id;
 
-    imageUrl.value =
-    data.image_url || "";
-
-    altText.value =
-    data.alt_text || "";
-
-    sortOrder.value =
-    data.sort_order ?? 0;
+    editingImageUrl =
+        image.image_url;
 
 
     formTitle.textContent =
-    "Edit Product Image";
+        "Edit Product Image";
 
-    saveBtn.textContent =
-    "Update Image";
+    saveImageBtn.textContent =
+        "Update Image";
 
+    altText.value =
+        image.alt_text || "";
+
+    imageFile.value = "";
+
+
+    imagePreview.src =
+        image.image_url;
+
+    imagePreview.classList.remove(
+        "hidden"
+    );
+
+    previewPlaceholder.classList.add(
+        "hidden"
+    );
+
+
+    clearStatus();
 
     imageFormCard.classList.remove(
         "hidden"
     );
 
-    window.scrollTo(
-        {
-            top:200,
-            behavior:"smooth"
-        }
-    );
+    imageFormCard.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
 
 };
 
 
-/* ==========================================
+/* ================================
    DELETE IMAGE
-========================================== */
+================================ */
 
 window.deleteImage =
-async function(id){
+async function(imageId,imageUrl){
 
     if(!confirm(
         "Are you sure you want to delete this image?"
     )){
 
         return;
-
     }
 
 
-    const {
-        error
-    } =
-    await supabaseClient
-    .from("product_images")
-    .delete()
-    .eq(
-        "id",
-        id
-    )
-    .eq(
-        "client_id",
-        currentClientId
-    );
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+        .from("product_images")
+        .delete()
+        .eq("id",imageId)
+        .eq("client_id",currentClientId)
+        .eq("product_id",productSelect.value);
 
 
-    if(error){
+        if(error){
+
+            throw error;
+        }
+
+
+        /*
+          Try to delete storage file also.
+          This prevents unnecessary storage usage.
+        */
+
+        try{
+
+            const storagePath =
+                getStoragePathFromUrl(imageUrl);
+
+
+            if(storagePath){
+
+                await supabaseClient
+                .storage
+                .from(STORAGE_BUCKET)
+                .remove([
+                    storagePath
+                ]);
+
+            }
+
+        }
+        catch(storageError){
+
+            console.warn(
+                "Storage delete warning:",
+                storageError
+            );
+
+        }
+
+
+        await loadImages(
+            productSelect.value
+        );
+
+
+        alert(
+            "Image deleted successfully."
+        );
+
+    }
+    catch(error){
 
         console.error(error);
 
-        showMessage(
-            error.message,
-            "error"
+        alert(
+            "Delete failed: " +
+            error.message
         );
 
-        return;
-
     }
-
-
-    showMessage(
-        "Image deleted successfully.",
-        "success"
-    );
-
-
-    await loadImages(
-        productSelect.value
-    );
 
 };
 
 
-/* ==========================================
-   LOGOUT
-========================================== */
+/* ================================
+   STORAGE PATH FROM URL
+================================ */
 
-document
-.getElementById("logoutBtn")
-.addEventListener(
+function getStoragePathFromUrl(url){
+
+    if(!url){
+        return null;
+    }
+
+
+    try{
+
+        const marker =
+            `/storage/v1/object/public/${STORAGE_BUCKET}/`;
+
+
+        const index =
+            url.indexOf(marker);
+
+
+        if(index === -1){
+
+            return null;
+        }
+
+
+        return decodeURIComponent(
+            url.substring(
+                index + marker.length
+            )
+        );
+
+    }
+    catch(error){
+
+        return null;
+    }
+
+}
+
+
+/* ================================
+   CANCEL
+================================ */
+
+cancelBtn.addEventListener(
+    "click",
+    closeForm
+);
+
+
+function closeForm(){
+
+    imageFormCard.classList.add(
+        "hidden"
+    );
+
+    editingImageId = null;
+
+    editingImageUrl = null;
+
+    imageFile.value = "";
+
+    altText.value = "";
+
+    resetPreview();
+
+    clearStatus();
+
+}
+
+
+/* ================================
+   PREVIEW RESET
+================================ */
+
+function resetPreview(){
+
+    imagePreview.src = "";
+
+    imagePreview.classList.add(
+        "hidden"
+    );
+
+    previewPlaceholder.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* ================================
+   STATUS
+================================ */
+
+function showStatus(
+    message,
+    type="info"
+){
+
+    uploadStatus.textContent =
+        message;
+
+    uploadStatus.className =
+        "status " + type;
+
+}
+
+
+function clearStatus(){
+
+    uploadStatus.textContent =
+        "";
+
+    uploadStatus.className =
+        "status";
+
+    progressWrap.classList.add(
+        "hidden"
+    );
+
+    progressBar.style.width =
+        "0%";
+
+}
+
+
+/* ================================
+   LOGOUT
+================================ */
+
+logoutBtn.addEventListener(
     "click",
     async function(){
 
-        await supabaseClient
-        .auth
-        .signOut();
+        await supabaseClient.auth.signOut();
 
         window.location.href =
-        "admin.html";
+            "admin.html";
 
     }
 );
 
 
-/* ==========================================
+/* ================================
+   SECURITY HELPERS
+================================ */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+    return escapeHtml(value);
+
+}
+
+
+/* ================================
    START
-========================================== */
+================================ */
 
 initialize();
 
