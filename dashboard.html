@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -21,6 +22,7 @@ body{
     background:#f1f5f9;
     color:#0f172a;
 }
+
 
 /* =========================
    HEADER
@@ -80,6 +82,7 @@ body{
     background:#475569;
 }
 
+
 /* =========================
    LAYOUT
 ========================= */
@@ -88,6 +91,7 @@ body{
     display:flex;
     min-height:calc(100vh - 70px);
 }
+
 
 /* =========================
    SIDEBAR
@@ -135,6 +139,7 @@ body{
     display:inline-block;
 }
 
+
 /* =========================
    MAIN
 ========================= */
@@ -163,6 +168,7 @@ body{
     font-size:14px;
     margin-top:5px;
 }
+
 
 /* =========================
    CLIENT BOX
@@ -193,6 +199,7 @@ body{
     color:#64748b;
     margin-top:4px;
 }
+
 
 /* =========================
    STATS
@@ -241,6 +248,7 @@ body{
     margin-top:15px;
 }
 
+
 /* =========================
    MODULES
 ========================= */
@@ -288,6 +296,7 @@ body{
     font-size:13px;
     line-height:1.5;
 }
+
 
 /* =========================
    MOBILE
@@ -349,10 +358,13 @@ body{
     }
 
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <!-- =========================
      HEADER
@@ -364,6 +376,7 @@ body{
         MD <span>KAIF</span>
     </div>
 
+
     <div class="header-right">
 
         <div class="user-info">
@@ -371,21 +384,29 @@ body{
             <div
                 class="user-name"
                 id="userName">
+
                 Loading...
+
             </div>
+
 
             <div
                 class="user-role"
                 id="userRole">
+
                 Loading...
+
             </div>
 
         </div>
 
+
         <button
             class="logout"
             id="logoutBtn">
+
             Logout
+
         </button>
 
     </div>
@@ -393,572 +414,596 @@ body{
 </header>
 
 
+
 <div class="layout">
 
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+
+    <div class="menu-title">
+        Management
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <a
+        href="dashboard.html"
+        class="menu active">
+
+        <span class="menu-icon">
+            📊
+        </span>
+
+        <span class="menu-text">
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <!-- CLIENTS -->
+
+    <a
+        href="client-manager.html"
+        class="menu">
+
+        <span class="menu-icon">
+            👥
+        </span>
+
+        <span class="menu-text">
+            Clients
+        </span>
+
+    </a>
+
+
+    <!-- CATEGORIES -->
+
+    <a
+        href="category-manager.html"
+        class="menu">
+
+        <span class="menu-icon">
+            📁
+        </span>
+
+        <span class="menu-text">
+            Categories
+        </span>
+
+    </a>
+
+
+    <!-- PRODUCTS -->
+
+    <a
+        href="product-manager.html"
+        class="menu">
+
+        <span class="menu-icon">
+            📦
+        </span>
+
+        <span class="menu-text">
+            Products
+        </span>
+
+    </a>
+
+
     <!-- =========================
-         SIDEBAR
+         WEBSITE
     ========================== -->
 
-    <aside class="sidebar">
-
-        <div class="menu-title">
-            Management
-        </div>
+    <div class="menu-title">
+        Website
+    </div>
 
 
-        <!-- Dashboard -->
+    <!-- PRODUCT IMAGES -->
 
-        <a
-            href="dashboard.html"
-            class="menu active">
+    <a
+        href="product-image-manager.html"
+        class="menu">
 
-            <span class="menu-icon">📊</span>
+        <span class="menu-icon">
+            🖼️
+        </span>
 
-            <span class="menu-text">
+        <span class="menu-text">
+            Product Images
+        </span>
+
+    </a>
+
+
+    <!-- GALLERY -->
+
+    <a
+        href="gallery-manager.html"
+        class="menu">
+
+        <span class="menu-icon">
+            🌄
+        </span>
+
+        <span class="menu-text">
+            Gallery
+        </span>
+
+    </a>
+
+
+    <!-- TESTIMONIALS -->
+
+    <a
+        href="testimonials-manager.html"
+        class="menu">
+
+        <span class="menu-icon">
+            ⭐
+        </span>
+
+        <span class="menu-text">
+            Testimonials
+        </span>
+
+    </a>
+
+
+    <!-- FAQs - CONNECTED -->
+
+    <a
+        href="faqs-manager.html"
+        class="menu">
+
+        <span class="menu-icon">
+            ❓
+        </span>
+
+        <span class="menu-text">
+            FAQs
+        </span>
+
+    </a>
+
+
+    <!-- =========================
+         BUSINESS
+    ========================== -->
+
+    <div class="menu-title">
+        Business
+    </div>
+
+
+    <!-- ENQUIRIES -->
+
+    <a
+        href="#"
+        class="menu"
+        onclick="comingSoon('Enquiries');return false;">
+
+        <span class="menu-icon">
+            📩
+        </span>
+
+        <span class="menu-text">
+            Enquiries
+        </span>
+
+    </a>
+
+
+    <!-- COMPANY SETTINGS -->
+
+    <a
+        href="#"
+        class="menu"
+        onclick="comingSoon('Company Settings');return false;">
+
+        <span class="menu-icon">
+            ⚙️
+        </span>
+
+        <span class="menu-text">
+            Company Settings
+        </span>
+
+    </a>
+
+</aside>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+    <div class="page-title">
+
+        <div>
+
+            <h1>
                 Dashboard
-            </span>
+            </h1>
 
-        </a>
+            <p>
+                Manage your business website from one place.
+            </p>
 
+        </div>
 
-        <!-- Clients -->
-
-        <a
-            href="client-manager.html"
-            class="menu">
-
-            <span class="menu-icon">👥</span>
-
-            <span class="menu-text">
-                Clients
-            </span>
-
-        </a>
+    </div>
 
 
-        <!-- Categories -->
 
-        <a
-            href="category-manager.html"
-            class="menu">
+    <!-- CURRENT CLIENT -->
 
-            <span class="menu-icon">📁</span>
+    <div class="client-box">
 
-            <span class="menu-text">
-                Categories
-            </span>
-
-        </a>
-
-
-        <!-- Products -->
-
-        <a
-            href="product-manager.html"
-            class="menu">
-
-            <span class="menu-icon">📦</span>
-
-            <span class="menu-text">
-                Products
-            </span>
-
-        </a>
-
-
-        <!-- =========================
-             WEBSITE
-        ========================== -->
-
-        <div class="menu-title">
-            Website
+        <div class="client-label">
+            CURRENT WEBSITE
         </div>
 
 
-        <!-- Product Images -->
+        <div
+            class="client-name"
+            id="clientName">
 
-        <a
-            href="product-image-manager.html"
-            class="menu">
-
-            <span class="menu-icon">🖼️</span>
-
-            <span class="menu-text">
-                Product Images
-            </span>
-
-        </a>
-
-
-        <!-- Gallery -->
-
-        <a
-            href="gallery-manager.html"
-            class="menu">
-
-            <span class="menu-icon">🌄</span>
-
-            <span class="menu-text">
-                Gallery
-            </span>
-
-        </a>
-
-
-        <!-- Testimonials - CONNECTED -->
-
-        <a
-            href="testimonials-manager.html"
-            class="menu">
-
-            <span class="menu-icon">⭐</span>
-
-            <span class="menu-text">
-                Testimonials
-            </span>
-
-        </a>
-
-
-        <!-- FAQs -->
-
-        <a
-            href="#"
-            class="menu"
-            onclick="comingSoon('FAQs');return false;">
-
-            <span class="menu-icon">❓</span>
-
-            <span class="menu-text">
-                FAQs
-            </span>
-
-        </a>
-
-
-        <!-- =========================
-             BUSINESS
-        ========================== -->
-
-        <div class="menu-title">
-            Business
-        </div>
-
-
-        <!-- Enquiries -->
-
-        <a
-            href="#"
-            class="menu"
-            onclick="comingSoon('Enquiries');return false;">
-
-            <span class="menu-icon">📩</span>
-
-            <span class="menu-text">
-                Enquiries
-            </span>
-
-        </a>
-
-
-        <!-- Company Settings -->
-
-        <a
-            href="#"
-            class="menu"
-            onclick="comingSoon('Company Settings');return false;">
-
-            <span class="menu-icon">⚙️</span>
-
-            <span class="menu-text">
-                Company Settings
-            </span>
-
-        </a>
-
-    </aside>
-
-
-    <!-- =========================
-         MAIN
-    ========================== -->
-
-    <main class="main">
-
-
-        <!-- PAGE TITLE -->
-
-        <div class="page-title">
-
-            <div>
-
-                <h1>
-                    Dashboard
-                </h1>
-
-                <p>
-                    Manage your business website from one place.
-                </p>
-
-            </div>
+            Loading...
 
         </div>
 
 
-        <!-- =========================
-             CURRENT CLIENT
-        ========================== -->
+        <div
+            class="client-domain"
+            id="clientDomain">
 
-        <div class="client-box">
-
-            <div class="client-label">
-                CURRENT WEBSITE
-            </div>
-
-            <div
-                class="client-name"
-                id="clientName">
-
-                Loading...
-
-            </div>
-
-            <div
-                class="client-domain"
-                id="clientDomain">
-
-                Loading...
-
-            </div>
+            Loading...
 
         </div>
 
-
-        <!-- =========================
-             STATISTICS
-        ========================== -->
-
-        <div class="stats">
+    </div>
 
 
-            <!-- Categories -->
 
-            <div class="stat-card">
+    <!-- STATISTICS -->
 
-                <div class="stat-top">
+    <div class="stats">
 
-                    <div class="stat-title">
-                        Categories
-                    </div>
 
-                    <div class="stat-icon">
-                        📁
-                    </div>
+        <!-- CATEGORIES -->
 
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-title">
+                    Categories
                 </div>
 
-                <div
-                    class="stat-number"
-                    id="categoryCount">
-
-                    —
-
-                </div>
-
-            </div>
-
-
-            <!-- Products -->
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <div class="stat-title">
-                        Products
-                    </div>
-
-                    <div class="stat-icon">
-                        📦
-                    </div>
-
-                </div>
-
-                <div
-                    class="stat-number"
-                    id="productCount">
-
-                    —
-
-                </div>
-
-            </div>
-
-
-            <!-- Gallery -->
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <div class="stat-title">
-                        Gallery
-                    </div>
-
-                    <div class="stat-icon">
-                        🌄
-                    </div>
-
-                </div>
-
-                <div
-                    class="stat-number"
-                    id="galleryCount">
-
-                    —
-
-                </div>
-
-            </div>
-
-
-            <!-- Enquiries -->
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <div class="stat-title">
-                        Enquiries
-                    </div>
-
-                    <div class="stat-icon">
-                        📩
-                    </div>
-
-                </div>
-
-                <div
-                    class="stat-number"
-                    id="enquiryCount">
-
-                    —
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================
-             WEBSITE MANAGEMENT
-        ========================== -->
-
-        <div class="section-title">
-            Website Management
-        </div>
-
-
-        <div class="modules">
-
-
-            <!-- CLIENT MANAGER -->
-
-            <a
-                href="client-manager.html"
-                class="module">
-
-                <div class="module-icon">
-                    👥
-                </div>
-
-                <h3>
-                    Client Manager
-                </h3>
-
-                <p>
-                    Create, edit and manage all website clients and their details.
-                </p>
-
-            </a>
-
-
-            <!-- CATEGORIES -->
-
-            <a
-                href="category-manager.html"
-                class="module">
-
-                <div class="module-icon">
+                <div class="stat-icon">
                     📁
                 </div>
 
-                <h3>
-                    Categories
-                </h3>
-
-                <p>
-                    Create, edit, delete and manage product categories.
-                </p>
-
-            </a>
+            </div>
 
 
-            <!-- PRODUCTS -->
+            <div
+                class="stat-number"
+                id="categoryCount">
 
-            <a
-                href="product-manager.html"
-                class="module">
+                —
 
-                <div class="module-icon">
-                    📦
-                </div>
-
-                <h3>
-                    Products
-                </h3>
-
-                <p>
-                    Manage products, descriptions, prices and categories.
-                </p>
-
-            </a>
-
-
-            <!-- PRODUCT IMAGES -->
-
-            <a
-                href="product-image-manager.html"
-                class="module">
-
-                <div class="module-icon">
-                    🖼️
-                </div>
-
-                <h3>
-                    Product Images
-                </h3>
-
-                <p>
-                    Upload and manage multiple images for products.
-                </p>
-
-            </a>
-
-
-            <!-- GALLERY -->
-
-            <a
-                href="gallery-manager.html"
-                class="module">
-
-                <div class="module-icon">
-                    🌄
-                </div>
-
-                <h3>
-                    Gallery
-                </h3>
-
-                <p>
-                    Manage product-wise gallery images for your business website.
-                </p>
-
-            </a>
-
-
-            <!-- TESTIMONIALS - CONNECTED -->
-
-            <a
-                href="testimonials-manager.html"
-                class="module">
-
-                <div class="module-icon">
-                    ⭐
-                </div>
-
-                <h3>
-                    Testimonials
-                </h3>
-
-                <p>
-                    Add and manage customer testimonials and reviews.
-                </p>
-
-            </a>
-
-
-            <!-- FAQ -->
-
-            <a
-                href="#"
-                class="module"
-                onclick="comingSoon('FAQs');return false;">
-
-                <div class="module-icon">
-                    ❓
-                </div>
-
-                <h3>
-                    FAQs
-                </h3>
-
-                <p>
-                    Manage frequently asked questions.
-                </p>
-
-            </a>
-
-
-            <!-- ENQUIRIES -->
-
-            <a
-                href="#"
-                class="module"
-                onclick="comingSoon('Enquiries');return false;">
-
-                <div class="module-icon">
-                    📩
-                </div>
-
-                <h3>
-                    Enquiries
-                </h3>
-
-                <p>
-                    View and manage customer enquiries.
-                </p>
-
-            </a>
-
-
-            <!-- COMPANY SETTINGS -->
-
-            <a
-                href="#"
-                class="module"
-                onclick="comingSoon('Company Settings');return false;">
-
-                <div class="module-icon">
-                    ⚙️
-                </div>
-
-                <h3>
-                    Company Settings
-                </h3>
-
-                <p>
-                    Manage logo, company information, contact details and website settings.
-                </p>
-
-            </a>
+            </div>
 
         </div>
 
-    </main>
+
+        <!-- PRODUCTS -->
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-title">
+                    Products
+                </div>
+
+                <div class="stat-icon">
+                    📦
+                </div>
+
+            </div>
+
+
+            <div
+                class="stat-number"
+                id="productCount">
+
+                —
+
+            </div>
+
+        </div>
+
+
+        <!-- GALLERY -->
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-title">
+                    Gallery
+                </div>
+
+                <div class="stat-icon">
+                    🌄
+                </div>
+
+            </div>
+
+
+            <div
+                class="stat-number"
+                id="galleryCount">
+
+                —
+
+            </div>
+
+        </div>
+
+
+        <!-- ENQUIRIES -->
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-title">
+                    Enquiries
+                </div>
+
+                <div class="stat-icon">
+                    📩
+                </div>
+
+            </div>
+
+
+            <div
+                class="stat-number"
+                id="enquiryCount">
+
+                —
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- WEBSITE MANAGEMENT -->
+
+    <div class="section-title">
+        Website Management
+    </div>
+
+
+    <div class="modules">
+
+
+        <!-- CLIENT -->
+
+        <a
+            href="client-manager.html"
+            class="module">
+
+            <div class="module-icon">
+                👥
+            </div>
+
+            <h3>
+                Client Manager
+            </h3>
+
+            <p>
+                Create, edit and manage all website clients and their details.
+            </p>
+
+        </a>
+
+
+        <!-- CATEGORY -->
+
+        <a
+            href="category-manager.html"
+            class="module">
+
+            <div class="module-icon">
+                📁
+            </div>
+
+            <h3>
+                Categories
+            </h3>
+
+            <p>
+                Create, edit, delete and manage product categories.
+            </p>
+
+        </a>
+
+
+        <!-- PRODUCT -->
+
+        <a
+            href="product-manager.html"
+            class="module">
+
+            <div class="module-icon">
+                📦
+            </div>
+
+            <h3>
+                Products
+            </h3>
+
+            <p>
+                Manage products, descriptions, prices and categories.
+            </p>
+
+        </a>
+
+
+        <!-- PRODUCT IMAGES -->
+
+        <a
+            href="product-image-manager.html"
+            class="module">
+
+            <div class="module-icon">
+                🖼️
+            </div>
+
+            <h3>
+                Product Images
+            </h3>
+
+            <p>
+                Upload and manage multiple images for products.
+            </p>
+
+        </a>
+
+
+        <!-- GALLERY -->
+
+        <a
+            href="gallery-manager.html"
+            class="module">
+
+            <div class="module-icon">
+                🌄
+            </div>
+
+            <h3>
+                Gallery
+            </h3>
+
+            <p>
+                Manage product-wise gallery images for your business website.
+            </p>
+
+        </a>
+
+
+        <!-- TESTIMONIALS -->
+
+        <a
+            href="testimonials-manager.html"
+            class="module">
+
+            <div class="module-icon">
+                ⭐
+            </div>
+
+            <h3>
+                Testimonials
+            </h3>
+
+            <p>
+                Add and manage customer testimonials and reviews.
+            </p>
+
+        </a>
+
+
+        <!-- FAQs - CONNECTED -->
+
+        <a
+            href="faqs-manager.html"
+            class="module">
+
+            <div class="module-icon">
+                ❓
+            </div>
+
+            <h3>
+                FAQs
+            </h3>
+
+            <p>
+                Manage frequently asked questions for your website.
+            </p>
+
+        </a>
+
+
+        <!-- ENQUIRIES -->
+
+        <a
+            href="#"
+            class="module"
+            onclick="comingSoon('Enquiries');return false;">
+
+            <div class="module-icon">
+                📩
+            </div>
+
+            <h3>
+                Enquiries
+            </h3>
+
+            <p>
+                View and manage customer enquiries.
+            </p>
+
+        </a>
+
+
+        <!-- COMPANY SETTINGS -->
+
+        <a
+            href="#"
+            class="module"
+            onclick="comingSoon('Company Settings');return false;">
+
+            <div class="module-icon">
+                ⚙️
+            </div>
+
+            <h3>
+                Company Settings
+            </h3>
+
+            <p>
+                Manage logo, company information, contact details and website settings.
+            </p>
+
+        </a>
+
+    </div>
+
+</main>
 
 </div>
+
 
 
 <script>
@@ -1036,6 +1081,10 @@ async function initialize(){
         }
 
 
+        /* ==========================================
+           LOAD PROFILE
+        ========================================== */
+
         const {
             data:profile,
             error:profileError
@@ -1076,6 +1125,10 @@ async function initialize(){
         }
 
 
+        /* ==========================================
+           USER INFO
+        ========================================== */
+
         setText(
             "userName",
             profile.full_name ||
@@ -1089,6 +1142,10 @@ async function initialize(){
         );
 
 
+        /* ==========================================
+           CLIENT USER
+        ========================================== */
+
         if(profile.client_id){
 
             await loadClient(
@@ -1101,6 +1158,11 @@ async function initialize(){
             );
 
         }
+
+
+        /* ==========================================
+           SUPER ADMIN
+        ========================================== */
 
         else{
 
@@ -1212,6 +1274,7 @@ async function loadStats(
     ] =
     await Promise.all([
 
+
         supabaseClient
         .from("categories")
         .select(
@@ -1322,6 +1385,7 @@ async function loadAllStats(){
     ] =
     await Promise.all([
 
+
         supabaseClient
         .from("categories")
         .select(
@@ -1423,7 +1487,9 @@ function comingSoon(
 ========================================== */
 
 document
-.getElementById("logoutBtn")
+.getElementById(
+    "logoutBtn"
+)
 .addEventListener(
     "click",
     async function(){
