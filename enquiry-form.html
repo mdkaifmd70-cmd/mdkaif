@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Send Enquiry</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#f5f7fb;color:#172033}.box{width:min(720px,calc(100% - 30px));margin:40px auto;background:#fff;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,.08);padding:28px}.head h1{margin:0 0 7px;font-size:28px}.head p{margin:0 0 24px;color:#64748b}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{display:block;font-size:12px;font-weight:800;color:#475569;margin:0 0 7px}.field{margin-bottom:15px}input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font:inherit;outline:none}textarea{min-height:150px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}button{width:100%;border:0;border-radius:10px;background:#2563eb;color:#fff;padding:13px 18px;font-weight:800;font-size:14px;cursor:pointer}button:disabled{opacity:.6;cursor:not-allowed}.notice{display:none;padding:12px;border-radius:9px;margin-bottom:16px;font-size:13px;font-weight:700}.ok{display:block;background:#dcfce7;color:#166534;border:1px solid #bbf7d0}.error{display:block;background:#fee2e2;color:#991b1b;border:1px solid #fecaca}.small{font-size:12px;color:#64748b;margin-top:12px}@media(max-width:650px){.two{grid-template-columns:1fr}.box{padding:20px;margin:20px auto}}
+</style></head><body>
+<div class="box"><div class="head"><h1>Send an Enquiry</h1><p>Fill in your details and our team will contact you.</p></div><div id="notice" class="notice"></div>
+<form id="form" onsubmit="submitEnquiry(event)">
+<div class="two"><div class="field"><label>Customer Name *</label><input id="customer_name" required maxlength="150"></div><div class="field"><label>Company Name</label><input id="company_name" maxlength="200"></div><div class="field"><label>Phone *</label><input id="phone" required maxlength="50"></div><div class="field"><label>Email</label><input id="email" type="email" maxlength="180"></div></div>
+<div class="field"><label>Product</label><select id="product_id"><option value="">General Enquiry</option></select></div>
+<div class="field"><label>Your Requirement *</label><textarea id="requirement" required placeholder="Tell us what you need..."></textarea></div>
+<button id="submitBtn" type="submit">Submit Enquiry</button>
+<div class="small">Your enquiry will be securely submitted to the selected client website.</div>
+</form></div>
+<script>
+const SUPABASE_URL='https://ywvdozdoanmcxscfofcf.supabase.co';
+const SUPABASE_KEY='sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB';
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const params=new URLSearchParams(location.search);const CLIENT_ID=params.get('client_id');
+const PRODUCT_ID=params.get('product_id');
+function notice(t,type){const n=document.getElementById('notice');n.textContent=t;n.className='notice '+type;n.style.display='block'}
+async function loadProducts(){if(!CLIENT_ID)return;let q=supabaseClient.from('products').select('id,name,product_code,status').eq('client_id',CLIENT_ID).order('name');const {data,error}=await q;if(error)return;const s=document.getElementById('product_id');for(const p of (data||[])){if(p.status==='inactive')continue;const o=document.createElement('option');o.value=p.id;o.textContent=p.product_code?`${p.name} (${p.product_code})`:p.name;s.appendChild(o)}if(PRODUCT_ID){s.value=PRODUCT_ID}}
+async function submitEnquiry(e){e.preventDefault();if(!CLIENT_ID){notice('Client is not configured. Please use a valid enquiry link.','error');return}const btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='Submitting...';const {error}=await supabaseClient.from('enquiries').insert({client_id:CLIENT_ID,product_id:document.getElementById('product_id').value||null,customer_name:document.getElementById('customer_name').value.trim(),company_name:document.getElementById('company_name').value.trim()||null,phone:document.getElementById('phone').value.trim(),email:document.getElementById('email').value.trim()||null,requirement:document.getElementById('requirement').value.trim(),source:'Website',status:'New'});btn.disabled=false;btn.textContent='Submit Enquiry';if(error){console.error(error);notice(error.message||'Unable to submit enquiry.','error');return}document.getElementById('form').reset();if(PRODUCT_ID)document.getElementById('product_id').value=PRODUCT_ID;notice('Thank you. Your enquiry has been submitted successfully.','ok')}
+loadProducts();
+</script></body></html>
