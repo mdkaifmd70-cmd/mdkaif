@@ -23,11 +23,6 @@ body{
     color:#0f172a;
 }
 
-
-/* =========================
-   HEADER
-========================= */
-
 .header{
     height:70px;
     background:#0f172a;
@@ -82,20 +77,10 @@ body{
     background:#475569;
 }
 
-
-/* =========================
-   LAYOUT
-========================= */
-
 .layout{
     display:flex;
     min-height:calc(100vh - 70px);
 }
-
-
-/* =========================
-   SIDEBAR
-========================= */
 
 .sidebar{
     width:240px;
@@ -139,11 +124,6 @@ body{
     display:inline-block;
 }
 
-
-/* =========================
-   MAIN
-========================= */
-
 .main{
     flex:1;
     padding:25px;
@@ -168,11 +148,6 @@ body{
     font-size:14px;
     margin-top:5px;
 }
-
-
-/* =========================
-   CLIENT BOX
-========================= */
 
 .client-box{
     background:white;
@@ -199,11 +174,6 @@ body{
     color:#64748b;
     margin-top:4px;
 }
-
-
-/* =========================
-   STATS
-========================= */
 
 .stats{
     display:grid;
@@ -248,11 +218,6 @@ body{
     margin-top:15px;
 }
 
-
-/* =========================
-   MODULES
-========================= */
-
 .section-title{
     font-size:19px;
     font-weight:900;
@@ -296,11 +261,6 @@ body{
     font-size:13px;
     line-height:1.5;
 }
-
-
-/* =========================
-   MOBILE
-========================= */
 
 @media(max-width:1000px){
 
@@ -362,20 +322,13 @@ body{
 </style>
 </head>
 
-
 <body>
-
-
-<!-- =========================
-     HEADER
-========================= -->
 
 <header class="header">
 
     <div class="logo">
         MD <span>KAIF</span>
     </div>
-
 
     <div class="header-right">
 
@@ -389,7 +342,6 @@ body{
 
             </div>
 
-
             <div
                 class="user-role"
                 id="userRole">
@@ -399,7 +351,6 @@ body{
             </div>
 
         </div>
-
 
         <button
             class="logout"
@@ -413,24 +364,13 @@ body{
 
 </header>
 
-
-
 <div class="layout">
 
-
-<!-- =========================
-     SIDEBAR
-========================= -->
-
 <aside class="sidebar">
-
 
     <div class="menu-title">
         Management
     </div>
-
-
-    <!-- DASHBOARD -->
 
     <a
         href="dashboard.html"
@@ -446,9 +386,6 @@ body{
 
     </a>
 
-
-    <!-- CLIENTS -->
-
     <a
         href="client-manager.html"
         class="menu">
@@ -462,9 +399,6 @@ body{
         </span>
 
     </a>
-
-
-    <!-- CATEGORIES -->
 
     <a
         href="category-manager.html"
@@ -480,9 +414,6 @@ body{
 
     </a>
 
-
-    <!-- PRODUCTS -->
-
     <a
         href="product-manager.html"
         class="menu">
@@ -497,17 +428,9 @@ body{
 
     </a>
 
-
-    <!-- =========================
-         WEBSITE
-    ========================== -->
-
     <div class="menu-title">
         Website
     </div>
-
-
-    <!-- PRODUCT IMAGES -->
 
     <a
         href="product-image-manager.html"
@@ -523,9 +446,6 @@ body{
 
     </a>
 
-
-    <!-- GALLERY -->
-
     <a
         href="gallery-manager.html"
         class="menu">
@@ -539,9 +459,6 @@ body{
         </span>
 
     </a>
-
-
-    <!-- TESTIMONIALS -->
 
     <a
         href="testimonials-manager.html"
@@ -557,9 +474,6 @@ body{
 
     </a>
 
-
-    <!-- FAQs -->
-
     <a
         href="faqs-manager.html"
         class="menu">
@@ -574,17 +488,9 @@ body{
 
     </a>
 
-
-    <!-- =========================
-         BUSINESS
-    ========================== -->
-
     <div class="menu-title">
         Business
     </div>
-
-
-    <!-- ENQUIRIES - CONNECTED -->
 
     <a
         href="enquiries-manager.html"
@@ -600,13 +506,11 @@ body{
 
     </a>
 
-
-    <!-- COMPANY SETTINGS -->
+    <!-- COMPANY SETTINGS - CONNECTED -->
 
     <a
-        href="#"
-        class="menu"
-        onclick="comingSoon('Company Settings');return false;">
+        href="company-settings.html"
+        class="menu">
 
         <span class="menu-icon">
             ⚙️
@@ -620,14 +524,7 @@ body{
 
 </aside>
 
-
-
-<!-- =========================
-     MAIN
-========================= -->
-
 <main class="main">
-
 
     <div class="page-title">
 
@@ -645,16 +542,11 @@ body{
 
     </div>
 
-
-
-    <!-- CURRENT CLIENT -->
-
     <div class="client-box">
 
         <div class="client-label">
             CURRENT WEBSITE
         </div>
-
 
         <div
             class="client-name"
@@ -663,7 +555,6 @@ body{
             Loading...
 
         </div>
-
 
         <div
             class="client-domain"
@@ -675,14 +566,7 @@ body{
 
     </div>
 
-
-
-    <!-- STATISTICS -->
-
     <div class="stats">
-
-
-        <!-- CATEGORIES -->
 
         <div class="stat-card">
 
@@ -698,7 +582,6 @@ body{
 
             </div>
 
-
             <div
                 class="stat-number"
                 id="categoryCount">
@@ -708,9 +591,6 @@ body{
             </div>
 
         </div>
-
-
-        <!-- PRODUCTS -->
 
         <div class="stat-card">
 
@@ -726,7 +606,6 @@ body{
 
             </div>
 
-
             <div
                 class="stat-number"
                 id="productCount">
@@ -736,9 +615,6 @@ body{
             </div>
 
         </div>
-
-
-        <!-- GALLERY -->
 
         <div class="stat-card">
 
@@ -754,7 +630,6 @@ body{
 
             </div>
 
-
             <div
                 class="stat-number"
                 id="galleryCount">
@@ -764,9 +639,6 @@ body{
             </div>
 
         </div>
-
-
-        <!-- ENQUIRIES -->
 
         <div class="stat-card">
 
@@ -782,7 +654,6 @@ body{
 
             </div>
 
-
             <div
                 class="stat-number"
                 id="enquiryCount">
@@ -795,19 +666,11 @@ body{
 
     </div>
 
-
-
-    <!-- WEBSITE MANAGEMENT -->
-
     <div class="section-title">
         Website Management
     </div>
 
-
     <div class="modules">
-
-
-        <!-- CLIENT -->
 
         <a
             href="client-manager.html"
@@ -827,9 +690,6 @@ body{
 
         </a>
 
-
-        <!-- CATEGORY -->
-
         <a
             href="category-manager.html"
             class="module">
@@ -847,9 +707,6 @@ body{
             </p>
 
         </a>
-
-
-        <!-- PRODUCT -->
 
         <a
             href="product-manager.html"
@@ -869,9 +726,6 @@ body{
 
         </a>
 
-
-        <!-- PRODUCT IMAGES -->
-
         <a
             href="product-image-manager.html"
             class="module">
@@ -889,9 +743,6 @@ body{
             </p>
 
         </a>
-
-
-        <!-- GALLERY -->
 
         <a
             href="gallery-manager.html"
@@ -911,9 +762,6 @@ body{
 
         </a>
 
-
-        <!-- TESTIMONIALS -->
-
         <a
             href="testimonials-manager.html"
             class="module">
@@ -931,9 +779,6 @@ body{
             </p>
 
         </a>
-
-
-        <!-- FAQs -->
 
         <a
             href="faqs-manager.html"
@@ -953,9 +798,6 @@ body{
 
         </a>
 
-
-        <!-- ENQUIRIES - CONNECTED -->
-
         <a
             href="enquiries-manager.html"
             class="module">
@@ -974,13 +816,11 @@ body{
 
         </a>
 
-
-        <!-- COMPANY SETTINGS -->
+        <!-- COMPANY SETTINGS - CONNECTED -->
 
         <a
-            href="#"
-            class="module"
-            onclick="comingSoon('Company Settings');return false;">
+            href="company-settings.html"
+            class="module">
 
             <div class="module-icon">
                 ⚙️
@@ -1002,13 +842,7 @@ body{
 
 </div>
 
-
-
 <script>
-
-/* ==========================================
-   SUPABASE
-========================================== */
 
 const SUPABASE_URL =
 "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -1016,17 +850,11 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
-
 const supabaseClient =
 window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
-
-
-/* ==========================================
-   HELPER
-========================================== */
 
 function setText(
     id,
@@ -1036,7 +864,6 @@ function setText(
     const element =
         document.getElementById(id);
 
-
     if(element){
 
         element.textContent =
@@ -1045,11 +872,6 @@ function setText(
     }
 
 }
-
-
-/* ==========================================
-   INITIALIZE
-========================================== */
 
 async function initialize(){
 
@@ -1065,10 +887,8 @@ async function initialize(){
         .auth
         .getUser();
 
-
         if(userError)
             throw userError;
-
 
         if(!user){
 
@@ -1077,11 +897,6 @@ async function initialize(){
 
             return;
         }
-
-
-        /* ==========================================
-           LOAD PROFILE
-        ========================================== */
 
         const {
             data:profile,
@@ -1098,7 +913,6 @@ async function initialize(){
         )
         .single();
 
-
         if(profileError){
 
             console.error(
@@ -1106,26 +920,18 @@ async function initialize(){
                 profileError
             );
 
-
             setText(
                 "userName",
                 user.email
             );
-
 
             setText(
                 "userRole",
                 "Profile not found"
             );
 
-
             return;
         }
-
-
-        /* ==========================================
-           USER INFO
-        ========================================== */
 
         setText(
             "userName",
@@ -1133,16 +939,10 @@ async function initialize(){
             user.email
         );
 
-
         setText(
             "userRole",
             profile.role
         );
-
-
-        /* ==========================================
-           CLIENT USER
-        ========================================== */
 
         if(profile.client_id){
 
@@ -1150,17 +950,11 @@ async function initialize(){
                 profile.client_id
             );
 
-
             await loadStats(
                 profile.client_id
             );
 
         }
-
-
-        /* ==========================================
-           SUPER ADMIN
-        ========================================== */
 
         else{
 
@@ -1169,12 +963,10 @@ async function initialize(){
                 "All Clients"
             );
 
-
             setText(
                 "clientDomain",
                 "Super Admin"
             );
-
 
             await loadAllStats();
 
@@ -1191,11 +983,6 @@ async function initialize(){
     }
 
 }
-
-
-/* ==========================================
-   LOAD CLIENT
-========================================== */
 
 async function loadClient(
     clientId
@@ -1216,7 +1003,6 @@ async function loadClient(
     )
     .single();
 
-
     if(error){
 
         console.error(
@@ -1224,28 +1010,23 @@ async function loadClient(
             error
         );
 
-
         setText(
             "clientName",
             "Client not found"
         );
-
 
         setText(
             "clientDomain",
             "—"
         );
 
-
         return;
     }
-
 
     setText(
         "clientName",
         data.company_name
     );
-
 
     setText(
         "clientDomain",
@@ -1254,11 +1035,6 @@ async function loadClient(
     );
 
 }
-
-
-/* ==========================================
-   CLIENT STATS
-========================================== */
 
 async function loadStats(
     clientId
@@ -1272,7 +1048,6 @@ async function loadStats(
     ] =
     await Promise.all([
 
-
         supabaseClient
         .from("categories")
         .select(
@@ -1286,7 +1061,6 @@ async function loadStats(
             "client_id",
             clientId
         ),
-
 
         supabaseClient
         .from("products")
@@ -1302,7 +1076,6 @@ async function loadStats(
             clientId
         ),
 
-
         supabaseClient
         .from("gallery")
         .select(
@@ -1316,7 +1089,6 @@ async function loadStats(
             "client_id",
             clientId
         ),
-
 
         supabaseClient
         .from("enquiries")
@@ -1334,14 +1106,12 @@ async function loadStats(
 
     ]);
 
-
     setText(
         "categoryCount",
         categories.error
         ? 0
         : categories.count ?? 0
     );
-
 
     setText(
         "productCount",
@@ -1350,14 +1120,12 @@ async function loadStats(
         : products.count ?? 0
     );
 
-
     setText(
         "galleryCount",
         gallery.error
         ? 0
         : gallery.count ?? 0
     );
-
 
     setText(
         "enquiryCount",
@@ -1367,11 +1135,6 @@ async function loadStats(
     );
 
 }
-
-
-/* ==========================================
-   ALL CLIENTS STATS
-========================================== */
 
 async function loadAllStats(){
 
@@ -1383,7 +1146,6 @@ async function loadAllStats(){
     ] =
     await Promise.all([
 
-
         supabaseClient
         .from("categories")
         .select(
@@ -1393,7 +1155,6 @@ async function loadAllStats(){
                 head:true
             }
         ),
-
 
         supabaseClient
         .from("products")
@@ -1405,7 +1166,6 @@ async function loadAllStats(){
             }
         ),
 
-
         supabaseClient
         .from("gallery")
         .select(
@@ -1415,7 +1175,6 @@ async function loadAllStats(){
                 head:true
             }
         ),
-
 
         supabaseClient
         .from("enquiries")
@@ -1429,14 +1188,12 @@ async function loadAllStats(){
 
     ]);
 
-
     setText(
         "categoryCount",
         categories.error
         ? 0
         : categories.count ?? 0
     );
-
 
     setText(
         "productCount",
@@ -1445,14 +1202,12 @@ async function loadAllStats(){
         : products.count ?? 0
     );
 
-
     setText(
         "galleryCount",
         gallery.error
         ? 0
         : gallery.count ?? 0
     );
-
 
     setText(
         "enquiryCount",
@@ -1462,27 +1217,6 @@ async function loadAllStats(){
     );
 
 }
-
-
-/* ==========================================
-   COMING SOON
-========================================== */
-
-function comingSoon(
-    moduleName
-){
-
-    alert(
-        moduleName +
-        " module will be connected next."
-    );
-
-}
-
-
-/* ==========================================
-   LOGOUT
-========================================== */
 
 document
 .getElementById(
@@ -1508,17 +1242,11 @@ document
 
         }
 
-
         window.location.href =
             "admin.html";
 
     }
 );
-
-
-/* ==========================================
-   START
-========================================== */
 
 initialize();
 
