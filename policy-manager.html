@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Policy Manager - MD Kaif Web Platform</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#1f2937;
+}
+
+.header{
+    height:70px;
+    background:#111827;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:700;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.user-name{
+    font-size:14px;
+    color:#d1d5db;
+}
+
+.logout-btn{
+    border:none;
+    background:#ef4444;
+    color:white;
+    padding:9px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.logout-btn:hover{
+    background:#dc2626;
+}
+
+.container{
+    max-width:1400px;
+    margin:0 auto;
+    padding:25px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.page-title h1{
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+.page-title p{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.back-btn{
+    text-decoration:none;
+    background:#374151;
+    color:white;
+    padding:11px 17px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.back-btn:hover{
+    background:#1f2937;
+}
+
+.client-panel{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+
+.client-panel label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.client-panel select{
+    width:100%;
+    max-width:500px;
+    padding:11px 12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    outline:none;
+    background:white;
+}
+
+.client-panel select:focus{
+    border-color:#2563eb;
+}
+
+.client-info{
+    margin-top:10px;
+    font-size:13px;
+    color:#6b7280;
+}
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+
+.stat-card h4{
+    font-size:13px;
+    color:#6b7280;
+    margin-bottom:8px;
+}
+
+.stat-number{
+    font-size:27px;
+    font-weight:700;
+}
+
+.toolbar{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.search-box{
+    flex:1;
+    min-width:220px;
+}
+
+.search-box input,
+.toolbar select{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    outline:none;
+    background:white;
+}
+
+.search-box input:focus,
+.toolbar select:focus{
+    border-color:#2563eb;
+}
+
+.filter-box{
+    width:180px;
+}
+
+.add-btn{
+    border:none;
+    background:#2563eb;
+    color:white;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.add-btn:hover{
+    background:#1d4ed8;
+}
+
+.table-card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+}
+
+thead{
+    background:#f9fafb;
+}
+
+th{
+    text-align:left;
+    padding:14px 15px;
+    font-size:12px;
+    text-transform:uppercase;
+    color:#6b7280;
+    border-bottom:1px solid #e5e7eb;
+}
+
+td{
+    padding:14px 15px;
+    border-bottom:1px solid #f0f0f0;
+    font-size:14px;
+    vertical-align:top;
+}
+
+tbody tr:hover{
+    background:#fafafa;
+}
+
+.policy-title{
+    font-weight:700;
+    color:#111827;
+}
+
+.policy-preview{
+    color:#6b7280;
+    max-width:400px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.type-badge,
+.status-badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.type-badge{
+    background:#eef2ff;
+    color:#4338ca;
+}
+
+.status-active{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-inactive{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.action-buttons{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.edit-btn,
+.delete-btn,
+.toggle-btn{
+    border:none;
+    padding:7px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:600;
+}
+
+.edit-btn{
+    background:#e0f2fe;
+    color:#0369a1;
+}
+
+.edit-btn:hover{
+    background:#bae6fd;
+}
+
+.delete-btn{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.delete-btn:hover{
+    background:#fecaca;
+}
+
+.toggle-btn{
+    background:#f3f4f6;
+    color:#374151;
+}
+
+.toggle-btn:hover{
+    background:#e5e7eb;
+}
+
+.empty-state{
+    text-align:center;
+    padding:50px 20px;
+    color:#6b7280;
+}
+
+.loading{
+    text-align:center;
+    padding:40px;
+    color:#6b7280;
+}
+
+.alert{
+    display:none;
+    padding:13px 16px;
+    border-radius:8px;
+    margin-bottom:18px;
+    font-size:14px;
+}
+
+.alert.success{
+    background:#dcfce7;
+    color:#166534;
+    border:1px solid #bbf7d0;
+}
+
+.alert.error{
+    background:#fee2e2;
+    color:#991b1b;
+    border:1px solid #fecaca;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:500;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-content{
+    width:100%;
+    max-width:750px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:14px;
+    padding:25px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:22px;
+}
+
+.close-btn{
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:50%;
+    background:#f3f4f6;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group.full{
+    grid-column:1 / -1;
+}
+
+.form-group label{
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    outline:none;
+    font-family:inherit;
+    font-size:14px;
+}
+
+.form-group textarea{
+    min-height:180px;
+    resize:vertical;
+    line-height:1.5;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#2563eb;
+}
+
+.form-help{
+    margin-top:5px;
+    color:#6b7280;
+    font-size:11px;
+}
+
+.modal-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:22px;
+}
+
+.cancel-btn,
+.save-btn{
+    border:none;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.cancel-btn{
+    background:#e5e7eb;
+    color:#374151;
+}
+
+.save-btn{
+    background:#2563eb;
+    color:white;
+}
+
+.save-btn:hover{
+    background:#1d4ed8;
+}
+
+.cancel-btn:hover{
+    background:#d1d5db;
+}
+
+.required{
+    color:#dc2626;
+}
+
+.no-client{
+    background:#fff7ed;
+    color:#9a3412;
+    border:1px solid #fed7aa;
+    padding:13px 15px;
+    border-radius:8px;
+    font-size:14px;
+}
+
+@media(max-width:900px){
+    .dashboard-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:650px){
+    .header{
+        padding:0 15px;
+    }
+
+    .user-name{
+        display:none;
+    }
+
+    .container{
+        padding:15px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .filter-box{
+        width:100%;
+    }
+
+    .toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">MD Kaif Web Platform</div>
+
+    <div class="header-right">
+        <span class="user-name" id="userName">Loading...</span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="topbar">
+        <div class="page-title">
+            <h1>Policy Manager</h1>
+            <p>Manage client-wise website policies and legal pages.</p>
+        </div>
+
+        <a href="dashboard.html" class="back-btn">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div id="alertBox" class="alert"></div>
+
+    <!-- CLIENT SELECT -->
+    <div class="client-panel" id="clientPanel">
+
+        <label for="clientSelect">
+            Select Client <span class="required">*</span>
+        </label>
+
+        <select id="clientSelect" onchange="clientChanged()">
+            <option value="">-- Select Client --</option>
+        </select>
+
+        <div class="client-info" id="clientInfo">
+            Please select a client to manage policies.
+        </div>
+
+    </div>
+
+    <!-- STATISTICS -->
+    <div class="dashboard-grid">
+
+        <div class="stat-card">
+            <h4>Total Policies</h4>
+            <div class="stat-number" id="totalCount">0</div>
+        </div>
+
+        <div class="stat-card">
+            <h4>Active</h4>
+            <div class="stat-number" id="activeCount">0</div>
+        </div>
+
+        <div class="stat-card">
+            <h4>Inactive</h4>
+            <div class="stat-number" id="inactiveCount">0</div>
+        </div>
+
+        <div class="stat-card">
+            <h4>Selected Client</h4>
+            <div class="stat-number" id="clientCount">-</div>
+        </div>
+
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search policy title..."
+                oninput="renderPolicies()"
+            >
+        </div>
+
+        <div class="filter-box">
+            <select id="typeFilter" onchange="renderPolicies()">
+                <option value="">All Policy Types</option>
+                <option value="privacy">Privacy Policy</option>
+                <option value="terms">Terms & Conditions</option>
+                <option value="disclaimer">Disclaimer</option>
+                <option value="refund">Refund / Cancellation</option>
+                <option value="shipping">Shipping / Delivery</option>
+                <option value="custom">Custom Policy</option>
+            </select>
+        </div>
+
+        <div class="filter-box">
+            <select id="statusFilter" onchange="renderPolicies()">
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+        </div>
+
+        <button class="add-btn" onclick="openAddModal()">
+            + Add Policy
+        </button>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Policy</th>
+                        <th>Type</th>
+                        <th>Content</th>
+                        <th>Order</th>
+                        <th>Status</th>
+                        <th>Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="policyTableBody">
+                    <tr>
+                        <td colspan="8">
+                            <div class="loading">
+                                Select a client first.
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- POLICY MODAL -->
+
+<div class="modal" id="policyModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2 id="modalTitle">Add Policy</h2>
+
+            <button class="close-btn" onclick="closeModal()">
+                ×
+            </button>
+        </div>
+
+        <form id="policyForm" onsubmit="savePolicy(event)">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>
+                        Policy Type <span class="required">*</span>
+                    </label>
+
+                    <select id="policyType" required>
+
+                        <option value="">
+                            -- Select Policy Type --
+                        </option>
+
+                        <option value="privacy">
+                            Privacy Policy
+                        </option>
+
+                        <option value="terms">
+                            Terms & Conditions
+                        </option>
+
+                        <option value="disclaimer">
+                            Disclaimer
+                        </option>
+
+                        <option value="refund">
+                            Refund / Cancellation Policy
+                        </option>
+
+                        <option value="shipping">
+                            Shipping / Delivery Policy
+                        </option>
+
+                        <option value="custom">
+                            Custom Policy
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Status <span class="required">*</span>
+                    </label>
+
+                    <select id="policyStatus" required>
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Policy Title <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="policyTitle"
+                        placeholder="Example: Privacy Policy"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Slug
+                    </label>
+
+                    <input
+                        type="text"
+                        id="policySlug"
+                        placeholder="Example: privacy-policy"
+                    >
+
+                    <div class="form-help">
+                        URL-friendly name. Example: privacy-policy
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Sort Order
+                    </label>
+
+                    <input
+                        type="number"
+                        id="sortOrder"
+                        value="0"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Policy Content <span class="required">*</span>
+                    </label>
+
+                    <textarea
+                        id="policyContent"
+                        placeholder="Enter complete policy content here..."
+                        required
+                    ></textarea>
+
+                    <div class="form-help">
+                        You can enter plain text or HTML content.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                    id="saveBtn"
+                >
+                    Save Policy
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+// ============================================
+// SUPABASE CONFIG
+// ============================================
+
+const SUPABASE_URL =
+    "https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+// ============================================
+// GLOBAL VARIABLES
+// ============================================
+
+let currentUser = null;
+let currentProfile = null;
+
+let currentClientId = null;
+
+let clients = [];
+let policies = [];
+
+let editingPolicyId = null;
+
+
+// ============================================
+// INIT
+// ============================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
+
+
+async function init(){
+
+    try{
+
+        const {
+            data: {
+                session
+            }
+        } = await supabaseClient.auth.getSession();
+
+
+        if(!session){
+
+            window.location.href = "index.html";
+            return;
+
+        }
+
+
+        currentUser = session.user;
+
+
+        document.getElementById("userName").textContent =
+            currentUser.email || "User";
+
+
+        // Load profile
+        const {
+            data: profile,
+            error: profileError
+        } = await supabaseClient
+            .from("profiles")
+            .select("id,role,client_id,full_name")
+            .eq("id", currentUser.id)
+            .single();
+
+
+        if(profileError){
+
+            console.error(profileError);
+
+            showAlert(
+                "Unable to load user profile.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        currentProfile = profile;
+
+
+        if(profile.full_name){
+
+            document.getElementById("userName").textContent =
+                profile.full_name;
+
+        }
+
+
+        // ========================================
+        // SUPER ADMIN
+        // ========================================
+
+        if(profile.role === "super_admin"){
+
+            await loadClients();
+
+            document.getElementById("clientInfo").textContent =
+                "Super Admin: Please select a client before managing policies.";
+
+            // IMPORTANT:
+            // Do NOT auto-select first client.
+
+            currentClientId = null;
+
+            renderPolicies();
+
+            return;
+        }
+
+
+        // ========================================
+        // NORMAL CLIENT USER
+        // ========================================
+
+        if(!profile.client_id){
+
+            document.getElementById("clientInfo").innerHTML =
+                '<div class="no-client">No client is assigned to your account.</div>';
+
+            document.getElementById("policyTableBody").innerHTML =
+                '<tr><td colspan="8"><div class="empty-state">No client assigned.</div></td></tr>';
+
+            return;
+        }
+
+
+        currentClientId = profile.client_id;
+
+
+        // Hide client selector for normal users
+        document.getElementById("clientPanel").style.display =
+            "none";
+
+
+        await loadClientName(profile.client_id);
+
+        await loadPolicies();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showAlert(
+            "Something went wrong while loading the page.",
+            "error"
+        );
+
+    }
+
+}
+
+
+// ============================================
+// LOAD CLIENTS
+// ============================================
+
+async function loadClients(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("clients")
+        .select("id,company_name,slug,status")
+        .order("company_name", {
+            ascending:true
+        });
+
+
+    if(error){
+
+        console.error(error);
+
+        showAlert(
+            "Unable to load clients: " + error.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    clients = data || [];
+
+
+    const select =
+        document.getElementById("clientSelect");
+
+
+    select.innerHTML =
+        '<option value="">-- Select Client --</option>';
+
+
+    clients.forEach(client => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = client.id;
+
+        option.textContent =
+            client.company_name +
+            (
+                client.status
+                ? " (" + client.status + ")"
+                : ""
+            );
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+// ============================================
+// CLIENT CHANGED
+// ============================================
+
+async function clientChanged(){
+
+    const selected =
+        document.getElementById("clientSelect").value;
+
+
+    currentClientId =
+        selected || null;
+
+
+    if(!currentClientId){
+
+        document.getElementById("clientInfo").textContent =
+            "Please select a client to manage policies.";
+
+        policies = [];
+
+        updateStats();
+
+        renderPolicies();
+
+        return;
+    }
+
+
+    const client =
+        clients.find(
+            c => c.id === currentClientId
+        );
+
+
+    if(client){
+
+        document.getElementById("clientInfo").textContent =
+            "Managing policies for: " +
+            client.company_name;
+
+    }
+
+
+    await loadPolicies();
+
+}
+
+
+// ============================================
+// LOAD CLIENT NAME
+// ============================================
+
+async function loadClientName(clientId){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("clients")
+        .select("company_name")
+        .eq("id",clientId)
+        .single();
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+    }
+
+
+    if(data){
+
+        document.getElementById("clientInfo").textContent =
+            "Managing policies for: " +
+            data.company_name;
+
+    }
+
+}
+
+
+// ============================================
+// LOAD POLICIES
+// ============================================
+
+async function loadPolicies(){
+
+    if(!currentClientId){
+
+        policies = [];
+
+        updateStats();
+
+        renderPolicies();
+
+        return;
+    }
+
+
+    document.getElementById("policyTableBody").innerHTML =
+        '<tr><td colspan="8"><div class="loading">Loading policies...</div></td></tr>';
+
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("policies")
+        .select(`
+            id,
+            client_id,
+            policy_type,
+            title,
+            slug,
+            content,
+            sort_order,
+            status,
+            created_at,
+            updated_at
+        `)
+        .eq("client_id",currentClientId)
+        .order("sort_order",{
+            ascending:true
+        })
+        .order("created_at",{
+            ascending:true
+        });
+
+
+    if(error){
+
+        console.error(error);
+
+        showAlert(
+            "Unable to load policies: " +
+            error.message,
+            "error"
+        );
+
+        policies = [];
+
+        updateStats();
+
+        renderPolicies();
+
+        return;
+    }
+
+
+    policies = data || [];
+
+
+    updateStats();
+
+    renderPolicies();
+
+}
+
+
+// ============================================
+// POLICY TYPE LABEL
+// ============================================
+
+function getPolicyTypeLabel(type){
+
+    const labels = {
+
+        privacy:
+            "Privacy Policy",
+
+        terms:
+            "Terms & Conditions",
+
+        disclaimer:
+            "Disclaimer",
+
+        refund:
+            "Refund / Cancellation",
+
+        shipping:
+            "Shipping / Delivery",
+
+        custom:
+            "Custom Policy"
+
+    };
+
+
+    return labels[type] || type || "-";
+
+}
+
+
+// ============================================
+// STATUS LABEL
+// ============================================
+
+function getStatusLabel(status){
+
+    return status === "active"
+        ? "Active"
+        : "Inactive";
+
+}
+
+
+// ============================================
+// STATS
+// ============================================
+
+function updateStats(){
+
+    const total =
+        policies.length;
+
+
+    const active =
+        policies.filter(
+            p => p.status === "active"
+        ).length;
+
+
+    const inactive =
+        policies.filter(
+            p => p.status === "inactive"
+        ).length;
+
+
+    document.getElementById("totalCount").textContent =
+        total;
+
+    document.getElementById("activeCount").textContent =
+        active;
+
+    document.getElementById("inactiveCount").textContent =
+        inactive;
+
+    document.getElementById("clientCount").textContent =
+        currentClientId
+            ? "Selected"
+            : "-";
+
+}
+
+
+// ============================================
+// RENDER POLICIES
+// ============================================
+
+function renderPolicies(){
+
+    const tbody =
+        document.getElementById("policyTableBody");
+
+
+    if(!currentClientId){
+
+        tbody.innerHTML =
+            '<tr><td colspan="8"><div class="empty-state">Please select a client first.</div></td></tr>';
+
+        updateStats();
+
+        return;
+    }
+
+
+    const search =
+        document.getElementById("searchInput")
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const type =
+        document.getElementById("typeFilter")
+            .value;
+
+
+    const status =
+        document.getElementById("statusFilter")
+            .value;
+
+
+    const filtered =
+        policies.filter(policy => {
+
+            const matchesSearch =
+                !search ||
+                (policy.title || "")
+                    .toLowerCase()
+                    .includes(search) ||
+                (policy.slug || "")
+                    .toLowerCase()
+                    .includes(search);
+
+
+            const matchesType =
+                !type ||
+                policy.policy_type === type;
+
+
+            const matchesStatus =
+                !status ||
+                policy.status === status;
+
+
+            return (
+                matchesSearch &&
+                matchesType &&
+                matchesStatus
+            );
+
+        });
+
+
+    if(filtered.length === 0){
+
+        tbody.innerHTML =
+            '<tr><td colspan="8"><div class="empty-state">No policies found for this client.</div></td></tr>';
+
+        return;
+
+    }
+
+
+    tbody.innerHTML = "";
+
+
+    filtered.forEach((policy,index) => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        const contentPreview =
+            stripHtml(policy.content || "");
+
+
+        const updated =
+            policy.updated_at
+                ? formatDate(policy.updated_at)
+                : "-";
+
+
+        tr.innerHTML = `
+
+            <td>
+                ${index + 1}
+            </td>
+
+            <td>
+                <div class="policy-title">
+                    ${escapeHtml(policy.title || "-")}
+                </div>
+
+                ${
+                    policy.slug
+                    ? `<div style="font-size:11px;color:#9ca3af;margin-top:4px;">
+                        /${escapeHtml(policy.slug)}
+                       </div>`
+                    : ""
+                }
+            </td>
+
+            <td>
+                <span class="type-badge">
+                    ${escapeHtml(
+                        getPolicyTypeLabel(
+                            policy.policy_type
+                        )
+                    )}
+                </span>
+            </td>
+
+            <td>
+                <div class="policy-preview"
+                     title="${escapeHtml(contentPreview)}">
+                    ${escapeHtml(
+                        contentPreview || "-"
+                    )}
+                </div>
+            </td>
+
+            <td>
+                ${Number(policy.sort_order || 0)}
+            </td>
+
+            <td>
+                <span class="status-badge ${
+                    policy.status === "active"
+                    ? "status-active"
+                    : "status-inactive"
+                }">
+                    ${getStatusLabel(policy.status)}
+                </span>
+            </td>
+
+            <td>
+                ${updated}
+            </td>
+
+            <td>
+
+                <div class="action-buttons">
+
+                    <button
+                        class="edit-btn"
+                        onclick="editPolicy('${policy.id}')"
+                    >
+                        Edit
+                    </button>
+
+                    <button
+                        class="toggle-btn"
+                        onclick="togglePolicy('${policy.id}')"
+                    >
+                        ${
+                            policy.status === "active"
+                            ? "Deactivate"
+                            : "Activate"
+                        }
+                    </button>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deletePolicy('${policy.id}')"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            </td>
+
+        `;
+
+
+        tbody.appendChild(tr);
+
+    });
+
+}
+
+
+// ============================================
+// ADD POLICY
+// ============================================
+
+function openAddModal(){
+
+    if(!currentClientId){
+
+        showAlert(
+            "PLEASE SELECT CLIENT FIRST.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    editingPolicyId = null;
+
+
+    document.getElementById("modalTitle").textContent =
+        "Add Policy";
+
+
+    document.getElementById("policyForm").reset();
+
+
+    document.getElementById("policyStatus").value =
+        "active";
+
+
+    document.getElementById("sortOrder").value =
+        "0";
+
+
+    document.getElementById("policyModal").style.display =
+        "flex";
+
+}
+
+
+// ============================================
+// EDIT POLICY
+// ============================================
+
+function editPolicy(id){
+
+    if(!currentClientId){
+
+        showAlert(
+            "PLEASE SELECT CLIENT FIRST.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const policy =
+        policies.find(
+            p => p.id === id
+        );
+
+
+    if(!policy){
+
+        showAlert(
+            "Policy not found.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    editingPolicyId =
+        policy.id;
+
+
+    document.getElementById("modalTitle").textContent =
+        "Edit Policy";
+
+
+    document.getElementById("policyType").value =
+        policy.policy_type || "";
+
+
+    document.getElementById("policyStatus").value =
+        policy.status || "active";
+
+
+    document.getElementById("policyTitle").value =
+        policy.title || "";
+
+
+    document.getElementById("policySlug").value =
+        policy.slug || "";
+
+
+    document.getElementById("sortOrder").value =
+        policy.sort_order ?? 0;
+
+
+    document.getElementById("policyContent").value =
+        policy.content || "";
+
+
+    document.getElementById("policyModal").style.display =
+        "flex";
+
+}
+
+
+// ============================================
+// SAVE POLICY
+// ============================================
+
+async function savePolicy(event){
+
+    event.preventDefault();
+
+
+    if(!currentClientId){
+
+        showAlert(
+            "PLEASE SELECT CLIENT FIRST.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const policyType =
+        document.getElementById("policyType")
+            .value;
+
+
+    const status =
+        document.getElementById("policyStatus")
+            .value;
+
+
+    const title =
+        document.getElementById("policyTitle")
+            .value
+            .trim();
+
+
+    const slug =
+        document.getElementById("policySlug")
+            .value
+            .trim();
+
+
+    const content =
+        document.getElementById("policyContent")
+            .value
+            .trim();
+
+
+    const sortOrder =
+        parseInt(
+            document.getElementById("sortOrder")
+                .value,
+            10
+        ) || 0;
+
+
+    if(!policyType){
+
+        showAlert(
+            "Please select policy type.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!title){
+
+        showAlert(
+            "Policy title is required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!content){
+
+        showAlert(
+            "Policy content is required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const saveBtn =
+        document.getElementById("saveBtn");
+
+
+    saveBtn.disabled = true;
+
+    saveBtn.textContent =
+        "Saving...";
+
+
+    try{
+
+        const payload = {
+
+            client_id:
+                currentClientId,
+
+            policy_type:
+                policyType,
+
+            title:
+                title,
+
+            slug:
+                slug || null,
+
+            content:
+                content,
+
+            sort_order:
+                sortOrder,
+
+            status:
+                status
+
+        };
+
+
+        let error;
+
+
+        // ====================================
+        // UPDATE
+        // ====================================
+
+        if(editingPolicyId){
+
+            const result =
+                await supabaseClient
+                    .from("policies")
+                    .update(payload)
+                    .eq("id",editingPolicyId)
+                    .eq("client_id",currentClientId);
+
+
+            error =
+                result.error;
+
+        }
+
+
+        // ====================================
+        // INSERT
+        // ====================================
+
+        else{
+
+            const result =
+                await supabaseClient
+                    .from("policies")
+                    .insert([payload]);
+
+
+            error =
+                result.error;
+
+        }
+
+
+        if(error){
+
+            console.error(error);
+
+            showAlert(
+                "Unable to save policy: " +
+                error.message,
+                "error"
+            );
+
+            return;
+        }
+
+
+        closeModal();
+
+
+        showAlert(
+            editingPolicyId
+                ? "Policy updated successfully."
+                : "Policy added successfully.",
+            "success"
+        );
+
+
+        await loadPolicies();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showAlert(
+            "Something went wrong: " +
+            error.message,
+            "error"
+        );
+
+    }
+    finally{
+
+        saveBtn.disabled = false;
+
+        saveBtn.textContent =
+            "Save Policy";
+
+    }
+
+}
+
+
+// ============================================
+// TOGGLE STATUS
+// ============================================
+
+async function togglePolicy(id){
+
+    if(!currentClientId){
+
+        showAlert(
+            "PLEASE SELECT CLIENT FIRST.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const policy =
+        policies.find(
+            p => p.id === id
+        );
+
+
+    if(!policy){
+
+        return;
+    }
+
+
+    const newStatus =
+        policy.status === "active"
+            ? "inactive"
+            : "active";
+
+
+    const actionText =
+        newStatus === "active"
+            ? "activate"
+            : "deactivate";
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to " +
+            actionText +
+            " this policy?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+    }
+
+
+    const {
+        error
+    } = await supabaseClient
+        .from("policies")
+        .update({
+            status:newStatus
+        })
+        .eq("id",id)
+        .eq("client_id",currentClientId);
+
+
+    if(error){
+
+        console.error(error);
+
+        showAlert(
+            "Unable to change status: " +
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    showAlert(
+        "Policy status updated successfully.",
+        "success"
+    );
+
+
+    await loadPolicies();
+
+}
+
+
+// ============================================
+// DELETE POLICY
+// ============================================
+
+async function deletePolicy(id){
+
+    if(!currentClientId){
+
+        showAlert(
+            "PLEASE SELECT CLIENT FIRST.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const policy =
+        policies.find(
+            p => p.id === id
+        );
+
+
+    if(!policy){
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete:\n\n" +
+            policy.title +
+            "\n\nThis action cannot be undone."
+        );
+
+
+    if(!confirmed){
+
+        return;
+    }
+
+
+    const {
+        error
+    } = await supabaseClient
+        .from("policies")
+        .delete()
+        .eq("id",id)
+        .eq("client_id",currentClientId);
+
+
+    if(error){
+
+        console.error(error);
+
+        showAlert(
+            "Unable to delete policy: " +
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    showAlert(
+        "Policy deleted successfully.",
+        "success"
+    );
+
+
+    await loadPolicies();
+
+}
+
+
+// ============================================
+// CLOSE MODAL
+// ============================================
+
+function closeModal(){
+
+    document.getElementById("policyModal").style.display =
+        "none";
+
+
+    document.getElementById("policyForm").reset();
+
+
+    editingPolicyId = null;
+
+}
+
+
+// ============================================
+// CLICK OUTSIDE MODAL
+// ============================================
+
+document.getElementById("policyModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target === this){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+// ============================================
+// ESC KEY
+// ============================================
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+// ============================================
+// LOGOUT
+// ============================================
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+// ============================================
+// ALERT
+// ============================================
+
+function showAlert(message,type){
+
+    const box =
+        document.getElementById("alertBox");
+
+
+    box.className =
+        "alert " +
+        (type || "success");
+
+
+    box.textContent =
+        message;
+
+
+    box.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            box.style.display =
+                "none";
+
+        },
+        4000
+    );
+
+}
+
+
+// ============================================
+// DATE FORMAT
+// ============================================
+
+function formatDate(dateString){
+
+    try{
+
+        return new Date(dateString)
+            .toLocaleDateString(
+                "en-IN",
+                {
+                    day:"2-digit",
+                    month:"short",
+                    year:"numeric"
+                }
+            );
+
+    }
+    catch(e){
+
+        return "-";
+
+    }
+
+}
+
+
+// ============================================
+// STRIP HTML
+// ============================================
+
+function stripHtml(html){
+
+    const temp =
+        document.createElement("div");
+
+    temp.innerHTML =
+        html;
+
+    return (
+        temp.textContent ||
+        temp.innerText ||
+        ""
+    ).replace(/\s+/g," ").trim();
+
+}
+
+
+// ============================================
+// ESCAPE HTML
+// ============================================
+
+function escapeHtml(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
