@@ -1,8 +1,6 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,7 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -31,7 +28,7 @@ body{
 .login-box{
     width:100%;
     max-width:430px;
-    background:#ffffff;
+    background:white;
     padding:35px;
     border-radius:18px;
     box-shadow:0 15px 40px rgba(15,23,42,.12);
@@ -72,12 +69,10 @@ input{
     margin-bottom:18px;
     font-size:15px;
     outline:none;
-    background:#ffffff;
 }
 
 input:focus{
     border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,.08);
 }
 
 .login-btn{
@@ -110,13 +105,13 @@ input:focus{
     line-height:1.5;
 }
 
-.message.error{
+.error{
     display:block;
     background:#fee2e2;
     color:#991b1b;
 }
 
-.message.success{
+.success{
     display:block;
     background:#dcfce7;
     color:#166534;
@@ -130,13 +125,7 @@ input:focus{
     text-decoration:none;
     font-size:13px;
 }
-
-.back:hover{
-    text-decoration:underline;
-}
-
 </style>
-
 </head>
 
 <body>
@@ -151,10 +140,9 @@ input:focus{
         Web Platform Admin Login
     </div>
 
-
     <form id="loginForm">
 
-        <label for="email">
+        <label>
             Email Address
         </label>
 
@@ -162,12 +150,10 @@ input:focus{
             type="email"
             id="email"
             placeholder="Enter your email"
-            autocomplete="username"
             required
         >
 
-
-        <label for="password">
+        <label>
             Password
         </label>
 
@@ -175,10 +161,8 @@ input:focus{
             type="password"
             id="password"
             placeholder="Enter your password"
-            autocomplete="current-password"
             required
         >
-
 
         <button
             type="submit"
@@ -191,12 +175,10 @@ input:focus{
 
     </form>
 
-
     <div
         id="message"
         class="message">
     </div>
-
 
     <a
         href="index.html"
@@ -211,84 +193,64 @@ input:focus{
 
 <script>
 
-/* =====================================================
+/* =========================================
    SUPABASE CONFIG
-===================================================== */
+========================================= */
 
 const SUPABASE_URL =
-    "https://ywvdozdoanmcxscfofc.supabase.co";
+"https://ywvdozdoanmcxscfofcf.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
-
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY,
-        {
-            auth:{
-                persistSession:true,
-                autoRefreshToken:true,
-                detectSessionInUrl:true
-            }
-        }
-    );
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-/* =====================================================
+/* =========================================
    ELEMENTS
-===================================================== */
+========================================= */
 
 const form =
-    document.getElementById("loginForm");
+document.getElementById("loginForm");
 
 const emailInput =
-    document.getElementById("email");
+document.getElementById("email");
 
 const passwordInput =
-    document.getElementById("password");
+document.getElementById("password");
 
 const loginBtn =
-    document.getElementById("loginBtn");
+document.getElementById("loginBtn");
 
 const message =
-    document.getElementById("message");
+document.getElementById("message");
 
 
-/* =====================================================
+/* =========================================
    MESSAGE
-===================================================== */
+========================================= */
 
-function showMessage(text,type){
+function showMessage(
+    text,
+    type
+){
 
     message.textContent =
-        text;
+    text;
 
     message.className =
-        "message " + type;
+    "message " + type;
 
 }
 
 
-/* =====================================================
-   RESET LOGIN BUTTON
-===================================================== */
-
-function resetButton(){
-
-    loginBtn.disabled =
-        false;
-
-    loginBtn.textContent =
-        "Login";
-
-}
-
-
-/* =====================================================
+/* =========================================
    LOGIN
-===================================================== */
+========================================= */
 
 form.addEventListener(
     "submit",
@@ -296,12 +258,11 @@ form.addEventListener(
 
         e.preventDefault();
 
-
         const email =
-            emailInput.value.trim();
+        emailInput.value.trim();
 
         const password =
-            passwordInput.value;
+        passwordInput.value;
 
 
         if(!email || !password){
@@ -317,198 +278,108 @@ form.addEventListener(
 
 
         loginBtn.disabled =
-            true;
+        true;
 
         loginBtn.textContent =
-            "Logging in...";
+        "Logging in...";
 
 
-        try{
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .auth
+        .signInWithPassword({
 
-            /* =========================================
-               SIGN IN
-            ========================================= */
+            email:email,
 
-            const {
-                data,
-                error
-            } =
-            await supabaseClient
-                .auth
-                .signInWithPassword({
+            password:password
 
-                    email:email,
-
-                    password:password
-
-                });
+        });
 
 
-            /* =========================================
-               LOGIN ERROR
-            ========================================= */
-
-            if(error){
-
-                console.error(
-                    "Supabase Login Error:",
-                    error
-                );
-
-                showMessage(
-                    error.message ||
-                    "Login failed.",
-                    "error"
-                );
-
-                resetButton();
-
-                return;
-
-            }
-
-
-            /* =========================================
-               USER CHECK
-            ========================================= */
-
-            if(
-                !data ||
-                !data.user
-            ){
-
-                showMessage(
-                    "Login failed. User was not found.",
-                    "error"
-                );
-
-                resetButton();
-
-                return;
-
-            }
-
-
-            /* =========================================
-               VERIFY SESSION
-            ========================================= */
-
-            const {
-                data:sessionData,
-                error:sessionError
-            } =
-            await supabaseClient
-                .auth
-                .getSession();
-
-
-            if(sessionError){
-
-                console.error(
-                    "Session Verification Error:",
-                    sessionError
-                );
-
-                showMessage(
-                    "Login succeeded, but session could not be verified.",
-                    "error"
-                );
-
-                resetButton();
-
-                return;
-
-            }
-
-
-            const session =
-                sessionData?.session;
-
-
-            if(
-                !session ||
-                !session.user
-            ){
-
-                showMessage(
-                    "Login session was not created. Please try again.",
-                    "error"
-                );
-
-                resetButton();
-
-                return;
-
-            }
-
-
-            /* =========================================
-               LOGIN SUCCESS
-            ========================================= */
+        if(error){
 
             showMessage(
-                "Login successful. Opening dashboard...",
-                "success"
-            );
-
-
-            /*
-              replace() prevents browser history
-              from creating unnecessary login loops.
-            */
-
-            setTimeout(
-                function(){
-
-                    window.location.replace(
-                        "dashboard.html"
-                    );
-
-                },
-                500
-            );
-
-        }
-        catch(error){
-
-            console.error(
-                "Unexpected Login Error:",
-                error
-            );
-
-            showMessage(
-                error?.message ||
-                "Something went wrong. Please try again.",
+                error.message,
                 "error"
             );
 
-            resetButton();
+            loginBtn.disabled =
+            false;
+
+            loginBtn.textContent =
+            "Login";
+
+            return;
 
         }
+
+
+        if(!data.user){
+
+            showMessage(
+                "Login failed.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "Login successful. Opening dashboard...",
+            "success"
+        );
+
+
+        /*
+          Temporary dashboard redirect.
+          We will create dashboard.html next.
+        */
+
+        setTimeout(
+            function(){
+
+                window.location.href =
+                "dashboard.html";
+
+            },
+            800
+        );
 
     }
 );
 
 
-/* =====================================================
-   IMPORTANT
-   =====================================================
+/* =========================================
+   CHECK EXISTING SESSION
+========================================= */
 
-   NO automatic getSession() redirect here.
+(async function(){
 
-   Reason:
-   dashboard.html also checks the session.
-   Having both pages automatically redirect each
-   other can create an infinite blinking loop.
+    const {
+        data:{
+            session
+        }
+    } =
+    await supabaseClient
+    .auth
+    .getSession();
 
-   User will reach dashboard only after successful
-   login above.
 
-===================================================== */
+    if(session){
 
+        window.location.href =
+        "dashboard.html";
+
+    }
+
+})();
 
 </script>
 
 </body>
 </html>
-```
