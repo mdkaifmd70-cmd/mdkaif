@@ -5,8 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Admin Login - MD Kaif Web Platform</title>
+<title>MD KAIF - Admin Login</title>
 
+<!-- Supabase JS v2 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -17,75 +18,79 @@
 }
 
 body{
-    min-height:100vh;
     font-family:Arial,Helvetica,sans-serif;
-    background:#f1f5f9;
+    min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
     padding:20px;
 }
 
 .login-box{
     width:100%;
-    max-width:430px;
-    background:white;
-    padding:35px;
+    max-width:420px;
+    background:#ffffff;
     border-radius:18px;
-    box-shadow:0 15px 40px rgba(15,23,42,.12);
+    padding:35px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
 .logo{
     text-align:center;
-    font-size:25px;
-    font-weight:900;
+    margin-bottom:25px;
+}
+
+.logo h1{
+    font-size:30px;
     color:#0f172a;
-    margin-bottom:8px;
+    font-weight:800;
 }
 
-.logo span{
-    color:#2563eb;
-}
-
-.subtitle{
-    text-align:center;
+.logo p{
+    margin-top:7px;
     color:#64748b;
     font-size:14px;
-    margin-bottom:30px;
+}
+
+.form-group{
+    margin-bottom:18px;
 }
 
 label{
     display:block;
-    font-size:13px;
-    font-weight:800;
     margin-bottom:7px;
+    font-size:14px;
+    font-weight:600;
     color:#334155;
 }
 
 input{
     width:100%;
-    padding:13px;
+    padding:13px 14px;
     border:1px solid #cbd5e1;
     border-radius:9px;
-    margin-bottom:18px;
     font-size:15px;
     outline:none;
+    transition:.2s;
 }
 
 input:focus{
     border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.10);
 }
 
 .login-btn{
     width:100%;
     border:0;
-    background:#2563eb;
-    color:white;
-    padding:13px;
+    padding:14px;
     border-radius:9px;
-    font-size:15px;
-    font-weight:800;
+    background:#2563eb;
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
     cursor:pointer;
+    transition:.2s;
 }
 
 .login-btn:hover{
@@ -93,38 +98,38 @@ input:focus{
 }
 
 .login-btn:disabled{
-    opacity:.6;
+    opacity:.65;
     cursor:not-allowed;
 }
 
 .message{
-    margin-top:15px;
-    padding:12px;
-    border-radius:8px;
     display:none;
-    font-size:13px;
+    margin-bottom:18px;
+    padding:12px 14px;
+    border-radius:9px;
+    font-size:14px;
     line-height:1.5;
 }
 
-.error{
+.message.error{
     display:block;
-    background:#fee2e2;
-    color:#991b1b;
+    background:#fef2f2;
+    color:#b91c1c;
+    border:1px solid #fecaca;
 }
 
-.success{
+.message.success{
     display:block;
-    background:#dcfce7;
-    color:#166534;
+    background:#f0fdf4;
+    color:#15803d;
+    border:1px solid #bbf7d0;
 }
 
-.back{
-    display:block;
+.footer{
     text-align:center;
-    margin-top:20px;
-    color:#2563eb;
-    text-decoration:none;
-    font-size:13px;
+    margin-top:22px;
+    color:#94a3b8;
+    font-size:12px;
 }
 </style>
 </head>
@@ -134,65 +139,86 @@ input:focus{
 <div class="login-box">
 
     <div class="logo">
-        MD <span>KAIF</span>
+        <h1>MD KAIF</h1>
+        <p>Web Platform Admin</p>
     </div>
 
-    <div class="subtitle">
-        Web Platform Admin Login
-    </div>
+    <div id="message" class="message"></div>
 
     <form id="loginForm">
 
-        <label>Email Address</label>
+        <div class="form-group">
+            <label for="email">Email Address</label>
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            autocomplete="username"
-            required
-        >
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required
+            >
+        </div>
 
-        <label>Password</label>
+        <div class="form-group">
+            <label for="password">Password</label>
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required
-        >
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+        </div>
 
         <button
             type="submit"
+            id="loginBtn"
             class="login-btn"
-            id="loginBtn">
-
+        >
             Login
-
         </button>
 
     </form>
 
-    <div id="message" class="message"></div>
-
-    <a href="index.html" class="back">
-        ← Back to Website
-    </a>
+    <div class="footer">
+        MDKF Web Platform
+    </div>
 
 </div>
 
+
 <script>
 
-/* =========================================
+/* =========================================================
    SUPABASE CONFIG
-========================================= */
+========================================================= */
 
 const SUPABASE_URL =
 "https://ywvdozdoanmcxscfofc.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+
+/* =========================================================
+   CHECK SUPABASE LIBRARY
+========================================================= */
+
+if(
+    !window.supabase ||
+    typeof window.supabase.createClient !== "function"
+){
+    alert(
+        "Supabase library could not load. " +
+        "Please check your internet connection and refresh the page."
+    );
+}
+
+
+/* =========================================================
+   CREATE SUPABASE CLIENT
+========================================================= */
 
 const supabaseClient =
 window.supabase.createClient(
@@ -209,11 +235,11 @@ window.supabase.createClient(
 );
 
 
-/* =========================================
+/* =========================================================
    ELEMENTS
-========================================= */
+========================================================= */
 
-const form =
+const loginForm =
 document.getElementById("loginForm");
 
 const emailInput =
@@ -225,33 +251,138 @@ document.getElementById("password");
 const loginBtn =
 document.getElementById("loginBtn");
 
-const message =
+const messageBox =
 document.getElementById("message");
 
 
-/* =========================================
-   MESSAGE
-========================================= */
+/* =========================================================
+   MESSAGE FUNCTION
+========================================================= */
 
 function showMessage(text,type){
 
-    message.textContent = text;
+    messageBox.textContent = text;
 
-    message.className =
+    messageBox.className =
         "message " + type;
 
 }
 
+function clearMessage(){
 
-/* =========================================
+    messageBox.textContent = "";
+
+    messageBox.className =
+        "message";
+
+}
+
+
+/* =========================================================
+   BUTTON STATE
+========================================================= */
+
+function setLoading(loading){
+
+    loginBtn.disabled = loading;
+
+    if(loading){
+
+        loginBtn.textContent =
+            "Logging in...";
+
+    }else{
+
+        loginBtn.textContent =
+            "Login";
+
+    }
+
+}
+
+
+/* =========================================================
+   CHECK EXISTING SESSION
+========================================================= */
+
+async function checkExistingSession(){
+
+    try{
+
+        console.log(
+            "Checking existing Supabase session..."
+        );
+
+        const result =
+        await supabaseClient.auth.getSession();
+
+        const sessionData =
+            result.data;
+
+        const sessionError =
+            result.error;
+
+        if(sessionError){
+
+            console.error(
+                "Session check error:",
+                sessionError
+            );
+
+            return;
+
+        }
+
+        const session =
+            sessionData &&
+            sessionData.session;
+
+        if(session){
+
+            console.log(
+                "Existing session found:",
+                session.user.email
+            );
+
+            /*
+             * Already logged in.
+             * Go directly to dashboard.
+             */
+            window.location.replace(
+                "dashboard.html"
+            );
+
+        }else{
+
+            console.log(
+                "No existing session."
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Existing session exception:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
    LOGIN
-========================================= */
+========================================================= */
 
-form.addEventListener(
+loginForm.addEventListener(
     "submit",
-    async function(e){
+    async function(event){
 
-        e.preventDefault();
+        event.preventDefault();
+
+        clearMessage();
 
         const email =
             emailInput.value.trim();
@@ -259,31 +390,44 @@ form.addEventListener(
         const password =
             passwordInput.value;
 
-
-        if(!email || !password){
+        if(!email){
 
             showMessage(
-                "Please enter email and password.",
+                "Please enter your email address.",
                 "error"
             );
 
-            return;
+            emailInput.focus();
 
+            return;
+        }
+
+        if(!password){
+
+            showMessage(
+                "Please enter your password.",
+                "error"
+            );
+
+            passwordInput.focus();
+
+            return;
         }
 
 
-        loginBtn.disabled = true;
-
-        loginBtn.textContent =
-            "Logging in...";
+        setLoading(true);
 
 
         try{
 
-            const {
-                data,
-                error
-            } =
+            console.log(
+                "Attempting Supabase login..."
+            );
+
+            /*
+             * LOGIN
+             */
+            const result =
             await supabaseClient.auth.signInWithPassword({
 
                 email:email,
@@ -293,46 +437,143 @@ form.addEventListener(
             });
 
 
+            const data =
+                result.data;
+
+            const error =
+                result.error;
+
+
+            /*
+             * Supabase returned an error
+             */
             if(error){
 
-                throw error;
-
-            }
-
-
-            if(!data || !data.session){
-
-                throw new Error(
-                    "Login successful but session was not created."
+                console.error(
+                    "Supabase Login Error:",
+                    error
                 );
+
+                let errorMessage =
+                    error.message ||
+                    "Login failed.";
+
+                /*
+                 * Better message for network failure
+                 */
+                if(
+                    errorMessage
+                    .toLowerCase()
+                    .includes("failed to fetch")
+                ){
+
+                    errorMessage =
+                    "Failed to fetch Supabase. " +
+                    "Please check your internet connection, " +
+                    "Supabase URL, and browser network access.";
+
+                }
+
+                showMessage(
+                    errorMessage,
+                    "error"
+                );
+
+                setLoading(false);
+
+                return;
 
             }
 
 
             /*
-             * IMPORTANT
-             * Confirm session is actually stored
-             * before redirecting.
+             * Login succeeded but session missing
              */
+            if(
+                !data ||
+                !data.session
+            ){
 
-            const {
-                data:{
-                    session
-                },
-                error:sessionError
-            } =
-            await supabaseClient.auth.getSession();
-
-
-            if(sessionError || !session){
-
-                throw new Error(
-                    "Session could not be saved. Please try again."
+                console.error(
+                    "Login succeeded but no session returned.",
+                    data
                 );
+
+                showMessage(
+                    "Login completed but session was not created. Please try again.",
+                    "error"
+                );
+
+                setLoading(false);
+
+                return;
 
             }
 
 
+            console.log(
+                "Login successful:",
+                data.user.email
+            );
+
+            console.log(
+                "Session created successfully."
+            );
+
+
+            /*
+             * Verify session from Supabase storage
+             */
+            const sessionCheck =
+            await supabaseClient.auth.getSession();
+
+            if(
+                sessionCheck.error
+            ){
+
+                console.error(
+                    "Session verification error:",
+                    sessionCheck.error
+                );
+
+                showMessage(
+                    "Login successful, but session verification failed.",
+                    "error"
+                );
+
+                setLoading(false);
+
+                return;
+
+            }
+
+
+            const verifiedSession =
+                sessionCheck.data &&
+                sessionCheck.data.session;
+
+
+            if(!verifiedSession){
+
+                console.error(
+                    "Verified session is missing."
+                );
+
+                showMessage(
+                    "Session could not be saved. Please try again.",
+                    "error"
+                );
+
+                setLoading(false);
+
+                return;
+
+            }
+
+
+            /*
+             * SUCCESS
+             */
             showMessage(
                 "Login successful. Opening dashboard...",
                 "success"
@@ -340,10 +581,8 @@ form.addEventListener(
 
 
             /*
-             * Small delay so Supabase localStorage
-             * session is fully available.
+             * Small delay so user sees success message.
              */
-
             setTimeout(function(){
 
                 window.location.replace(
@@ -353,27 +592,43 @@ form.addEventListener(
             },500);
 
 
-        }
-        catch(error){
+        }catch(error){
 
             console.error(
-                "Login Error:",
+                "Login Exception:",
                 error
             );
 
 
+            let errorMessage =
+                error &&
+                error.message
+                ? error.message
+                : "Unexpected login error.";
+
+
+            /*
+             * Network / Failed to fetch
+             */
+            if(
+                errorMessage
+                .toLowerCase()
+                .includes("failed to fetch")
+            ){
+
+                errorMessage =
+                "Failed to fetch Supabase. " +
+                "Check your internet connection or Supabase configuration.";
+
+            }
+
+
             showMessage(
-                error.message ||
-                "Unable to login.",
+                errorMessage,
                 "error"
             );
 
-
-            loginBtn.disabled =
-                false;
-
-            loginBtn.textContent =
-                "Login";
+            setLoading(false);
 
         }
 
@@ -381,46 +636,36 @@ form.addEventListener(
 );
 
 
-/* =========================================
-   CHECK EXISTING SESSION
-========================================= */
+/* =========================================================
+   AUTH STATE LISTENER
+========================================================= */
 
-(async function(){
+supabaseClient.auth.onAuthStateChange(
+    function(event,session){
 
-    try{
-
-        const {
-            data:{
-                session
-            }
-        } =
-        await supabaseClient.auth.getSession();
-
+        console.log(
+            "Supabase Auth Event:",
+            event
+        );
 
         if(session){
 
-            /*
-             * Existing valid session.
-             * Go directly to dashboard.
-             */
-
-            window.location.replace(
-                "dashboard.html"
+            console.log(
+                "Authenticated user:",
+                session.user.email
             );
 
         }
 
     }
-    catch(error){
+);
 
-        console.error(
-            "Session Check Error:",
-            error
-        );
 
-    }
+/* =========================================================
+   START
+========================================================= */
 
-})();
+checkExistingSession();
 
 </script>
 
