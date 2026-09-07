@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,25 +143,23 @@ input:focus{
 
     <form id="loginForm">
 
-        <label>
-            Email Address
-        </label>
+        <label>Email Address</label>
 
         <input
             type="email"
             id="email"
             placeholder="Enter your email"
+            autocomplete="username"
             required
         >
 
-        <label>
-            Password
-        </label>
+        <label>Password</label>
 
         <input
             type="password"
             id="password"
             placeholder="Enter your password"
+            autocomplete="current-password"
             required
         >
 
@@ -175,21 +174,13 @@ input:focus{
 
     </form>
 
-    <div
-        id="message"
-        class="message">
-    </div>
+    <div id="message" class="message"></div>
 
-    <a
-        href="index.html"
-        class="back">
-
+    <a href="index.html" class="back">
         ← Back to Website
-
     </a>
 
 </div>
-
 
 <script>
 
@@ -198,7 +189,7 @@ input:focus{
 ========================================= */
 
 const SUPABASE_URL =
-"https://ywvdozdoanmcxscfofcf.supabase.co";
+"https://ywvdozdoanmcxscfofc.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
@@ -206,7 +197,15 @@ const SUPABASE_KEY =
 const supabaseClient =
 window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_KEY
+    SUPABASE_KEY,
+    {
+        auth:{
+            persistSession:true,
+            autoRefreshToken:true,
+            detectSessionInUrl:true,
+            storage:window.localStorage
+        }
+    }
 );
 
 
@@ -234,16 +233,12 @@ document.getElementById("message");
    MESSAGE
 ========================================= */
 
-function showMessage(
-    text,
-    type
-){
+function showMessage(text,type){
 
-    message.textContent =
-    text;
+    message.textContent = text;
 
     message.className =
-    "message " + type;
+        "message " + type;
 
 }
 
@@ -259,10 +254,10 @@ form.addEventListener(
         e.preventDefault();
 
         const email =
-        emailInput.value.trim();
+            emailInput.value.trim();
 
         const password =
-        passwordInput.value;
+            passwordInput.value;
 
 
         if(!email || !password){
@@ -277,78 +272,110 @@ form.addEventListener(
         }
 
 
-        loginBtn.disabled =
-        true;
+        loginBtn.disabled = true;
 
         loginBtn.textContent =
-        "Logging in...";
+            "Logging in...";
 
 
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-        .auth
-        .signInWithPassword({
+        try{
 
-            email:email,
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.auth.signInWithPassword({
 
-            password:password
+                email:email,
 
-        });
+                password:password
+
+            });
 
 
-        if(error){
+            if(error){
+
+                throw error;
+
+            }
+
+
+            if(!data || !data.session){
+
+                throw new Error(
+                    "Login successful but session was not created."
+                );
+
+            }
+
+
+            /*
+             * IMPORTANT
+             * Confirm session is actually stored
+             * before redirecting.
+             */
+
+            const {
+                data:{
+                    session
+                },
+                error:sessionError
+            } =
+            await supabaseClient.auth.getSession();
+
+
+            if(sessionError || !session){
+
+                throw new Error(
+                    "Session could not be saved. Please try again."
+                );
+
+            }
+
 
             showMessage(
-                error.message,
+                "Login successful. Opening dashboard...",
+                "success"
+            );
+
+
+            /*
+             * Small delay so Supabase localStorage
+             * session is fully available.
+             */
+
+            setTimeout(function(){
+
+                window.location.replace(
+                    "dashboard.html"
+                );
+
+            },500);
+
+
+        }
+        catch(error){
+
+            console.error(
+                "Login Error:",
+                error
+            );
+
+
+            showMessage(
+                error.message ||
+                "Unable to login.",
                 "error"
             );
+
 
             loginBtn.disabled =
-            false;
+                false;
 
             loginBtn.textContent =
-            "Login";
-
-            return;
+                "Login";
 
         }
-
-
-        if(!data.user){
-
-            showMessage(
-                "Login failed.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        showMessage(
-            "Login successful. Opening dashboard...",
-            "success"
-        );
-
-
-        /*
-          Temporary dashboard redirect.
-          We will create dashboard.html next.
-        */
-
-        setTimeout(
-            function(){
-
-                window.location.href =
-                "dashboard.html";
-
-            },
-            800
-        );
 
     }
 );
@@ -360,20 +387,36 @@ form.addEventListener(
 
 (async function(){
 
-    const {
-        data:{
-            session
+    try{
+
+        const {
+            data:{
+                session
+            }
+        } =
+        await supabaseClient.auth.getSession();
+
+
+        if(session){
+
+            /*
+             * Existing valid session.
+             * Go directly to dashboard.
+             */
+
+            window.location.replace(
+                "dashboard.html"
+            );
+
         }
-    } =
-    await supabaseClient
-    .auth
-    .getSession();
 
+    }
+    catch(error){
 
-    if(session){
-
-        window.location.href =
-        "dashboard.html";
+        console.error(
+            "Session Check Error:",
+            error
+        );
 
     }
 
@@ -383,3 +426,4 @@ form.addEventListener(
 
 </body>
 </html>
+```
