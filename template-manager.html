@@ -1,0 +1,1539 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Template Manager - MD Kaif Web Platform</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+
+.header{
+  background:#111827;
+  color:#fff;
+  padding:18px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.brand h1{
+  font-size:21px;
+  font-weight:700;
+}
+
+.brand p{
+  font-size:12px;
+  color:#aeb8c8;
+  margin-top:3px;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.header-btn{
+  border:1px solid #374151;
+  background:#1f2937;
+  color:#fff;
+  padding:9px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.header-btn:hover{
+  background:#374151;
+}
+
+.container{
+  max-width:1400px;
+  margin:auto;
+  padding:25px;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:22px;
+  flex-wrap:wrap;
+}
+
+.page-title h2{
+  font-size:25px;
+}
+
+.page-title p{
+  color:#667085;
+  font-size:14px;
+  margin-top:5px;
+}
+
+.add-btn{
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  border-radius:9px;
+  padding:12px 18px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.add-btn:hover{
+  background:#1d4ed8;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:18px;
+}
+
+.stat-label{
+  color:#667085;
+  font-size:13px;
+}
+
+.stat-value{
+  font-size:27px;
+  font-weight:700;
+  margin-top:6px;
+}
+
+.toolbar{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:15px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.search{
+  flex:1;
+  min-width:240px;
+  position:relative;
+}
+
+.search input{
+  width:100%;
+  padding:11px 13px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  outline:none;
+}
+
+.search input:focus{
+  border-color:#2563eb;
+}
+
+.filter{
+  min-width:160px;
+  padding:11px 12px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  background:#fff;
+}
+
+.table-card{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1000px;
+}
+
+th{
+  background:#f8fafc;
+  color:#475467;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  text-align:left;
+  padding:14px;
+  border-bottom:1px solid #e5e7eb;
+}
+
+td{
+  padding:14px;
+  border-bottom:1px solid #eef0f3;
+  font-size:13px;
+  vertical-align:middle;
+}
+
+tr:hover td{
+  background:#fafcff;
+}
+
+.preview{
+  width:90px;
+  height:55px;
+  border-radius:7px;
+  border:1px solid #e5e7eb;
+  object-fit:cover;
+  background:#f3f4f6;
+}
+
+.no-image{
+  width:90px;
+  height:55px;
+  border-radius:7px;
+  background:#eef2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  color:#667085;
+}
+
+.template-name{
+  font-weight:700;
+  color:#111827;
+}
+
+.slug{
+  font-family:monospace;
+  color:#667085;
+  font-size:12px;
+  margin-top:4px;
+}
+
+.badge{
+  display:inline-flex;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+}
+
+.active{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.inactive{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.action-btn{
+  border:1px solid #d1d5db;
+  background:#fff;
+  padding:7px 9px;
+  border-radius:7px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.action-btn:hover{
+  background:#f3f4f6;
+}
+
+.action-btn.edit{
+  color:#2563eb;
+}
+
+.action-btn.delete{
+  color:#dc2626;
+}
+
+.action-btn.open{
+  color:#059669;
+}
+
+.empty{
+  padding:45px 20px;
+  text-align:center;
+  color:#667085;
+}
+
+.loading{
+  padding:40px;
+  text-align:center;
+  color:#667085;
+}
+
+/* Modal */
+
+.modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.60);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal-overlay.show{
+  display:flex;
+}
+
+.modal{
+  background:#fff;
+  width:100%;
+  max-width:650px;
+  max-height:92vh;
+  overflow:auto;
+  border-radius:14px;
+  box-shadow:0 25px 60px rgba(0,0,0,.25);
+}
+
+.modal-header{
+  padding:18px 20px;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.modal-header h3{
+  font-size:18px;
+}
+
+.close{
+  border:none;
+  background:#f3f4f6;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.modal-body{
+  padding:20px;
+}
+
+.form-group{
+  margin-bottom:16px;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:7px;
+  color:#344054;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  outline:none;
+  font-family:inherit;
+  font-size:13px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color:#2563eb;
+}
+
+.form-group textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.modal-footer{
+  padding:15px 20px;
+  border-top:1px solid #e5e7eb;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+.cancel-btn{
+  background:#fff;
+  border:1px solid #d1d5db;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.save-btn{
+  background:#2563eb;
+  border:none;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.save-btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.message{
+  display:none;
+  padding:11px 14px;
+  border-radius:8px;
+  margin-bottom:15px;
+  font-size:13px;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.success{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.message.error{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.preview-box{
+  margin-top:10px;
+  display:none;
+}
+
+.preview-box img{
+  width:180px;
+  max-height:110px;
+  object-fit:cover;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+.info{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:9px;
+  padding:12px;
+  font-size:12px;
+  color:#667085;
+  margin-bottom:15px;
+}
+
+@media(max-width:700px){
+  .header{
+    padding:15px;
+  }
+
+  .container{
+    padding:15px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .row{
+    grid-template-columns:1fr;
+  }
+
+  .page-title h2{
+    font-size:21px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="brand">
+    <h1>MD Kaif Web Platform</h1>
+    <p>Template Management System</p>
+  </div>
+
+  <div class="header-right">
+    <button class="header-btn" onclick="window.location.href='dashboard.html'">
+      Dashboard
+    </button>
+
+    <button class="header-btn" onclick="logout()">
+      Logout
+    </button>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="topbar">
+    <div class="page-title">
+      <h2>Template Manager</h2>
+      <p>Manage website templates connected with your client system.</p>
+    </div>
+
+    <button class="add-btn" onclick="openAddModal()">
+      + Add Template
+    </button>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="stat-label">Total Templates</div>
+      <div class="stat-value" id="totalTemplates">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Active Templates</div>
+      <div class="stat-value" id="activeTemplates">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Inactive Templates</div>
+      <div class="stat-value" id="inactiveTemplates">0</div>
+    </div>
+
+  </div>
+
+  <div id="message" class="message"></div>
+
+  <div class="toolbar">
+
+    <div class="search">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search template name, slug or description..."
+        oninput="renderTemplates()"
+      >
+    </div>
+
+    <select id="statusFilter" class="filter" onchange="renderTemplates()">
+      <option value="all">All Status</option>
+      <option value="active">Active Only</option>
+      <option value="inactive">Inactive Only</option>
+    </select>
+
+  </div>
+
+  <div class="table-card">
+
+    <div id="loading" class="loading">
+      Loading templates...
+    </div>
+
+    <div class="table-wrap" id="tableWrap" style="display:none;">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Preview</th>
+            <th>Template</th>
+            <th>URL</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="templateTableBody"></tbody>
+
+      </table>
+
+      <div id="emptyState" class="empty" style="display:none;">
+        No templates found.
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<!-- ADD / EDIT MODAL -->
+
+<div class="modal-overlay" id="templateModal">
+
+  <div class="modal">
+
+    <div class="modal-header">
+      <h3 id="modalTitle">Add Template</h3>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+
+    <form id="templateForm">
+
+      <div class="modal-body">
+
+        <div class="info">
+          Template details are stored directly in the existing
+          <strong>templates</strong> table.
+        </div>
+
+        <div class="form-group">
+          <label>Template Name *</label>
+          <input
+            type="text"
+            id="templateName"
+            placeholder="Example: Travel Business"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Template Slug *</label>
+          <input
+            type="text"
+            id="templateSlug"
+            placeholder="travel-business"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Template URL</label>
+          <input
+            type="url"
+            id="templateUrl"
+            placeholder="https://example.github.io/travel-business/"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Preview Image URL</label>
+          <input
+            type="url"
+            id="previewImage"
+            placeholder="https://example.com/preview.jpg"
+            oninput="showImagePreview()"
+          >
+
+          <div class="preview-box" id="previewBox">
+            <img id="previewImageElement" alt="Template Preview">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea
+            id="description"
+            placeholder="Describe this website template..."
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Status *</label>
+
+          <select id="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          onclick="closeModal()"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="save-btn"
+          id="saveButton"
+        >
+          Save Template
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ================================
+   SUPABASE CONFIG
+================================ */
+
+const SUPABASE_URL =
+  "https://ywvdozdoanmcxscfofc.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* ================================
+   GLOBAL DATA
+================================ */
+
+let templates = [];
+let editingId = null;
+
+
+/* ================================
+   AUTH CHECK
+================================ */
+
+async function checkLogin(){
+
+  const {
+    data: { user },
+    error
+  } = await supabaseClient.auth.getUser();
+
+  if(error || !user){
+
+    window.location.href = "admin.html";
+    return false;
+  }
+
+  return true;
+}
+
+
+/* ================================
+   LOAD TEMPLATES
+================================ */
+
+async function loadTemplates(){
+
+  showLoading(true);
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("templates")
+    .select(`
+      id,
+      template_name,
+      template_slug,
+      template_url,
+      preview_image,
+      description,
+      status,
+      created_at
+    `)
+    .order("created_at", {
+      ascending:false
+    });
+
+  if(error){
+
+    console.error(error);
+
+    showLoading(false);
+
+    showMessage(
+      "Unable to load templates: " + error.message,
+      "error"
+    );
+
+    return;
+  }
+
+  templates = data || [];
+
+  showLoading(false);
+
+  updateStats();
+
+  renderTemplates();
+}
+
+
+/* ================================
+   RENDER
+================================ */
+
+function renderTemplates(){
+
+  const tbody =
+    document.getElementById("templateTableBody");
+
+  const search =
+    document.getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const filter =
+    document.getElementById("statusFilter").value;
+
+  let filtered =
+    templates.filter(template => {
+
+      const searchable = [
+
+        template.template_name,
+        template.template_slug,
+        template.description
+
+      ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+      const matchesSearch =
+        !search ||
+        searchable.includes(search);
+
+      const matchesStatus =
+        filter === "all" ||
+        String(template.status || "").toLowerCase() === filter;
+
+      return matchesSearch && matchesStatus;
+
+    });
+
+
+  tbody.innerHTML = "";
+
+
+  document.getElementById("tableWrap")
+    .style.display = "block";
+
+
+  if(filtered.length === 0){
+
+    document.getElementById("emptyState")
+      .style.display = "block";
+
+    return;
+  }
+
+
+  document.getElementById("emptyState")
+    .style.display = "none";
+
+
+  filtered.forEach(template => {
+
+    const tr =
+      document.createElement("tr");
+
+    const isActive =
+      String(template.status || "")
+        .toLowerCase() === "active";
+
+
+    const preview =
+      template.preview_image
+      ? `
+        <img
+          class="preview"
+          src="${escapeAttr(template.preview_image)}"
+          alt="Preview"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <div class="no-image" style="display:none;">
+          No Image
+        </div>
+      `
+      : `
+        <div class="no-image">
+          No Image
+        </div>
+      `;
+
+
+    const description =
+      template.description
+      ? escapeHtml(
+          truncate(template.description, 90)
+        )
+      : "—";
+
+
+    const created =
+      template.created_at
+      ? new Date(template.created_at)
+          .toLocaleDateString()
+      : "—";
+
+
+    const urlButton =
+      template.template_url
+      ? `
+        <button
+          class="action-btn open"
+          onclick="openTemplate('${escapeJs(template.template_url)}')"
+        >
+          Open
+        </button>
+      `
+      : "";
+
+
+    tr.innerHTML = `
+
+      <td>
+        ${preview}
+      </td>
+
+      <td>
+        <div class="template-name">
+          ${escapeHtml(template.template_name || "Unnamed")}
+        </div>
+
+        <div class="slug">
+          ${escapeHtml(template.template_slug || "")}
+        </div>
+      </td>
+
+      <td>
+        ${
+          template.template_url
+          ? `<span style="font-size:12px;color:#667085;">
+              ${escapeHtml(truncate(template.template_url, 35))}
+             </span>`
+          : "—"
+        }
+      </td>
+
+      <td>
+        ${description}
+      </td>
+
+      <td>
+        <span class="badge ${isActive ? "active" : "inactive"}">
+          ${isActive ? "Active" : "Inactive"}
+        </span>
+      </td>
+
+      <td>
+        ${created}
+      </td>
+
+      <td>
+
+        <div class="actions">
+
+          ${urlButton}
+
+          <button
+            class="action-btn edit"
+            onclick="editTemplate('${escapeJs(template.id)}')"
+          >
+            Edit
+          </button>
+
+          <button
+            class="action-btn delete"
+            onclick="deleteTemplate('${escapeJs(template.id)}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </td>
+
+    `;
+
+
+    tbody.appendChild(tr);
+
+  });
+
+}
+
+
+/* ================================
+   ADD TEMPLATE
+================================ */
+
+function openAddModal(){
+
+  editingId = null;
+
+  document.getElementById("modalTitle")
+    .textContent = "Add Template";
+
+  document.getElementById("saveButton")
+    .textContent = "Save Template";
+
+  document.getElementById("templateForm")
+    .reset();
+
+  document.getElementById("status")
+    .value = "active";
+
+  document.getElementById("previewBox")
+    .style.display = "none";
+
+  document.getElementById("templateModal")
+    .classList.add("show");
+
+}
+
+
+/* ================================
+   EDIT TEMPLATE
+================================ */
+
+function editTemplate(id){
+
+  const template =
+    templates.find(
+      item => String(item.id) === String(id)
+    );
+
+  if(!template){
+    showMessage(
+      "Template not found.",
+      "error"
+    );
+    return;
+  }
+
+  editingId = template.id;
+
+  document.getElementById("modalTitle")
+    .textContent = "Edit Template";
+
+  document.getElementById("saveButton")
+    .textContent = "Update Template";
+
+
+  document.getElementById("templateName")
+    .value = template.template_name || "";
+
+  document.getElementById("templateSlug")
+    .value = template.template_slug || "";
+
+  document.getElementById("templateUrl")
+    .value = template.template_url || "";
+
+  document.getElementById("previewImage")
+    .value = template.preview_image || "";
+
+  document.getElementById("description")
+    .value = template.description || "";
+
+  document.getElementById("status")
+    .value =
+      template.status === "inactive"
+      ? "inactive"
+      : "active";
+
+
+  showImagePreview();
+
+
+  document.getElementById("templateModal")
+    .classList.add("show");
+
+}
+
+
+/* ================================
+   SAVE / UPDATE
+================================ */
+
+document.getElementById("templateForm")
+.addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  const saveButton =
+    document.getElementById("saveButton");
+
+  const templateName =
+    document.getElementById("templateName")
+      .value
+      .trim();
+
+  const templateSlug =
+    document.getElementById("templateSlug")
+      .value
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g,"-");
+
+
+  const templateUrl =
+    document.getElementById("templateUrl")
+      .value
+      .trim();
+
+  const previewImage =
+    document.getElementById("previewImage")
+      .value
+      .trim();
+
+  const description =
+    document.getElementById("description")
+      .value
+      .trim();
+
+  const status =
+    document.getElementById("status")
+      .value;
+
+
+  if(!templateName){
+
+    showMessage(
+      "Template name is required.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if(!templateSlug){
+
+    showMessage(
+      "Template slug is required.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  saveButton.disabled = true;
+
+
+  const payload = {
+
+    template_name: templateName,
+
+    template_slug: templateSlug,
+
+    template_url:
+      templateUrl || null,
+
+    preview_image:
+      previewImage || null,
+
+    description:
+      description || null,
+
+    status:
+      status
+
+  };
+
+
+  let result;
+
+
+  if(editingId){
+
+    result =
+      await supabaseClient
+        .from("templates")
+        .update(payload)
+        .eq("id", editingId);
+
+  }else{
+
+    result =
+      await supabaseClient
+        .from("templates")
+        .insert([payload]);
+
+  }
+
+
+  saveButton.disabled = false;
+
+
+  if(result.error){
+
+    console.error(result.error);
+
+    showMessage(
+      "Error saving template: " +
+      result.error.message,
+      "error"
+    );
+
+    return;
+  }
+
+
+  closeModal();
+
+
+  showMessage(
+    editingId
+      ? "Template updated successfully."
+      : "Template added successfully.",
+    "success"
+  );
+
+
+  await loadTemplates();
+
+});
+
+
+/* ================================
+   DELETE
+================================ */
+
+async function deleteTemplate(id){
+
+  const template =
+    templates.find(
+      item => String(item.id) === String(id)
+    );
+
+  if(!template){
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      `Delete template "${template.template_name}"?\n\nThis action cannot be undone.`
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  const {
+    error
+  } = await supabaseClient
+    .from("templates")
+    .delete()
+    .eq("id", id);
+
+
+  if(error){
+
+    console.error(error);
+
+    showMessage(
+      "Unable to delete template: " +
+      error.message,
+      "error"
+    );
+
+    return;
+  }
+
+
+  showMessage(
+    "Template deleted successfully.",
+    "success"
+  );
+
+
+  await loadTemplates();
+
+}
+
+
+/* ================================
+   OPEN TEMPLATE
+================================ */
+
+function openTemplate(url){
+
+  if(!url){
+    return;
+  }
+
+  window.open(
+    url,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+/* ================================
+   IMAGE PREVIEW
+================================ */
+
+function showImagePreview(){
+
+  const url =
+    document.getElementById("previewImage")
+      .value
+      .trim();
+
+  const box =
+    document.getElementById("previewBox");
+
+  const img =
+    document.getElementById("previewImageElement");
+
+
+  if(!url){
+
+    box.style.display = "none";
+    return;
+  }
+
+
+  img.src = url;
+
+  box.style.display = "block";
+
+
+  img.onerror = function(){
+
+    box.style.display = "none";
+
+  };
+
+}
+
+
+/* ================================
+   STATS
+================================ */
+
+function updateStats(){
+
+  const total =
+    templates.length;
+
+  const active =
+    templates.filter(
+      item =>
+        String(item.status || "")
+          .toLowerCase() === "active"
+    ).length;
+
+  const inactive =
+    total - active;
+
+
+  document.getElementById("totalTemplates")
+    .textContent = total;
+
+  document.getElementById("activeTemplates")
+    .textContent = active;
+
+  document.getElementById("inactiveTemplates")
+    .textContent = inactive;
+
+}
+
+
+/* ================================
+   MODAL
+================================ */
+
+function closeModal(){
+
+  document.getElementById("templateModal")
+    .classList.remove("show");
+
+  editingId = null;
+
+}
+
+
+document.getElementById("templateModal")
+.addEventListener("click", function(e){
+
+  if(e.target === this){
+    closeModal();
+  }
+
+});
+
+
+/* ================================
+   LOADING
+================================ */
+
+function showLoading(show){
+
+  document.getElementById("loading")
+    .style.display = show
+      ? "block"
+      : "none";
+
+}
+
+
+/* ================================
+   MESSAGE
+================================ */
+
+function showMessage(text,type){
+
+  const message =
+    document.getElementById("message");
+
+  message.textContent = text;
+
+  message.className =
+    "message show " + type;
+
+
+  setTimeout(() => {
+
+    message.classList.remove("show");
+
+  }, 4500);
+
+}
+
+
+/* ================================
+   LOGOUT
+================================ */
+
+async function logout(){
+
+  await supabaseClient.auth.signOut();
+
+  window.location.href = "admin.html";
+
+}
+
+
+/* ================================
+   HELPERS
+================================ */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttr(value){
+
+  return escapeHtml(value);
+
+}
+
+
+function escapeJs(value){
+
+  return String(value ?? "")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/"/g,"&quot;")
+    .replace(/\n/g,"\\n")
+    .replace(/\r/g,"\\r");
+
+}
+
+
+function truncate(value,length){
+
+  value = String(value || "");
+
+  if(value.length <= length){
+    return value;
+  }
+
+  return value.substring(0,length) + "...";
+
+}
+
+
+/* ================================
+   START
+================================ */
+
+(async function(){
+
+  const loggedIn =
+    await checkLogin();
+
+  if(!loggedIn){
+    return;
+  }
+
+  await loadTemplates();
+
+})();
+
+</script>
+
+</body>
+</html>
+```
