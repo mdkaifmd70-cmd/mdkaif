@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +28,7 @@ body{
 .login-box{
     width:100%;
     max-width:430px;
-    background:#fff;
+    background:white;
     padding:35px;
     border-radius:18px;
     box-shadow:0 15px 40px rgba(15,23,42,.12);
@@ -74,7 +73,6 @@ input{
 
 input:focus{
     border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,.08);
 }
 
 .login-btn{
@@ -127,10 +125,6 @@ input:focus{
     text-decoration:none;
     font-size:13px;
 }
-
-.back:hover{
-    text-decoration:underline;
-}
 </style>
 </head>
 
@@ -148,7 +142,7 @@ input:focus{
 
     <form id="loginForm">
 
-        <label for="email">
+        <label>
             Email Address
         </label>
 
@@ -156,11 +150,10 @@ input:focus{
             type="email"
             id="email"
             placeholder="Enter your email"
-            autocomplete="username"
             required
         >
 
-        <label for="password">
+        <label>
             Password
         </label>
 
@@ -168,7 +161,6 @@ input:focus{
             type="password"
             id="password"
             placeholder="Enter your password"
-            autocomplete="current-password"
             required
         >
 
@@ -198,6 +190,7 @@ input:focus{
 
 </div>
 
+
 <script>
 
 /* =========================================
@@ -205,7 +198,7 @@ input:focus{
 ========================================= */
 
 const SUPABASE_URL =
-"https://ywvdozdoanmcxscfofc.supabase.co";
+"https://ywvdozdoanmcxscfofcf.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
@@ -238,15 +231,20 @@ document.getElementById("message");
 
 
 /* =========================================
-   MESSAGE FUNCTION
+   MESSAGE
 ========================================= */
 
-function showMessage(text,type){
+function showMessage(
+    text,
+    type
+){
 
-    message.textContent = text;
+    message.textContent =
+    text;
 
     message.className =
-        "message " + type;
+    "message " + type;
+
 }
 
 
@@ -261,15 +259,11 @@ form.addEventListener(
         e.preventDefault();
 
         const email =
-            emailInput.value.trim();
+        emailInput.value.trim();
 
         const password =
-            passwordInput.value;
+        passwordInput.value;
 
-
-        /* -------------------------------
-           VALIDATION
-        -------------------------------- */
 
         if(!email || !password){
 
@@ -279,194 +273,113 @@ form.addEventListener(
             );
 
             return;
+
         }
 
 
-        /* -------------------------------
-           BUTTON LOADING
-        -------------------------------- */
-
-        loginBtn.disabled = true;
+        loginBtn.disabled =
+        true;
 
         loginBtn.textContent =
-            "Logging in...";
+        "Logging in...";
 
 
-        try{
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .auth
+        .signInWithPassword({
 
-            /* ---------------------------
-               SUPABASE LOGIN
-            ---------------------------- */
+            email:email,
 
-            const {
-                data,
-                error
-            } =
-            await supabaseClient
-                .auth
-                .signInWithPassword({
+            password:password
 
-                    email: email,
-
-                    password: password
-
-                });
+        });
 
 
-            /* ---------------------------
-               LOGIN ERROR
-            ---------------------------- */
-
-            if(error){
-
-                console.error(
-                    "Login Error:",
-                    error
-                );
-
-                showMessage(
-                    error.message,
-                    "error"
-                );
-
-                loginBtn.disabled = false;
-
-                loginBtn.textContent =
-                    "Login";
-
-                return;
-            }
-
-
-            /* ---------------------------
-               USER CHECK
-            ---------------------------- */
-
-            if(
-                !data ||
-                !data.user
-            ){
-
-                showMessage(
-                    "Login failed. User session was not created.",
-                    "error"
-                );
-
-                loginBtn.disabled = false;
-
-                loginBtn.textContent =
-                    "Login";
-
-                return;
-            }
-
-
-            /* ---------------------------
-               VERIFY SESSION
-            ---------------------------- */
-
-            const {
-                data: sessionData,
-                error: sessionError
-            } =
-            await supabaseClient
-                .auth
-                .getSession();
-
-
-            if(sessionError){
-
-                console.error(
-                    "Session Error:",
-                    sessionError
-                );
-
-                showMessage(
-                    "Login succeeded but session could not be verified.",
-                    "error"
-                );
-
-                loginBtn.disabled = false;
-
-                loginBtn.textContent =
-                    "Login";
-
-                return;
-            }
-
-
-            if(
-                !sessionData ||
-                !sessionData.session ||
-                !sessionData.session.user
-            ){
-
-                showMessage(
-                    "Login session could not be created. Please try again.",
-                    "error"
-                );
-
-                loginBtn.disabled = false;
-
-                loginBtn.textContent =
-                    "Login";
-
-                return;
-            }
-
-
-            /* ---------------------------
-               SUCCESS
-            ---------------------------- */
+        if(error){
 
             showMessage(
-                "Login successful. Opening dashboard...",
-                "success"
-            );
-
-
-            /*
-              replace() is used instead of
-              href() so browser history does
-              not create an unnecessary
-              login/dashboard loop.
-            */
-
-            setTimeout(
-                function(){
-
-                    window.location.replace(
-                        "dashboard.html"
-                    );
-
-                },
-                500
-            );
-
-        }
-        catch(error){
-
-            console.error(
-                "Unexpected Login Error:",
-                error
-            );
-
-            showMessage(
-                "Something went wrong. Please try again.",
+                error.message,
                 "error"
             );
 
-            loginBtn.disabled = false;
+            loginBtn.disabled =
+            false;
 
             loginBtn.textContent =
-                "Login";
+            "Login";
+
+            return;
+
         }
+
+
+        if(!data.user){
+
+            showMessage(
+                "Login failed.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "Login successful. Opening dashboard...",
+            "success"
+        );
+
+
+        /*
+          Temporary dashboard redirect.
+          We will create dashboard.html next.
+        */
+
+        setTimeout(
+            function(){
+
+                window.location.href =
+                "dashboard.html";
+
+            },
+            800
+        );
 
     }
 );
+
+
+/* =========================================
+   CHECK EXISTING SESSION
+========================================= */
+
+(async function(){
+
+    const {
+        data:{
+            session
+        }
+    } =
+    await supabaseClient
+    .auth
+    .getSession();
+
+
+    if(session){
+
+        window.location.href =
+        "dashboard.html";
+
+    }
+
+})();
 
 </script>
 
 </body>
 </html>
-```
