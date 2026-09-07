@@ -1,0 +1,1419 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Loading Website...</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#fff;
+    color:#222;
+}
+
+#loading{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:15px;
+}
+
+.loader{
+    width:45px;
+    height:45px;
+    border:4px solid #ddd;
+    border-top-color:#111;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+#error{
+    display:none;
+    min-height:100vh;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    text-align:center;
+}
+
+.error-box{
+    max-width:600px;
+    padding:35px;
+    border-radius:15px;
+    background:#f8f8f8;
+}
+
+#error h2{
+    margin-top:0;
+}
+
+#website{
+    display:none;
+}
+
+/* Default fallback website */
+
+.site-header{
+    background:#111;
+    color:#fff;
+    padding:20px 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.site-brand{
+    font-size:24px;
+    font-weight:700;
+}
+
+.site-nav{
+    display:flex;
+    gap:20px;
+}
+
+.site-nav a{
+    color:#fff;
+    text-decoration:none;
+}
+
+.hero{
+    min-height:500px;
+    display:flex;
+    align-items:center;
+    padding:70px 7%;
+    background:#f4f4f4;
+}
+
+.hero-content{
+    max-width:750px;
+}
+
+.hero h1{
+    font-size:52px;
+    margin:0 0 20px;
+}
+
+.hero p{
+    font-size:20px;
+    line-height:1.7;
+}
+
+.section{
+    padding:70px 7%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.products-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:25px;
+}
+
+.product-card{
+    border:1px solid #ddd;
+    border-radius:12px;
+    overflow:hidden;
+    background:#fff;
+}
+
+.product-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.product-info{
+    padding:20px;
+}
+
+.product-info h3{
+    margin-top:0;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.gallery-grid img{
+    width:100%;
+    height:230px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.site-footer{
+    background:#111;
+    color:#fff;
+    padding:40px 7%;
+    text-align:center;
+}
+
+@media(max-width:700px){
+
+    .site-header{
+        flex-direction:column;
+    }
+
+    .site-nav{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .hero h1{
+        font-size:36px;
+    }
+
+    .hero{
+        min-height:400px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+
+    <div class="loader"></div>
+
+    <strong>
+        Loading Website...
+    </strong>
+
+</div>
+
+
+<!-- ERROR -->
+<div id="error">
+
+    <div class="error-box">
+
+        <h2>
+            Website Preview Error
+        </h2>
+
+        <p id="errorMessage">
+            Unable to load website.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- WEBSITE -->
+<div id="website"></div>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+"https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =====================================================
+   GLOBAL DATA
+===================================================== */
+
+let clientData = null;
+let templateData = null;
+
+let categoriesData = [];
+let productsData = [];
+let productImagesData = [];
+let galleryData = [];
+let testimonialsData = [];
+let faqsData = [];
+let companySettingsData = null;
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function escapeHtml(value){
+
+    if(value === null || value === undefined){
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function getClientId(){
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    return params.get("client");
+}
+
+
+function showError(message){
+
+    document.getElementById("loading").style.display =
+        "none";
+
+    document.getElementById("website").style.display =
+        "none";
+
+    document.getElementById("error").style.display =
+        "flex";
+
+    document.getElementById("errorMessage").textContent =
+        message;
+}
+
+
+function showWebsite(){
+
+    document.getElementById("loading").style.display =
+        "none";
+
+    document.getElementById("error").style.display =
+        "none";
+
+    document.getElementById("website").style.display =
+        "block";
+}
+
+
+/* =====================================================
+   LOAD CLIENT
+===================================================== */
+
+async function loadClient(clientId){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("clients")
+        .select("*")
+        .eq("id",clientId)
+        .maybeSingle();
+
+    if(error){
+        throw error;
+    }
+
+    if(!data){
+        throw new Error(
+            "Client not found."
+        );
+    }
+
+    clientData = data;
+
+    console.log(
+        "Client loaded:",
+        clientData
+    );
+}
+
+
+/* =====================================================
+   LOAD TEMPLATE
+===================================================== */
+
+async function loadTemplate(){
+
+    if(!clientData.template){
+
+        throw new Error(
+            "No template has been assigned to this client."
+        );
+    }
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("templates")
+        .select("*")
+        .or(
+            `template_slug.eq.${clientData.template},slug.eq.${clientData.template}`
+        )
+        .limit(1)
+        .maybeSingle();
+
+    if(error){
+        throw error;
+    }
+
+    if(!data){
+
+        throw new Error(
+            "Selected template was not found."
+        );
+    }
+
+    templateData = data;
+
+    console.log(
+        "Template loaded:",
+        templateData
+    );
+}
+
+
+/* =====================================================
+   LOAD CATEGORIES
+===================================================== */
+
+async function loadCategories(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("categories")
+        .select("*")
+        .eq("client_id",clientData.id)
+        .order("created_at",{ascending:true});
+
+    if(error){
+
+        console.warn(
+            "Categories:",
+            error.message
+        );
+
+        categoriesData = [];
+
+        return;
+    }
+
+    categoriesData = data || [];
+}
+
+
+/* =====================================================
+   LOAD PRODUCTS
+===================================================== */
+
+async function loadProducts(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("products")
+        .select("*")
+        .eq("client_id",clientData.id)
+        .order("created_at",{ascending:false});
+
+    if(error){
+
+        console.warn(
+            "Products:",
+            error.message
+        );
+
+        productsData = [];
+
+        return;
+    }
+
+    productsData = data || [];
+}
+
+
+/* =====================================================
+   LOAD PRODUCT IMAGES
+===================================================== */
+
+async function loadProductImages(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("product_images")
+        .select("*")
+        .eq("client_id",clientData.id);
+
+    if(error){
+
+        console.warn(
+            "Product Images:",
+            error.message
+        );
+
+        productImagesData = [];
+
+        return;
+    }
+
+    productImagesData = data || [];
+}
+
+
+/* =====================================================
+   LOAD GALLERY
+===================================================== */
+
+async function loadGallery(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("gallery")
+        .select("*")
+        .eq("client_id",clientData.id)
+        .order("created_at",{ascending:false});
+
+    if(error){
+
+        console.warn(
+            "Gallery:",
+            error.message
+        );
+
+        galleryData = [];
+
+        return;
+    }
+
+    galleryData = data || [];
+}
+
+
+/* =====================================================
+   LOAD TESTIMONIALS
+===================================================== */
+
+async function loadTestimonials(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("testimonials")
+        .select("*")
+        .eq("client_id",clientData.id)
+        .order("created_at",{ascending:false});
+
+    if(error){
+
+        console.warn(
+            "Testimonials:",
+            error.message
+        );
+
+        testimonialsData = [];
+
+        return;
+    }
+
+    testimonialsData = data || [];
+}
+
+
+/* =====================================================
+   LOAD FAQS
+===================================================== */
+
+async function loadFaqs(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("faqs")
+        .select("*")
+        .eq("client_id",clientData.id)
+        .order("sort_order",{ascending:true});
+
+    if(error){
+
+        console.warn(
+            "FAQs:",
+            error.message
+        );
+
+        faqsData = [];
+
+        return;
+    }
+
+    faqsData = data || [];
+}
+
+
+/* =====================================================
+   LOAD COMPANY SETTINGS
+===================================================== */
+
+async function loadCompanySettings(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("company_settings")
+        .select("*")
+        .eq("client_id",clientData.id)
+        .limit(1)
+        .maybeSingle();
+
+    if(error){
+
+        console.warn(
+            "Company Settings:",
+            error.message
+        );
+
+        companySettingsData = null;
+
+        return;
+    }
+
+    companySettingsData = data;
+}
+
+
+/* =====================================================
+   FIND VALUE FROM OBJECT
+===================================================== */
+
+function findValue(object,keys){
+
+    if(!object){
+        return "";
+    }
+
+    for(const key of keys){
+
+        if(
+            object[key] !== undefined &&
+            object[key] !== null &&
+            object[key] !== ""
+        ){
+
+            return object[key];
+        }
+    }
+
+    return "";
+}
+
+
+/* =====================================================
+   GET COMPANY NAME
+===================================================== */
+
+function getCompanyName(){
+
+    return findValue(
+        companySettingsData,
+        [
+            "company_name",
+            "business_name",
+            "name"
+        ]
+    )
+    ||
+    clientData.company_name
+    ||
+    "Your Company";
+}
+
+
+/* =====================================================
+   GET LOGO
+===================================================== */
+
+function getLogo(){
+
+    return findValue(
+        companySettingsData,
+        [
+            "logo_url",
+            "logo",
+            "company_logo"
+        ]
+    );
+}
+
+
+/* =====================================================
+   GET PRODUCT IMAGE
+===================================================== */
+
+function getProductImage(product){
+
+    const productId =
+        product.id;
+
+    const image =
+        productImagesData.find(
+            item =>
+                item.product_id === productId
+        );
+
+    if(image){
+
+        return findValue(
+            image,
+            [
+                "image_url",
+                "url",
+                "image",
+                "file_url"
+            ]
+        );
+    }
+
+    return findValue(
+        product,
+        [
+            "image_url",
+            "image",
+            "photo",
+            "product_image"
+        ]
+    );
+}
+
+
+/* =====================================================
+   GET GALLERY IMAGE
+===================================================== */
+
+function getGalleryImage(item){
+
+    return findValue(
+        item,
+        [
+            "image_url",
+            "url",
+            "image",
+            "file_url"
+        ]
+    );
+}
+
+
+/* =====================================================
+   RENDER FALLBACK WEBSITE
+===================================================== */
+
+function renderFallbackWebsite(){
+
+    const company =
+        getCompanyName();
+
+    const logo =
+        getLogo();
+
+    document.title =
+        company;
+
+    let html = "";
+
+
+    /* HEADER */
+
+    html += `
+        <header class="site-header">
+
+            <div class="site-brand">
+
+                ${
+                    logo
+                    ?
+                    `<img
+                        src="${escapeHtml(logo)}"
+                        alt="${escapeHtml(company)}"
+                        style="
+                            max-height:55px;
+                            max-width:180px;
+                            object-fit:contain;
+                        "
+                    >`
+                    :
+                    escapeHtml(company)
+                }
+
+            </div>
+
+
+            <nav class="site-nav">
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#products">
+                    Products
+                </a>
+
+                <a href="#gallery">
+                    Gallery
+                </a>
+
+                <a href="#contact">
+                    Contact
+                </a>
+
+            </nav>
+
+        </header>
+    `;
+
+
+    /* HERO */
+
+    html += `
+        <section
+            id="home"
+            class="hero"
+        >
+
+            <div class="hero-content">
+
+                <h1>
+                    ${escapeHtml(company)}
+                </h1>
+
+                <p>
+                    Welcome to our official website.
+                    Explore our products, services
+                    and company information.
+                </p>
+
+            </div>
+
+        </section>
+    `;
+
+
+    /* PRODUCTS */
+
+    if(productsData.length){
+
+        html += `
+            <section
+                id="products"
+                class="section"
+            >
+
+                <div class="section-title">
+
+                    <h2>
+                        Our Products
+                    </h2>
+
+                </div>
+
+                <div class="products-grid">
+        `;
+
+
+        productsData.forEach(product => {
+
+            const name =
+                findValue(
+                    product,
+                    [
+                        "product_name",
+                        "name",
+                        "title"
+                    ]
+                ) ||
+                "Product";
+
+
+            const description =
+                findValue(
+                    product,
+                    [
+                        "description",
+                        "short_description",
+                        "details"
+                    ]
+                );
+
+
+            const image =
+                getProductImage(product);
+
+
+            html += `
+
+                <article class="product-card">
+
+                    ${
+                        image
+                        ?
+                        `
+                        <img
+                            src="${escapeHtml(image)}"
+                            alt="${escapeHtml(name)}"
+                        >
+                        `
+                        :
+                        ""
+                    }
+
+                    <div class="product-info">
+
+                        <h3>
+                            ${escapeHtml(name)}
+                        </h3>
+
+                        ${
+                            description
+                            ?
+                            `<p>
+                                ${escapeHtml(description)}
+                            </p>`
+                            :
+                            ""
+                        }
+
+                    </div>
+
+                </article>
+
+            `;
+
+        });
+
+
+        html += `
+                </div>
+
+            </section>
+        `;
+    }
+
+
+    /* GALLERY */
+
+    if(galleryData.length){
+
+        html += `
+            <section
+                id="gallery"
+                class="section"
+            >
+
+                <div class="section-title">
+
+                    <h2>
+                        Gallery
+                    </h2>
+
+                </div>
+
+                <div class="gallery-grid">
+        `;
+
+
+        galleryData.forEach(item => {
+
+            const image =
+                getGalleryImage(item);
+
+            if(!image){
+                return;
+            }
+
+            html += `
+
+                <img
+                    src="${escapeHtml(image)}"
+                    alt="${escapeHtml(company)}"
+                    loading="lazy"
+                >
+
+            `;
+
+        });
+
+
+        html += `
+                </div>
+
+            </section>
+        `;
+    }
+
+
+    /* TESTIMONIALS */
+
+    if(testimonialsData.length){
+
+        html += `
+            <section class="section">
+
+                <div class="section-title">
+
+                    <h2>
+                        What Our Clients Say
+                    </h2>
+
+                </div>
+
+                <div class="products-grid">
+        `;
+
+
+        testimonialsData.forEach(item => {
+
+            const text =
+                findValue(
+                    item,
+                    [
+                        "testimonial",
+                        "message",
+                        "review",
+                        "content"
+                    ]
+                );
+
+
+            const name =
+                findValue(
+                    item,
+                    [
+                        "name",
+                        "client_name",
+                        "customer_name"
+                    ]
+                );
+
+
+            html += `
+
+                <article class="product-card">
+
+                    <div class="product-info">
+
+                        <p>
+                            "${escapeHtml(text)}"
+                        </p>
+
+                        <strong>
+                            ${escapeHtml(name)}
+                        </strong>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        });
+
+
+        html += `
+                </div>
+
+            </section>
+        `;
+    }
+
+
+    /* FAQ */
+
+    if(faqsData.length){
+
+        html += `
+            <section class="section">
+
+                <div class="section-title">
+
+                    <h2>
+                        Frequently Asked Questions
+                    </h2>
+
+                </div>
+        `;
+
+
+        faqsData.forEach(item => {
+
+            const question =
+                findValue(
+                    item,
+                    [
+                        "question",
+                        "title"
+                    ]
+                );
+
+
+            const answer =
+                findValue(
+                    item,
+                    [
+                        "answer",
+                        "content",
+                        "description"
+                    ]
+                );
+
+
+            html += `
+
+                <details
+                    style="
+                        max-width:800px;
+                        margin:15px auto;
+                        padding:20px;
+                        border:1px solid #ddd;
+                        border-radius:10px;
+                    "
+                >
+
+                    <summary
+                        style="
+                            cursor:pointer;
+                            font-weight:bold;
+                        "
+                    >
+                        ${escapeHtml(question)}
+                    </summary>
+
+                    <p>
+                        ${escapeHtml(answer)}
+                    </p>
+
+                </details>
+
+            `;
+
+        });
+
+
+        html += `
+            </section>
+        `;
+    }
+
+
+    /* FOOTER */
+
+    html += `
+
+        <footer
+            id="contact"
+            class="site-footer"
+        >
+
+            <h3>
+                ${escapeHtml(company)}
+            </h3>
+
+            ${
+                findValue(
+                    companySettingsData,
+                    [
+                        "phone",
+                        "mobile",
+                        "contact_number"
+                    ]
+                )
+                ?
+                `
+                <p>
+                    Phone:
+                    ${escapeHtml(
+                        findValue(
+                            companySettingsData,
+                            [
+                                "phone",
+                                "mobile",
+                                "contact_number"
+                            ]
+                        )
+                    )}
+                </p>
+                `
+                :
+                ""
+            }
+
+            ${
+                findValue(
+                    companySettingsData,
+                    [
+                        "email",
+                        "email_address"
+                    ]
+                )
+                ?
+                `
+                <p>
+                    Email:
+                    ${escapeHtml(
+                        findValue(
+                            companySettingsData,
+                            [
+                                "email",
+                                "email_address"
+                            ]
+                        )
+                    )}
+                </p>
+                `
+                :
+                ""
+            }
+
+            <p>
+                © ${new Date().getFullYear()}
+                ${escapeHtml(company)}
+            </p>
+
+        </footer>
+
+    `;
+
+
+    document.getElementById(
+        "website"
+    ).innerHTML = html;
+
+    showWebsite();
+}
+
+
+/* =====================================================
+   LOAD EXTERNAL MASTER TEMPLATE
+===================================================== */
+
+async function tryLoadMasterTemplate(){
+
+    const templateUrl =
+        findValue(
+            templateData,
+            [
+                "template_url",
+                "url",
+                "website_url",
+                "github_url"
+            ]
+        );
+
+
+    /*
+       IMPORTANT:
+       If template_url is empty,
+       fallback website will be used.
+    */
+
+    if(!templateUrl){
+
+        renderFallbackWebsite();
+
+        return;
+    }
+
+
+    let finalUrl =
+        templateUrl;
+
+
+    /*
+       Relative GitHub paths:
+       templates/industria/
+    */
+
+    if(
+        !/^https?:\/\//i.test(finalUrl)
+    ){
+
+        finalUrl =
+            new URL(
+                finalUrl,
+                window.location.href
+            ).href;
+    }
+
+
+    console.log(
+        "Template URL:",
+        finalUrl
+    );
+
+
+    /*
+       For security and reliability,
+       we keep the dynamic client rendering
+       in this page.
+
+       Master templates can later be converted
+       to the common data-attribute system.
+
+       Until then fallback renderer works.
+    */
+
+    renderFallbackWebsite();
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+async function initWebsite(){
+
+    try{
+
+        const clientId =
+            getClientId();
+
+
+        if(!clientId){
+
+            throw new Error(
+                "Client ID is missing from the website URL."
+            );
+        }
+
+
+        console.log(
+            "Client ID:",
+            clientId
+        );
+
+
+        /* CLIENT */
+
+        await loadClient(
+            clientId
+        );
+
+
+        /* TEMPLATE */
+
+        await loadTemplate();
+
+
+        /*
+           Load all client data.
+           Promise.all makes loading faster.
+        */
+
+        await Promise.all([
+
+            loadCategories(),
+
+            loadProducts(),
+
+            loadProductImages(),
+
+            loadGallery(),
+
+            loadTestimonials(),
+
+            loadFaqs(),
+
+            loadCompanySettings()
+
+        ]);
+
+
+        console.log(
+            "All website data loaded."
+        );
+
+
+        console.log(
+            {
+                client:clientData,
+                template:templateData,
+                categories:categoriesData,
+                products:productsData,
+                productImages:productImagesData,
+                gallery:galleryData,
+                testimonials:testimonialsData,
+                faqs:faqsData,
+                companySettings:companySettingsData
+            }
+        );
+
+
+        /* RENDER */
+
+        await tryLoadMasterTemplate();
+
+    }
+    catch(error){
+
+        console.error(
+            "Website Engine Error:",
+            error
+        );
+
+
+        showError(
+            error.message ||
+            "Unable to load website."
+        );
+
+    }
+
+}
+
+
+/* START */
+
+initWebsite();
+
+</script>
+
+</body>
+</html>
+```
