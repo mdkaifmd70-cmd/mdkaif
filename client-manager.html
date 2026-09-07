@@ -73,7 +73,7 @@ body{
 }
 
 .container{
-    max-width:1250px;
+    max-width:1400px;
     margin:auto;
     padding:25px;
 }
@@ -200,6 +200,7 @@ body{
 table{
     width:100%;
     border-collapse:collapse;
+    min-width:1050px;
 }
 
 th{
@@ -215,6 +216,7 @@ td{
     padding:14px 13px;
     border-bottom:1px solid #e2e8f0;
     font-size:13px;
+    vertical-align:middle;
 }
 
 .company{
@@ -270,13 +272,16 @@ td{
 
 .edit-btn,
 .use-btn,
-.delete-btn{
+.delete-btn,
+.preview-btn,
+.website-btn{
     border:0;
     padding:7px 10px;
     border-radius:7px;
     cursor:pointer;
     font-size:12px;
     font-weight:700;
+    white-space:nowrap;
 }
 
 .edit-btn{
@@ -292,6 +297,30 @@ td{
 .delete-btn{
     background:#fee2e2;
     color:#b91c1c;
+}
+
+.preview-btn{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.preview-btn:hover{
+    background:#fde68a;
+}
+
+.website-btn{
+    background:#e0f2fe;
+    color:#0369a1;
+}
+
+.website-btn:hover{
+    background:#bae6fd;
+}
+
+.website-btn.disabled{
+    background:#e2e8f0;
+    color:#94a3b8;
+    cursor:not-allowed;
 }
 
 .message{
@@ -756,7 +785,15 @@ const SUPABASE_KEY =
 const supabaseClient =
 window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_KEY
+    SUPABASE_KEY,
+    {
+        auth:{
+            persistSession:true,
+            autoRefreshToken:true,
+            detectSessionInUrl:true,
+            storage:window.localStorage
+        }
+    }
 );
 
 
@@ -765,94 +802,58 @@ window.supabase.createClient(
 ========================================== */
 
 const formCard =
-document.getElementById(
-    "formCard"
-);
+document.getElementById("formCard");
 
 const clientForm =
-document.getElementById(
-    "clientForm"
-);
+document.getElementById("clientForm");
 
 const clientId =
-document.getElementById(
-    "clientId"
-);
+document.getElementById("clientId");
 
 const companyName =
-document.getElementById(
-    "companyName"
-);
+document.getElementById("companyName");
 
 const slug =
-document.getElementById(
-    "slug"
-);
+document.getElementById("slug");
 
 const domain =
-document.getElementById(
-    "domain"
-);
+document.getElementById("domain");
 
 const hostingType =
-document.getElementById(
-    "hostingType"
-);
+document.getElementById("hostingType");
 
 const hostingUrl =
-document.getElementById(
-    "hostingUrl"
-);
+document.getElementById("hostingUrl");
 
 const template =
-document.getElementById(
-    "template"
-);
+document.getElementById("template");
 
 const templateStatus =
-document.getElementById(
-    "templateStatus"
-);
+document.getElementById("templateStatus");
 
 const status =
-document.getElementById(
-    "status"
-);
+document.getElementById("status");
 
 const tableArea =
-document.getElementById(
-    "tableArea"
-);
+document.getElementById("tableArea");
 
 const clientTable =
-document.getElementById(
-    "clientTable"
-);
+document.getElementById("clientTable");
 
 const loading =
-document.getElementById(
-    "loading"
-);
+document.getElementById("loading");
 
 const empty =
-document.getElementById(
-    "empty"
-);
+document.getElementById("empty");
 
 const message =
-document.getElementById(
-    "message"
-);
+document.getElementById("message");
 
 const formTitle =
-document.getElementById(
-    "formTitle"
-);
+document.getElementById("formTitle");
 
 const saveBtn =
-document.getElementById(
-    "saveBtn"
-);
+document.getElementById("saveBtn");
 
 
 /* ==========================================
@@ -896,14 +897,6 @@ function showMessage(
 
 function getTemplateValue(row){
 
-    /*
-     * Different template table versions
-     * may use different naming columns.
-     *
-     * We intentionally read the complete row
-     * and detect the useful field.
-     */
-
     const possibleKeys = [
 
         "slug",
@@ -943,7 +936,7 @@ function getTemplateValue(row){
 
 
 /* ==========================================
-   TEMPLATE DISPLAY NAME HELPER
+   TEMPLATE DISPLAY NAME
 ========================================== */
 
 function getTemplateDisplayName(row){
@@ -987,6 +980,121 @@ function getTemplateDisplayName(row){
 
 
 /* ==========================================
+   FIND TEMPLATE ROW
+========================================== */
+
+function findTemplateRow(
+    templateValue
+){
+
+    if(!templateValue){
+
+        return null;
+
+    }
+
+
+    return templatesData.find(
+        row =>
+            getTemplateValue(row) ===
+            String(templateValue).trim()
+    ) || null;
+
+}
+
+
+/* ==========================================
+   GET TEMPLATE URL
+========================================== */
+
+function getTemplateUrl(
+    templateValue
+){
+
+    const row =
+    findTemplateRow(
+        templateValue
+    );
+
+
+    if(!row){
+
+        return null;
+
+    }
+
+
+    const possibleKeys = [
+
+        "template_url",
+        "url",
+        "preview_url",
+        "website_url",
+        "github_url"
+
+    ];
+
+
+    for(
+        const key of possibleKeys
+    ){
+
+        if(
+            row[key] !== undefined &&
+            row[key] !== null &&
+            String(row[key]).trim() !== ""
+        ){
+
+            return String(
+                row[key]
+            ).trim();
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* ==========================================
+   BUILD URL
+========================================== */
+
+function buildUrl(
+    value
+){
+
+    if(!value){
+
+        return null;
+
+    }
+
+
+    let url =
+    String(value).trim();
+
+
+    if(
+        !/^https?:\/\//i.test(url)
+    ){
+
+        url =
+        "https://" +
+        url;
+
+    }
+
+
+    return url;
+
+}
+
+
+/* ==========================================
    LOAD TEMPLATES
 ========================================== */
 
@@ -1007,15 +1115,6 @@ async function loadTemplates(){
 
     `;
 
-
-    /*
-     * IMPORTANT:
-     *
-     * We use select("*") so this code does
-     * not depend on one fixed template column.
-     *
-     * Existing templates table is NOT changed.
-     */
 
     const {
         data,
@@ -1052,11 +1151,6 @@ async function loadTemplates(){
         "template-status error-status";
 
 
-        /*
-         * Do not stop Client Manager.
-         * Existing clients can still be edited.
-         */
-
         return false;
 
     }
@@ -1067,11 +1161,6 @@ async function loadTemplates(){
     ? data
     : [];
 
-
-    /*
-     * Remove rows that do not contain
-     * a usable template identifier/name.
-     */
 
     const usableTemplates =
     templatesData.filter(
@@ -1166,9 +1255,7 @@ function ensureTemplateOption(
     value
 ){
 
-    if(
-        !value
-    ){
+    if(!value){
 
         return;
 
@@ -1184,20 +1271,12 @@ function ensureTemplateOption(
     );
 
 
-    if(
-        exists
-    ){
+    if(exists){
 
         return;
 
     }
 
-
-    /*
-     * This handles old clients whose
-     * template value may no longer exist
-     * in templates table.
-     */
 
     const option =
     document.createElement(
@@ -1264,7 +1343,7 @@ async function checkLogin(){
 
 
 /* ==========================================
-   LOAD ACTIVE CLIENT
+   ACTIVE CLIENT DISPLAY
 ========================================== */
 
 function updateActiveClientDisplay(){
@@ -1396,6 +1475,26 @@ async function loadClients(){
             "—";
 
 
+            const templateUrl =
+            getTemplateUrl(
+                client.template
+            );
+
+
+            const websiteUrl =
+            client.domain
+            ? buildUrl(
+                client.domain
+            )
+            : (
+                client.hosting_url
+                ? buildUrl(
+                    client.hosting_url
+                )
+                : null
+            );
+
+
             row.innerHTML = `
 
                 <td>
@@ -1486,6 +1585,64 @@ async function loadClients(){
                 <td>
 
                     <div class="actions">
+
+                        ${
+                            templateUrl
+                            ?
+
+                            `
+                            <button
+                                class="preview-btn"
+                                onclick="previewTemplate('${client.id}')">
+
+                                👁 Preview
+
+                            </button>
+                            `
+
+                            :
+
+                            `
+                            <button
+                                class="preview-btn"
+                                disabled
+                                title="Template preview URL not available">
+
+                                👁 Preview
+
+                            </button>
+                            `
+                        }
+
+
+                        ${
+                            websiteUrl
+                            ?
+
+                            `
+                            <button
+                                class="website-btn"
+                                onclick="openWebsite('${client.id}')">
+
+                                🌐 Website
+
+                            </button>
+                            `
+
+                            :
+
+                            `
+                            <button
+                                class="website-btn disabled"
+                                disabled
+                                title="Domain / Hosting URL not available">
+
+                                🌐 Website
+
+                            </button>
+                            `
+                        }
+
 
                         <button
                             class="use-btn"
@@ -1578,13 +1735,183 @@ function escapeHtml(
 
 
 /* ==========================================
+   PREVIEW TEMPLATE
+========================================== */
+
+window.previewTemplate =
+async function(id){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,template"
+    )
+    .eq(
+        "id",
+        id
+    )
+    .single();
+
+
+    if(error){
+
+        console.error(
+            error
+        );
+
+        showMessage(
+            "Unable to find client template.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const url =
+    getTemplateUrl(
+        data.template
+    );
+
+
+    if(!url){
+
+        showMessage(
+            "Preview URL is not available for template: " +
+            (data.template || "default"),
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const finalUrl =
+    buildUrl(url);
+
+
+    if(!finalUrl){
+
+        showMessage(
+            "Invalid template preview URL.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    window.open(
+        finalUrl,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+};
+
+
+/* ==========================================
+   OPEN CLIENT WEBSITE
+========================================== */
+
+window.openWebsite =
+async function(id){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,domain,hosting_url"
+    )
+    .eq(
+        "id",
+        id
+    )
+    .single();
+
+
+    if(error){
+
+        console.error(
+            error
+        );
+
+        showMessage(
+            "Unable to find website details.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Priority:
+     *
+     * 1. Custom Domain
+     * 2. Hosting URL
+     */
+
+    const rawUrl =
+    data.domain
+    ? data.domain
+    : data.hosting_url;
+
+
+    if(!rawUrl){
+
+        showMessage(
+            "No domain or hosting URL is available for this client.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const finalUrl =
+    buildUrl(rawUrl);
+
+
+    if(!finalUrl){
+
+        showMessage(
+            "Invalid website URL.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    window.open(
+        finalUrl,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+};
+
+
+/* ==========================================
    ADD CLIENT
 ========================================== */
 
 document
-.getElementById(
-    "addBtn"
-)
+.getElementById("addBtn")
 .addEventListener(
     "click",
     function(){
@@ -1597,9 +1924,6 @@ document
         hostingType.value =
         "GitHub Pages";
 
-        /*
-         * Select first real template.
-         */
 
         if(
             template.options.length > 1
@@ -1641,9 +1965,7 @@ document
 ========================================== */
 
 document
-.getElementById(
-    "cancelBtn"
-)
+.getElementById("cancelBtn")
 .addEventListener(
     "click",
     function(){
@@ -1789,12 +2111,6 @@ clientForm.addEventListener(
                 hostingUrlValue ||
                 null,
 
-                /*
-                 * IMPORTANT:
-                 * We continue using the existing
-                 * clients.template text column.
-                 */
-
                 template:
                 templateValue,
 
@@ -1894,12 +2210,6 @@ clientForm.addEventListener(
         clientId.value =
         "";
 
-
-        /*
-         * After creating/updating,
-         * fetch exact client and make
-         * it the active website.
-         */
 
         const targetId =
         savedClientId ||
@@ -2102,12 +2412,6 @@ async function(id){
     "";
 
 
-    /*
-     * Make sure an old template value
-     * is not lost if it no longer exists
-     * in templates table.
-     */
-
     ensureTemplateOption(
         data.template
     );
@@ -2228,9 +2532,7 @@ async function(id){
 ========================================== */
 
 document
-.getElementById(
-    "logoutBtn"
-)
+.getElementById("logoutBtn")
 .addEventListener(
     "click",
     async function(){
@@ -2279,15 +2581,9 @@ document
 
     if(loggedIn){
 
-        /*
-         * Load templates first.
-         */
-
         await loadTemplates();
 
-
         updateActiveClientDisplay();
-
 
         await loadClients();
 
