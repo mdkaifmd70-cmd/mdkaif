@@ -8,6 +8,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<!-- CLIENT CONTEXT -->
+<script src="client-context.js"></script>
+
 <style>
 
 *{
@@ -160,7 +163,29 @@ body{
     font-size:12px;
     font-weight:800;
     color:#64748b;
-    margin-bottom:6px;
+    margin-bottom:9px;
+}
+
+.client-selector{
+    width:100%;
+    max-width:520px;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    font-size:14px;
+    font-weight:700;
+    color:#0f172a;
+    background:white;
+    outline:none;
+    margin-bottom:12px;
+}
+
+.client-selector:focus{
+    border-color:#2563eb;
+}
+
+.client-selector.hidden{
+    display:none;
 }
 
 .client-name{
@@ -172,6 +197,12 @@ body{
     font-size:13px;
     color:#64748b;
     margin-top:4px;
+}
+
+.client-template{
+    font-size:12px;
+    color:#64748b;
+    margin-top:5px;
 }
 
 .stats{
@@ -316,6 +347,10 @@ body{
         padding:0 15px;
     }
 
+    .client-selector{
+        max-width:100%;
+    }
+
 }
 
 </style>
@@ -371,168 +406,67 @@ body{
         Management
     </div>
 
-    <a
-        href="dashboard.html"
-        class="menu active">
-
-        <span class="menu-icon">
-            📊
-        </span>
-
-        <span class="menu-text">
-            Dashboard
-        </span>
-
+    <a href="dashboard.html" class="menu active">
+        <span class="menu-icon">📊</span>
+        <span class="menu-text">Dashboard</span>
     </a>
 
-    <a
-        href="client-manager.html"
-        class="menu">
-
-        <span class="menu-icon">
-            👥
-        </span>
-
-        <span class="menu-text">
-            Clients
-        </span>
-
+    <a href="client-manager.html" class="menu">
+        <span class="menu-icon">👥</span>
+        <span class="menu-text">Clients</span>
     </a>
 
-    <a
-        href="category-manager.html"
-        class="menu">
-
-        <span class="menu-icon">
-            📁
-        </span>
-
-        <span class="menu-text">
-            Categories
-        </span>
-
+    <a href="category-manager.html" class="menu">
+        <span class="menu-icon">📁</span>
+        <span class="menu-text">Categories</span>
     </a>
 
-    <a
-        href="product-manager.html"
-        class="menu">
-
-        <span class="menu-icon">
-            📦
-        </span>
-
-        <span class="menu-text">
-            Products
-        </span>
-
+    <a href="product-manager.html" class="menu">
+        <span class="menu-icon">📦</span>
+        <span class="menu-text">Products</span>
     </a>
 
     <div class="menu-title">
         Website
     </div>
 
-    <a
-        href="product-image-manager.html"
-        class="menu">
-
-        <span class="menu-icon">
-            🖼️
-        </span>
-
-        <span class="menu-text">
-            Product Images
-        </span>
-
+    <a href="product-image-manager.html" class="menu">
+        <span class="menu-icon">🖼️</span>
+        <span class="menu-text">Product Images</span>
     </a>
 
-    <a
-        href="gallery-manager.html"
-        class="menu">
-
-        <span class="menu-icon">
-            🌄
-        </span>
-
-        <span class="menu-text">
-            Gallery
-        </span>
-
+    <a href="gallery-manager.html" class="menu">
+        <span class="menu-icon">🌄</span>
+        <span class="menu-text">Gallery</span>
     </a>
 
-    <a
-        href="testimonials-manager.html"
-        class="menu">
-
-        <span class="menu-icon">
-            ⭐
-        </span>
-
-        <span class="menu-text">
-            Testimonials
-        </span>
-
+    <a href="testimonials-manager.html" class="menu">
+        <span class="menu-icon">⭐</span>
+        <span class="menu-text">Testimonials</span>
     </a>
 
-    <a
-        href="faqs-manager.html"
-        class="menu">
-
-        <span class="menu-icon">
-            ❓
-        </span>
-
-        <span class="menu-text">
-            FAQs
-        </span>
-
+    <a href="faqs-manager.html" class="menu">
+        <span class="menu-icon">❓</span>
+        <span class="menu-text">FAQs</span>
     </a>
 
     <div class="menu-title">
         Business
     </div>
 
-    <a
-        href="enquiries-manager.html"
-        class="menu">
-
-        <span class="menu-icon">
-            📩
-        </span>
-
-        <span class="menu-text">
-            Enquiries
-        </span>
-
+    <a href="enquiries-manager.html" class="menu">
+        <span class="menu-icon">📩</span>
+        <span class="menu-text">Enquiries</span>
     </a>
 
-    <a
-        href="company-settings.html"
-        class="menu">
-
-        <span class="menu-icon">
-            ⚙️
-        </span>
-
-        <span class="menu-text">
-            Company Settings
-        </span>
-
+    <a href="company-settings.html" class="menu">
+        <span class="menu-icon">⚙️</span>
+        <span class="menu-text">Company Settings</span>
     </a>
 
-    <!-- POLICY MANAGER - NEW -->
-
-    <a
-        href="policy-manager.html"
-        class="menu">
-
-        <span class="menu-icon">
-            📜
-        </span>
-
-        <span class="menu-text">
-            Policy Manager
-        </span>
-
+    <a href="policy-manager.html" class="menu">
+        <span class="menu-icon">📜</span>
+        <span class="menu-text">Policy Manager</span>
     </a>
 
 </aside>
@@ -555,11 +489,24 @@ body{
 
     </div>
 
+
+    <!-- ACTIVE CLIENT -->
+
     <div class="client-box">
 
         <div class="client-label">
-            CURRENT WEBSITE
+            ACTIVE CLIENT / WEBSITE
         </div>
+
+        <select
+            id="globalClientSelect"
+            class="client-selector hidden">
+
+            <option value="">
+                Loading clients...
+            </option>
+
+        </select>
 
         <div
             class="client-name"
@@ -577,7 +524,18 @@ body{
 
         </div>
 
+        <div
+            class="client-template"
+            id="clientTemplate">
+
+            Template: —
+
+        </div>
+
     </div>
+
+
+    <!-- STATS -->
 
     <div class="stats">
 
@@ -605,6 +563,7 @@ body{
 
         </div>
 
+
         <div class="stat-card">
 
             <div class="stat-top">
@@ -629,6 +588,7 @@ body{
 
         </div>
 
+
         <div class="stat-card">
 
             <div class="stat-top">
@@ -652,6 +612,7 @@ body{
             </div>
 
         </div>
+
 
         <div class="stat-card">
 
@@ -679,192 +640,101 @@ body{
 
     </div>
 
+
     <div class="section-title">
         Website Management
     </div>
 
+
     <div class="modules">
 
-        <a
-            href="client-manager.html"
-            class="module">
-
-            <div class="module-icon">
-                👥
-            </div>
-
-            <h3>
-                Client Manager
-            </h3>
-
+        <a href="client-manager.html" class="module">
+            <div class="module-icon">👥</div>
+            <h3>Client Manager</h3>
             <p>
                 Create, edit and manage all website clients and their details.
             </p>
-
         </a>
 
-        <a
-            href="category-manager.html"
-            class="module">
 
-            <div class="module-icon">
-                📁
-            </div>
-
-            <h3>
-                Categories
-            </h3>
-
+        <a href="category-manager.html" class="module">
+            <div class="module-icon">📁</div>
+            <h3>Categories</h3>
             <p>
                 Create, edit, delete and manage product categories.
             </p>
-
         </a>
 
-        <a
-            href="product-manager.html"
-            class="module">
 
-            <div class="module-icon">
-                📦
-            </div>
-
-            <h3>
-                Products
-            </h3>
-
+        <a href="product-manager.html" class="module">
+            <div class="module-icon">📦</div>
+            <h3>Products</h3>
             <p>
                 Manage products, descriptions, prices and categories.
             </p>
-
         </a>
 
-        <a
-            href="product-image-manager.html"
-            class="module">
 
-            <div class="module-icon">
-                🖼️
-            </div>
-
-            <h3>
-                Product Images
-            </h3>
-
+        <a href="product-image-manager.html" class="module">
+            <div class="module-icon">🖼️</div>
+            <h3>Product Images</h3>
             <p>
                 Upload and manage multiple images for products.
             </p>
-
         </a>
 
-        <a
-            href="gallery-manager.html"
-            class="module">
 
-            <div class="module-icon">
-                🌄
-            </div>
-
-            <h3>
-                Gallery
-            </h3>
-
+        <a href="gallery-manager.html" class="module">
+            <div class="module-icon">🌄</div>
+            <h3>Gallery</h3>
             <p>
                 Manage product-wise gallery images for your business website.
             </p>
-
         </a>
 
-        <a
-            href="testimonials-manager.html"
-            class="module">
 
-            <div class="module-icon">
-                ⭐
-            </div>
-
-            <h3>
-                Testimonials
-            </h3>
-
+        <a href="testimonials-manager.html" class="module">
+            <div class="module-icon">⭐</div>
+            <h3>Testimonials</h3>
             <p>
                 Add and manage customer testimonials and reviews.
             </p>
-
         </a>
 
-        <a
-            href="faqs-manager.html"
-            class="module">
 
-            <div class="module-icon">
-                ❓
-            </div>
-
-            <h3>
-                FAQs
-            </h3>
-
+        <a href="faqs-manager.html" class="module">
+            <div class="module-icon">❓</div>
+            <h3>FAQs</h3>
             <p>
                 Manage frequently asked questions for your website.
             </p>
-
         </a>
 
-        <a
-            href="enquiries-manager.html"
-            class="module">
 
-            <div class="module-icon">
-                📩
-            </div>
-
-            <h3>
-                Enquiries
-            </h3>
-
+        <a href="enquiries-manager.html" class="module">
+            <div class="module-icon">📩</div>
+            <h3>Enquiries</h3>
             <p>
                 View and manage customer enquiries.
             </p>
-
         </a>
 
-        <a
-            href="company-settings.html"
-            class="module">
 
-            <div class="module-icon">
-                ⚙️
-            </div>
-
-            <h3>
-                Company Settings
-            </h3>
-
+        <a href="company-settings.html" class="module">
+            <div class="module-icon">⚙️</div>
+            <h3>Company Settings</h3>
             <p>
                 Manage logo, company information, contact details and website settings.
             </p>
-
         </a>
 
-        <!-- POLICY MANAGER - NEW -->
 
-        <a
-            href="policy-manager.html"
-            class="module">
-
-            <div class="module-icon">
-                📜
-            </div>
-
-            <h3>
-                Policy Manager
-            </h3>
-
+        <a href="policy-manager.html" class="module">
+            <div class="module-icon">📜</div>
+            <h3>Policy Manager</h3>
             <p>
                 Manage Privacy Policy, Terms, Disclaimer and other website policies.
             </p>
-
         </a>
 
     </div>
@@ -873,7 +743,12 @@ body{
 
 </div>
 
+
 <script>
+
+/* ==========================================
+   SUPABASE
+========================================== */
 
 const SUPABASE_URL =
 "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -887,22 +762,490 @@ window.supabase.createClient(
     SUPABASE_KEY
 );
 
-function setText(
-    id,
-    value
-){
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const globalClientSelect =
+document.getElementById(
+    "globalClientSelect"
+);
+
+
+/* ==========================================
+   TEXT HELPER
+========================================== */
+
+function setText(id,value){
 
     const element =
-        document.getElementById(id);
+    document.getElementById(id);
 
     if(element){
 
         element.textContent =
-            value ?? "—";
+        value ?? "—";
 
     }
 
 }
+
+
+/* ==========================================
+   LOAD SINGLE CLIENT
+========================================== */
+
+async function getClient(clientId){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,slug,domain,hosting_type,hosting_url,template,status"
+    )
+    .eq(
+        "id",
+        clientId
+    )
+    .single();
+
+    if(error){
+
+        console.error(
+            "Client Error:",
+            error
+        );
+
+        return null;
+
+    }
+
+    return data;
+
+}
+
+
+/* ==========================================
+   SHOW ACTIVE CLIENT
+========================================== */
+
+function showActiveClient(client){
+
+    if(!client){
+
+        setText(
+            "clientName",
+            "No Client Selected"
+        );
+
+        setText(
+            "clientDomain",
+            "Please select a client"
+        );
+
+        setText(
+            "clientTemplate",
+            "Template: —"
+        );
+
+        return;
+
+    }
+
+
+    setText(
+        "clientName",
+        client.company_name ||
+        "Unnamed Client"
+    );
+
+
+    setText(
+        "clientDomain",
+        client.domain ||
+        "No domain configured"
+    );
+
+
+    setText(
+        "clientTemplate",
+        "Template: " +
+        (
+            client.template ||
+            "default"
+        )
+    );
+
+}
+
+
+/* ==========================================
+   RESET STATS
+========================================== */
+
+function resetStats(){
+
+    setText(
+        "categoryCount",
+        0
+    );
+
+    setText(
+        "productCount",
+        0
+    );
+
+    setText(
+        "galleryCount",
+        0
+    );
+
+    setText(
+        "enquiryCount",
+        0
+    );
+
+}
+
+
+/* ==========================================
+   LOAD CLIENT STATS
+========================================== */
+
+async function loadStats(clientId){
+
+    if(!clientId){
+
+        resetStats();
+
+        return;
+
+    }
+
+
+    const [
+        categories,
+        products,
+        gallery,
+        enquiries
+    ] =
+    await Promise.all([
+
+        supabaseClient
+        .from("categories")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        ),
+
+
+        supabaseClient
+        .from("products")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        ),
+
+
+        supabaseClient
+        .from("gallery")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        ),
+
+
+        supabaseClient
+        .from("enquiries")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        )
+
+    ]);
+
+
+    setText(
+        "categoryCount",
+        categories.error
+        ? 0
+        : categories.count ?? 0
+    );
+
+
+    setText(
+        "productCount",
+        products.error
+        ? 0
+        : products.count ?? 0
+    );
+
+
+    setText(
+        "galleryCount",
+        gallery.error
+        ? 0
+        : gallery.count ?? 0
+    );
+
+
+    setText(
+        "enquiryCount",
+        enquiries.error
+        ? 0
+        : enquiries.count ?? 0
+    );
+
+}
+
+
+/* ==========================================
+   SET CLIENT CONTEXT
+========================================== */
+
+function setActiveClient(client){
+
+    if(
+        window.MDKClientContext &&
+        client
+    ){
+
+        MDKClientContext.set(
+            client
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   LOAD ALL CLIENTS FOR SUPER ADMIN
+========================================== */
+
+async function setupSuperAdminClients(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,slug,domain,hosting_type,hosting_url,template,status"
+    )
+    .order(
+        "company_name",
+        {
+            ascending:true
+        }
+    );
+
+
+    if(error){
+
+        console.error(
+            "Client List Error:",
+            error
+        );
+
+        globalClientSelect.innerHTML =
+        "<option value=''>Unable to load clients</option>";
+
+        resetStats();
+
+        return;
+
+    }
+
+
+    globalClientSelect.innerHTML = "";
+
+
+    if(!data || data.length === 0){
+
+        globalClientSelect.innerHTML =
+        "<option value=''>No clients found</option>";
+
+        showActiveClient(null);
+
+        resetStats();
+
+        return;
+
+    }
+
+
+    data.forEach(
+        client => {
+
+            const option =
+            document.createElement(
+                "option"
+            );
+
+            option.value =
+            client.id;
+
+            option.textContent =
+            client.company_name +
+            (
+                client.domain
+                ? " — " + client.domain
+                : ""
+            );
+
+            globalClientSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    let activeClient =
+    null;
+
+
+    if(
+        window.MDKClientContext
+    ){
+
+        const saved =
+        MDKClientContext.get();
+
+
+        if(saved && saved.id){
+
+            activeClient =
+            data.find(
+                client =>
+                client.id === saved.id
+            );
+
+        }
+
+    }
+
+
+    if(!activeClient){
+
+        activeClient =
+        data[0];
+
+    }
+
+
+    globalClientSelect.value =
+    activeClient.id;
+
+
+    setActiveClient(
+        activeClient
+    );
+
+
+    showActiveClient(
+        activeClient
+    );
+
+
+    await loadStats(
+        activeClient.id
+    );
+
+}
+
+
+/* ==========================================
+   CLIENT SELECT CHANGE
+========================================== */
+
+globalClientSelect.addEventListener(
+    "change",
+    async function(){
+
+        const clientId =
+        this.value;
+
+
+        if(!clientId){
+
+            showActiveClient(null);
+
+            resetStats();
+
+            return;
+
+        }
+
+
+        const client =
+        await getClient(
+            clientId
+        );
+
+
+        if(!client){
+
+            return;
+
+        }
+
+
+        setActiveClient(
+            client
+        );
+
+
+        showActiveClient(
+            client
+        );
+
+
+        await loadStats(
+            client.id
+        );
+
+    }
+);
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
 
 async function initialize(){
 
@@ -918,16 +1261,23 @@ async function initialize(){
         .auth
         .getUser();
 
-        if(userError)
+
+        if(userError){
+
             throw userError;
+
+        }
+
 
         if(!user){
 
             window.location.href =
-                "admin.html";
+            "admin.html";
 
             return;
+
         }
+
 
         const {
             data:profile,
@@ -944,6 +1294,7 @@ async function initialize(){
         )
         .single();
 
+
         if(profileError){
 
             console.error(
@@ -951,18 +1302,25 @@ async function initialize(){
                 profileError
             );
 
+
             setText(
                 "userName",
                 user.email
             );
+
 
             setText(
                 "userRole",
                 "Profile not found"
             );
 
+
+            resetStats();
+
             return;
+
         }
+
 
         setText(
             "userName",
@@ -970,38 +1328,91 @@ async function initialize(){
             user.email
         );
 
+
         setText(
             "userRole",
-            profile.role
+            profile.role ||
+            "User"
         );
 
-        if(profile.client_id){
 
-            await loadClient(
-                profile.client_id
+        /*
+         * SUPER ADMIN
+         *
+         * Super Admin can switch
+         * between clients.
+         */
+
+        if(
+            profile.role ===
+            "super_admin"
+        ){
+
+            globalClientSelect.classList.remove(
+                "hidden"
             );
 
-            await loadStats(
-                profile.client_id
-            );
+
+            await setupSuperAdminClients();
+
+            return;
 
         }
 
-        else{
 
-            setText(
-                "clientName",
-                "All Clients"
-            );
+        /*
+         * NORMAL USER / CLIENT ADMIN
+         *
+         * Automatically use assigned
+         * client_id.
+         */
 
-            setText(
-                "clientDomain",
-                "Super Admin"
-            );
+        globalClientSelect.classList.add(
+            "hidden"
+        );
 
-            await loadAllStats();
+
+        if(!profile.client_id){
+
+            showActiveClient(null);
+
+            resetStats();
+
+            return;
 
         }
+
+
+        const client =
+        await getClient(
+            profile.client_id
+        );
+
+
+        if(!client){
+
+            showActiveClient(null);
+
+            resetStats();
+
+            return;
+
+        }
+
+
+        setActiveClient(
+            client
+        );
+
+
+        showActiveClient(
+            client
+        );
+
+
+        await loadStats(
+            client.id
+        );
 
     }
     catch(error){
@@ -1011,243 +1422,19 @@ async function initialize(){
             error
         );
 
+        setText(
+            "userRole",
+            "Error loading dashboard"
+        );
+
     }
 
 }
 
-async function loadClient(
-    clientId
-){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,domain,status"
-    )
-    .eq(
-        "id",
-        clientId
-    )
-    .single();
-
-    if(error){
-
-        console.error(
-            "Client Error:",
-            error
-        );
-
-        setText(
-            "clientName",
-            "Client not found"
-        );
-
-        setText(
-            "clientDomain",
-            "—"
-        );
-
-        return;
-    }
-
-    setText(
-        "clientName",
-        data.company_name
-    );
-
-    setText(
-        "clientDomain",
-        data.domain ||
-        "No domain configured"
-    );
-
-}
-
-async function loadStats(
-    clientId
-){
-
-    const [
-        categories,
-        products,
-        gallery,
-        enquiries
-    ] =
-    await Promise.all([
-
-        supabaseClient
-        .from("categories")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        )
-        .eq(
-            "client_id",
-            clientId
-        ),
-
-        supabaseClient
-        .from("products")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        )
-        .eq(
-            "client_id",
-            clientId
-        ),
-
-        supabaseClient
-        .from("gallery")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        )
-        .eq(
-            "client_id",
-            clientId
-        ),
-
-        supabaseClient
-        .from("enquiries")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        )
-        .eq(
-            "client_id",
-            clientId
-        )
-
-    ]);
-
-    setText(
-        "categoryCount",
-        categories.error
-        ? 0
-        : categories.count ?? 0
-    );
-
-    setText(
-        "productCount",
-        products.error
-        ? 0
-        : products.count ?? 0
-    );
-
-    setText(
-        "galleryCount",
-        gallery.error
-        ? 0
-        : gallery.count ?? 0
-    );
-
-    setText(
-        "enquiryCount",
-        enquiries.error
-        ? 0
-        : enquiries.count ?? 0
-    );
-
-}
-
-async function loadAllStats(){
-
-    const [
-        categories,
-        products,
-        gallery,
-        enquiries
-    ] =
-    await Promise.all([
-
-        supabaseClient
-        .from("categories")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        ),
-
-        supabaseClient
-        .from("products")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        ),
-
-        supabaseClient
-        .from("gallery")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        ),
-
-        supabaseClient
-        .from("enquiries")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        )
-
-    ]);
-
-    setText(
-        "categoryCount",
-        categories.error
-        ? 0
-        : categories.count ?? 0
-    );
-
-    setText(
-        "productCount",
-        products.error
-        ? 0
-        : products.count ?? 0
-    );
-
-    setText(
-        "galleryCount",
-        gallery.error
-        ? 0
-        : gallery.count ?? 0
-    );
-
-    setText(
-        "enquiryCount",
-        enquiries.error
-        ? 0
-        : enquiries.count ?? 0
-    );
-
-}
+/* ==========================================
+   LOGOUT
+========================================== */
 
 document
 .getElementById(
@@ -1258,6 +1445,15 @@ document
     async function(){
 
         try{
+
+            if(
+                window.MDKClientContext
+            ){
+
+                MDKClientContext.clear();
+
+            }
+
 
             await supabaseClient
             .auth
@@ -1273,11 +1469,17 @@ document
 
         }
 
+
         window.location.href =
-            "admin.html";
+        "admin.html";
 
     }
 );
+
+
+/* ==========================================
+   START
+========================================== */
 
 initialize();
 
