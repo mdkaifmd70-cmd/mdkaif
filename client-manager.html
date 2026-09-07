@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -144,6 +145,7 @@ body{
     border-radius:8px;
     font-size:14px;
     outline:none;
+    background:white;
 }
 
 .field input:focus,
@@ -176,6 +178,10 @@ body{
 .save-btn{
     background:#16a34a;
     color:white;
+}
+
+.save-btn:hover{
+    background:#15803d;
 }
 
 .cancel-btn{
@@ -331,6 +337,24 @@ td{
     font-weight:700;
 }
 
+.template-status{
+    margin-top:6px;
+    font-size:11px;
+    color:#64748b;
+}
+
+.template-status.loading-status{
+    color:#2563eb;
+}
+
+.template-status.error-status{
+    color:#dc2626;
+}
+
+.template-status.success-status{
+    color:#16a34a;
+}
+
 @media(max-width:850px){
 
     .form-grid{
@@ -450,6 +474,8 @@ td{
             <div class="form-grid">
 
 
+                <!-- COMPANY -->
+
                 <div class="field">
 
                     <label>
@@ -465,6 +491,8 @@ td{
                 </div>
 
 
+                <!-- SLUG -->
+
                 <div class="field">
 
                     <label>
@@ -479,6 +507,8 @@ td{
 
                 </div>
 
+
+                <!-- DOMAIN -->
 
                 <div class="field">
 
@@ -497,6 +527,8 @@ td{
 
                 </div>
 
+
+                <!-- HOSTING TYPE -->
 
                 <div class="field">
 
@@ -531,6 +563,8 @@ td{
                 </div>
 
 
+                <!-- HOSTING URL -->
+
                 <div class="field">
 
                     <label>
@@ -549,23 +583,34 @@ td{
                 </div>
 
 
+                <!-- TEMPLATE DROPDOWN -->
+
                 <div class="field">
 
                     <label>
                         Website Template
                     </label>
 
-                    <input
-                        type="text"
-                        id="template"
-                        placeholder="template-1">
+                    <select id="template">
 
-                    <small>
-                        Example: template-1, template-2, industrial-1
-                    </small>
+                        <option value="">
+                            Loading templates...
+                        </option>
+
+                    </select>
+
+                    <div
+                        id="templateStatus"
+                        class="template-status loading-status">
+
+                        Loading templates from Supabase...
+
+                    </div>
 
                 </div>
 
+
+                <!-- STATUS -->
 
                 <div class="field">
 
@@ -764,6 +809,11 @@ document.getElementById(
     "template"
 );
 
+const templateStatus =
+document.getElementById(
+    "templateStatus"
+);
+
 const status =
 document.getElementById(
     "status"
@@ -806,6 +856,13 @@ document.getElementById(
 
 
 /* ==========================================
+   TEMPLATE DATA
+========================================== */
+
+let templatesData = [];
+
+
+/* ==========================================
    MESSAGE
 ========================================== */
 
@@ -828,6 +885,336 @@ function showMessage(
 
         },
         4000
+    );
+
+}
+
+
+/* ==========================================
+   TEMPLATE VALUE HELPER
+========================================== */
+
+function getTemplateValue(row){
+
+    /*
+     * Different template table versions
+     * may use different naming columns.
+     *
+     * We intentionally read the complete row
+     * and detect the useful field.
+     */
+
+    const possibleKeys = [
+
+        "slug",
+        "template_slug",
+        "name",
+        "template_name",
+        "title",
+        "template",
+        "code",
+        "template_code"
+
+    ];
+
+
+    for(
+        const key of possibleKeys
+    ){
+
+        if(
+            row[key] !== undefined &&
+            row[key] !== null &&
+            String(row[key]).trim() !== ""
+        ){
+
+            return String(
+                row[key]
+            ).trim();
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* ==========================================
+   TEMPLATE DISPLAY NAME HELPER
+========================================== */
+
+function getTemplateDisplayName(row){
+
+    const possibleKeys = [
+
+        "name",
+        "template_name",
+        "title",
+        "display_name",
+        "slug",
+        "template",
+        "code",
+        "template_code"
+
+    ];
+
+
+    for(
+        const key of possibleKeys
+    ){
+
+        if(
+            row[key] !== undefined &&
+            row[key] !== null &&
+            String(row[key]).trim() !== ""
+        ){
+
+            return String(
+                row[key]
+            ).trim();
+
+        }
+
+    }
+
+
+    return "Unnamed Template";
+
+}
+
+
+/* ==========================================
+   LOAD TEMPLATES
+========================================== */
+
+async function loadTemplates(){
+
+    templateStatus.textContent =
+    "Loading templates from Supabase...";
+
+    templateStatus.className =
+    "template-status loading-status";
+
+
+    template.innerHTML = `
+
+        <option value="">
+            Loading templates...
+        </option>
+
+    `;
+
+
+    /*
+     * IMPORTANT:
+     *
+     * We use select("*") so this code does
+     * not depend on one fixed template column.
+     *
+     * Existing templates table is NOT changed.
+     */
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("templates")
+    .select("*");
+
+
+    if(error){
+
+        console.error(
+            "Template loading error:",
+            error
+        );
+
+
+        template.innerHTML = `
+
+            <option value="">
+                Unable to load templates
+            </option>
+
+        `;
+
+
+        templateStatus.textContent =
+        "Template loading failed: " +
+        error.message;
+
+
+        templateStatus.className =
+        "template-status error-status";
+
+
+        /*
+         * Do not stop Client Manager.
+         * Existing clients can still be edited.
+         */
+
+        return false;
+
+    }
+
+
+    templatesData =
+    Array.isArray(data)
+    ? data
+    : [];
+
+
+    /*
+     * Remove rows that do not contain
+     * a usable template identifier/name.
+     */
+
+    const usableTemplates =
+    templatesData.filter(
+        row =>
+            getTemplateValue(row)
+    );
+
+
+    template.innerHTML = `
+
+        <option value="">
+            Select Website Template
+        </option>
+
+    `;
+
+
+    usableTemplates.forEach(
+        row => {
+
+            const value =
+            getTemplateValue(row);
+
+            const display =
+            getTemplateDisplayName(row);
+
+
+            const option =
+            document.createElement(
+                "option"
+            );
+
+
+            option.value =
+            value;
+
+            option.textContent =
+            display;
+
+
+            template.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    if(
+        usableTemplates.length === 0
+    ){
+
+        template.innerHTML = `
+
+            <option value="">
+                No templates found
+            </option>
+
+        `;
+
+
+        templateStatus.textContent =
+        "No usable templates found in templates table.";
+
+        templateStatus.className =
+        "template-status error-status";
+
+
+        return false;
+
+    }
+
+
+    templateStatus.textContent =
+    usableTemplates.length +
+    " template(s) loaded from Supabase.";
+
+    templateStatus.className =
+    "template-status success-status";
+
+
+    return true;
+
+}
+
+
+/* ==========================================
+   PRESERVE OLD TEMPLATE
+========================================== */
+
+function ensureTemplateOption(
+    value
+){
+
+    if(
+        !value
+    ){
+
+        return;
+
+    }
+
+
+    const exists =
+    Array.from(
+        template.options
+    ).some(
+        option =>
+            option.value === value
+    );
+
+
+    if(
+        exists
+    ){
+
+        return;
+
+    }
+
+
+    /*
+     * This handles old clients whose
+     * template value may no longer exist
+     * in templates table.
+     */
+
+    const option =
+    document.createElement(
+        "option"
+    );
+
+
+    option.value =
+    value;
+
+    option.textContent =
+    value +
+    " (Existing)";
+
+
+    template.appendChild(
+        option
     );
 
 }
@@ -1210,8 +1597,25 @@ document
         hostingType.value =
         "GitHub Pages";
 
-        template.value =
-        "default";
+        /*
+         * Select first real template.
+         */
+
+        if(
+            template.options.length > 1
+        ){
+
+            template.selectedIndex =
+            1;
+
+        }
+        else{
+
+            template.value =
+            "";
+
+        }
+
 
         status.value =
         "active";
@@ -1308,9 +1712,7 @@ clientForm.addEventListener(
         hostingUrl.value.trim();
 
         const templateValue =
-        template.value.trim()
-        ||
-        "default";
+        template.value.trim();
 
         const statusValue =
         status.value;
@@ -1332,6 +1734,18 @@ clientForm.addEventListener(
 
             showMessage(
                 "Slug is required.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if(!templateValue){
+
+            showMessage(
+                "Please select a website template.",
                 "error"
             );
 
@@ -1374,6 +1788,12 @@ clientForm.addEventListener(
                 hosting_url:
                 hostingUrlValue ||
                 null,
+
+                /*
+                 * IMPORTANT:
+                 * We continue using the existing
+                 * clients.template text column.
+                 */
 
                 template:
                 templateValue,
@@ -1681,9 +2101,22 @@ async function(id){
     data.hosting_url ||
     "";
 
+
+    /*
+     * Make sure an old template value
+     * is not lost if it no longer exists
+     * in templates table.
+     */
+
+    ensureTemplateOption(
+        data.template
+    );
+
+
     template.value =
     data.template ||
-    "default";
+    "";
+
 
     status.value =
     data.status ||
@@ -1846,7 +2279,15 @@ document
 
     if(loggedIn){
 
+        /*
+         * Load templates first.
+         */
+
+        await loadTemplates();
+
+
         updateActiveClientDisplay();
+
 
         await loadClients();
 
@@ -1858,3 +2299,4 @@ document
 
 </body>
 </html>
+```
