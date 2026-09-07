@@ -11,431 +11,747 @@
 <script src="client-context.js"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:#f1f5f9;
-color:#0f172a
-}
-
-.header{
-height:70px;background:#0f172a;color:white;
-display:flex;align-items:center;justify-content:space-between;
-padding:0 25px
-}
-
-.logo{font-size:21px;font-weight:900}
-.logo span{color:#60a5fa}
-
-.header-right{display:flex;align-items:center;gap:15px}
-
-.user-info{text-align:right}
-.user-name{font-size:14px;font-weight:700}
-.user-role{font-size:11px;color:#94a3b8;margin-top:3px}
-
-.logout{
-background:#334155;color:white;border:0;padding:9px 15px;
-border-radius:8px;cursor:pointer;font-weight:700
-}
-
-.logout:hover{background:#475569}
-
-.layout{
-display:flex;
-min-height:calc(100vh - 70px)
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+    color:#0f172a;
 }
 
 .sidebar{
-width:240px;background:white;border-right:1px solid #e2e8f0;
-padding:20px 12px
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:250px;
+    background:#0f172a;
+    color:white;
+    padding:22px 15px;
+    overflow-y:auto;
 }
 
-.menu-title{
-font-size:11px;font-weight:800;color:#94a3b8;
-text-transform:uppercase;padding:10px 12px
+.logo{
+    font-size:22px;
+    font-weight:900;
+    padding:0 10px 25px;
+}
+
+.logo span{
+    color:#3b82f6;
 }
 
 .menu{
-display:block;width:100%;text-decoration:none;color:#334155;
-padding:12px;border-radius:9px;margin-bottom:4px;
-font-size:14px;font-weight:700
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px 12px;
+    color:#cbd5e1;
+    text-decoration:none;
+    border-radius:8px;
+    margin-bottom:5px;
+    font-size:14px;
 }
 
-.menu:hover{background:#eff6ff;color:#2563eb}
-.menu.active{background:#dbeafe;color:#1d4ed8}
+.menu:hover{
+    background:#1e293b;
+    color:white;
+}
 
-.menu-icon{width:25px;display:inline-block}
+.menu-icon{
+    width:24px;
+    text-align:center;
+}
 
 .main{
-flex:1;padding:25px;min-width:0
+    margin-left:250px;
+    padding:30px;
 }
 
-.page-title{
-display:flex;justify-content:space-between;align-items:center;
-margin-bottom:25px;flex-wrap:wrap;gap:15px
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    gap:15px;
 }
 
-.page-title h1{font-size:28px}
+.header h1{
+    font-size:28px;
+}
 
-.page-title p{
-color:#64748b;font-size:14px;margin-top:5px
+.user-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-info{
+    text-align:right;
+}
+
+.user-name{
+    font-weight:800;
+    font-size:14px;
+}
+
+.user-role{
+    color:#64748b;
+    font-size:12px;
+}
+
+.logout-btn{
+    border:0;
+    background:#dc2626;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.logout-btn:hover{
+    background:#b91c1c;
 }
 
 .client-box{
-background:white;border:1px solid #e2e8f0;
-border-radius:14px;padding:18px;margin-bottom:22px
+    background:white;
+    border-radius:15px;
+    padding:22px;
+    margin-bottom:25px;
+    box-shadow:0 5px 20px rgba(15,23,42,.06);
 }
 
-.client-label{
-font-size:12px;font-weight:800;color:#64748b;margin-bottom:9px
+.client-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
 }
 
-.client-selector{
-width:100%;max-width:520px;padding:12px;
-border:1px solid #cbd5e1;border-radius:9px;
-font-size:14px;font-weight:700;color:#0f172a;
-background:white;outline:none;margin-bottom:12px
+.client-title{
+    font-size:17px;
+    font-weight:900;
+    margin-bottom:7px;
 }
-
-.client-selector:focus{border-color:#2563eb}
-.client-selector.hidden{display:none}
-
-.client-name{font-size:18px;font-weight:900}
 
 .client-domain{
-font-size:13px;color:#64748b;margin-top:4px
+    color:#2563eb;
+    font-size:14px;
 }
 
 .client-template{
-font-size:12px;color:#64748b;margin-top:5px
+    color:#64748b;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.client-select{
+    min-width:250px;
+    padding:11px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    background:white;
 }
 
 .stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px;
-margin-bottom:25px
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:28px;
 }
 
-.stat-card{
-background:white;border:1px solid #e2e8f0;
-border-radius:14px;padding:20px
-}
-
-.stat-top{
-display:flex;justify-content:space-between;align-items:center
-}
-
-.stat-title{
-color:#64748b;font-size:13px;font-weight:700
+.stat{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(15,23,42,.06);
 }
 
 .stat-icon{
-width:38px;height:38px;border-radius:9px;
-background:#eff6ff;display:flex;align-items:center;
-justify-content:center;font-size:19px
+    font-size:25px;
+    margin-bottom:10px;
 }
 
-.stat-number{
-font-size:30px;font-weight:900;margin-top:15px
+.stat-value{
+    font-size:28px;
+    font-weight:900;
+}
+
+.stat-label{
+    color:#64748b;
+    font-size:13px;
+    margin-top:4px;
 }
 
 .section-title{
-font-size:19px;font-weight:900;margin-bottom:15px
+    font-size:20px;
+    font-weight:900;
+    margin-bottom:18px;
 }
 
 .modules{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
 }
 
 .module{
-background:white;border:1px solid #e2e8f0;
-border-radius:14px;padding:22px;
-text-decoration:none;color:#0f172a;
-transition:.15s
+    background:white;
+    border-radius:15px;
+    padding:22px;
+    text-decoration:none;
+    color:#0f172a;
+    box-shadow:0 5px 20px rgba(15,23,42,.06);
+    transition:.2s;
 }
 
 .module:hover{
-border-color:#93c5fd;
-transform:translateY(-2px);
-box-shadow:0 8px 20px rgba(15,23,42,.06)
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(15,23,42,.1);
 }
 
-.module-icon{font-size:27px;margin-bottom:12px}
-.module h3{font-size:16px;margin-bottom:7px}
+.module-icon{
+    font-size:28px;
+    margin-bottom:12px;
+}
+
+.module h3{
+    font-size:16px;
+    margin-bottom:7px;
+}
 
 .module p{
-color:#64748b;font-size:13px;line-height:1.5
+    color:#64748b;
+    font-size:12px;
+    line-height:1.5;
 }
 
-@media(max-width:1000px){
-.stats{grid-template-columns:repeat(2,1fr)}
-.modules{grid-template-columns:repeat(2,1fr)}
+.loading{
+    color:#64748b;
 }
 
-@media(max-width:700px){
-.sidebar{width:65px;padding:15px 8px}
-.menu-title,.menu-text{display:none}
-.menu{text-align:center;padding:12px 5px}
-.menu-icon{width:auto;font-size:18px}
-.main{padding:15px}
-.stats{grid-template-columns:1fr 1fr;gap:10px}
-.modules{grid-template-columns:1fr}
-.user-info{display:none}
-.header{padding:0 15px}
-.client-selector{max-width:100%}
+.error-text{
+    color:#dc2626;
+}
+
+@media(max-width:1100px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .modules{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:800px){
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+    .main{
+        margin-left:0;
+        padding:20px;
+    }
+
+    .header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .user-box{
+        width:100%;
+        justify-content:space-between;
+    }
+
+    .modules{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:550px){
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .modules{
+        grid-template-columns:1fr;
+    }
+
+    .client-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .client-select{
+        width:100%;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
-
-<div class="logo">
-MD <span>KAIF</span>
-</div>
-
-<div class="header-right">
-
-<div class="user-info">
-<div class="user-name" id="userName">Loading...</div>
-<div class="user-role" id="userRole">Loading...</div>
-</div>
-
-<button class="logout" id="logoutBtn">Logout</button>
-
-</div>
-</header>
-
-<div class="layout">
+<!-- =========================================
+     SIDEBAR
+========================================= -->
 
 <aside class="sidebar">
 
-<div class="menu-title">Management</div>
+    <div class="logo">
+        MD <span>KAIF</span>
+    </div>
 
-<a href="dashboard.html" class="menu active">
-<span class="menu-icon">📊</span>
-<span class="menu-text">Dashboard</span>
-</a>
+    <a href="dashboard.html" class="menu">
+        <span class="menu-icon">📊</span>
+        <span class="menu-text">Dashboard</span>
+    </a>
 
-<a href="client-manager.html" class="menu">
-<span class="menu-icon">👥</span>
-<span class="menu-text">Clients</span>
-</a>
+    <a href="client-manager.html" class="menu">
+        <span class="menu-icon">👥</span>
+        <span class="menu-text">Clients</span>
+    </a>
 
-<a href="template-manager.html" class="menu">
-<span class="menu-icon">🧩</span>
-<span class="menu-text">Template Manager</span>
-</a>
+    <a href="template-manager.html" class="menu">
+        <span class="menu-icon">🧩</span>
+        <span class="menu-text">Template Manager</span>
+    </a>
 
-<a href="category-manager.html" class="menu">
-<span class="menu-icon">📁</span>
-<span class="menu-text">Categories</span>
-</a>
+    <a href="category-manager.html" class="menu">
+        <span class="menu-icon">📁</span>
+        <span class="menu-text">Categories</span>
+    </a>
 
-<a href="product-manager.html" class="menu">
-<span class="menu-icon">📦</span>
-<span class="menu-text">Products</span>
-</a>
+    <a href="product-manager.html" class="menu">
+        <span class="menu-icon">📦</span>
+        <span class="menu-text">Products</span>
+    </a>
 
-<div class="menu-title">Website</div>
+    <a href="product-image-manager.html" class="menu">
+        <span class="menu-icon">🖼️</span>
+        <span class="menu-text">Product Images</span>
+    </a>
 
-<a href="product-image-manager.html" class="menu">
-<span class="menu-icon">🖼️</span>
-<span class="menu-text">Product Images</span>
-</a>
+    <a href="gallery-manager.html" class="menu">
+        <span class="menu-icon">🌄</span>
+        <span class="menu-text">Gallery</span>
+    </a>
 
-<a href="gallery-manager.html" class="menu">
-<span class="menu-icon">🌄</span>
-<span class="menu-text">Gallery</span>
-</a>
+    <a href="testimonials-manager.html" class="menu">
+        <span class="menu-icon">⭐</span>
+        <span class="menu-text">Testimonials</span>
+    </a>
 
-<a href="testimonials-manager.html" class="menu">
-<span class="menu-icon">⭐</span>
-<span class="menu-text">Testimonials</span>
-</a>
+    <a href="faqs-manager.html" class="menu">
+        <span class="menu-icon">❓</span>
+        <span class="menu-text">FAQs</span>
+    </a>
 
-<a href="faqs-manager.html" class="menu">
-<span class="menu-icon">❓</span>
-<span class="menu-text">FAQs</span>
-</a>
+    <a href="enquiries-manager.html" class="menu">
+        <span class="menu-icon">📩</span>
+        <span class="menu-text">Enquiries</span>
+    </a>
 
-<div class="menu-title">Business</div>
+    <a href="company-settings.html" class="menu">
+        <span class="menu-icon">⚙️</span>
+        <span class="menu-text">Company Settings</span>
+    </a>
 
-<a href="enquiries-manager.html" class="menu">
-<span class="menu-icon">📩</span>
-<span class="menu-text">Enquiries</span>
-</a>
-
-<a href="company-settings.html" class="menu">
-<span class="menu-icon">⚙️</span>
-<span class="menu-text">Company Settings</span>
-</a>
-
-<a href="policy-manager.html" class="menu">
-<span class="menu-icon">📜</span>
-<span class="menu-text">Policy Manager</span>
-</a>
+    <a href="policy-manager.html" class="menu">
+        <span class="menu-icon">📜</span>
+        <span class="menu-text">Policy Manager</span>
+    </a>
 
 </aside>
 
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
 <main class="main">
 
-<div class="page-title">
+    <div class="header">
 
-<div>
-<h1>Dashboard</h1>
-<p>Manage your business website from one place.</p>
-</div>
+        <div>
+            <h1>Dashboard</h1>
+        </div>
 
-</div>
+        <div class="user-box">
 
-<div class="client-box">
+            <div class="user-info">
+                <div
+                    id="userName"
+                    class="user-name">
+                    Loading...
+                </div>
 
-<div class="client-label">
-ACTIVE CLIENT / WEBSITE
-</div>
+                <div
+                    id="userRole"
+                    class="user-role">
+                    Loading...
+                </div>
+            </div>
 
-<select id="globalClientSelect" class="client-selector hidden">
-<option value="">Loading clients...</option>
-</select>
+            <button
+                class="logout-btn"
+                id="logoutBtn">
+                Logout
+            </button>
 
-<div class="client-name" id="clientName">
-Loading...
-</div>
+        </div>
 
-<div class="client-domain" id="clientDomain">
-Loading...
-</div>
+    </div>
 
-<div class="client-template" id="clientTemplate">
-Template: —
-</div>
 
-</div>
+    <!-- =========================================
+         ACTIVE CLIENT
+    ========================================== -->
 
-<div class="stats">
+    <div class="client-box">
 
-<div class="stat-card">
-<div class="stat-top">
-<div class="stat-title">Categories</div>
-<div class="stat-icon">📁</div>
-</div>
-<div class="stat-number" id="categoryCount">—</div>
-</div>
+        <div class="client-header">
 
-<div class="stat-card">
-<div class="stat-top">
-<div class="stat-title">Products</div>
-<div class="stat-icon">📦</div>
-</div>
-<div class="stat-number" id="productCount">—</div>
-</div>
+            <div>
 
-<div class="stat-card">
-<div class="stat-top">
-<div class="stat-title">Gallery</div>
-<div class="stat-icon">🌄</div>
-</div>
-<div class="stat-number" id="galleryCount">—</div>
-</div>
+                <div class="client-title">
+                    Active Client / Website
+                </div>
 
-<div class="stat-card">
-<div class="stat-top">
-<div class="stat-title">Enquiries</div>
-<div class="stat-icon">📩</div>
-</div>
-<div class="stat-number" id="enquiryCount">—</div>
-</div>
+                <div
+                    id="clientName"
+                    class="client-domain">
+                    Loading...
+                </div>
 
-</div>
+                <div
+                    id="clientDomain"
+                    class="client-domain">
+                </div>
 
-<div class="section-title">
-Website Management
-</div>
+                <div
+                    id="clientTemplate"
+                    class="client-template">
+                </div>
 
-<div class="modules">
+            </div>
 
-<a href="client-manager.html" class="module">
-<div class="module-icon">👥</div>
-<h3>Client Manager</h3>
-<p>Create, edit and manage all website clients and their details.</p>
-</a>
 
-<a href="template-manager.html" class="module">
-<div class="module-icon">🧩</div>
-<h3>Template Manager</h3>
-<p>Add, edit, delete and manage website templates and GitHub website URLs.</p>
-</a>
+            <select
+                id="globalClientSelect"
+                class="client-select"
+                style="display:none;">
 
-<a href="category-manager.html" class="module">
-<div class="module-icon">📁</div>
-<h3>Categories</h3>
-<p>Create, edit, delete and manage product categories.</p>
-</a>
+                <option value="">
+                    Select Client
+                </option>
 
-<a href="product-manager.html" class="module">
-<div class="module-icon">📦</div>
-<h3>Products</h3>
-<p>Manage products, descriptions, prices and categories.</p>
-</a>
+            </select>
 
-<a href="product-image-manager.html" class="module">
-<div class="module-icon">🖼️</div>
-<h3>Product Images</h3>
-<p>Upload and manage multiple images for products.</p>
-</a>
+        </div>
 
-<a href="gallery-manager.html" class="module">
-<div class="module-icon">🌄</div>
-<h3>Gallery</h3>
-<p>Manage product-wise gallery images for your business website.</p>
-</a>
+    </div>
 
-<a href="testimonials-manager.html" class="module">
-<div class="module-icon">⭐</div>
-<h3>Testimonials</h3>
-<p>Add and manage customer testimonials and reviews.</p>
-</a>
 
-<a href="faqs-manager.html" class="module">
-<div class="module-icon">❓</div>
-<h3>FAQs</h3>
-<p>Manage frequently asked questions for your website.</p>
-</a>
+    <!-- =========================================
+         STATS
+    ========================================== -->
 
-<a href="enquiries-manager.html" class="module">
-<div class="module-icon">📩</div>
-<h3>Enquiries</h3>
-<p>View and manage customer enquiries.</p>
-</a>
+    <div class="stats">
 
-<a href="company-settings.html" class="module">
-<div class="module-icon">⚙️</div>
-<h3>Company Settings</h3>
-<p>Manage logo, company information, contact details and website settings.</p>
-</a>
+        <div class="stat">
 
-<a href="policy-manager.html" class="module">
-<div class="module-icon">📜</div>
-<h3>Policy Manager</h3>
-<p>Manage Privacy Policy, Terms, Disclaimer and other website policies.</p>
-</a>
+            <div class="stat-icon">
+                📁
+            </div>
 
-</div>
+            <div
+                id="categoryCount"
+                class="stat-value">
+                0
+            </div>
+
+            <div class="stat-label">
+                Categories
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📦
+            </div>
+
+            <div
+                id="productCount"
+                class="stat-value">
+                0
+            </div>
+
+            <div class="stat-label">
+                Products
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🌄
+            </div>
+
+            <div
+                id="galleryCount"
+                class="stat-value">
+                0
+            </div>
+
+            <div class="stat-label">
+                Gallery
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📩
+            </div>
+
+            <div
+                id="enquiryCount"
+                class="stat-value">
+                0
+            </div>
+
+            <div class="stat-label">
+                Enquiries
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         WEBSITE MANAGEMENT
+    ========================================== -->
+
+    <div class="section-title">
+        Website Management
+    </div>
+
+
+    <div class="modules">
+
+        <a href="client-manager.html" class="module">
+
+            <div class="module-icon">
+                👥
+            </div>
+
+            <h3>
+                Client Manager
+            </h3>
+
+            <p>
+                Add, edit and manage website clients.
+            </p>
+
+        </a>
+
+
+        <a href="template-manager.html" class="module">
+
+            <div class="module-icon">
+                🧩
+            </div>
+
+            <h3>
+                Template Manager
+            </h3>
+
+            <p>
+                Add, edit, delete and manage website templates and GitHub website URLs.
+            </p>
+
+        </a>
+
+
+        <a href="category-manager.html" class="module">
+
+            <div class="module-icon">
+                📁
+            </div>
+
+            <h3>
+                Categories
+            </h3>
+
+            <p>
+                Manage website categories and category structure.
+            </p>
+
+        </a>
+
+
+        <a href="product-manager.html" class="module">
+
+            <div class="module-icon">
+                📦
+            </div>
+
+            <h3>
+                Products
+            </h3>
+
+            <p>
+                Manage products, descriptions and specifications.
+            </p>
+
+        </a>
+
+
+        <a href="product-image-manager.html" class="module">
+
+            <div class="module-icon">
+                🖼️
+            </div>
+
+            <h3>
+                Product Images
+            </h3>
+
+            <p>
+                Manage product images and image information.
+            </p>
+
+        </a>
+
+
+        <a href="gallery-manager.html" class="module">
+
+            <div class="module-icon">
+                🌄
+            </div>
+
+            <h3>
+                Gallery
+            </h3>
+
+            <p>
+                Manage website gallery images and media.
+            </p>
+
+        </a>
+
+
+        <a href="testimonials-manager.html" class="module">
+
+            <div class="module-icon">
+                ⭐
+            </div>
+
+            <h3>
+                Testimonials
+            </h3>
+
+            <p>
+                Manage customer testimonials and reviews.
+            </p>
+
+        </a>
+
+
+        <a href="faqs-manager.html" class="module">
+
+            <div class="module-icon">
+                ❓
+            </div>
+
+            <h3>
+                FAQs
+            </h3>
+
+            <p>
+                Manage frequently asked questions.
+            </p>
+
+        </a>
+
+
+        <a href="enquiries-manager.html" class="module">
+
+            <div class="module-icon">
+                📩
+            </div>
+
+            <h3>
+                Enquiries
+            </h3>
+
+            <p>
+                View and manage website enquiries.
+            </p>
+
+        </a>
+
+
+        <a href="company-settings.html" class="module">
+
+            <div class="module-icon">
+                ⚙️
+            </div>
+
+            <h3>
+                Company Settings
+            </h3>
+
+            <p>
+                Manage company information and website settings.
+            </p>
+
+        </a>
+
+
+        <a href="policy-manager.html" class="module">
+
+            <div class="module-icon">
+                📜
+            </div>
+
+            <h3>
+                Policy Manager
+            </h3>
+
+            <p>
+                Manage privacy, terms and other website policies.
+            </p>
+
+        </a>
+
+    </div>
 
 </main>
-</div>
+
 
 <script>
 
-/* ==========================================
-   SUPABASE
-========================================== */
+/* =========================================
+   SUPABASE CONFIG
+========================================= */
 
 const SUPABASE_URL =
 "https://ywvdozdoanmcxscfofc.supabase.co";
@@ -445,836 +761,926 @@ const SUPABASE_KEY =
 
 const supabaseClient =
 window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
 
-/* ==========================================
-   ELEMENTS
-========================================== */
-
-const globalClientSelect =
-document.getElementById("globalClientSelect");
-
-
-/* ==========================================
-   TEXT
-========================================== */
+/* =========================================
+   HELPERS
+========================================= */
 
 function setText(id,value){
 
-const element =
-document.getElementById(id);
+    const element =
+    document.getElementById(id);
 
-if(element){
-element.textContent =
-value === null ||
-value === undefined ||
-value === ""
-? "—"
-: value;
-}
+    if(element){
+
+        element.textContent =
+        value ?? "";
+
+    }
 
 }
 
-
-/* ==========================================
-   RESET STATS
-========================================== */
 
 function resetStats(){
 
-setText("categoryCount",0);
-setText("productCount",0);
-setText("galleryCount",0);
-setText("enquiryCount",0);
+    setText("categoryCount","0");
+    setText("productCount","0");
+    setText("galleryCount","0");
+    setText("enquiryCount","0");
 
 }
 
-
-/* ==========================================
-   SAFE CLIENT CONTEXT
-========================================== */
 
 function getSavedClient(){
 
-try{
+    try{
 
-if(
-window.MDKClientContext &&
-typeof MDKClientContext.get === "function"
-){
+        if(
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.get === "function"
+        ){
 
-return MDKClientContext.get();
+            return window.MDKClientContext.get();
 
-}
+        }
 
-}catch(error){
+    }catch(error){
 
-console.warn(
-"Client context read failed:",
-error
-);
+        console.warn(
+            "Client context read failed:",
+            error
+        );
 
-}
+    }
 
-return null;
+    return null;
 
 }
 
 
 function saveClient(client){
 
-try{
+    try{
 
-if(
-window.MDKClientContext &&
-typeof MDKClientContext.set === "function"
-){
+        if(
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.set === "function"
+        ){
 
-MDKClientContext.set(client);
+            window.MDKClientContext.set(client);
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "Client context save failed:",
+            error
+        );
+
+    }
 
 }
 
-}catch(error){
 
-console.warn(
-"Client context save failed:",
-error
-);
-
-}
-
-}
-
-
-/* ==========================================
-   LOAD CLIENT
-========================================== */
+/* =========================================
+   GET CLIENT
+========================================= */
 
 async function getClient(clientId){
 
-if(!clientId){
-return null;
+    if(!clientId){
+
+        return null;
+
+    }
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,slug,domain,hosting_type,hosting_url,template,status"
+    )
+    .eq("id",clientId)
+    .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Client Load Error:",
+            error
+        );
+
+        return null;
+
+    }
+
+
+    return data;
+
 }
 
-const {
-data,
-error
-} =
-await supabaseClient
-.from("clients")
-.select(
-"id,company_name,slug,domain,hosting_type,hosting_url,template,status"
-)
-.eq("id",clientId)
-.maybeSingle();
 
-if(error){
-
-console.error(
-"Client Error:",
-error
-);
-
-return null;
-
-}
-
-return data;
-
-}
-
-
-/* ==========================================
-   SHOW CLIENT
-========================================== */
+/* =========================================
+   SHOW ACTIVE CLIENT
+========================================= */
 
 function showActiveClient(client){
 
-if(!client){
+    if(!client){
 
-setText(
-"clientName",
-"No Client Selected"
-);
+        setText(
+            "clientName",
+            "No client selected"
+        );
 
-setText(
-"clientDomain",
-"Please select a client"
-);
+        setText(
+            "clientDomain",
+            ""
+        );
 
-setText(
-"clientTemplate",
-"Template: —"
-);
+        setText(
+            "clientTemplate",
+            ""
+        );
 
-return;
+        return;
+
+    }
+
+
+    setText(
+        "clientName",
+        client.company_name ||
+        client.slug ||
+        "Unnamed Client"
+    );
+
+
+    setText(
+        "clientDomain",
+        client.domain ||
+        "Domain not configured"
+    );
+
+
+    setText(
+        "clientTemplate",
+        client.template
+        ? "Template: " + client.template
+        : "Template not selected"
+    );
 
 }
 
-setText(
-"clientName",
-client.company_name ||
-"Unnamed Client"
-);
 
-setText(
-"clientDomain",
-client.domain ||
-"No domain configured"
-);
-
-setText(
-"clientTemplate",
-"Template: " +
-(
-client.template ||
-"default"
-)
-);
-
-}
-
-
-/* ==========================================
+/* =========================================
    LOAD STATS
-========================================== */
+========================================= */
 
 async function loadStats(clientId){
 
-resetStats();
+    resetStats();
 
-if(!clientId){
-return;
+    if(!clientId){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            count,
+            error
+        } =
+        await supabaseClient
+        .from("categories")
+        .select(
+            "*",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        );
+
+        if(!error){
+
+            setText(
+                "categoryCount",
+                count || 0
+            );
+
+        }else{
+
+            console.warn(
+                "Categories count error:",
+                error
+            );
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "Categories stats failed:",
+            error
+        );
+
+    }
+
+
+    try{
+
+        const {
+            count,
+            error
+        } =
+        await supabaseClient
+        .from("products")
+        .select(
+            "*",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        );
+
+        if(!error){
+
+            setText(
+                "productCount",
+                count || 0
+            );
+
+        }else{
+
+            console.warn(
+                "Products count error:",
+                error
+            );
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "Products stats failed:",
+            error
+        );
+
+    }
+
+
+    try{
+
+        const {
+            count,
+            error
+        } =
+        await supabaseClient
+        .from("gallery")
+        .select(
+            "*",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        );
+
+        if(!error){
+
+            setText(
+                "galleryCount",
+                count || 0
+            );
+
+        }else{
+
+            console.warn(
+                "Gallery count error:",
+                error
+            );
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "Gallery stats failed:",
+            error
+        );
+
+    }
+
+
+    try{
+
+        const {
+            count,
+            error
+        } =
+        await supabaseClient
+        .from("enquiries")
+        .select(
+            "*",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+        .eq(
+            "client_id",
+            clientId
+        );
+
+        if(!error){
+
+            setText(
+                "enquiryCount",
+                count || 0
+            );
+
+        }else{
+
+            console.warn(
+                "Enquiries count error:",
+                error
+            );
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "Enquiries stats failed:",
+            error
+        );
+
+    }
+
 }
 
 
-/* Categories */
-
-try{
-
-const result =
-await supabaseClient
-.from("categories")
-.select(
-"id",
-{
-count:"exact",
-head:true
-}
-)
-.eq(
-"client_id",
-clientId
-);
-
-if(!result.error){
-
-setText(
-"categoryCount",
-result.count || 0
-);
-
-}
-
-}catch(error){
-
-console.warn(
-"Category stats failed:",
-error
-);
-
-}
-
-
-/* Products */
-
-try{
-
-const result =
-await supabaseClient
-.from("products")
-.select(
-"id",
-{
-count:"exact",
-head:true
-}
-)
-.eq(
-"client_id",
-clientId
-);
-
-if(!result.error){
-
-setText(
-"productCount",
-result.count || 0
-);
-
-}
-
-}catch(error){
-
-console.warn(
-"Product stats failed:",
-error
-);
-
-}
-
-
-/* Gallery */
-
-try{
-
-const result =
-await supabaseClient
-.from("gallery")
-.select(
-"id",
-{
-count:"exact",
-head:true
-}
-)
-.eq(
-"client_id",
-clientId
-);
-
-if(!result.error){
-
-setText(
-"galleryCount",
-result.count || 0
-);
-
-}
-
-}catch(error){
-
-console.warn(
-"Gallery stats failed:",
-error
-);
-
-}
-
-
-/* Enquiries */
-
-try{
-
-const result =
-await supabaseClient
-.from("enquiries")
-.select(
-"id",
-{
-count:"exact",
-head:true
-}
-)
-.eq(
-"client_id",
-clientId
-);
-
-if(!result.error){
-
-setText(
-"enquiryCount",
-result.count || 0
-);
-
-}
-
-}catch(error){
-
-console.warn(
-"Enquiry stats failed:",
-error
-);
-
-}
-
-}
-
-
-/* ==========================================
-   SETUP SUPER ADMIN
-========================================== */
+/* =========================================
+   SUPER ADMIN CLIENTS
+========================================= */
 
 async function setupSuperAdminClients(){
 
-const {
-data,
-error
-} =
-await supabaseClient
-.from("clients")
-.select(
-"id,company_name,slug,domain,hosting_type,hosting_url,template,status"
-)
-.order(
-"company_name",
-{
-ascending:true
+    const select =
+    document.getElementById(
+        "globalClientSelect"
+    );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,slug,domain,hosting_type,hosting_url,template,status"
+    );
+
+
+    if(error){
+
+        console.error(
+            "Clients Load Error:",
+            error
+        );
+
+        select.innerHTML =
+        `<option value="">
+            Client loading failed
+        </option>`;
+
+        return;
+
+    }
+
+
+    const clients =
+    Array.isArray(data)
+    ? data
+    : [];
+
+
+    clients.sort(
+        function(a,b){
+
+            return String(
+                a.company_name || ""
+            ).localeCompare(
+                String(
+                    b.company_name || ""
+                )
+            );
+
+        }
+    );
+
+
+    select.innerHTML =
+    `<option value="">
+        Select Client
+    </option>`;
+
+
+    clients.forEach(
+        function(client){
+
+            const option =
+            document.createElement(
+                "option"
+            );
+
+            option.value =
+            client.id;
+
+            option.textContent =
+            client.company_name ||
+            client.slug ||
+            client.domain ||
+            "Unnamed Client";
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    if(!clients.length){
+
+        resetStats();
+
+        showActiveClient(null);
+
+        return;
+
+    }
+
+
+    const saved =
+    getSavedClient();
+
+
+    let selectedClient =
+    null;
+
+
+    if(saved && saved.id){
+
+        selectedClient =
+        clients.find(
+            function(client){
+
+                return String(
+                    client.id
+                ) === String(
+                    saved.id
+                );
+
+            }
+        ) || null;
+
+    }
+
+
+    if(!selectedClient){
+
+        selectedClient =
+        clients[0];
+
+    }
+
+
+    if(selectedClient){
+
+        select.value =
+        selectedClient.id;
+
+        saveClient(
+            selectedClient
+        );
+
+        showActiveClient(
+            selectedClient
+        );
+
+        await loadStats(
+            selectedClient.id
+        );
+
+    }
+
 }
+
+
+/* =========================================
+   CLIENT SELECT CHANGE
+========================================= */
+
+document
+.getElementById("globalClientSelect")
+.addEventListener(
+    "change",
+    async function(){
+
+        const clientId =
+        this.value;
+
+
+        if(!clientId){
+
+            resetStats();
+
+            showActiveClient(
+                null
+            );
+
+            return;
+
+        }
+
+
+        const client =
+        await getClient(
+            clientId
+        );
+
+
+        if(!client){
+
+            resetStats();
+
+            showActiveClient(
+                null
+            );
+
+            return;
+
+        }
+
+
+        saveClient(
+            client
+        );
+
+        showActiveClient(
+            client
+        );
+
+        await loadStats(
+            client.id
+        );
+
+    }
 );
 
-if(error){
 
-console.error(
-"Client List Error:",
-error
-);
-
-globalClientSelect.innerHTML =
-"<option value=''>Unable to load clients</option>";
-
-showActiveClient(null);
-resetStats();
-
-return;
-
-}
-
-
-globalClientSelect.innerHTML = "";
-
-
-if(
-!data ||
-data.length === 0
-){
-
-globalClientSelect.innerHTML =
-"<option value=''>No clients found</option>";
-
-showActiveClient(null);
-resetStats();
-
-return;
-
-}
-
-
-/* Add clients */
-
-data.forEach(client => {
-
-const option =
-document.createElement("option");
-
-option.value =
-client.id;
-
-option.textContent =
-(
-client.company_name ||
-"Unnamed Client"
-)
-+
-(
-client.domain
-? " — " + client.domain
-: ""
-);
-
-globalClientSelect.appendChild(
-option
-);
-
-});
-
-
-/* Restore saved client */
-
-let activeClient = null;
-
-const saved =
-getSavedClient();
-
-if(saved && saved.id){
-
-activeClient =
-data.find(
-client =>
-String(client.id) ===
-String(saved.id)
-);
-
-}
-
-
-/* Default first client */
-
-if(!activeClient){
-
-activeClient =
-data[0];
-
-}
-
-
-/* Apply */
-
-globalClientSelect.value =
-activeClient.id;
-
-saveClient(activeClient);
-
-showActiveClient(activeClient);
-
-await loadStats(
-activeClient.id
-);
-
-}
-
-
-/* ==========================================
-   CLIENT CHANGE
-========================================== */
-
-globalClientSelect.addEventListener(
-"change",
-async function(){
-
-try{
-
-const clientId =
-this.value;
-
-if(!clientId){
-
-showActiveClient(null);
-resetStats();
-
-return;
-
-}
-
-const client =
-await getClient(clientId);
-
-if(!client){
-
-showActiveClient(null);
-resetStats();
-
-return;
-
-}
-
-saveClient(client);
-
-showActiveClient(client);
-
-await loadStats(
-client.id
-);
-
-}catch(error){
-
-console.error(
-"Client change error:",
-error
-);
-
-}
-
-});
-
-
-/* ==========================================
-   INITIALIZE
-========================================== */
+/* =========================================
+   INITIALIZE DASHBOARD
+========================================= */
 
 async function initialize(){
 
-try{
+    try{
 
-setText(
-"userName",
-"Loading..."
-);
+        /*
+         IMPORTANT:
+         Use getSession() instead of getUser().
+         getUser() throws AuthSessionMissingError
+         when there is no active session.
+        */
 
-setText(
-"userRole",
-"Loading..."
-);
+        const {
+            data:sessionData,
+            error:sessionError
+        } =
+        await supabaseClient
+        .auth
+        .getSession();
 
 
-/* Check logged-in user */
+        if(sessionError){
 
-const {
-data:userData,
-error:userError
-} =
-await supabaseClient
-.auth
-.getUser();
+            console.error(
+                "Session Error:",
+                sessionError
+            );
 
-if(userError){
+            window.location.href =
+            "admin.html";
 
-console.error(
-"Auth Error:",
-userError
-);
+            return;
 
-throw userError;
+        }
+
+
+        const session =
+        sessionData?.session;
+
+
+        if(
+            !session ||
+            !session.user
+        ){
+
+            console.warn(
+                "No active Supabase session."
+            );
+
+            window.location.href =
+            "admin.html";
+
+            return;
+
+        }
+
+
+        const user =
+        session.user;
+
+
+        /* =====================================
+           LOAD PROFILE
+        ===================================== */
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
+        .from("profiles")
+        .select(
+            "id,role,client_id,full_name"
+        )
+        .eq(
+            "id",
+            user.id
+        )
+        .maybeSingle();
+
+
+        if(profileError){
+
+            console.error(
+                "Profile Error:",
+                profileError
+            );
+
+            setText(
+                "userName",
+                user.email || "Admin"
+            );
+
+            setText(
+                "userRole",
+                "Profile Error"
+            );
+
+            resetStats();
+
+            return;
+
+        }
+
+
+        if(!profile){
+
+            setText(
+                "userName",
+                user.email || "Admin"
+            );
+
+            setText(
+                "userRole",
+                "Profile not found"
+            );
+
+            resetStats();
+
+            return;
+
+        }
+
+
+        setText(
+            "userName",
+            profile.full_name ||
+            user.email ||
+            "Admin"
+        );
+
+
+        setText(
+            "userRole",
+            profile.role ||
+            "User"
+        );
+
+
+        /* =====================================
+           SUPER ADMIN
+        ===================================== */
+
+        if(
+            profile.role ===
+            "super_admin"
+        ){
+
+            document
+            .getElementById(
+                "globalClientSelect"
+            )
+            .style.display =
+            "block";
+
+
+            await setupSuperAdminClients();
+
+            return;
+
+        }
+
+
+        /* =====================================
+           NORMAL CLIENT USER
+        ===================================== */
+
+        document
+        .getElementById(
+            "globalClientSelect"
+        )
+        .style.display =
+        "none";
+
+
+        if(!profile.client_id){
+
+            setText(
+                "clientName",
+                "No client assigned"
+            );
+
+            setText(
+                "clientDomain",
+                ""
+            );
+
+            setText(
+                "clientTemplate",
+                ""
+            );
+
+            resetStats();
+
+            return;
+
+        }
+
+
+        const client =
+        await getClient(
+            profile.client_id
+        );
+
+
+        if(!client){
+
+            setText(
+                "clientName",
+                "Client not found"
+            );
+
+            setText(
+                "clientDomain",
+                ""
+            );
+
+            setText(
+                "clientTemplate",
+                ""
+            );
+
+            resetStats();
+
+            return;
+
+        }
+
+
+        saveClient(
+            client
+        );
+
+        showActiveClient(
+            client
+        );
+
+        await loadStats(
+            client.id
+        );
+
+    }catch(error){
+
+        console.error(
+            "Dashboard Error:",
+            error
+        );
+
+
+        setText(
+            "userRole",
+            "Dashboard Error"
+        );
+
+
+        setText(
+            "userName",
+            "Please refresh"
+        );
+
+
+        resetStats();
+
+    }
 
 }
 
-const user =
-userData?.user;
 
-
-if(!user){
-
-window.location.href =
-"admin.html";
-
-return;
-
-}
-
-
-/* Load profile */
-
-const {
-data:profile,
-error:profileError
-} =
-await supabaseClient
-.from("profiles")
-.select(
-"id,role,client_id,full_name"
-)
-.eq(
-"id",
-user.id
-)
-.maybeSingle();
-
-
-/*
-   If profile does not exist,
-   don't crash dashboard.
-*/
-
-if(profileError){
-
-console.error(
-"Profile Error:",
-profileError
-);
-
-setText(
-"userName",
-user.email || "User"
-);
-
-setText(
-"userRole",
-"Profile Error"
-);
-
-resetStats();
-
-return;
-
-}
-
-
-if(!profile){
-
-setText(
-"userName",
-user.email || "User"
-);
-
-setText(
-"userRole",
-"Profile not found"
-);
-
-resetStats();
-
-return;
-
-}
-
-
-/* User information */
-
-setText(
-"userName",
-profile.full_name ||
-user.email ||
-"User"
-);
-
-setText(
-"userRole",
-profile.role ||
-"User"
-);
-
-
-/* ==========================================
-   SUPER ADMIN
-========================================== */
-
-if(
-profile.role === "super_admin"
-){
-
-globalClientSelect.classList.remove(
-"hidden"
-);
-
-await setupSuperAdminClients();
-
-return;
-
-}
-
-
-/* ==========================================
-   NORMAL USER
-========================================== */
-
-globalClientSelect.classList.add(
-"hidden"
-);
-
-
-if(!profile.client_id){
-
-showActiveClient(null);
-resetStats();
-
-return;
-
-}
-
-
-const client =
-await getClient(
-profile.client_id
-);
-
-if(!client){
-
-showActiveClient(null);
-resetStats();
-
-return;
-
-}
-
-saveClient(client);
-
-showActiveClient(client);
-
-await loadStats(
-client.id
-);
-
-
-/* SUCCESS */
-
-console.log(
-"Dashboard loaded successfully"
-);
-
-}catch(error){
-
-console.error(
-"Dashboard Error:",
-error
-);
-
-setText(
-"userRole",
-"Dashboard Error"
-);
-
-setText(
-"userName",
-"Please refresh"
-);
-
-showActiveClient(null);
-
-resetStats();
-
-}
-
-}
-
-
-/* ==========================================
+/* =========================================
    LOGOUT
-========================================== */
+========================================= */
 
 document
 .getElementById("logoutBtn")
 .addEventListener(
-"click",
-async function(){
+    "click",
+    async function(){
 
-try{
+        try{
 
-try{
+            if(
+                window.MDKClientContext &&
+                typeof window.MDKClientContext.clear === "function"
+            ){
 
-if(
-window.MDKClientContext &&
-typeof MDKClientContext.clear === "function"
-){
+                window.MDKClientContext.clear();
 
-MDKClientContext.clear();
+            }
 
-}
+        }catch(error){
 
-}catch(e){
+            console.warn(
+                "Client context clear failed:",
+                error
+            );
 
-console.warn(
-"Context clear failed:",
-e
+        }
+
+
+        await supabaseClient
+        .auth
+        .signOut();
+
+
+        window.location.href =
+        "admin.html";
+
+    }
 );
 
-}
 
-await supabaseClient
-.auth
-.signOut();
-
-}catch(error){
-
-console.error(
-"Logout Error:",
-error
-);
-
-}
-
-window.location.href =
-"admin.html";
-
-});
-
-
-/* ==========================================
+/* =========================================
    START
-========================================== */
+========================================= */
 
 initialize();
 
