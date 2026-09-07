@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -8,7 +9,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<!-- CLIENT CONTEXT -->
+<script src="client-context.js"></script>
+
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -67,7 +72,7 @@ body{
 }
 
 .container{
-    max-width:1200px;
+    max-width:1250px;
     margin:auto;
     padding:25px;
 }
@@ -146,6 +151,13 @@ body{
     border-color:#2563eb;
 }
 
+.field small{
+    display:block;
+    color:#64748b;
+    font-size:11px;
+    margin-top:5px;
+}
+
 .form-actions{
     margin-top:18px;
     display:flex;
@@ -207,6 +219,25 @@ td{
     color:#64748b;
 }
 
+.domain{
+    color:#475569;
+}
+
+.template-badge{
+    display:inline-block;
+    background:#eff6ff;
+    color:#1d4ed8;
+    padding:5px 9px;
+    border-radius:7px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.hosting{
+    color:#64748b;
+    font-size:12px;
+}
+
 .badge{
     display:inline-block;
     padding:5px 9px;
@@ -228,9 +259,11 @@ td{
 .actions{
     display:flex;
     gap:7px;
+    flex-wrap:wrap;
 }
 
 .edit-btn,
+.use-btn,
 .delete-btn{
     border:0;
     padding:7px 10px;
@@ -243,6 +276,11 @@ td{
 .edit-btn{
     background:#dbeafe;
     color:#1d4ed8;
+}
+
+.use-btn{
+    background:#dcfce7;
+    color:#166534;
 }
 
 .delete-btn{
@@ -282,7 +320,18 @@ td{
     color:#64748b;
 }
 
-@media(max-width:700px){
+.active-client-info{
+    background:#eff6ff;
+    border:1px solid #bfdbfe;
+    color:#1e40af;
+    padding:12px 15px;
+    border-radius:9px;
+    margin-bottom:20px;
+    font-size:13px;
+    font-weight:700;
+}
+
+@media(max-width:850px){
 
     .form-grid{
         grid-template-columns:1fr;
@@ -300,7 +349,9 @@ td{
     .header{
         padding:0 15px;
     }
+
 }
+
 </style>
 </head>
 
@@ -337,10 +388,12 @@ td{
 
         <div class="title">
 
-            <h1>Clients</h1>
+            <h1>
+                Clients
+            </h1>
 
             <p>
-                Manage websites and business clients.
+                Manage websites, domains, hosting and templates.
             </p>
 
         </div>
@@ -350,6 +403,18 @@ td{
             id="addBtn">
             + Add Client
         </button>
+
+    </div>
+
+
+    <div
+        id="activeClientInfo"
+        class="active-client-info">
+
+        Active Client:
+        <span id="activeClientName">
+            None
+        </span>
 
     </div>
 
@@ -369,8 +434,11 @@ td{
         <div
             id="formTitle"
             class="form-title">
+
             Add New Client
+
         </div>
+
 
         <form id="clientForm">
 
@@ -380,6 +448,7 @@ td{
 
 
             <div class="form-grid">
+
 
                 <div class="field">
 
@@ -422,19 +491,78 @@ td{
                         id="domain"
                         placeholder="www.example.com">
 
+                    <small>
+                        Example: www.client.com
+                    </small>
+
                 </div>
 
 
                 <div class="field">
 
                     <label>
-                        Template
+                        Hosting Type
+                    </label>
+
+                    <select id="hostingType">
+
+                        <option value="GitHub Pages">
+                            GitHub Pages
+                        </option>
+
+                        <option value="Custom Domain">
+                            Custom Domain
+                        </option>
+
+                        <option value="Web Hosting">
+                            Web Hosting
+                        </option>
+
+                        <option value="Cloud Hosting">
+                            Cloud Hosting
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Hosting URL
+                    </label>
+
+                    <input
+                        type="text"
+                        id="hostingUrl"
+                        placeholder="https://username.github.io/project/">
+
+                    <small>
+                        GitHub Pages / hosting project URL
+                    </small>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Website Template
                     </label>
 
                     <input
                         type="text"
                         id="template"
-                        placeholder="default">
+                        placeholder="template-1">
+
+                    <small>
+                        Example: template-1, template-2, industrial-1
+                    </small>
 
                 </div>
 
@@ -459,6 +587,7 @@ td{
 
                 </div>
 
+
             </div>
 
 
@@ -472,6 +601,7 @@ td{
                     Save Client
 
                 </button>
+
 
                 <button
                     type="button"
@@ -525,6 +655,10 @@ td{
                         </th>
 
                         <th>
+                            HOSTING
+                        </th>
+
+                        <th>
                             TEMPLATE
                         </th>
 
@@ -539,6 +673,7 @@ td{
                     </tr>
 
                 </thead>
+
 
                 <tbody id="clientTable">
                 </tbody>
@@ -585,49 +720,89 @@ window.supabase.createClient(
 ========================================== */
 
 const formCard =
-document.getElementById("formCard");
+document.getElementById(
+    "formCard"
+);
 
 const clientForm =
-document.getElementById("clientForm");
+document.getElementById(
+    "clientForm"
+);
 
 const clientId =
-document.getElementById("clientId");
+document.getElementById(
+    "clientId"
+);
 
 const companyName =
-document.getElementById("companyName");
+document.getElementById(
+    "companyName"
+);
 
 const slug =
-document.getElementById("slug");
+document.getElementById(
+    "slug"
+);
 
 const domain =
-document.getElementById("domain");
+document.getElementById(
+    "domain"
+);
+
+const hostingType =
+document.getElementById(
+    "hostingType"
+);
+
+const hostingUrl =
+document.getElementById(
+    "hostingUrl"
+);
 
 const template =
-document.getElementById("template");
+document.getElementById(
+    "template"
+);
 
 const status =
-document.getElementById("status");
+document.getElementById(
+    "status"
+);
 
 const tableArea =
-document.getElementById("tableArea");
+document.getElementById(
+    "tableArea"
+);
 
 const clientTable =
-document.getElementById("clientTable");
+document.getElementById(
+    "clientTable"
+);
 
 const loading =
-document.getElementById("loading");
+document.getElementById(
+    "loading"
+);
 
 const empty =
-document.getElementById("empty");
+document.getElementById(
+    "empty"
+);
 
 const message =
-document.getElementById("message");
+document.getElementById(
+    "message"
+);
 
 const formTitle =
-document.getElementById("formTitle");
+document.getElementById(
+    "formTitle"
+);
 
 const saveBtn =
-document.getElementById("saveBtn");
+document.getElementById(
+    "saveBtn"
+);
 
 
 /* ==========================================
@@ -647,8 +822,10 @@ function showMessage(
 
     setTimeout(
         () => {
+
             message.className =
             "message";
+
         },
         4000
     );
@@ -665,11 +842,23 @@ async function checkLogin(){
     const {
         data:{
             user
-        }
+        },
+        error
     } =
     await supabaseClient
     .auth
     .getUser();
+
+
+    if(error){
+
+        console.error(
+            error
+        );
+
+        return false;
+
+    }
 
 
     if(!user){
@@ -681,7 +870,45 @@ async function checkLogin(){
 
     }
 
+
     return true;
+
+}
+
+
+/* ==========================================
+   LOAD ACTIVE CLIENT
+========================================== */
+
+function updateActiveClientDisplay(){
+
+    if(
+        window.MDKClientContext
+    ){
+
+        const client =
+        MDKClientContext.get();
+
+
+        if(client){
+
+            document.getElementById(
+                "activeClientName"
+            ).textContent =
+            client.company_name ||
+            client.id;
+
+            return;
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "activeClientName"
+    ).textContent =
+    "None";
 
 }
 
@@ -712,7 +939,7 @@ async function loadClients(){
     await supabaseClient
     .from("clients")
     .select(
-        "id,company_name,slug,domain,template,status,created_at"
+        "id,company_name,slug,domain,hosting_type,hosting_url,template,status,created_at"
     )
     .order(
         "created_at",
@@ -729,7 +956,9 @@ async function loadClients(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         showMessage(
             "Unable to load clients: " +
@@ -742,7 +971,10 @@ async function loadClients(){
     }
 
 
-    if(!data || data.length === 0){
+    if(
+        !data ||
+        data.length === 0
+    ){
 
         empty.classList.remove(
             "hidden"
@@ -753,37 +985,98 @@ async function loadClients(){
     }
 
 
-    clientTable.innerHTML = "";
+    clientTable.innerHTML =
+    "";
+
+
+    const activeId =
+    window.MDKClientContext
+    ? MDKClientContext.id()
+    : null;
 
 
     data.forEach(
         client => {
 
             const row =
-            document.createElement("tr");
+            document.createElement(
+                "tr"
+            );
+
+
+            const hostingText =
+            client.hosting_type ||
+            "—";
 
 
             row.innerHTML = `
 
                 <td>
+
                     <div class="company">
-                        ${escapeHtml(client.company_name)}
+
+                        ${escapeHtml(
+                            client.company_name
+                        )}
+
                     </div>
+
                 </td>
 
+
                 <td>
+
                     <span class="slug">
-                        ${escapeHtml(client.slug)}
+
+                        ${escapeHtml(
+                            client.slug
+                        )}
+
                     </span>
+
                 </td>
 
-                <td>
-                    ${escapeHtml(client.domain || "—")}
-                </td>
 
                 <td>
-                    ${escapeHtml(client.template || "default")}
+
+                    <span class="domain">
+
+                        ${escapeHtml(
+                            client.domain ||
+                            "—"
+                        )}
+
+                    </span>
+
                 </td>
+
+
+                <td>
+
+                    <div class="hosting">
+
+                        ${escapeHtml(
+                            hostingText
+                        )}
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <span class="template-badge">
+
+                        ${escapeHtml(
+                            client.template ||
+                            "default"
+                        )}
+
+                    </span>
+
+                </td>
+
 
                 <td>
 
@@ -793,15 +1086,32 @@ async function loadClients(){
                         : "inactive"
                     }">
 
-                        ${escapeHtml(client.status || "active")}
+                        ${escapeHtml(
+                            client.status ||
+                            "active"
+                        )}
 
                     </span>
 
                 </td>
 
+
                 <td>
 
                     <div class="actions">
+
+                        <button
+                            class="use-btn"
+                            onclick="useClient('${client.id}')">
+
+                            ${
+                                activeId === client.id
+                                ? "Active"
+                                : "Use Client"
+                            }
+
+                        </button>
+
 
                         <button
                             class="edit-btn"
@@ -810,6 +1120,7 @@ async function loadClients(){
                             Edit
 
                         </button>
+
 
                         <button
                             class="delete-btn"
@@ -822,6 +1133,7 @@ async function loadClients(){
                     </div>
 
                 </td>
+
             `;
 
 
@@ -837,6 +1149,9 @@ async function loadClients(){
         "hidden"
     );
 
+
+    updateActiveClientDisplay();
+
 }
 
 
@@ -851,28 +1166,49 @@ function escapeHtml(
     return String(
         value ?? ""
     )
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
 
 }
 
 
 /* ==========================================
-   ADD BUTTON
+   ADD CLIENT
 ========================================== */
 
 document
-.getElementById("addBtn")
+.getElementById(
+    "addBtn"
+)
 .addEventListener(
     "click",
     function(){
 
         clientForm.reset();
 
-        clientId.value = "";
+        clientId.value =
+        "";
+
+        hostingType.value =
+        "GitHub Pages";
 
         template.value =
         "default";
@@ -901,7 +1237,9 @@ document
 ========================================== */
 
 document
-.getElementById("cancelBtn")
+.getElementById(
+    "cancelBtn"
+)
 .addEventListener(
     "click",
     function(){
@@ -963,6 +1301,12 @@ clientForm.addEventListener(
         const domainValue =
         domain.value.trim();
 
+        const hostingTypeValue =
+        hostingType.value;
+
+        const hostingUrlValue =
+        hostingUrl.value.trim();
+
         const templateValue =
         template.value.trim()
         ||
@@ -1020,7 +1364,16 @@ clientForm.addEventListener(
                 slugValue,
 
                 domain:
-                domainValue || null,
+                domainValue ||
+                null,
+
+                hosting_type:
+                hostingTypeValue ||
+                null,
+
+                hosting_url:
+                hostingUrlValue ||
+                null,
 
                 template:
                 templateValue,
@@ -1037,6 +1390,7 @@ clientForm.addEventListener(
                 clientId.value
             );
 
+
         }else{
 
             result =
@@ -1051,7 +1405,16 @@ clientForm.addEventListener(
                 slugValue,
 
                 domain:
-                domainValue || null,
+                domainValue ||
+                null,
+
+                hosting_type:
+                hostingTypeValue ||
+                null,
+
+                hosting_url:
+                hostingUrlValue ||
+                null,
 
                 template:
                 templateValue,
@@ -1067,11 +1430,6 @@ clientForm.addEventListener(
         saveBtn.disabled =
         false;
 
-        saveBtn.textContent =
-        clientId.value
-        ? "Update Client"
-        : "Save Client";
-
 
         if(result.error){
 
@@ -1084,13 +1442,22 @@ clientForm.addEventListener(
                 "error"
             );
 
+            saveBtn.textContent =
+            clientId.value
+            ? "Update Client"
+            : "Save Client";
+
             return;
 
         }
 
 
+        const savedClientId =
+        clientId.value;
+
+
         showMessage(
-            clientId.value
+            savedClientId
             ? "Client updated successfully."
             : "Client created successfully.",
             "success"
@@ -1104,13 +1471,156 @@ clientForm.addEventListener(
 
         clientForm.reset();
 
-        clientId.value = "";
+        clientId.value =
+        "";
+
+
+        /*
+         * After creating/updating,
+         * fetch exact client and make
+         * it the active website.
+         */
+
+        const targetId =
+        savedClientId ||
+        await findClientIdBySlug(
+            slugValue
+        );
+
+
+        if(targetId){
+
+            await useClient(
+                targetId,
+                false
+            );
+
+        }
+
+
+        saveBtn.textContent =
+        "Save Client";
 
 
         await loadClients();
 
     }
 );
+
+
+/* ==========================================
+   FIND CLIENT BY SLUG
+========================================== */
+
+async function findClientIdBySlug(
+    slugValue
+){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id"
+    )
+    .eq(
+        "slug",
+        slugValue
+    )
+    .limit(1)
+    .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            error
+        );
+
+        return null;
+
+    }
+
+
+    return data
+    ? data.id
+    : null;
+
+}
+
+
+/* ==========================================
+   USE CLIENT
+========================================== */
+
+window.useClient =
+async function(
+    id,
+    showAlert = true
+){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("clients")
+    .select(
+        "id,company_name,slug,domain,hosting_type,hosting_url,template,status"
+    )
+    .eq(
+        "id",
+        id
+    )
+    .single();
+
+
+    if(error){
+
+        console.error(
+            error
+        );
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        window.MDKClientContext
+    ){
+
+        MDKClientContext.set(
+            data
+        );
+
+    }
+
+
+    updateActiveClientDisplay();
+
+
+    if(showAlert){
+
+        showMessage(
+            data.company_name +
+            " is now the active client.",
+            "success"
+        );
+
+    }
+
+
+    await loadClients();
+
+};
 
 
 /* ==========================================
@@ -1127,7 +1637,7 @@ async function(id){
     await supabaseClient
     .from("clients")
     .select(
-        "id,company_name,slug,domain,template,status"
+        "id,company_name,slug,domain,hosting_type,hosting_url,template,status"
     )
     .eq(
         "id",
@@ -1152,19 +1662,32 @@ async function(id){
     data.id;
 
     companyName.value =
-    data.company_name || "";
+    data.company_name ||
+    "";
 
     slug.value =
-    data.slug || "";
+    data.slug ||
+    "";
 
     domain.value =
-    data.domain || "";
+    data.domain ||
+    "";
+
+    hostingType.value =
+    data.hosting_type ||
+    "GitHub Pages";
+
+    hostingUrl.value =
+    data.hosting_url ||
+    "";
 
     template.value =
-    data.template || "default";
+    data.template ||
+    "default";
 
     status.value =
-    data.status || "active";
+    data.status ||
+    "active";
 
 
     formTitle.textContent =
@@ -1177,6 +1700,7 @@ async function(id){
     formCard.classList.remove(
         "hidden"
     );
+
 
     window.scrollTo(
         {
@@ -1197,7 +1721,7 @@ async function(id){
 
     const confirmed =
     confirm(
-        "Are you sure you want to delete this client?"
+        "Are you sure you want to delete this client?\n\nAll related website data may also be affected depending on your Supabase foreign-key/RLS configuration."
     );
 
 
@@ -1206,6 +1730,12 @@ async function(id){
         return;
 
     }
+
+
+    const activeId =
+    window.MDKClientContext
+    ? MDKClientContext.id()
+    : null;
 
 
     const {
@@ -1236,10 +1766,23 @@ async function(id){
     }
 
 
+    if(
+        activeId === id &&
+        window.MDKClientContext
+    ){
+
+        MDKClientContext.clear();
+
+    }
+
+
     showMessage(
         "Client deleted successfully.",
         "success"
     );
+
+
+    updateActiveClientDisplay();
 
 
     await loadClients();
@@ -1252,14 +1795,37 @@ async function(id){
 ========================================== */
 
 document
-.getElementById("logoutBtn")
+.getElementById(
+    "logoutBtn"
+)
 .addEventListener(
     "click",
     async function(){
 
-        await supabaseClient
-        .auth
-        .signOut();
+        try{
+
+            if(
+                window.MDKClientContext
+            ){
+
+                MDKClientContext.clear();
+
+            }
+
+
+            await supabaseClient
+            .auth
+            .signOut();
+
+        }
+        catch(error){
+
+            console.error(
+                error
+            );
+
+        }
+
 
         window.location.href =
         "admin.html";
@@ -1277,7 +1843,10 @@ document
     const loggedIn =
     await checkLogin();
 
+
     if(loggedIn){
+
+        updateActiveClientDisplay();
 
         await loadClients();
 
