@@ -1,6 +1,6 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -23,477 +23,571 @@
 
 body{
     font-family:Arial,Helvetica,sans-serif;
-    background:#f1f5f9;
-    color:#0f172a;
+    background:#f5f7fb;
+    color:#172033;
 }
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+.container{
+    width:min(1400px,94%);
+    margin:auto;
+}
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
-    height:70px;
-    background:#0f172a;
-    color:white;
+    background:#0b1628;
+    color:#fff;
+    padding:18px 0;
+}
+
+.header-inner{
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    padding:0 25px;
+    align-items:center;
+    gap:20px;
 }
 
-.logo{
-    font-size:21px;
-    font-weight:900;
-}
-
-.logo span{
-    color:#60a5fa;
-}
-
-.header-right{
+.brand{
     display:flex;
     align-items:center;
     gap:12px;
 }
 
-.back-btn,
-.logout-btn{
-    border:0;
-    padding:9px 14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:700;
-}
-
-.back-btn{
-    background:#334155;
-    color:white;
-    text-decoration:none;
-}
-
-.logout-btn{
-    background:#dc2626;
-    color:white;
-}
-
-.container{
-    max-width:1400px;
-    margin:auto;
-    padding:25px;
-}
-
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    margin-bottom:25px;
-}
-
-.title h1{
-    font-size:28px;
-}
-
-.title p{
-    color:#64748b;
-    font-size:14px;
-    margin-top:5px;
-}
-
-.add-btn{
-    background:#2563eb;
-    color:white;
-    border:0;
-    padding:12px 18px;
+.brand-logo{
+    width:45px;
+    height:45px;
+    background:#0b5ed7;
     border-radius:9px;
-    cursor:pointer;
-    font-weight:800;
-}
-
-.add-btn:hover{
-    background:#1d4ed8;
-}
-
-.card{
-    background:white;
-    border:1px solid #e2e8f0;
-    border-radius:14px;
-    padding:20px;
-    margin-bottom:20px;
-}
-
-.form-title{
-    font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     font-weight:900;
-    margin-bottom:18px;
 }
 
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:16px;
+.brand h1{
+    font-size:21px;
 }
 
-.field label{
-    display:block;
-    font-size:13px;
-    font-weight:800;
-    margin-bottom:7px;
+.brand p{
+    font-size:12px;
+    color:#aeb9c8;
+    margin-top:2px;
 }
 
-.field input,
-.field select{
-    width:100%;
-    padding:12px;
-    border:1px solid #cbd5e1;
-    border-radius:8px;
-    font-size:14px;
-    outline:none;
-    background:white;
-}
-
-.field input:focus,
-.field select:focus{
-    border-color:#2563eb;
-}
-
-.field small{
-    display:block;
-    color:#64748b;
-    font-size:11px;
-    margin-top:5px;
-}
-
-.form-actions{
-    margin-top:18px;
+.header-actions{
     display:flex;
     gap:10px;
 }
 
-.save-btn,
-.cancel-btn{
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
     border:0;
-    padding:11px 18px;
-    border-radius:8px;
+    padding:10px 15px;
+    border-radius:7px;
     cursor:pointer;
-    font-weight:800;
+    font-weight:700;
+    transition:.2s;
 }
 
-.save-btn{
-    background:#16a34a;
-    color:white;
+.btn:hover{
+    transform:translateY(-1px);
 }
 
-.save-btn:hover{
-    background:#15803d;
+.btn-primary{
+    background:#0b5ed7;
+    color:#fff;
 }
 
-.cancel-btn{
-    background:#e2e8f0;
-    color:#334155;
+.btn-secondary{
+    background:#e9eef6;
+    color:#172033;
 }
 
-.hidden{
+.btn-danger{
+    background:#dc3545;
+    color:#fff;
+}
+
+.btn-dark{
+    background:#172033;
+    color:#fff;
+}
+
+.btn-success{
+    background:#198754;
+    color:#fff;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+    padding:30px 0 60px;
+}
+
+.page-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.page-title h2{
+    font-size:30px;
+}
+
+.page-title p{
+    color:#667085;
+    margin-top:5px;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+#message{
     display:none;
+    padding:13px 16px;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-weight:600;
 }
 
-.table-wrap{
+.message-success{
+    background:#d1e7dd;
+    color:#0f5132;
+}
+
+.message-error{
+    background:#f8d7da;
+    color:#842029;
+}
+
+/* =========================
+   FORM CARD
+========================= */
+
+.form-card{
+    background:#fff;
+    border:1px solid #e3e8ef;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:28px;
+    box-shadow:0 5px 18px rgba(0,0,0,.04);
+}
+
+.form-card h3{
+    margin-bottom:20px;
+    font-size:21px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    font-size:14px;
+    font-weight:700;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px 13px;
+    border:1px solid #d5dce6;
+    border-radius:7px;
+    outline:none;
+    background:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#0b5ed7;
+    box-shadow:0 0 0 3px rgba(11,94,215,.1);
+}
+
+.form-actions{
+    margin-top:22px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+    background:#fff;
+    border:1px solid #e3e8ef;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.search-box{
+    flex:1;
+    min-width:250px;
+}
+
+.search-box input{
+    width:100%;
+    padding:11px 13px;
+    border:1px solid #d5dce6;
+    border-radius:7px;
+}
+
+.count-box{
+    font-weight:700;
+    color:#667085;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-card{
+    background:#fff;
+    border:1px solid #e3e8ef;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 5px 18px rgba(0,0,0,.04);
+}
+
+.table-wrapper{
+    width:100%;
     overflow-x:auto;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:1050px;
+    min-width:1100px;
 }
 
-th{
-    background:#f8fafc;
-    text-align:left;
-    padding:13px;
-    font-size:12px;
-    color:#475569;
-    border-bottom:1px solid #e2e8f0;
+thead{
+    background:#0b1628;
+    color:#fff;
 }
 
+th,
 td{
-    padding:14px 13px;
-    border-bottom:1px solid #e2e8f0;
-    font-size:13px;
+    padding:14px 12px;
+    text-align:left;
+    border-bottom:1px solid #e9edf2;
     vertical-align:middle;
 }
 
-.company{
-    font-weight:800;
-}
-
-.slug{
-    color:#64748b;
-}
-
-.domain{
-    color:#475569;
-}
-
-.template-badge{
-    display:inline-block;
-    background:#eff6ff;
-    color:#1d4ed8;
-    padding:5px 9px;
-    border-radius:7px;
-    font-size:11px;
-    font-weight:800;
-}
-
-.hosting{
-    color:#64748b;
-    font-size:12px;
-}
-
-.badge{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:800;
-}
-
-.active{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.inactive{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-.actions{
-    display:flex;
-    gap:7px;
-    flex-wrap:wrap;
-}
-
-.edit-btn,
-.use-btn,
-.delete-btn,
-.preview-btn,
-.website-btn{
-    border:0;
-    padding:7px 10px;
-    border-radius:7px;
-    cursor:pointer;
-    font-size:12px;
-    font-weight:700;
+th{
+    font-size:13px;
     white-space:nowrap;
 }
 
-.edit-btn{
-    background:#dbeafe;
-    color:#1d4ed8;
+td{
+    font-size:14px;
 }
 
-.use-btn{
-    background:#dcfce7;
-    color:#166534;
+tbody tr:hover{
+    background:#f8fafc;
 }
 
-.delete-btn{
-    background:#fee2e2;
-    color:#b91c1c;
+.company-name{
+    font-weight:800;
+    color:#172033;
 }
 
-.preview-btn{
-    background:#fef3c7;
-    color:#92400e;
+.slug{
+    color:#667085;
+    font-size:12px;
+    margin-top:3px;
 }
 
-.preview-btn:hover{
-    background:#fde68a;
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:800;
 }
 
-.website-btn{
-    background:#e0f2fe;
-    color:#0369a1;
+.status-active{
+    background:#d1e7dd;
+    color:#0f5132;
 }
 
-.website-btn:hover{
-    background:#bae6fd;
+.status-inactive{
+    background:#f8d7da;
+    color:#842029;
 }
 
-.website-btn.disabled{
-    background:#e2e8f0;
-    color:#94a3b8;
-    cursor:not-allowed;
+.status-other{
+    background:#e9ecef;
+    color:#495057;
 }
 
-.message{
-    padding:12px;
-    border-radius:8px;
-    margin-bottom:18px;
-    display:none;
-    font-size:13px;
+/* =========================
+   ACTIONS
+========================= */
+
+.actions{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
 }
 
-.success{
-    display:block;
-    background:#dcfce7;
-    color:#166534;
-}
-
-.error{
-    display:block;
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-.empty{
-    text-align:center;
-    padding:35px;
-    color:#64748b;
-}
-
-.loading{
-    text-align:center;
-    padding:30px;
-    color:#64748b;
-}
-
-.active-client-info{
-    background:#eff6ff;
-    border:1px solid #bfdbfe;
-    color:#1e40af;
-    padding:12px 15px;
-    border-radius:9px;
-    margin-bottom:20px;
-    font-size:13px;
+.actions button{
+    border:0;
+    padding:7px 9px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:12px;
     font-weight:700;
 }
 
-.template-status{
-    margin-top:6px;
-    font-size:11px;
-    color:#64748b;
+.use-btn{
+    background:#198754;
+    color:#fff;
 }
 
-.template-status.loading-status{
-    color:#2563eb;
+.preview-btn{
+    background:#6f42c1;
+    color:#fff;
 }
 
-.template-status.error-status{
-    color:#dc2626;
+.website-btn{
+    background:#0b5ed7;
+    color:#fff;
 }
 
-.template-status.success-status{
-    color:#16a34a;
+.edit-btn{
+    background:#ffc107;
+    color:#172033;
 }
 
-@media(max-width:850px){
+.delete-btn{
+    background:#dc3545;
+    color:#fff;
+}
+
+.disabled-btn{
+    background:#adb5bd !important;
+    color:#fff !important;
+    cursor:not-allowed !important;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+    text-align:center;
+    padding:50px;
+    color:#667085;
+}
+
+.spinner{
+    width:35px;
+    height:35px;
+    border:4px solid #e6ebf2;
+    border-top-color:#0b5ed7;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin:0 auto 15px;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    text-align:center;
+    padding:50px 20px;
+    color:#667085;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .form-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .header-inner,
+    .page-title{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .header-actions{
+        width:100%;
+    }
+
+    .header-actions .btn{
+        flex:1;
+    }
 
     .form-grid{
         grid-template-columns:1fr;
     }
 
-    .container{
-        padding:15px;
-    }
-
-    .topbar{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-    .header{
-        padding:0 15px;
+    .page-title h2{
+        font-size:25px;
     }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header class="header">
 
-    <div class="logo">
-        MD <span>KAIF</span>
-    </div>
+    <div class="container header-inner">
 
-    <div class="header-right">
+        <div class="brand">
 
-        <a
-            href="dashboard.html"
-            class="back-btn">
-            Dashboard
-        </a>
+            <div class="brand-logo">
+                MD
+            </div>
 
-        <button
-            class="logout-btn"
-            id="logoutBtn">
-            Logout
-        </button>
+            <div>
+
+                <h1>
+                    MD Kaif Web Platform
+                </h1>
+
+                <p>
+                    Client Manager
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                class="btn btn-secondary"
+                onclick="location.reload()">
+                🔄 Refresh
+            </button>
+
+            <button
+                class="btn btn-danger"
+                onclick="logout()">
+                Logout
+            </button>
+
+        </div>
 
     </div>
 
 </header>
 
 
+<!-- =========================
+     PAGE
+========================= -->
+
+<main class="page">
+
 <div class="container">
 
-    <div class="topbar">
 
-        <div class="title">
+    <!-- TITLE -->
 
-            <h1>
-                Clients
-            </h1>
+    <div class="page-title">
+
+        <div>
+
+            <h2>
+                Client Manager
+            </h2>
 
             <p>
-                Manage websites, domains, hosting and templates.
+                Manage clients, templates and websites
             </p>
 
         </div>
 
         <button
-            class="add-btn"
-            id="addBtn">
+            class="btn btn-primary"
+            onclick="newClient()">
             + Add Client
         </button>
 
     </div>
 
 
-    <div
-        id="activeClientInfo"
-        class="active-client-info">
+    <!-- MESSAGE -->
 
-        Active Client:
-        <span id="activeClientName">
-            None
-        </span>
-
-    </div>
+    <div id="message"></div>
 
 
-    <div
-        id="message"
-        class="message">
-    </div>
+    <!-- =========================
+         CLIENT FORM
+    ========================= -->
 
+    <div class="form-card">
 
-    <!-- FORM -->
-
-    <div
-        id="formCard"
-        class="card hidden">
-
-        <div
-            id="formTitle"
-            class="form-title">
-
+        <h3 id="formTitle">
             Add New Client
+        </h3>
 
-        </div>
 
-
-        <form id="clientForm">
+        <form
+            id="clientForm"
+            onsubmit="saveClient(event)">
 
             <input
                 type="hidden"
@@ -505,7 +599,7 @@ td{
 
                 <!-- COMPANY -->
 
-                <div class="field">
+                <div class="form-group">
 
                     <label>
                         Company Name *
@@ -514,15 +608,15 @@ td{
                     <input
                         type="text"
                         id="companyName"
-                        placeholder="Example: ABC Industries"
-                        required>
+                        required
+                        placeholder="Company Name">
 
                 </div>
 
 
                 <!-- SLUG -->
 
-                <div class="field">
+                <div class="form-group">
 
                     <label>
                         Slug *
@@ -531,15 +625,15 @@ td{
                     <input
                         type="text"
                         id="slug"
-                        placeholder="abc-industries"
-                        required>
+                        required
+                        placeholder="company-name">
 
                 </div>
 
 
                 <!-- DOMAIN -->
 
-                <div class="field">
+                <div class="form-group">
 
                     <label>
                         Domain
@@ -548,53 +642,30 @@ td{
                     <input
                         type="text"
                         id="domain"
-                        placeholder="www.example.com">
-
-                    <small>
-                        Example: www.client.com
-                    </small>
+                        placeholder="example.com">
 
                 </div>
 
 
                 <!-- HOSTING TYPE -->
 
-                <div class="field">
+                <div class="form-group">
 
                     <label>
                         Hosting Type
                     </label>
 
-                    <select id="hostingType">
-
-                        <option value="GitHub Pages">
-                            GitHub Pages
-                        </option>
-
-                        <option value="Custom Domain">
-                            Custom Domain
-                        </option>
-
-                        <option value="Web Hosting">
-                            Web Hosting
-                        </option>
-
-                        <option value="Cloud Hosting">
-                            Cloud Hosting
-                        </option>
-
-                        <option value="Other">
-                            Other
-                        </option>
-
-                    </select>
+                    <input
+                        type="text"
+                        id="hostingType"
+                        placeholder="GitHub / Hostinger / Other">
 
                 </div>
 
 
                 <!-- HOSTING URL -->
 
-                <div class="field">
+                <div class="form-group">
 
                     <label>
                         Hosting URL
@@ -603,24 +674,22 @@ td{
                     <input
                         type="text"
                         id="hostingUrl"
-                        placeholder="https://username.github.io/project/">
-
-                    <small>
-                        GitHub Pages / hosting project URL
-                    </small>
+                        placeholder="https://example.github.io">
 
                 </div>
 
 
-                <!-- TEMPLATE DROPDOWN -->
+                <!-- TEMPLATE -->
 
-                <div class="field">
+                <div class="form-group">
 
                     <label>
-                        Website Template
+                        Website Template *
                     </label>
 
-                    <select id="template">
+                    <select
+                        id="template"
+                        required>
 
                         <option value="">
                             Loading templates...
@@ -628,20 +697,12 @@ td{
 
                     </select>
 
-                    <div
-                        id="templateStatus"
-                        class="template-status loading-status">
-
-                        Loading templates from Supabase...
-
-                    </div>
-
                 </div>
 
 
                 <!-- STATUS -->
 
-                <div class="field">
+                <div class="form-group">
 
                     <label>
                         Status
@@ -669,21 +730,16 @@ td{
 
                 <button
                     type="submit"
-                    class="save-btn"
-                    id="saveBtn">
-
+                    class="btn btn-primary"
+                    id="saveButton">
                     Save Client
-
                 </button>
-
 
                 <button
                     type="button"
-                    class="cancel-btn"
-                    id="cancelBtn">
-
-                    Cancel
-
+                    class="btn btn-secondary"
+                    onclick="newClient()">
+                    Clear
                 </button>
 
             </div>
@@ -693,22 +749,38 @@ td{
     </div>
 
 
-    <!-- CLIENT LIST -->
+    <!-- =========================
+         TOOLBAR
+    ========================= -->
 
-    <div class="card">
+    <div class="toolbar">
 
-        <div
-            id="loading"
-            class="loading">
+        <div class="search-box">
 
-            Loading clients...
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Search company, slug, domain, template..."
+                oninput="filterClients()">
 
         </div>
 
-
         <div
-            id="tableArea"
-            class="table-wrap hidden">
+            class="count-box"
+            id="clientCount">
+            0 Clients
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TABLE
+    ========================= -->
+
+    <div class="table-card">
+
+        <div class="table-wrapper">
 
             <table>
 
@@ -717,51 +789,56 @@ td{
                     <tr>
 
                         <th>
-                            COMPANY
+                            Company
                         </th>
 
                         <th>
-                            SLUG
+                            Domain
                         </th>
 
                         <th>
-                            DOMAIN
+                            Hosting
                         </th>
 
                         <th>
-                            HOSTING
+                            Template
                         </th>
 
                         <th>
-                            TEMPLATE
+                            Status
                         </th>
 
                         <th>
-                            STATUS
+                            Created
                         </th>
 
                         <th>
-                            ACTIONS
+                            Actions
                         </th>
 
                     </tr>
 
                 </thead>
 
+                <tbody id="clientsBody">
 
-                <tbody id="clientTable">
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="loading">
+
+                            <div class="spinner"></div>
+
+                            Loading clients...
+
+                        </td>
+
+                    </tr>
+
                 </tbody>
 
             </table>
-
-        </div>
-
-
-        <div
-            id="empty"
-            class="empty hidden">
-
-            No clients found.
 
         </div>
 
@@ -769,371 +846,158 @@ td{
 
 </div>
 
+</main>
+
 
 <script>
 
-/* ==========================================
+/* ==========================================================
    SUPABASE
-========================================== */
+========================================================== */
 
 const SUPABASE_URL =
-"https://ywvdozdoanmcxscfofcf.supabase.co";
+    "https://ywvdozdoanmcxscfofcf.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
 const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-        auth:{
-            persistSession:true,
-            autoRefreshToken:true,
-            detectSessionInUrl:true,
-            storage:window.localStorage
-        }
-    }
-);
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-/* ==========================================
-   ELEMENTS
-========================================== */
+/* ==========================================================
+   GLOBAL DATA
+========================================================== */
 
-const formCard =
-document.getElementById("formCard");
-
-const clientForm =
-document.getElementById("clientForm");
-
-const clientId =
-document.getElementById("clientId");
-
-const companyName =
-document.getElementById("companyName");
-
-const slug =
-document.getElementById("slug");
-
-const domain =
-document.getElementById("domain");
-
-const hostingType =
-document.getElementById("hostingType");
-
-const hostingUrl =
-document.getElementById("hostingUrl");
-
-const template =
-document.getElementById("template");
-
-const templateStatus =
-document.getElementById("templateStatus");
-
-const status =
-document.getElementById("status");
-
-const tableArea =
-document.getElementById("tableArea");
-
-const clientTable =
-document.getElementById("clientTable");
-
-const loading =
-document.getElementById("loading");
-
-const empty =
-document.getElementById("empty");
-
-const message =
-document.getElementById("message");
-
-const formTitle =
-document.getElementById("formTitle");
-
-const saveBtn =
-document.getElementById("saveBtn");
+let allClients = [];
+let allTemplates = [];
 
 
-/* ==========================================
-   TEMPLATE DATA
-========================================== */
-
-let templatesData = [];
-
-
-/* ==========================================
+/* ==========================================================
    MESSAGE
-========================================== */
+========================================================== */
 
 function showMessage(
     text,
-    type
+    type = "success"
 ){
 
-    message.textContent =
-    text;
+    const box =
+        document.getElementById(
+            "message"
+        );
 
-    message.className =
-    "message " + type;
+    box.textContent = text;
 
-    setTimeout(
-        () => {
+    box.className =
+        type === "error"
+        ? "message-error"
+        : "message-success";
 
-            message.className =
-            "message";
+    box.style.display = "block";
 
-        },
-        4000
+    setTimeout(() => {
+
+        box.style.display = "none";
+
+    },4000);
+
+}
+
+
+/* ==========================================================
+   TEMPLATE HELPERS
+========================================================== */
+
+function getTemplateValue(row){
+
+    return (
+        row.slug ||
+        row.template_slug ||
+        row.name ||
+        row.template_name ||
+        row.title ||
+        row.template ||
+        row.code ||
+        row.template_code ||
+        ""
     );
 
 }
 
 
-/* ==========================================
-   TEMPLATE VALUE HELPER
-========================================== */
-
-function getTemplateValue(row){
-
-    const possibleKeys = [
-
-        "slug",
-        "template_slug",
-        "name",
-        "template_name",
-        "title",
-        "template",
-        "code",
-        "template_code"
-
-    ];
-
-
-    for(
-        const key of possibleKeys
-    ){
-
-        if(
-            row[key] !== undefined &&
-            row[key] !== null &&
-            String(row[key]).trim() !== ""
-        ){
-
-            return String(
-                row[key]
-            ).trim();
-
-        }
-
-    }
-
-
-    return null;
-
-}
-
-
-/* ==========================================
-   TEMPLATE DISPLAY NAME
-========================================== */
-
 function getTemplateDisplayName(row){
 
-    const possibleKeys = [
-
-        "name",
-        "template_name",
-        "title",
-        "display_name",
-        "slug",
-        "template",
-        "code",
-        "template_code"
-
-    ];
-
-
-    for(
-        const key of possibleKeys
-    ){
-
-        if(
-            row[key] !== undefined &&
-            row[key] !== null &&
-            String(row[key]).trim() !== ""
-        ){
-
-            return String(
-                row[key]
-            ).trim();
-
-        }
-
-    }
-
-
-    return "Unnamed Template";
+    return (
+        row.name ||
+        row.template_name ||
+        row.title ||
+        row.display_name ||
+        row.slug ||
+        row.template ||
+        row.code ||
+        row.template_code ||
+        "Template"
+    );
 
 }
 
-
-/* ==========================================
-   FIND TEMPLATE ROW
-========================================== */
 
 function findTemplateRow(
     templateValue
 ){
 
-    if(!templateValue){
-
-        return null;
-
-    }
-
-
-    return templatesData.find(
+    return allTemplates.find(
         row =>
-            getTemplateValue(row) ===
-            String(templateValue).trim()
-    ) || null;
-
-}
-
-
-/* ==========================================
-   GET TEMPLATE URL
-========================================== */
-
-function getTemplateUrl(
-    templateValue
-){
-
-    const row =
-    findTemplateRow(
-        templateValue
+            String(
+                getTemplateValue(row)
+            ).toLowerCase()
+            ===
+            String(
+                templateValue || ""
+            ).toLowerCase()
     );
 
-
-    if(!row){
-
-        return null;
-
-    }
-
-
-    const possibleKeys = [
-
-        "template_url",
-        "url",
-        "preview_url",
-        "website_url",
-        "github_url"
-
-    ];
-
-
-    for(
-        const key of possibleKeys
-    ){
-
-        if(
-            row[key] !== undefined &&
-            row[key] !== null &&
-            String(row[key]).trim() !== ""
-        ){
-
-            return String(
-                row[key]
-            ).trim();
-
-        }
-
-    }
-
-
-    return null;
-
 }
 
 
-/* ==========================================
-   BUILD URL
-========================================== */
-
-function buildUrl(
-    value
-){
-
-    if(!value){
-
-        return null;
-
-    }
-
-
-    let url =
-    String(value).trim();
-
-
-    if(
-        !/^https?:\/\//i.test(url)
-    ){
-
-        url =
-        "https://" +
-        url;
-
-    }
-
-
-    return url;
-
-}
-
-
-/* ==========================================
+/* ==========================================================
    LOAD TEMPLATES
-========================================== */
+========================================================== */
 
 async function loadTemplates(){
 
-    templateStatus.textContent =
-    "Loading templates from Supabase...";
-
-    templateStatus.className =
-    "template-status loading-status";
-
-
-    template.innerHTML = `
-
-        <option value="">
-            Loading templates...
-        </option>
-
-    `;
+    const select =
+        document.getElementById(
+            "template"
+        );
 
 
     const {
         data,
         error
-    } =
-    await supabaseClient
-    .from("templates")
-    .select("*");
+    } = await supabaseClient
+        .from("templates")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
 
 
     if(error){
 
         console.error(
-            "Template loading error:",
+            "Template error:",
             error
         );
 
-
-        template.innerHTML = `
+        select.innerHTML = `
 
             <option value="">
                 Unable to load templates
@@ -1141,438 +1005,448 @@ async function loadTemplates(){
 
         `;
 
-
-        templateStatus.textContent =
-        "Template loading failed: " +
-        error.message;
-
-
-        templateStatus.className =
-        "template-status error-status";
-
-
-        return false;
+        return;
 
     }
 
 
-    templatesData =
-    Array.isArray(data)
-    ? data
-    : [];
+    allTemplates =
+        data || [];
 
 
-    const usableTemplates =
-    templatesData.filter(
-        row =>
-            getTemplateValue(row)
-    );
-
-
-    template.innerHTML = `
+    select.innerHTML = `
 
         <option value="">
-            Select Website Template
+            Select Template
         </option>
 
     `;
 
 
-    usableTemplates.forEach(
+    allTemplates.forEach(
         row => {
 
             const value =
-            getTemplateValue(row);
+                getTemplateValue(row);
 
             const display =
-            getTemplateDisplayName(row);
+                getTemplateDisplayName(row);
+
+
+            if(!value){
+
+                return;
+
+            }
 
 
             const option =
-            document.createElement(
-                "option"
-            );
-
+                document.createElement(
+                    "option"
+                );
 
             option.value =
-            value;
+                value;
 
             option.textContent =
-            display;
+                display;
 
-
-            template.appendChild(
+            select.appendChild(
                 option
             );
 
         }
     );
 
-
-    if(
-        usableTemplates.length === 0
-    ){
-
-        template.innerHTML = `
-
-            <option value="">
-                No templates found
-            </option>
-
-        `;
-
-
-        templateStatus.textContent =
-        "No usable templates found in templates table.";
-
-        templateStatus.className =
-        "template-status error-status";
-
-
-        return false;
-
-    }
-
-
-    templateStatus.textContent =
-    usableTemplates.length +
-    " template(s) loaded from Supabase.";
-
-    templateStatus.className =
-    "template-status success-status";
-
-
-    return true;
-
 }
 
 
-/* ==========================================
-   PRESERVE OLD TEMPLATE
-========================================== */
-
-function ensureTemplateOption(
-    value
-){
-
-    if(!value){
-
-        return;
-
-    }
-
-
-    const exists =
-    Array.from(
-        template.options
-    ).some(
-        option =>
-            option.value === value
-    );
-
-
-    if(exists){
-
-        return;
-
-    }
-
-
-    const option =
-    document.createElement(
-        "option"
-    );
-
-
-    option.value =
-    value;
-
-    option.textContent =
-    value +
-    " (Existing)";
-
-
-    template.appendChild(
-        option
-    );
-
-}
-
-
-/* ==========================================
-   SESSION
-========================================== */
-
-async function checkLogin(){
-
-    const {
-        data:{
-            user
-        },
-        error
-    } =
-    await supabaseClient
-    .auth
-    .getUser();
-
-
-    if(error){
-
-        console.error(
-            error
-        );
-
-        return false;
-
-    }
-
-
-    if(!user){
-
-        window.location.href =
-        "admin.html";
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* ==========================================
-   ACTIVE CLIENT DISPLAY
-========================================== */
-
-function updateActiveClientDisplay(){
-
-    if(
-        window.MDKClientContext
-    ){
-
-        const client =
-        MDKClientContext.get();
-
-
-        if(client){
-
-            document.getElementById(
-                "activeClientName"
-            ).textContent =
-            client.company_name ||
-            client.id;
-
-            return;
-
-        }
-
-    }
-
-
-    document.getElementById(
-        "activeClientName"
-    ).textContent =
-    "None";
-
-}
-
-
-/* ==========================================
+/* ==========================================================
    LOAD CLIENTS
-========================================== */
+========================================================== */
 
 async function loadClients(){
 
-    loading.classList.remove(
-        "hidden"
-    );
+    const body =
+        document.getElementById(
+            "clientsBody"
+        );
 
-    tableArea.classList.add(
-        "hidden"
-    );
 
-    empty.classList.add(
-        "hidden"
-    );
+    body.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="7"
+                class="loading">
+
+                <div class="spinner"></div>
+
+                Loading clients...
+
+            </td>
+
+        </tr>
+
+    `;
 
 
     const {
         data,
         error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,slug,domain,hosting_type,hosting_url,template,status,created_at"
-    )
-    .order(
-        "created_at",
-        {
-            ascending:false
-        }
-    );
-
-
-    loading.classList.add(
-        "hidden"
-    );
+    } = await supabaseClient
+        .from("clients")
+        .select(`
+            id,
+            company_name,
+            slug,
+            domain,
+            hosting_type,
+            hosting_url,
+            template,
+            status,
+            created_at
+        `)
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
 
 
     if(error){
 
         console.error(
+            "Client loading error:",
             error
         );
 
-        showMessage(
-            "Unable to load clients: " +
-            error.message,
-            "error"
-        );
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="empty">
+
+                    Failed to load clients.<br>
+
+                    ${escapeHTML(
+                        error.message || ""
+                    )}
+
+                </td>
+
+            </tr>
+
+        `;
 
         return;
 
     }
 
 
-    if(
-        !data ||
-        data.length === 0
-    ){
+    allClients =
+        data || [];
 
-        empty.classList.remove(
-            "hidden"
+
+    renderClients(
+        allClients
+    );
+
+}
+
+
+/* ==========================================================
+   RENDER CLIENTS
+========================================================== */
+
+function renderClients(
+    clients
+){
+
+    const body =
+        document.getElementById(
+            "clientsBody"
         );
+
+
+    document.getElementById(
+        "clientCount"
+    ).textContent =
+        `${clients.length} Client${
+            clients.length === 1
+            ? ""
+            : "s"
+        }`;
+
+
+    if(!clients.length){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="empty">
+
+                    No clients found.
+
+                </td>
+
+            </tr>
+
+        `;
 
         return;
 
     }
 
 
-    clientTable.innerHTML =
-    "";
+    body.innerHTML = "";
 
 
-    const activeId =
-    window.MDKClientContext
-    ? MDKClientContext.id()
-    : null;
-
-
-    data.forEach(
+    clients.forEach(
         client => {
 
-            const row =
-            document.createElement(
-                "tr"
-            );
+            const tr =
+                document.createElement(
+                    "tr"
+                );
 
 
-            const hostingText =
-            client.hosting_type ||
-            "—";
+            /* =========================
+               COMPANY
+            ========================= */
+
+            const company =
+                escapeHTML(
+                    client.company_name ||
+                    "Unnamed Client"
+                );
 
 
-            const templateUrl =
-            getTemplateUrl(
-                client.template
-            );
+            const slug =
+                escapeHTML(
+                    client.slug || ""
+                );
 
 
-            const websiteUrl =
-            client.domain
-            ? buildUrl(
+            /* =========================
+               DOMAIN
+            ========================= */
+
+            const domain =
                 client.domain
-            )
-            : (
-                client.hosting_url
-                ? buildUrl(
-                    client.hosting_url
+                ?
+                escapeHTML(
+                    client.domain
                 )
-                : null
-            );
+                :
+                "—";
 
 
-            row.innerHTML = `
+            /* =========================
+               HOSTING
+            ========================= */
+
+            const hostingType =
+                escapeHTML(
+                    client.hosting_type ||
+                    "—"
+                );
+
+
+            const hostingUrl =
+                escapeHTML(
+                    client.hosting_url ||
+                    ""
+                );
+
+
+            /* =========================
+               TEMPLATE
+            ========================= */
+
+            const templateRow =
+                findTemplateRow(
+                    client.template
+                );
+
+
+            const templateName =
+                templateRow
+                ?
+                getTemplateDisplayName(
+                    templateRow
+                )
+                :
+                (
+                    client.template ||
+                    "—"
+                );
+
+
+            /* =========================
+               STATUS
+            ========================= */
+
+            const status =
+                String(
+                    client.status ||
+                    "active"
+                ).toLowerCase();
+
+
+            let statusClass =
+                "status-other";
+
+
+            if(status === "active"){
+
+                statusClass =
+                    "status-active";
+
+            }else if(
+                status === "inactive"
+            ){
+
+                statusClass =
+                    "status-inactive";
+
+            }
+
+
+            /* =========================
+               DATE
+            ========================= */
+
+            let created =
+                "—";
+
+
+            if(client.created_at){
+
+                created =
+                    new Date(
+                        client.created_at
+                    ).toLocaleDateString(
+                        "en-IN",
+                        {
+                            day:"2-digit",
+                            month:"short",
+                            year:"numeric"
+                        }
+                    );
+
+            }
+
+
+            /* =========================
+               WEBSITE BUTTON
+            ========================= */
+
+            let websiteButton =
+                "";
+
+
+            const actualWebsite =
+                getActualWebsiteUrl(
+                    client
+                );
+
+
+            if(actualWebsite){
+
+                websiteButton = `
+
+                    <button
+                        class="website-btn"
+                        onclick="openWebsite('${escapeJS(client.id)}')">
+
+                        🌐 Website
+
+                    </button>
+
+                `;
+
+            }else{
+
+                websiteButton = `
+
+                    <button
+                        class="website-btn disabled-btn"
+                        disabled>
+
+                        🌐 Website
+
+                    </button>
+
+                `;
+
+            }
+
+
+            /* =========================
+               ROW
+            ========================= */
+
+            tr.innerHTML = `
 
                 <td>
 
-                    <div class="company">
+                    <div class="company-name">
+                        ${company}
+                    </div>
 
-                        ${escapeHtml(
-                            client.company_name
-                        )}
-
+                    <div class="slug">
+                        ${slug}
                     </div>
 
                 </td>
 
 
                 <td>
-
-                    <span class="slug">
-
-                        ${escapeHtml(
-                            client.slug
-                        )}
-
-                    </span>
-
+                    ${domain}
                 </td>
 
 
                 <td>
 
-                    <span class="domain">
+                    <strong>
+                        ${hostingType}
+                    </strong>
 
-                        ${escapeHtml(
-                            client.domain ||
-                            "—"
-                        )}
-
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    <div class="hosting">
-
-                        ${escapeHtml(
-                            hostingText
-                        )}
-
-                    </div>
+                    ${
+                        hostingUrl
+                        ?
+                        `<div class="slug">
+                            ${hostingUrl}
+                        </div>`
+                        :
+                        ""
+                    }
 
                 </td>
 
 
                 <td>
-
-                    <span class="template-badge">
-
-                        ${escapeHtml(
-                            client.template ||
-                            "default"
-                        )}
-
-                    </span>
-
+                    ${escapeHTML(
+                        templateName
+                    )}
                 </td>
 
 
                 <td>
 
-                    <span class="badge ${
-                        client.status === "active"
-                        ? "active"
-                        : "inactive"
-                    }">
+                    <span
+                        class="status ${statusClass}">
 
-                        ${escapeHtml(
+                        ${escapeHTML(
                             client.status ||
                             "active"
                         )}
@@ -1583,96 +1457,63 @@ async function loadClients(){
 
 
                 <td>
+                    ${created}
+                </td>
+
+
+                <td>
 
                     <div class="actions">
 
-                        ${
-                            templateUrl
-                            ?
 
-                            `
-                            <button
-                                class="preview-btn"
-                                onclick="previewTemplate('${client.id}')">
-
-                                👁 Preview
-
-                            </button>
-                            `
-
-                            :
-
-                            `
-                            <button
-                                class="preview-btn"
-                                disabled
-                                title="Template preview URL not available">
-
-                                👁 Preview
-
-                            </button>
-                            `
-                        }
-
-
-                        ${
-                            websiteUrl
-                            ?
-
-                            `
-                            <button
-                                class="website-btn"
-                                onclick="openWebsite('${client.id}')">
-
-                                🌐 Website
-
-                            </button>
-                            `
-
-                            :
-
-                            `
-                            <button
-                                class="website-btn disabled"
-                                disabled
-                                title="Domain / Hosting URL not available">
-
-                                🌐 Website
-
-                            </button>
-                            `
-                        }
-
+                        <!-- USE CLIENT -->
 
                         <button
                             class="use-btn"
-                            onclick="useClient('${client.id}')">
+                            onclick="useClient('${escapeJS(client.id)}')">
 
-                            ${
-                                activeId === client.id
-                                ? "Active"
-                                : "Use Client"
-                            }
+                            ✓ Use
 
                         </button>
 
+
+                        <!-- PREVIEW -->
+
+                        <button
+                            class="preview-btn"
+                            onclick="previewTemplate('${escapeJS(client.id)}')">
+
+                            👁 Preview
+
+                        </button>
+
+
+                        <!-- ACTUAL WEBSITE -->
+
+                        ${websiteButton}
+
+
+                        <!-- EDIT -->
 
                         <button
                             class="edit-btn"
-                            onclick="editClient('${client.id}')">
+                            onclick="editClient('${escapeJS(client.id)}')">
 
-                            Edit
+                            ✏ Edit
 
                         </button>
 
+
+                        <!-- DELETE -->
 
                         <button
                             class="delete-btn"
-                            onclick="deleteClient('${client.id}')">
+                            onclick="deleteClient('${escapeJS(client.id)}')">
 
-                            Delete
+                            🗑 Delete
 
                         </button>
+
 
                     </div>
 
@@ -1681,173 +1522,69 @@ async function loadClients(){
             `;
 
 
-            clientTable.appendChild(
-                row
+            body.appendChild(
+                tr
             );
 
         }
     );
 
-
-    tableArea.classList.remove(
-        "hidden"
-    );
-
-
-    updateActiveClientDisplay();
-
 }
 
 
-/* ==========================================
-   ESCAPE HTML
-========================================== */
+/* ==========================================================
+   ACTUAL WEBSITE URL
+========================================================== */
 
-function escapeHtml(
-    value
+function getActualWebsiteUrl(
+    client
 ){
 
-    return String(
-        value ?? ""
-    )
-    .replaceAll(
-        "&",
-        "&amp;"
-    )
-    .replaceAll(
-        "<",
-        "&lt;"
-    )
-    .replaceAll(
-        ">",
-        "&gt;"
-    )
-    .replaceAll(
-        '"',
-        "&quot;"
-    )
-    .replaceAll(
-        "'",
-        "&#039;"
-    );
-
-}
-
-
-/* ==========================================
-   PREVIEW TEMPLATE
-========================================== */
-
-window.previewTemplate =
-async function(id){
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,template"
-    )
-    .eq(
-        "id",
-        id
-    )
-    .single();
-
-
-    if(error){
-
-        console.error(
-            error
-        );
-
-        showMessage(
-            "Unable to find client template.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const url =
-    getTemplateUrl(
-        data.template
-    );
+    let url =
+        client.domain ||
+        client.hosting_url ||
+        "";
 
 
     if(!url){
 
-        showMessage(
-            "Preview URL is not available for template: " +
-            (data.template || "default"),
-            "error"
-        );
-
-        return;
+        return "";
 
     }
 
 
-    const finalUrl =
-    buildUrl(url);
+    url =
+        String(url).trim();
 
 
-    if(!finalUrl){
+    if(
+        !url.startsWith("http://") &&
+        !url.startsWith("https://")
+    ){
 
-        showMessage(
-            "Invalid template preview URL.",
-            "error"
-        );
-
-        return;
+        url =
+            "https://" +
+            url;
 
     }
 
 
-    window.open(
-        finalUrl,
-        "_blank",
-        "noopener,noreferrer"
-    );
+    return url;
 
-};
+}
 
 
-/* ==========================================
-   OPEN CLIENT WEBSITE
-========================================== */
+/* ==========================================================
+   PREVIEW CLIENT WEBSITE
+========================================================== */
 
-window.openWebsite =
+window.previewTemplate =
 async function(id){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,domain,hosting_url"
-    )
-    .eq(
-        "id",
-        id
-    )
-    .single();
-
-
-    if(error){
-
-        console.error(
-            error
-        );
+    if(!id){
 
         showMessage(
-            "Unable to find website details.",
+            "Client ID is missing.",
             "error"
         );
 
@@ -1857,48 +1594,25 @@ async function(id){
 
 
     /*
-     * Priority:
+     * IMPORTANT:
      *
-     * 1. Custom Domain
-     * 2. Hosting URL
+     * Preview no longer depends on
+     * templates.template_url.
+     *
+     * It opens our common dynamic
+     * website engine.
+     *
+     * website.html?client=CLIENT_ID
      */
 
-    const rawUrl =
-    data.domain
-    ? data.domain
-    : data.hosting_url;
 
-
-    if(!rawUrl){
-
-        showMessage(
-            "No domain or hosting URL is available for this client.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const finalUrl =
-    buildUrl(rawUrl);
-
-
-    if(!finalUrl){
-
-        showMessage(
-            "Invalid website URL.",
-            "error"
-        );
-
-        return;
-
-    }
+    const previewUrl =
+        "website.html?client=" +
+        encodeURIComponent(id);
 
 
     window.open(
-        finalUrl,
+        previewUrl,
         "_blank",
         "noopener,noreferrer"
     );
@@ -1906,560 +1620,531 @@ async function(id){
 };
 
 
-/* ==========================================
-   ADD CLIENT
-========================================== */
+/* ==========================================================
+   OPEN ACTUAL WEBSITE
+========================================================== */
 
-document
-.getElementById("addBtn")
-.addEventListener(
-    "click",
-    function(){
+window.openWebsite =
+async function(id){
 
-        clientForm.reset();
+    try{
 
-        clientId.value =
-        "";
+        const {
+            data:client,
+            error
+        } = await supabaseClient
+            .from("clients")
+            .select(
+                "id,company_name,domain,hosting_url"
+            )
+            .eq(
+                "id",
+                id
+            )
+            .single();
 
-        hostingType.value =
-        "GitHub Pages";
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        const url =
+            getActualWebsiteUrl(
+                client
+            );
+
+
+        if(!url){
+
+            showMessage(
+                "No domain or hosting URL is configured for this client.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        window.open(
+            url,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+        showMessage(
+            "Unable to open website.",
+            "error"
+        );
+
+    }
+
+};
+
+
+/* ==========================================================
+   USE CLIENT
+========================================================== */
+
+window.useClient =
+async function(id){
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("clients")
+            .select("*")
+            .eq(
+                "id",
+                id
+            )
+            .single();
+
+
+        if(error){
+
+            throw error;
+
+        }
 
 
         if(
-            template.options.length > 1
+            typeof MDKClientContext !==
+            "undefined" &&
+            MDKClientContext.set
         ){
 
-            template.selectedIndex =
-            1;
-
-        }
-        else{
-
-            template.value =
-            "";
+            MDKClientContext.set(
+                data
+            );
 
         }
 
 
-        status.value =
-        "active";
-
-        formTitle.textContent =
-        "Add New Client";
-
-        saveBtn.textContent =
-        "Save Client";
-
-        formCard.classList.remove(
-            "hidden"
+        showMessage(
+            `${data.company_name} is now active client.`
         );
 
-        companyName.focus();
 
-    }
-);
+    }catch(error){
 
+        console.error(
+            error
+        );
 
-/* ==========================================
-   CANCEL
-========================================== */
-
-document
-.getElementById("cancelBtn")
-.addEventListener(
-    "click",
-    function(){
-
-        formCard.classList.add(
-            "hidden"
+        showMessage(
+            "Unable to select client.",
+            "error"
         );
 
     }
-);
+
+};
 
 
-/* ==========================================
-   AUTO SLUG
-========================================== */
+/* ==========================================================
+   EDIT CLIENT
+========================================================== */
 
-companyName.addEventListener(
-    "input",
-    function(){
+window.editClient =
+async function(id){
 
-        if(!clientId.value){
+    try{
 
-            slug.value =
-            companyName.value
-            .toLowerCase()
-            .trim()
-            .replace(
-                /[^a-z0-9]+/g,
-                "-"
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("clients")
+            .select("*")
+            .eq(
+                "id",
+                id
             )
-            .replace(
-                /^-+|-+$/g,
-                ""
-            );
+            .single();
+
+
+        if(error){
+
+            throw error;
 
         }
+
+
+        document.getElementById(
+            "clientId"
+        ).value =
+            data.id || "";
+
+
+        document.getElementById(
+            "companyName"
+        ).value =
+            data.company_name || "";
+
+
+        document.getElementById(
+            "slug"
+        ).value =
+            data.slug || "";
+
+
+        document.getElementById(
+            "domain"
+        ).value =
+            data.domain || "";
+
+
+        document.getElementById(
+            "hostingType"
+        ).value =
+            data.hosting_type || "";
+
+
+        document.getElementById(
+            "hostingUrl"
+        ).value =
+            data.hosting_url || "";
+
+
+        document.getElementById(
+            "template"
+        ).value =
+            data.template || "";
+
+
+        document.getElementById(
+            "status"
+        ).value =
+            data.status || "active";
+
+
+        document.getElementById(
+            "formTitle"
+        ).textContent =
+            "Edit Client";
+
+
+        document.getElementById(
+            "saveButton"
+        ).textContent =
+            "Update Client";
+
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+        showMessage(
+            "Unable to load client for editing.",
+            "error"
+        );
 
     }
-);
+
+};
 
 
-/* ==========================================
-   SAVE CLIENT
-========================================== */
+/* ==========================================================
+   SAVE / UPDATE CLIENT
+========================================================== */
 
-clientForm.addEventListener(
-    "submit",
-    async function(e){
+window.saveClient =
+async function(event){
 
-        e.preventDefault();
-
-
-        const company =
-        companyName.value.trim();
-
-        const slugValue =
-        slug.value.trim();
-
-        const domainValue =
-        domain.value.trim();
-
-        const hostingTypeValue =
-        hostingType.value;
-
-        const hostingUrlValue =
-        hostingUrl.value.trim();
-
-        const templateValue =
-        template.value.trim();
-
-        const statusValue =
-        status.value;
+    event.preventDefault();
 
 
-        if(!company){
-
-            showMessage(
-                "Company name is required.",
-                "error"
-            );
-
-            return;
-
-        }
+    const id =
+        document.getElementById(
+            "clientId"
+        ).value.trim();
 
 
-        if(!slugValue){
-
-            showMessage(
-                "Slug is required.",
-                "error"
-            );
-
-            return;
-
-        }
+    const company_name =
+        document.getElementById(
+            "companyName"
+        ).value.trim();
 
 
-        if(!templateValue){
-
-            showMessage(
-                "Please select a website template.",
-                "error"
-            );
-
-            return;
-
-        }
+    const slug =
+        document.getElementById(
+            "slug"
+        ).value.trim();
 
 
-        saveBtn.disabled =
-        true;
+    const domain =
+        document.getElementById(
+            "domain"
+        ).value.trim();
 
-        saveBtn.textContent =
-        "Saving...";
 
+    const hosting_type =
+        document.getElementById(
+            "hostingType"
+        ).value.trim();
+
+
+    const hosting_url =
+        document.getElementById(
+            "hostingUrl"
+        ).value.trim();
+
+
+    const template =
+        document.getElementById(
+            "template"
+        ).value;
+
+
+    const status =
+        document.getElementById(
+            "status"
+        ).value;
+
+
+    if(!company_name){
+
+        showMessage(
+            "Company name is required.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!slug){
+
+        showMessage(
+            "Slug is required.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!template){
+
+        showMessage(
+            "Please select a template.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const payload = {
+
+        company_name,
+
+        slug,
+
+        domain:
+            domain || null,
+
+        hosting_type:
+            hosting_type || null,
+
+        hosting_url:
+            hosting_url || null,
+
+        template,
+
+        status
+
+    };
+
+
+    try{
 
         let result;
 
 
-        if(clientId.value){
+        if(id){
 
             result =
-            await supabaseClient
-            .from("clients")
-            .update({
-
-                company_name:
-                company,
-
-                slug:
-                slugValue,
-
-                domain:
-                domainValue ||
-                null,
-
-                hosting_type:
-                hostingTypeValue ||
-                null,
-
-                hosting_url:
-                hostingUrlValue ||
-                null,
-
-                template:
-                templateValue,
-
-                status:
-                statusValue,
-
-                updated_at:
-                new Date().toISOString()
-
-            })
-            .eq(
-                "id",
-                clientId.value
-            );
+                await supabaseClient
+                    .from("clients")
+                    .update(
+                        payload
+                    )
+                    .eq(
+                        "id",
+                        id
+                    )
+                    .select()
+                    .single();
 
 
         }else{
 
             result =
-            await supabaseClient
-            .from("clients")
-            .insert({
-
-                company_name:
-                company,
-
-                slug:
-                slugValue,
-
-                domain:
-                domainValue ||
-                null,
-
-                hosting_type:
-                hostingTypeValue ||
-                null,
-
-                hosting_url:
-                hostingUrlValue ||
-                null,
-
-                template:
-                templateValue,
-
-                status:
-                statusValue
-
-            });
+                await supabaseClient
+                    .from("clients")
+                    .insert(
+                        payload
+                    )
+                    .select()
+                    .single();
 
         }
-
-
-        saveBtn.disabled =
-        false;
 
 
         if(result.error){
 
-            console.error(
-                result.error
-            );
-
-            showMessage(
-                result.error.message,
-                "error"
-            );
-
-            saveBtn.textContent =
-            clientId.value
-            ? "Update Client"
-            : "Save Client";
-
-            return;
+            throw result.error;
 
         }
 
 
-        const savedClientId =
-        clientId.value;
+        const savedClient =
+            result.data;
+
+
+        if(
+            typeof MDKClientContext !==
+            "undefined" &&
+            MDKClientContext.set
+        ){
+
+            MDKClientContext.set(
+                savedClient
+            );
+
+        }
 
 
         showMessage(
-            savedClientId
-            ? "Client updated successfully."
-            : "Client created successfully.",
-            "success"
+            id
+            ?
+            "Client updated successfully."
+            :
+            "Client created successfully."
         );
 
 
-        formCard.classList.add(
-            "hidden"
-        );
-
-
-        clientForm.reset();
-
-        clientId.value =
-        "";
-
-
-        const targetId =
-        savedClientId ||
-        await findClientIdBySlug(
-            slugValue
-        );
-
-
-        if(targetId){
-
-            await useClient(
-                targetId,
-                false
-            );
-
-        }
-
-
-        saveBtn.textContent =
-        "Save Client";
+        newClient();
 
 
         await loadClients();
 
-    }
-);
 
-
-/* ==========================================
-   FIND CLIENT BY SLUG
-========================================== */
-
-async function findClientIdBySlug(
-    slugValue
-){
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id"
-    )
-    .eq(
-        "slug",
-        slugValue
-    )
-    .limit(1)
-    .maybeSingle();
-
-
-    if(error){
+    }catch(error){
 
         console.error(
             error
         );
 
-        return null;
-
-    }
-
-
-    return data
-    ? data.id
-    : null;
-
-}
-
-
-/* ==========================================
-   USE CLIENT
-========================================== */
-
-window.useClient =
-async function(
-    id,
-    showAlert = true
-){
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,slug,domain,hosting_type,hosting_url,template,status"
-    )
-    .eq(
-        "id",
-        id
-    )
-    .single();
-
-
-    if(error){
-
-        console.error(
-            error
-        );
 
         showMessage(
-            error.message,
+            error.message ||
+            "Unable to save client.",
             "error"
         );
 
-        return;
-
     }
-
-
-    if(
-        window.MDKClientContext
-    ){
-
-        MDKClientContext.set(
-            data
-        );
-
-    }
-
-
-    updateActiveClientDisplay();
-
-
-    if(showAlert){
-
-        showMessage(
-            data.company_name +
-            " is now the active client.",
-            "success"
-        );
-
-    }
-
-
-    await loadClients();
 
 };
 
 
-/* ==========================================
-   EDIT CLIENT
-========================================== */
+/* ==========================================================
+   NEW CLIENT
+========================================================== */
 
-window.editClient =
-async function(id){
+window.newClient =
+function(){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,slug,domain,hosting_type,hosting_url,template,status"
-    )
-    .eq(
-        "id",
-        id
-    )
-    .single();
+    document.getElementById(
+        "clientForm"
+    ).reset();
 
 
-    if(error){
-
-        showMessage(
-            error.message,
-            "error"
-        );
-
-        return;
-
-    }
+    document.getElementById(
+        "clientId"
+    ).value = "";
 
 
-    clientId.value =
-    data.id;
-
-    companyName.value =
-    data.company_name ||
-    "";
-
-    slug.value =
-    data.slug ||
-    "";
-
-    domain.value =
-    data.domain ||
-    "";
-
-    hostingType.value =
-    data.hosting_type ||
-    "GitHub Pages";
-
-    hostingUrl.value =
-    data.hosting_url ||
-    "";
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "Add New Client";
 
 
-    ensureTemplateOption(
-        data.template
-    );
+    document.getElementById(
+        "saveButton"
+    ).textContent =
+        "Save Client";
 
 
-    template.value =
-    data.template ||
-    "";
+    document.getElementById(
+        "status"
+    ).value =
+        "active";
 
 
-    status.value =
-    data.status ||
-    "active";
-
-
-    formTitle.textContent =
-    "Edit Client";
-
-    saveBtn.textContent =
-    "Update Client";
-
-
-    formCard.classList.remove(
-        "hidden"
-    );
-
-
-    window.scrollTo(
-        {
-            top:0,
-            behavior:"smooth"
-        }
-    );
+    document.getElementById(
+        "template"
+    ).value =
+        "";
 
 };
 
 
-/* ==========================================
+/* ==========================================================
    DELETE CLIENT
-========================================== */
+========================================================== */
 
 window.deleteClient =
 async function(id){
 
+    const client =
+        allClients.find(
+            item =>
+                String(item.id)
+                ===
+                String(id)
+        );
+
+
+    const company =
+        client
+        ?
+        client.company_name
+        :
+        "this client";
+
+
     const confirmed =
-    confirm(
-        "Are you sure you want to delete this client?\n\nAll related website data may also be affected depending on your Supabase foreign-key/RLS configuration."
-    );
+        confirm(
+            `Delete "${company}" permanently?\n\nThis action cannot be undone.`
+        );
 
 
     if(!confirmed){
@@ -2469,33 +2154,72 @@ async function(id){
     }
 
 
-    const activeId =
-    window.MDKClientContext
-    ? MDKClientContext.id()
-    : null;
+    try{
+
+        const {
+            error
+        } = await supabaseClient
+            .from("clients")
+            .delete()
+            .eq(
+                "id",
+                id
+            );
 
 
-    const {
-        error
-    } =
-    await supabaseClient
-    .from("clients")
-    .delete()
-    .eq(
-        "id",
-        id
-    );
+        if(error){
+
+            throw error;
+
+        }
 
 
-    if(error){
+        showMessage(
+            "Client deleted successfully."
+        );
+
+
+        await loadClients();
+
+
+    }catch(error){
 
         console.error(
             error
         );
 
+
         showMessage(
-            error.message,
+            error.message ||
+            "Unable to delete client.",
             "error"
+        );
+
+    }
+
+};
+
+
+/* ==========================================================
+   SEARCH
+========================================================== */
+
+window.filterClients =
+function(){
+
+    const query =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    if(!query){
+
+        renderClients(
+            allClients
         );
 
         return;
@@ -2503,96 +2227,159 @@ async function(id){
     }
 
 
-    if(
-        activeId === id &&
-        window.MDKClientContext
-    ){
+    const filtered =
+        allClients.filter(
+            client => {
 
-        MDKClientContext.clear();
+                const text = [
 
-    }
+                    client.company_name,
+
+                    client.slug,
+
+                    client.domain,
+
+                    client.hosting_type,
+
+                    client.hosting_url,
+
+                    client.template,
+
+                    client.status
+
+                ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
 
 
-    showMessage(
-        "Client deleted successfully.",
-        "success"
+                return text.includes(
+                    query
+                );
+
+            }
+        );
+
+
+    renderClients(
+        filtered
     );
-
-
-    updateActiveClientDisplay();
-
-
-    await loadClients();
 
 };
 
 
-/* ==========================================
+/* ==========================================================
+   ESCAPE HTML
+========================================================== */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* ==========================================================
+   ESCAPE JAVASCRIPT
+========================================================== */
+
+function escapeJS(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /\\/g,
+        "\\\\"
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    )
+    .replace(
+        /"/g,
+        '\\"'
+    );
+
+}
+
+
+/* ==========================================================
    LOGOUT
-========================================== */
+========================================================== */
 
-document
-.getElementById("logoutBtn")
-.addEventListener(
-    "click",
-    async function(){
+window.logout =
+async function(){
 
-        try{
+    try{
 
-            if(
-                window.MDKClientContext
-            ){
-
-                MDKClientContext.clear();
-
-            }
-
-
-            await supabaseClient
+        await supabaseClient
             .auth
             .signOut();
 
-        }
-        catch(error){
+    }catch(error){
 
-            console.error(
-                error
-            );
-
-        }
-
-
-        window.location.href =
-        "admin.html";
+        console.error(
+            error
+        );
 
     }
-);
 
 
-/* ==========================================
+    /*
+     * Change this if your actual
+     * login page has another name.
+     */
+
+    window.location.href =
+        "index.html";
+
+};
+
+
+/* ==========================================================
    START
-========================================== */
+========================================================== */
 
-(async function(){
+async function start(){
 
-    const loggedIn =
-    await checkLogin();
+    await loadTemplates();
+
+    await loadClients();
+
+}
 
 
-    if(loggedIn){
-
-        await loadTemplates();
-
-        updateActiveClientDisplay();
-
-        await loadClients();
-
-    }
-
-})();
+start();
 
 </script>
 
 </body>
+
 </html>
-```
