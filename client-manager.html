@@ -759,11 +759,11 @@ tbody tr:last-child td{
     <div class="stat-card">
 
         <div class="label">
-            Available Templates
+            Available Template
         </div>
 
         <div
-            id="totalTemplates"
+            id="totalTemplate"
             class="number"
         >
             0
@@ -933,7 +933,7 @@ tbody tr:last-child td{
 
             <div class="field">
 
-                <label for="templateSelect">
+                <label for="elect">
                     Website Template *
                 </label>
 
@@ -942,7 +942,7 @@ tbody tr:last-child td{
                 >
 
                     <option value="">
-                        Loading Templates...
+                        Loading Template...
                     </option>
 
                 </select>
@@ -1163,7 +1163,7 @@ const supabaseClient =
 
 let allClients = [];
 
-let allTemplates = [];
+let allTemplate = [];
 
 let editingClientId = null;
 
@@ -1348,7 +1348,7 @@ function normalizeTemplateSlug(
     /*
        If database has:
 
-       templates/template-v1.html
+       template/template-v1.html
 
        convert to:
 
@@ -1485,14 +1485,14 @@ function getTemplateFileUrl(
     /*
        IMPORTANT GITHUB STRUCTURE:
 
-       templates/
+       template/
        template-v1.html
        template-v2.html
        ...
     */
 
     return (
-        "templates/" +
+        "template/" +
         slug +
         ".html"
     );
@@ -1570,10 +1570,10 @@ async function checkAuth(){
 
 
 /* =====================================================
-   LOAD TEMPLATES
+   LOAD TEMPLATE
 ===================================================== */
 
-async function loadTemplates(){
+async function loadTemplate(){
 
     try{
 
@@ -1582,7 +1582,7 @@ async function loadTemplates(){
             error
         } =
             await supabaseClient
-                .from("templates")
+                .from("template")
                 .select("*")
                 .order(
                     "created_at",
@@ -1609,20 +1609,20 @@ async function loadTemplates(){
         }
 
 
-        allTemplates =
+        allTemplate =
             data || [];
 
 
         const total =
             document.getElementById(
-                "totalTemplates"
+                "totalTemplate"
             );
 
 
         if(total){
 
             total.textContent =
-                allTemplates.length;
+                allTemplate.length;
 
         }
 
@@ -1671,7 +1671,7 @@ function populateTemplateSelect(){
     `;
 
 
-    allTemplates.forEach(
+    allTemplate.forEach(
         template => {
 
             const slug =
@@ -1785,7 +1785,7 @@ function updateTemplateInfo(){
 
 
     const row =
-        allTemplates.find(
+        allTemplate.find(
             template =>
                 getTemplateValue(
                     template
@@ -1916,7 +1916,7 @@ function getClientTemplateName(
 
 
     const row =
-        allTemplates.find(
+        allTemplate.find(
             template =>
                 getTemplateValue(
                     template
@@ -3317,15 +3317,15 @@ document.addEventListener(
 
 
             /*
-               LOAD TEMPLATES FIRST
+               LOAD TEMPLATE FIRST
             */
 
             showLoader(
-                "Loading templates..."
+                "Loading template..."
             );
 
 
-            await loadTemplates();
+            await loadTemplate();
 
 
             /*
@@ -3400,8 +3400,8 @@ window.loadClients =
     loadClients;
 
 
-window.loadTemplates =
-    loadTemplates;
+window.loadTemplate =
+    loadTemplate;
 
 
 window.updateTemplateInfo =
