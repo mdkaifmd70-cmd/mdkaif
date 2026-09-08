@@ -1,17 +1,1154 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Client Manager - MD Kaif Web Platform</title>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<!-- =====================================================
+     CLIENT CONTEXT
+===================================================== -->
+
+<script src="client-context.js"></script>
+
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:#f4f7fb;
+    color:#172033;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+    background:#111827;
+    color:#fff;
+    padding:18px 28px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.header-left h1{
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.header-left p{
+    font-size:13px;
+    color:#aeb8c8;
+}
+
+.header-right{
+    display:flex;
+    gap:10px;
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+    max-width:1400px;
+    margin:0 auto;
+    padding:25px;
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+    display:grid;
+    grid-template-columns:
+        repeat(3, minmax(0,1fr));
+
+    gap:18px;
+    margin-bottom:22px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid #e5eaf1;
+    border-radius:14px;
+    padding:20px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.04);
+}
+
+.stat-card .label{
+    font-size:13px;
+    color:#687386;
+    margin-bottom:8px;
+}
+
+.stat-card .number{
+    font-size:28px;
+    font-weight:800;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card{
+    background:#fff;
+
+    border:1px solid #e5eaf1;
+
+    border-radius:16px;
+
+    padding:22px;
+
+    margin-bottom:22px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.04);
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+.card-title h2{
+    font-size:18px;
+}
+
+
+/* =====================================================
+   FORM GRID
+===================================================== */
+
+.form-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:16px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.field.full{
+    grid-column:1 / -1;
+}
+
+.field label{
+    font-size:13px;
+    font-weight:700;
+    color:#394457;
+}
+
+.field input,
+.field select{
+
+    width:100%;
+
+    height:44px;
+
+    border:1px solid #d8dee8;
+
+    border-radius:9px;
+
+    padding:0 13px;
+
+    outline:none;
+
+    background:#fff;
+
+    color:#182234;
+
+    transition:.2s;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(79,70,229,.10);
+}
+
+.field small{
+    color:#7b8596;
+    font-size:12px;
+}
+
+
+/* =====================================================
+   TEMPLATE INFO
+===================================================== */
+
+.template-info{
+    margin-top:2px;
+}
+
+.template-info-box{
+
+    background:#f5f7fa;
+
+    border:1px solid #e5eaf1;
+
+    border-radius:9px;
+
+    padding:10px 12px;
+
+    font-size:12px;
+
+    color:#4c5668;
+
+    word-break:break-all;
+}
+
+.template-info-box code{
+    color:#111827;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+
+    margin-top:20px;
+}
+
+.btn{
+
+    border:0;
+
+    border-radius:8px;
+
+    padding:10px 16px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.btn-primary{
+    background:#4f46e5;
+    color:#fff;
+}
+
+.btn-secondary{
+    background:#e8edf5;
+    color:#263246;
+}
+
+.btn-success{
+    background:#059669;
+    color:#fff;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:#fff;
+}
+
+.btn-dark{
+    background:#111827;
+    color:#fff;
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-row{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:18px;
+}
+
+.search-box{
+    flex:1;
+}
+
+.search-box input{
+
+    width:100%;
+
+    height:44px;
+
+    border:1px solid #d8dee8;
+
+    border-radius:9px;
+
+    padding:0 14px;
+
+    outline:none;
+}
+
+.search-box input:focus{
+
+    border-color:#4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(79,70,229,.10);
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-wrapper{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border:1px solid #e5eaf1;
+
+    border-radius:12px;
+}
+
+table{
+
+    width:100%;
+
+    min-width:950px;
+
+    border-collapse:collapse;
+}
+
+thead{
+    background:#f8fafc;
+}
+
+th,
+td{
+
+    padding:13px 14px;
+
+    border-bottom:1px solid #edf0f5;
+
+    text-align:left;
+
+    font-size:13px;
+
+    vertical-align:middle;
+}
+
+th{
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.3px;
+
+    color:#667085;
+}
+
+tbody tr:hover{
+    background:#fafbfc;
+}
+
+tbody tr:last-child td{
+    border-bottom:0;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    padding:5px 9px;
+
+    border-radius:20px;
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+.status.active{
+
+    background:#dcfce7;
+
+    color:#166534;
+}
+
+.status.inactive{
+
+    background:#fee2e2;
+
+    color:#991b1b;
+}
+
+
+/* =====================================================
+   TABLE ACTIONS
+===================================================== */
+
+.table-actions{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:6px;
+}
+
+.table-btn{
+
+    border:0;
+
+    border-radius:6px;
+
+    padding:7px 9px;
+
+    cursor:pointer;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    background:#eef2f7;
+
+    color:#273246;
+}
+
+.table-btn:hover{
+    background:#e1e7ef;
+}
+
+.table-btn.preview{
+    background:#e0e7ff;
+    color:#3730a3;
+}
+
+.table-btn.website{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.table-btn.delete{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty{
+
+    text-align:center;
+
+    padding:40px 20px;
+
+    color:#7a8495;
+
+    font-size:14px;
+}
+
+
+/* =====================================================
+   LOADER
+===================================================== */
+
+.loader{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(255,255,255,.92);
+
+    z-index:9999;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-direction:column;
+
+    gap:12px;
+}
+
+.loader.show{
+    display:flex;
+}
+
+.spinner{
+
+    width:38px;
+    height:38px;
+
+    border:4px solid #e5e7eb;
+
+    border-top-color:#4f46e5;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+.loader-text{
+    font-size:13px;
+    color:#566173;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:800px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .search-row{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .container{
+        padding:15px;
+    }
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+#errorBox{
+
+    display:none;
+
+    background:#fff1f2;
+
+    border:1px solid #fecdd3;
+
+    color:#9f1239;
+
+    border-radius:10px;
+
+    padding:15px;
+
+    margin-bottom:20px;
+
+    font-size:13px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOADER
+===================================================== -->
+
+<div
+    id="loader"
+    class="loader"
+>
+
+    <div class="spinner"></div>
+
+    <div
+        id="loaderText"
+        class="loader-text"
+    >
+        Loading...
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="header-left">
+
+        <h1>
+            Client Manager
+        </h1>
+
+        <p>
+            MD Kaif Web Platform
+        </p>
+
+    </div>
+
+
+    <div class="header-right">
+
+        <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="window.location.href='admin.html'"
+        >
+            Dashboard
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="container">
+
+
+<div
+    id="errorBox"
+></div>
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<section class="stats">
+
+
+    <div class="stat-card">
+
+        <div class="label">
+            Total Clients
+        </div>
+
+        <div
+            id="totalClients"
+            class="number"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="label">
+            Active Clients
+        </div>
+
+        <div
+            id="activeClients"
+            class="number"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="label">
+            Available Templates
+        </div>
+
+        <div
+            id="totalTemplates"
+            class="number"
+        >
+            0
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     CLIENT FORM
+===================================================== -->
+
+<section class="card">
+
+    <div class="card-title">
+
+        <h2
+            id="formTitle"
+        >
+            Add Client
+        </h2>
+
+    </div>
+
+
+    <form
+        id="clientForm"
+    >
+
+        <div class="form-grid">
+
+
+            <!-- COMPANY -->
+
+            <div class="field">
+
+                <label for="companyName">
+                    Company Name *
+                </label>
+
+                <input
+                    id="companyName"
+                    type="text"
+                    placeholder="ABC Industries"
+                    autocomplete="organization"
+                >
+
+            </div>
+
+
+            <!-- SLUG -->
+
+            <div class="field">
+
+                <label for="clientSlug">
+                    Client Slug *
+                </label>
+
+                <input
+                    id="clientSlug"
+                    type="text"
+                    placeholder="abc-industries"
+                >
+
+                <small>
+                    Automatically generated from Company Name
+                </small>
+
+            </div>
+
+
+            <!-- DOMAIN -->
+
+            <div class="field">
+
+                <label for="domain">
+                    Live Website / Domain
+                </label>
+
+                <input
+                    id="domain"
+                    type="text"
+                    placeholder="https://example.com"
+                >
+
+                <small>
+                    Client's actual live website
+                </small>
+
+            </div>
+
+
+            <!-- HOSTING TYPE -->
+
+            <div class="field">
+
+                <label for="hostingType">
+                    Hosting Type
+                </label>
+
+                <select
+                    id="hostingType"
+                >
+
+                    <option value="">
+                        Select Hosting
+                    </option>
+
+                    <option value="GitHub Pages">
+                        GitHub Pages
+                    </option>
+
+                    <option value="Netlify">
+                        Netlify
+                    </option>
+
+                    <option value="Vercel">
+                        Vercel
+                    </option>
+
+                    <option value="Cloudflare">
+                        Cloudflare
+                    </option>
+
+                    <option value="WordPress">
+                        WordPress
+                    </option>
+
+                    <option value="Shared Hosting">
+                        Shared Hosting
+                    </option>
+
+                    <option value="VPS">
+                        VPS
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- HOSTING URL -->
+
+            <div class="field">
+
+                <label for="hostingUrl">
+                    Hosting URL
+                </label>
+
+                <input
+                    id="hostingUrl"
+                    type="text"
+                    placeholder="https://client-hosting-url.com"
+                >
+
+            </div>
+
+
+            <!-- TEMPLATE -->
+
+            <div class="field">
+
+                <label for="templateSelect">
+                    Website Template *
+                </label>
+
+                <select
+                    id="templateSelect"
+                >
+
+                    <option value="">
+                        Loading Templates...
+                    </option>
+
+                </select>
+
+
+                <div
+                    id="templateInfo"
+                    class="template-info"
+                >
+
+                    <div
+                        class="template-info-box"
+                    >
+                        Select a template.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="field">
+
+                <label for="status">
+                    Client Status
+                </label>
+
+                <select
+                    id="status"
+                >
+
+                    <option value="active">
+                        Active
+                    </option>
+
+                    <option value="inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- FORM ACTIONS -->
+
+        <div class="actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+                id="saveBtn"
+            >
+                Save Client
+            </button>
+
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="resetClientForm()"
+            >
+                Clear
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<!-- =====================================================
+     CLIENT LIST
+===================================================== -->
+
+<section class="card">
+
+    <div class="card-title">
+
+        <h2>
+            Clients
+        </h2>
+
+        <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="loadClients()"
+        >
+            Refresh
+        </button>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-row">
+
+        <div class="search-box">
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search company, slug, domain, template..."
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Company
+                    </th>
+
+                    <th>
+                        Slug
+                    </th>
+
+                    <th>
+                        Domain
+                    </th>
+
+                    <th>
+                        Hosting
+                    </th>
+
+                    <th>
+                        Template
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="clientTableBody"
+            >
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="empty"
+                    >
+                        Loading clients...
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =====================================================
+     CLIENT MANAGER SCRIPT
+===================================================== -->
+
 <script>
 
 "use strict";
 
 
-/* =========================================
+/* =====================================================
    SUPABASE
-========================================= */
+===================================================== */
 
 const SUPABASE_URL =
     "https://ywvdozdoanmcxscfofcf.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
 
 const supabaseClient =
     supabase.createClient(
@@ -20,9 +1157,9 @@ const supabaseClient =
     );
 
 
-/* =========================================
+/* =====================================================
    STATE
-========================================= */
+===================================================== */
 
 let allClients = [];
 
@@ -31,9 +1168,113 @@ let allTemplates = [];
 let editingClientId = null;
 
 
-/* =========================================
-   PATH
-========================================= */
+/* =====================================================
+   LOADER
+===================================================== */
+
+function showLoader(
+    text = "Loading..."
+){
+
+    const loader =
+        document.getElementById(
+            "loader"
+        );
+
+    const loaderText =
+        document.getElementById(
+            "loaderText"
+        );
+
+
+    if(loader){
+
+        loader.classList.add(
+            "show"
+        );
+
+    }
+
+
+    if(loaderText){
+
+        loaderText.textContent =
+            text;
+
+    }
+
+}
+
+
+function hideLoader(){
+
+    const loader =
+        document.getElementById(
+            "loader"
+        );
+
+
+    if(loader){
+
+        loader.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function showError(
+    message
+){
+
+    const box =
+        document.getElementById(
+            "errorBox"
+        );
+
+
+    if(!box){
+        return;
+    }
+
+
+    box.textContent =
+        message;
+
+
+    box.style.display =
+        "block";
+
+}
+
+
+function hideError(){
+
+    const box =
+        document.getElementById(
+            "errorBox"
+        );
+
+
+    if(box){
+
+        box.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   PAGE URL
+===================================================== */
 
 function pageUrl(
     file,
@@ -48,172 +1289,365 @@ function pageUrl(
 }
 
 
-/* =========================================
+/* =====================================================
    ESCAPE
-========================================= */
+===================================================== */
 
-function escapeHtml(value){
+function escapeHtml(
+    value
+){
 
     return String(
         value ?? ""
     )
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================
-   AUTH
-========================================= */
-
-async function checkAuth(){
-
-    const {
-        data
-    } = await supabaseClient
-        .auth
-        .getUser();
-
-
-    if(!data?.user){
-
-        window.location.href =
-            pageUrl("admin.html");
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =========================================
-   TEMPLATE VALUE
-========================================= */
-
-function getTemplateValue(row){
-
-    return String(
-        row.template_slug ||
-        row.slug ||
-        row.template ||
-        row.code ||
-        row.template_code ||
-        row.name ||
-        row.template_name ||
-        row.title ||
-        ""
+    .replace(
+        /&/g,
+        "&amp;"
     )
-    .trim()
-    .toLowerCase();
-
-}
-
-
-/* =========================================
-   TEMPLATE NAME
-========================================= */
-
-function getTemplateDisplayName(row){
-
-    return (
-        row.template_name ||
-        row.name ||
-        row.title ||
-        row.display_name ||
-        row.template_slug ||
-        row.slug ||
-        row.template ||
-        "Template"
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
     );
 
 }
 
 
-/* =========================================
-   TEMPLATE URL
-========================================= */
+/* =====================================================
+   NORMALIZE TEMPLATE
+===================================================== */
 
-function getTemplateUrl(row){
+function normalizeTemplateSlug(
+    value
+){
 
-    const slug =
-        getTemplateValue(row);
-
-
-    const dbUrl =
+    let slug =
         String(
-            row.template_url || ""
-        ).trim();
+            value || ""
+        )
+        .trim()
+        .toLowerCase();
 
 
-    if(dbUrl){
+    if(!slug){
+        return "";
+    }
 
-        return dbUrl;
+
+    /*
+       If database has:
+
+       templates/template-v1.html
+
+       convert to:
+
+       template-v1
+    */
+
+    slug =
+        slug
+            .replace(
+                /^.*[\\\/]/,
+                ""
+            )
+            .replace(
+                /\.html$/i,
+                ""
+            );
+
+
+    /*
+       v1 -> template-v1
+    */
+
+    if(
+        /^v\d+$/.test(slug)
+    ){
+
+        slug =
+            "template-" +
+            slug;
 
     }
 
 
-    return `templates/${slug}.html`;
+    return slug;
 
 }
 
 
-/* =========================================
-   LOAD TEMPLATES
-========================================= */
+/* =====================================================
+   TEMPLATE VALUE
+===================================================== */
 
-async function loadTemplates(){
+function getTemplateValue(
+    row
+){
 
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("templates")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
+    if(!row){
+        return "";
+    }
+
+
+    return normalizeTemplateSlug(
+
+        row.template_slug ||
+
+        row.slug ||
+
+        row.template ||
+
+        row.code ||
+
+        row.template_code ||
+
+        row.template_name ||
+
+        row.name ||
+
+        row.title ||
+
+        row.display_name ||
+
+        ""
+
+    );
+
+}
+
+
+/* =====================================================
+   TEMPLATE NAME
+===================================================== */
+
+function getTemplateDisplayName(
+    row
+){
+
+    if(!row){
+        return "Template";
+    }
+
+
+    return (
+
+        row.template_name ||
+
+        row.display_name ||
+
+        row.name ||
+
+        row.title ||
+
+        row.template_slug ||
+
+        row.slug ||
+
+        row.template ||
+
+        "Template"
+
+    );
+
+}
+
+
+/* =====================================================
+   TEMPLATE FILE
+===================================================== */
+
+function getTemplateFileUrl(
+    row
+){
+
+    const slug =
+        getTemplateValue(
+            row
         );
 
 
-    if(error){
+    if(!slug){
+        return "";
+    }
+
+
+    /*
+       IMPORTANT GITHUB STRUCTURE:
+
+       templates/
+       template-v1.html
+       template-v2.html
+       ...
+    */
+
+    return (
+        "templates/" +
+        slug +
+        ".html"
+    );
+
+}
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+async function checkAuth(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .auth
+                .getUser();
+
+
+        if(error){
+
+            console.error(
+                error
+            );
+
+            window.location.href =
+                pageUrl(
+                    "admin.html"
+                );
+
+            return false;
+
+        }
+
+
+        if(
+            !data ||
+            !data.user
+        ){
+
+            window.location.href =
+                pageUrl(
+                    "admin.html"
+                );
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+    catch(error){
 
         console.error(
-            "Template load error:",
             error
         );
 
-        alert(
-            "Template loading failed: " +
-            error.message
-        );
+        window.location.href =
+            pageUrl(
+                "admin.html"
+            );
 
-        return;
+        return false;
 
     }
-
-
-    allTemplates =
-        data || [];
-
-
-    populateTemplateSelect();
 
 }
 
 
-/* =========================================
-   POPULATE TEMPLATE SELECT
-========================================= */
+/* =====================================================
+   LOAD TEMPLATES
+===================================================== */
+
+async function loadTemplates(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("templates")
+                .select("*")
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "Template Error:",
+                error
+            );
+
+            showError(
+                "Template loading failed: " +
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        allTemplates =
+            data || [];
+
+
+        const total =
+            document.getElementById(
+                "totalTemplates"
+            );
+
+
+        if(total){
+
+            total.textContent =
+                allTemplates.length;
+
+        }
+
+
+        populateTemplateSelect();
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+        showError(
+            "Template loading error."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   TEMPLATE SELECT
+===================================================== */
 
 function populateTemplateSelect(){
 
@@ -224,16 +1658,16 @@ function populateTemplateSelect(){
 
 
     if(!select){
-
         return;
-
     }
 
 
     select.innerHTML = `
+
         <option value="">
             Select Template
         </option>
+
     `;
 
 
@@ -247,9 +1681,7 @@ function populateTemplateSelect(){
 
 
             if(!slug){
-
                 return;
-
             }
 
 
@@ -273,10 +1705,13 @@ function populateTemplateSelect(){
                 String(
                     template.status ||
                     "active"
-                ).toLowerCase();
+                )
+                .toLowerCase();
 
 
-            if(status !== "active"){
+            if(
+                status !== "active"
+            ){
 
                 option.disabled =
                     true;
@@ -300,9 +1735,9 @@ function populateTemplateSelect(){
 }
 
 
-/* =========================================
+/* =====================================================
    TEMPLATE INFO
-========================================= */
+===================================================== */
 
 function updateTemplateInfo(){
 
@@ -311,13 +1746,17 @@ function updateTemplateInfo(){
             "templateSelect"
         );
 
+
     const info =
         document.getElementById(
             "templateInfo"
         );
 
 
-    if(!select || !info){
+    if(
+        !select ||
+        !info
+    ){
 
         return;
 
@@ -325,13 +1764,20 @@ function updateTemplateInfo(){
 
 
     const slug =
-        select.value;
+        normalizeTemplateSlug(
+            select.value
+        );
 
 
     if(!slug){
 
-        info.innerHTML =
-            "Select a template.";
+        info.innerHTML = `
+
+            <div class="template-info-box">
+                Select a template.
+            </div>
+
+        `;
 
         return;
 
@@ -347,80 +1793,154 @@ function updateTemplateInfo(){
         );
 
 
-    const url =
-        row
-            ? getTemplateUrl(row)
-            : `templates/${slug}.html`;
-
-
-    info.innerHTML =
-        `Template file:
-        <code>${escapeHtml(url)}</code>`;
-
-}
-
-
-/* =========================================
-   LOAD CLIENTS
-========================================= */
-
-async function loadClients(){
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("clients")
-        .select(`
-            id,
-            company_name,
-            slug,
-            domain,
-            hosting_type,
-            hosting_url,
-            template,
-            status,
-            created_at
-        `)
-        .order(
-            "created_at",
-            {
-                ascending:false
+    const file =
+        getTemplateFileUrl(
+            row || {
+                template_slug:slug
             }
         );
 
 
-    if(error){
+    info.innerHTML = `
 
-        console.error(
-            "Client load error:",
-            error
-        );
+        <div class="template-info-box">
 
-        alert(
-            "Clients loading failed: " +
-            error.message
-        );
+            <strong>
+                GitHub Template File:
+            </strong>
 
-        return;
+            <br>
 
-    }
+            <code>
+                ${escapeHtml(file)}
+            </code>
 
+        </div>
 
-    allClients =
-        data || [];
-
-
-    renderClients();
-
-    updateClientStats();
+    `;
 
 }
 
 
-/* =========================================
+/* =====================================================
+   LOAD CLIENTS
+===================================================== */
+
+async function loadClients(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("clients")
+                .select(`
+                    id,
+                    company_name,
+                    slug,
+                    domain,
+                    hosting_type,
+                    hosting_url,
+                    template,
+                    status,
+                    created_at
+                `)
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "Client Error:",
+                error
+            );
+
+            showError(
+                "Clients loading failed: " +
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        allClients =
+            data || [];
+
+
+        renderClients();
+
+        updateClientStats();
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+        showError(
+            "Client loading error."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CLIENT TEMPLATE NAME
+===================================================== */
+
+function getClientTemplateName(
+    client
+){
+
+    const slug =
+        normalizeTemplateSlug(
+            client.template
+        );
+
+
+    if(!slug){
+        return "-";
+    }
+
+
+    const row =
+        allTemplates.find(
+            template =>
+                getTemplateValue(
+                    template
+                ) === slug
+        );
+
+
+    if(row){
+
+        return getTemplateDisplayName(
+            row
+        );
+
+    }
+
+
+    return slug;
+
+}
+
+
+/* =====================================================
    RENDER CLIENTS
-========================================= */
+===================================================== */
 
 function renderClients(){
 
@@ -431,21 +1951,27 @@ function renderClients(){
 
 
     if(!tbody){
-
         return;
-
     }
 
 
-    if(!allClients.length){
+    if(
+        !allClients.length
+    ){
 
         tbody.innerHTML = `
+
             <tr>
-                <td colspan="10"
-                    style="text-align:center;padding:30px;">
+
+                <td
+                    colspan="7"
+                    class="empty"
+                >
                     No clients found.
                 </td>
+
             </tr>
+
         `;
 
         return;
@@ -454,100 +1980,174 @@ function renderClients(){
 
 
     tbody.innerHTML =
-        allClients.map(
-            client => {
+        allClients
+            .map(
+                client => {
 
-                const status =
-                    String(
-                        client.status ||
-                        "active"
-                    ).toLowerCase();
+                    const status =
+                        String(
+                            client.status ||
+                            "active"
+                        )
+                        .toLowerCase();
 
 
-                return `
-                    <tr>
+                    return `
 
-                        <td>
-                            <strong>
+                        <tr>
+
+                            <td>
+
+                                <strong>
+                                    ${escapeHtml(
+                                        client.company_name
+                                    )}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
                                 ${escapeHtml(
-                                    client.company_name
+                                    client.slug
                                 )}
-                            </strong>
-                        </td>
+                            </td>
 
-                        <td>
-                            ${escapeHtml(
-                                client.slug
-                            )}
-                        </td>
 
-                        <td>
-                            ${escapeHtml(
-                                client.domain ||
-                                "-"
-                            )}
-                        </td>
+                            <td>
 
-                        <td>
-                            ${escapeHtml(
-                                client.hosting_type ||
-                                "-"
-                            )}
-                        </td>
+                                ${
+                                    client.domain
 
-                        <td>
-                            ${escapeHtml(
-                                client.template ||
-                                "-"
-                            )}
-                        </td>
+                                    ? escapeHtml(
+                                        client.domain
+                                    )
 
-                        <td>
-                            ${status === "active"
-                                ? "Active"
-                                : "Inactive"}
-                        </td>
+                                    : "-"
+                                }
 
-                        <td>
+                            </td>
 
-                            <button
-                                type="button"
-                                onclick="editClient('${client.id}')">
-                                Edit
-                            </button>
 
-                            <button
-                                type="button"
-                                onclick="previewClient('${client.id}')">
-                                Preview
-                            </button>
+                            <td>
 
-                            <button
-                                type="button"
-                                onclick="openClientWebsite('${client.id}')">
-                                Website
-                            </button>
+                                ${
+                                    escapeHtml(
+                                        client.hosting_type ||
+                                        "-"
+                                    )
+                                }
 
-                            <button
-                                type="button"
-                                onclick="deleteClient('${client.id}')">
-                                Delete
-                            </button>
+                            </td>
 
-                        </td>
 
-                    </tr>
-                `;
+                            <td>
 
-            }
-        ).join("");
+                                ${escapeHtml(
+                                    getClientTemplateName(
+                                        client
+                                    )
+                                )}
+
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="status ${
+                                        status === "active"
+                                        ? "active"
+                                        : "inactive"
+                                    }"
+                                >
+
+                                    ${
+                                        status === "active"
+                                        ? "Active"
+                                        : "Inactive"
+                                    }
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="table-actions">
+
+
+                                    <button
+                                        type="button"
+                                        class="table-btn"
+                                        onclick="
+                                            editClient(
+                                                '${client.id}'
+                                            )
+                                        "
+                                    >
+                                        Edit
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="table-btn preview"
+                                        onclick="
+                                            previewClient(
+                                                '${client.id}'
+                                            )
+                                        "
+                                    >
+                                        Preview
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="table-btn website"
+                                        onclick="
+                                            openClientWebsite(
+                                                '${client.id}'
+                                            )
+                                        "
+                                    >
+                                        Website
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="table-btn delete"
+                                        onclick="
+                                            deleteClient(
+                                                '${client.id}'
+                                            )
+                                        "
+                                    >
+                                        Delete
+                                    </button>
+
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            )
+            .join("");
 
 }
 
 
-/* =========================================
+/* =====================================================
    STATS
-========================================= */
+===================================================== */
 
 function updateClientStats(){
 
@@ -555,6 +2155,7 @@ function updateClientStats(){
         document.getElementById(
             "totalClients"
         );
+
 
     const active =
         document.getElementById(
@@ -575,11 +2176,14 @@ function updateClientStats(){
         active.textContent =
             allClients.filter(
                 client =>
+
                     String(
                         client.status ||
                         "active"
-                    ).toLowerCase()
+                    )
+                    .toLowerCase()
                     === "active"
+
             ).length;
 
     }
@@ -587,9 +2191,9 @@ function updateClientStats(){
 }
 
 
-/* =========================================
+/* =====================================================
    SLUG
-========================================= */
+===================================================== */
 
 function setupSlugGenerator(){
 
@@ -598,16 +2202,18 @@ function setupSlugGenerator(){
             "companyName"
         );
 
+
     const slug =
         document.getElementById(
             "clientSlug"
         );
 
 
-    if(!company || !slug){
-
+    if(
+        !company ||
+        !slug
+    ){
         return;
-
     }
 
 
@@ -618,9 +2224,7 @@ function setupSlugGenerator(){
             if(
                 editingClientId
             ){
-
                 return;
-
             }
 
 
@@ -643,200 +2247,385 @@ function setupSlugGenerator(){
 }
 
 
-/* =========================================
-   SAVE CLIENT
-========================================= */
+/* =====================================================
+   NORMALIZE URL
+===================================================== */
 
-async function saveClient(){
+function normalizeUrl(
+    value
+){
 
-    const companyName =
-        document.getElementById(
-            "companyName"
-        ).value.trim();
-
-
-    const slug =
-        document.getElementById(
-            "clientSlug"
-        ).value
-            .trim()
-            .toLowerCase();
+    let url =
+        String(
+            value || ""
+        ).trim();
 
 
-    const domain =
-        document.getElementById(
-            "domain"
-        ).value.trim();
+    if(!url){
+        return "";
+    }
 
 
-    const hostingType =
-        document.getElementById(
-            "hostingType"
-        ).value.trim();
+    if(
+        !/^https?:\/\//i.test(
+            url
+        )
+    ){
 
-
-    const hostingUrl =
-        document.getElementById(
-            "hostingUrl"
-        ).value.trim();
-
-
-    const template =
-        document.getElementById(
-            "templateSelect"
-        ).value;
-
-
-    const status =
-        document.getElementById(
-            "status"
-        ).value;
-
-
-    if(!companyName){
-
-        alert(
-            "Company Name is required."
-        );
-
-        return;
+        url =
+            "https://" +
+            url;
 
     }
 
 
-    if(!slug){
-
-        alert(
-            "Client Slug is required."
-        );
-
-        return;
-
-    }
-
-
-    if(!template){
-
-        alert(
-            "Please select a template."
-        );
-
-        return;
-
-    }
-
-
-    const payload = {
-
-        company_name:
-            companyName,
-
-        slug:
-            slug,
-
-        domain:
-            domain || null,
-
-        hosting_type:
-            hostingType || null,
-
-        hosting_url:
-            hostingUrl || null,
-
-        /*
-            IMPORTANT
-
-            Stores:
-
-            template-v1
-            template-v2
-            ...
-        */
-
-        template:
-            template,
-
-        status:
-            status || "active"
-
-    };
-
-
-    let result;
-
-
-    if(editingClientId){
-
-        result =
-            await supabaseClient
-                .from("clients")
-                .update(payload)
-                .eq(
-                    "id",
-                    editingClientId
-                );
-
-    }
-    else{
-
-        result =
-            await supabaseClient
-                .from("clients")
-                .insert(payload);
-
-    }
-
-
-    if(result.error){
-
-        console.error(
-            result.error
-        );
-
-        alert(
-            "Client save failed: " +
-            result.error.message
-        );
-
-        return;
-
-    }
-
-
-    alert(
-        editingClientId
-            ? "Client updated successfully."
-            : "Client created successfully."
-    );
-
-
-    editingClientId =
-        null;
-
-
-    resetClientForm();
-
-
-    await loadClients();
+    return url;
 
 }
 
 
-/* =========================================
-   EDIT CLIENT
-========================================= */
+/* =====================================================
+   SAVE CLIENT
+===================================================== */
 
-function editClient(id){
+async function saveClient(){
+
+    hideError();
+
+    showLoader(
+        editingClientId
+            ? "Updating client..."
+            : "Creating client..."
+    );
+
+
+    try{
+
+        const companyName =
+            document.getElementById(
+                "companyName"
+            ).value.trim();
+
+
+        const slug =
+            document.getElementById(
+                "clientSlug"
+            ).value
+            .trim()
+            .toLowerCase();
+
+
+        const domain =
+            document.getElementById(
+                "domain"
+            ).value.trim();
+
+
+        const hostingType =
+            document.getElementById(
+                "hostingType"
+            ).value;
+
+
+        const hostingUrl =
+            document.getElementById(
+                "hostingUrl"
+            ).value.trim();
+
+
+        const template =
+            normalizeTemplateSlug(
+                document.getElementById(
+                    "templateSelect"
+                ).value
+            );
+
+
+        const status =
+            document.getElementById(
+                "status"
+            ).value;
+
+
+        /* =================================================
+           VALIDATION
+        ================================================= */
+
+        if(!companyName){
+
+            hideLoader();
+
+            alert(
+                "Company Name is required."
+            );
+
+            return;
+
+        }
+
+
+        if(!slug){
+
+            hideLoader();
+
+            alert(
+                "Client Slug is required."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            !/^[a-z0-9-]+$/.test(
+                slug
+            )
+        ){
+
+            hideLoader();
+
+            alert(
+                "Client Slug can contain only:\n\n" +
+                "a-z\n" +
+                "0-9\n" +
+                "-"
+            );
+
+            return;
+
+        }
+
+
+        if(!template){
+
+            hideLoader();
+
+            alert(
+                "Please select a template."
+            );
+
+            return;
+
+        }
+
+
+        /* =================================================
+           DUPLICATE SLUG
+        ================================================= */
+
+        const duplicate =
+            allClients.find(
+                client =>
+
+                    String(
+                        client.slug || ""
+                    )
+                    .toLowerCase()
+                    === slug
+
+                    &&
+
+                    String(
+                        client.id
+                    )
+                    !== String(
+                        editingClientId
+                    )
+            );
+
+
+        if(duplicate){
+
+            hideLoader();
+
+            alert(
+                "This Client Slug already exists."
+            );
+
+            return;
+
+        }
+
+
+        /* =================================================
+           PAYLOAD
+        ================================================= */
+
+        const payload = {
+
+            company_name:
+                companyName,
+
+            slug:
+                slug,
+
+            domain:
+                domain
+                    ? normalizeUrl(
+                        domain
+                    )
+                    : null,
+
+            hosting_type:
+                hostingType ||
+                null,
+
+            hosting_url:
+                hostingUrl
+                    ? normalizeUrl(
+                        hostingUrl
+                    )
+                    : null,
+
+            /*
+               ONLY SLUG STORED
+
+               template-v1
+               template-v2
+               ...
+            */
+
+            template:
+                template,
+
+            status:
+                status ||
+                "active"
+
+        };
+
+
+        let result;
+
+
+        /* =================================================
+           UPDATE
+        ================================================= */
+
+        if(
+            editingClientId
+        ){
+
+            result =
+                await supabaseClient
+                    .from("clients")
+                    .update(
+                        payload
+                    )
+                    .eq(
+                        "id",
+                        editingClientId
+                    );
+
+        }
+
+
+        /* =================================================
+           INSERT
+        ================================================= */
+
+        else{
+
+            result =
+                await supabaseClient
+                    .from("clients")
+                    .insert(
+                        payload
+                    );
+
+        }
+
+
+        if(
+            result.error
+        ){
+
+            console.error(
+                result.error
+            );
+
+
+            hideLoader();
+
+
+            alert(
+                "Client save failed:\n\n" +
+                result.error.message
+            );
+
+
+            return;
+
+        }
+
+
+        alert(
+            editingClientId
+                ? "Client updated successfully."
+                : "Client created successfully."
+        );
+
+
+        editingClientId =
+            null;
+
+
+        resetClientForm();
+
+
+        await loadClients();
+
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        alert(
+            "Client save error:\n\n" +
+            error.message
+        );
+
+    }
+    finally{
+
+        hideLoader();
+
+    }
+
+}
+
+
+/* =====================================================
+   EDIT CLIENT
+===================================================== */
+
+function editClient(
+    id
+){
 
     const client =
         allClients.find(
             item =>
-                String(item.id)
-                === String(id)
+
+                String(
+                    item.id
+                )
+                === String(
+                    id
+                )
         );
 
 
     if(!client){
+
+        alert(
+            "Client not found."
+        );
 
         return;
 
@@ -850,55 +2639,51 @@ function editClient(id){
     document.getElementById(
         "companyName"
     ).value =
-        client.company_name || "";
+        client.company_name ||
+        "";
 
 
     document.getElementById(
         "clientSlug"
     ).value =
-        client.slug || "";
+        client.slug ||
+        "";
 
 
     document.getElementById(
         "domain"
     ).value =
-        client.domain || "";
+        client.domain ||
+        "";
 
 
     document.getElementById(
         "hostingType"
     ).value =
-        client.hosting_type || "";
+        client.hosting_type ||
+        "";
 
 
     document.getElementById(
         "hostingUrl"
     ).value =
-        client.hosting_url || "";
+        client.hosting_url ||
+        "";
 
 
-    const templateSelect =
-        document.getElementById(
-            "templateSelect"
+    document.getElementById(
+        "templateSelect"
+    ).value =
+        normalizeTemplateSlug(
+            client.template
         );
-
-
-    if(templateSelect){
-
-        templateSelect.value =
-            String(
-                client.template || ""
-            )
-            .trim()
-            .toLowerCase();
-
-    }
 
 
     document.getElementById(
         "status"
     ).value =
-        client.status || "active";
+        client.status ||
+        "active";
 
 
     updateTemplateInfo();
@@ -918,17 +2703,34 @@ function editClient(id){
     }
 
 
+    const saveBtn =
+        document.getElementById(
+            "saveBtn"
+        );
+
+
+    if(saveBtn){
+
+        saveBtn.textContent =
+            "Update Client";
+
+    }
+
+
     window.scrollTo({
+
         top:0,
+
         behavior:"smooth"
+
     });
 
 }
 
 
-/* =========================================
+/* =====================================================
    RESET
-========================================= */
+===================================================== */
 
 function resetClientForm(){
 
@@ -963,22 +2765,43 @@ function resetClientForm(){
     }
 
 
+    const saveBtn =
+        document.getElementById(
+            "saveBtn"
+        );
+
+
+    if(saveBtn){
+
+        saveBtn.textContent =
+            "Save Client";
+
+    }
+
+
     updateTemplateInfo();
 
 }
 
 
-/* =========================================
+/* =====================================================
    PREVIEW CLIENT
-========================================= */
+===================================================== */
 
-function previewClient(id){
+function previewClient(
+    id
+){
 
     const client =
         allClients.find(
             item =>
-                String(item.id)
-                === String(id)
+
+                String(
+                    item.id
+                )
+                === String(
+                    id
+                )
         );
 
 
@@ -993,11 +2816,16 @@ function previewClient(id){
     }
 
 
-    if(
+    const status =
         String(
-            client.status || ""
-        ).toLowerCase()
-        !== "active"
+            client.status ||
+            "active"
+        )
+        .toLowerCase();
+
+
+    if(
+        status !== "active"
     ){
 
         alert(
@@ -1009,9 +2837,25 @@ function previewClient(id){
     }
 
 
+    const template =
+        normalizeTemplateSlug(
+            client.template
+        );
+
+
+    if(!template){
+
+        alert(
+            "No template assigned to this client."
+        );
+
+        return;
+
+    }
+
+
     /*
-        Save active client
-        into client-context.js
+       SAVE ACTIVE CLIENT
     */
 
     if(
@@ -1026,20 +2870,17 @@ function previewClient(id){
 
 
     /*
-        IMPORTANT
-
-        No /mdkaif/
-
-        Current GitHub path
-        automatically detected.
+       OPEN PLATFORM PREVIEW
     */
 
     const previewUrl =
         pageUrl(
             "website.html",
-            `?client=${encodeURIComponent(
+            "?client=" +
+            encodeURIComponent(
                 client.id
-            )}&preview=1`
+            ) +
+            "&preview=1"
         );
 
 
@@ -1052,21 +2893,32 @@ function previewClient(id){
 }
 
 
-/* =========================================
+/* =====================================================
    OPEN LIVE WEBSITE
-========================================= */
+===================================================== */
 
-function openClientWebsite(id){
+function openClientWebsite(
+    id
+){
 
     const client =
         allClients.find(
             item =>
-                String(item.id)
-                === String(id)
+
+                String(
+                    item.id
+                )
+                === String(
+                    id
+                )
         );
 
 
     if(!client){
+
+        alert(
+            "Client not found."
+        );
 
         return;
 
@@ -1074,7 +2926,7 @@ function openClientWebsite(id){
 
 
     /*
-        Set active client
+       SAVE CLIENT CONTEXT
     */
 
     if(
@@ -1101,23 +2953,15 @@ function openClientWebsite(id){
 
 
     /*
-        If external website exists
-        open external website.
+       EXTERNAL WEBSITE
     */
 
     if(target){
 
-        if(
-            !/^https?:\/\//i.test(
+        target =
+            normalizeUrl(
                 target
-            )
-        ){
-
-            target =
-                "https://" +
-                target;
-
-        }
+            );
 
 
         window.open(
@@ -1133,101 +2977,157 @@ function openClientWebsite(id){
 
 
     /*
-        No external domain:
-        open platform preview.
+       NO LIVE WEBSITE
+
+       OPEN PLATFORM PREVIEW
     */
 
-    const previewUrl =
-        pageUrl(
-            "website.html",
-            `?client=${encodeURIComponent(
-                client.id
-            )}&preview=1`
-        );
-
-
-    window.open(
-        previewUrl,
-        "_blank",
-        "noopener"
+    previewClient(
+        client.id
     );
 
 }
 
 
-/* =========================================
-   DELETE CLIENT
-========================================= */
+/* =====================================================
+   DELETE
+===================================================== */
 
-async function deleteClient(id){
+async function deleteClient(
+    id
+){
 
     const client =
         allClients.find(
             item =>
-                String(item.id)
-                === String(id)
+
+                String(
+                    item.id
+                )
+                === String(
+                    id
+                )
         );
 
 
     if(!client){
 
+        alert(
+            "Client not found."
+        );
+
         return;
 
     }
 
 
-    if(
-        !confirm(
+    const confirmed =
+        confirm(
             `Delete client "${client.company_name}"?`
-        )
-    ){
-
-        return;
-
-    }
-
-
-    const {
-        error
-    } = await supabaseClient
-        .from("clients")
-        .delete()
-        .eq(
-            "id",
-            id
         );
 
 
-    if(error){
+    if(!confirmed){
+        return;
+    }
+
+
+    showLoader(
+        "Deleting client..."
+    );
+
+
+    try{
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("clients")
+                .delete()
+                .eq(
+                    "id",
+                    id
+                );
+
+
+        if(error){
+
+            alert(
+                "Delete failed:\n\n" +
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        /*
+           CLEAR ACTIVE CONTEXT
+        */
+
+        if(
+            window.MDKClientContext
+            &&
+            String(
+                window.MDKClientContext.id()
+            )
+            === String(id)
+        ){
+
+            window.MDKClientContext.clear();
+
+        }
+
 
         alert(
-            "Delete failed: " +
+            "Client deleted successfully."
+        );
+
+
+        await loadClients();
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+        alert(
+            "Delete error:\n\n" +
             error.message
         );
 
-        return;
+    }
+    finally{
+
+        hideLoader();
 
     }
-
-
-    await loadClients();
 
 }
 
 
-/* =========================================
+/* =====================================================
    SEARCH
-========================================= */
+===================================================== */
 
-const searchInput =
-    document.getElementById(
-        "searchInput"
-    );
+function setupSearch(){
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
 
 
-if(searchInput){
+    if(!input){
+        return;
+    }
 
-    searchInput.addEventListener(
+
+    input.addEventListener(
         "input",
         function(){
 
@@ -1244,7 +3144,10 @@ if(searchInput){
 
 
             allClients.forEach(
-                (client,index) => {
+                (
+                    client,
+                    index
+                ) => {
 
                     const text = [
 
@@ -1254,7 +3157,17 @@ if(searchInput){
 
                         client.domain,
 
-                        client.template
+                        client.hosting_type,
+
+                        client.hosting_url,
+
+                        client.template,
+
+                        getClientTemplateName(
+                            client
+                        ),
+
+                        client.status
 
                     ]
                     .filter(Boolean)
@@ -1262,10 +3175,17 @@ if(searchInput){
                     .toLowerCase();
 
 
-                    if(rows[index]){
+                    if(
+                        rows[index]
+                    ){
 
-                        rows[index].style.display =
-                            text.includes(search)
+                        rows[index]
+                            .style
+                            .display =
+
+                                text.includes(
+                                    search
+                                )
                                 ? ""
                                 : "none";
 
@@ -1280,19 +3200,24 @@ if(searchInput){
 }
 
 
-/* =========================================
+/* =====================================================
    TEMPLATE CHANGE
-========================================= */
+===================================================== */
 
-const templateSelect =
-    document.getElementById(
-        "templateSelect"
-    );
+function setupTemplateChange(){
+
+    const select =
+        document.getElementById(
+            "templateSelect"
+        );
 
 
-if(templateSelect){
+    if(!select){
+        return;
+    }
 
-    templateSelect.addEventListener(
+
+    select.addEventListener(
         "change",
         updateTemplateInfo
     );
@@ -1300,61 +3225,192 @@ if(templateSelect){
 }
 
 
-/* =========================================
+/* =====================================================
+   FORM SUBMIT
+===================================================== */
+
+function setupForm(){
+
+    const form =
+        document.getElementById(
+            "clientForm"
+        );
+
+
+    if(!form){
+        return;
+    }
+
+
+    form.addEventListener(
+        "submit",
+        function(event){
+
+            event.preventDefault();
+
+            saveClient();
+
+        }
+    );
+
+}
+
+
+/* =====================================================
    INIT
-========================================= */
+===================================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
     async function(){
 
-        const authenticated =
-            await checkAuth();
+        console.log(
+            "MD Kaif Client Manager starting..."
+        );
 
 
-        if(!authenticated){
+        /*
+           SUPABASE CHECK
+        */
+
+        if(
+            typeof supabase ===
+            "undefined"
+        ){
+
+            showError(
+                "Supabase JS load nahi hua. Internet connection ya CDN script check karein."
+            );
 
             return;
 
         }
 
 
-        setupSlugGenerator();
+        showLoader(
+            "Checking authentication..."
+        );
 
-        await loadTemplates();
 
-        await loadClients();
+        try{
+
+            const authenticated =
+                await checkAuth();
+
+
+            if(!authenticated){
+
+                hideLoader();
+
+                return;
+
+            }
+
+
+            setupSlugGenerator();
+
+            setupSearch();
+
+            setupTemplateChange();
+
+            setupForm();
+
+
+            /*
+               LOAD TEMPLATES FIRST
+            */
+
+            showLoader(
+                "Loading templates..."
+            );
+
+
+            await loadTemplates();
+
+
+            /*
+               THEN CLIENTS
+            */
+
+            showLoader(
+                "Loading clients..."
+            );
+
+
+            await loadClients();
+
+
+            console.log(
+                "Client Manager ready."
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                error
+            );
+
+
+            showError(
+                "Client Manager initialization failed: " +
+                error.message
+            );
+
+        }
+        finally{
+
+            hideLoader();
+
+        }
 
     }
 );
 
 
-/* =========================================
+/* =====================================================
    GLOBAL FUNCTIONS
-========================================= */
+===================================================== */
 
 window.saveClient =
     saveClient;
 
+
 window.editClient =
     editClient;
+
 
 window.deleteClient =
     deleteClient;
 
+
 window.previewClient =
     previewClient;
+
 
 window.openClientWebsite =
     openClientWebsite;
 
+
 window.resetClientForm =
     resetClientForm;
+
 
 window.loadClients =
     loadClients;
 
+
 window.loadTemplates =
     loadTemplates;
 
+
+window.updateTemplateInfo =
+    updateTemplateInfo;
+
 </script>
+
+
+</body>
+
+</html>
+```
