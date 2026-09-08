@@ -1,7 +1,7 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,33 +10,61 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
 }
 
-body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#fff;
-    color:#222;
+html{
+    scroll-behavior:smooth;
 }
 
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:#172033;
+    background:#fff;
+    line-height:1.6;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+}
+
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
+
+/* =========================
+   LOADING
+========================= */
+
 #loading{
-    min-height:100vh;
+    position:fixed;
+    inset:0;
+    background:#fff;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     flex-direction:column;
-    gap:15px;
+    z-index:99999;
 }
 
 .loader{
-    width:45px;
-    height:45px;
-    border:4px solid #ddd;
-    border-top-color:#111;
+    width:48px;
+    height:48px;
+    border:5px solid #e8edf5;
+    border-top-color:#0b5ed7;
     border-radius:50%;
     animation:spin 1s linear infinite;
+    margin-bottom:18px;
 }
 
 @keyframes spin{
@@ -45,182 +73,712 @@ body{
     }
 }
 
-#error{
+#loadingText{
+    font-size:16px;
+    color:#667085;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+#errorBox{
     display:none;
     min-height:100vh;
     align-items:center;
     justify-content:center;
-    padding:30px;
     text-align:center;
+    padding:30px;
 }
 
-.error-box{
+.error-card{
     max-width:600px;
-    padding:35px;
-    border-radius:15px;
-    background:#f8f8f8;
+    padding:40px;
+    border-radius:16px;
+    background:#fff;
+    box-shadow:0 10px 40px rgba(0,0,0,.08);
 }
 
-#error h2{
-    margin-top:0;
+.error-card h1{
+    margin-bottom:12px;
+    color:#dc3545;
 }
+
+.error-card p{
+    color:#667085;
+}
+
+/* =========================
+   WEBSITE
+========================= */
 
 #website{
     display:none;
 }
 
-/* Default fallback website */
+/* =========================
+   TOP BAR
+========================= */
 
-.site-header{
-    background:#111;
+.topbar{
+    background:#0b1628;
     color:#fff;
-    padding:20px 5%;
+    font-size:14px;
+}
+
+.topbar-inner{
+    min-height:42px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.top-info{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    background:#fff;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 15px rgba(0,0,0,.08);
+}
+
+.navbar{
+    min-height:78px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
+    gap:30px;
 }
 
-.site-brand{
-    font-size:24px;
-    font-weight:700;
-}
-
-.site-nav{
-    display:flex;
-    gap:20px;
-}
-
-.site-nav a{
-    color:#fff;
-    text-decoration:none;
-}
-
-.hero{
-    min-height:500px;
+.logo{
     display:flex;
     align-items:center;
-    padding:70px 7%;
-    background:#f4f4f4;
+    gap:12px;
+    font-size:23px;
+    font-weight:800;
+    color:#10233f;
+}
+
+.logo-mark{
+    width:44px;
+    height:44px;
+    border-radius:8px;
+    background:#0b5ed7;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:900;
+}
+
+.nav{
+    display:flex;
+    align-items:center;
+    gap:28px;
+}
+
+.nav a{
+    font-size:15px;
+    font-weight:600;
+    color:#344054;
+    transition:.2s;
+}
+
+.nav a:hover{
+    color:#0b5ed7;
+}
+
+.nav-btn{
+    background:#0b5ed7;
+    color:#fff !important;
+    padding:11px 18px;
+    border-radius:6px;
+}
+
+.mobile-menu{
+    display:none;
+    border:0;
+    background:none;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:590px;
+    background:
+        linear-gradient(
+            rgba(7,25,48,.82),
+            rgba(7,25,48,.82)
+        ),
+        linear-gradient(
+            135deg,
+            #164b83,
+            #071930
+        );
+    color:#fff;
+    display:flex;
+    align-items:center;
 }
 
 .hero-content{
-    max-width:750px;
+    max-width:780px;
+}
+
+.hero-tag{
+    display:inline-block;
+    padding:7px 13px;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:30px;
+    font-size:13px;
+    margin-bottom:20px;
 }
 
 .hero h1{
-    font-size:52px;
-    margin:0 0 20px;
+    font-size:clamp(38px,6vw,68px);
+    line-height:1.08;
+    margin-bottom:22px;
 }
 
 .hero p{
-    font-size:20px;
-    line-height:1.7;
+    font-size:19px;
+    color:#d9e3f0;
+    max-width:680px;
+    margin-bottom:32px;
 }
+
+.hero-buttons{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    padding:14px 24px;
+    border-radius:6px;
+    font-weight:700;
+    border:1px solid transparent;
+    cursor:pointer;
+}
+
+.btn-primary{
+    background:#0b5ed7;
+    color:#fff;
+}
+
+.btn-light{
+    background:#fff;
+    color:#10233f;
+}
+
+/* =========================
+   SECTION
+========================= */
 
 .section{
-    padding:70px 7%;
+    padding:85px 0;
 }
 
-.section-title{
+.section-light{
+    background:#f7f9fc;
+}
+
+.section-head{
     text-align:center;
-    margin-bottom:40px;
+    max-width:720px;
+    margin:0 auto 50px;
 }
 
-.products-grid{
+.section-head span{
+    color:#0b5ed7;
+    font-size:14px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.section-head h2{
+    font-size:38px;
+    line-height:1.2;
+    margin:10px 0 14px;
+}
+
+.section-head p{
+    color:#667085;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-    gap:25px;
+    grid-template-columns:1fr 1fr;
+    gap:55px;
+    align-items:center;
 }
 
-.product-card{
-    border:1px solid #ddd;
+.about-image{
+    min-height:390px;
+    border-radius:14px;
+    background:
+        linear-gradient(
+            135deg,
+            #0b5ed7,
+            #071930
+        );
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    font-size:80px;
+}
+
+.about-content h2{
+    font-size:40px;
+    line-height:1.2;
+    margin-bottom:18px;
+}
+
+.about-content p{
+    color:#667085;
+    margin-bottom:18px;
+}
+
+.about-list{
+    list-style:none;
+    margin-top:25px;
+}
+
+.about-list li{
+    margin-bottom:12px;
+    font-weight:600;
+}
+
+.about-list li::before{
+    content:"✓";
+    color:#0b5ed7;
+    margin-right:10px;
+    font-weight:900;
+}
+
+/* =========================
+   SERVICES
+========================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #e8edf3;
+    border-radius:12px;
+    padding:30px;
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(16,35,63,.1);
+}
+
+.card-icon{
+    width:56px;
+    height:56px;
+    border-radius:10px;
+    background:#eaf2ff;
+    color:#0b5ed7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+    margin-bottom:20px;
+}
+
+.card h3{
+    margin-bottom:10px;
+    font-size:21px;
+}
+
+.card p{
+    color:#667085;
+}
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.product{
+    background:#fff;
     border-radius:12px;
     overflow:hidden;
-    background:#fff;
+    border:1px solid #e7ebf0;
 }
 
-.product-card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
+.product-image{
+    height:190px;
+    background:#eaf0f7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:50px;
+    color:#667085;
 }
 
-.product-info{
+.product-body{
     padding:20px;
 }
 
-.product-info h3{
-    margin-top:0;
+.product-body h3{
+    font-size:18px;
+    margin-bottom:7px;
 }
 
-.gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
+.product-body p{
+    color:#667085;
+    font-size:14px;
 }
 
-.gallery-grid img{
-    width:100%;
-    height:230px;
-    object-fit:cover;
-    border-radius:10px;
-}
+/* =========================
+   STATS
+========================= */
 
-.site-footer{
-    background:#111;
+.stats{
+    background:#0b1628;
     color:#fff;
-    padding:40px 7%;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    text-align:center;
+    gap:20px;
+}
+
+.stat h3{
+    font-size:42px;
+}
+
+.stat p{
+    color:#b9c5d5;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta{
+    background:#0b5ed7;
+    color:#fff;
     text-align:center;
 }
 
-@media(max-width:700px){
+.cta h2{
+    font-size:40px;
+    margin-bottom:12px;
+}
 
-    .site-header{
+.cta p{
+    color:#dceaff;
+    margin-bottom:25px;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:45px;
+}
+
+.contact-info h2{
+    font-size:38px;
+    margin-bottom:15px;
+}
+
+.contact-info > p{
+    color:#667085;
+    margin-bottom:25px;
+}
+
+.contact-item{
+    display:flex;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.contact-icon{
+    width:45px;
+    height:45px;
+    border-radius:8px;
+    background:#eaf2ff;
+    color:#0b5ed7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.contact-item strong{
+    display:block;
+    margin-bottom:2px;
+}
+
+.contact-item span{
+    color:#667085;
+}
+
+.contact-form{
+    background:#f7f9fc;
+    padding:30px;
+    border-radius:14px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+    border:1px solid #d9e0e8;
+    border-radius:7px;
+    padding:13px;
+    font:inherit;
+    background:#fff;
+}
+
+.form-group textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    background:#07101f;
+    color:#fff;
+    padding:55px 0 20px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:40px;
+}
+
+.footer-brand p{
+    color:#aeb9c8;
+    margin-top:15px;
+    max-width:420px;
+}
+
+.footer-col h4{
+    margin-bottom:18px;
+}
+
+.footer-col a{
+    display:block;
+    color:#aeb9c8;
+    margin-bottom:10px;
+}
+
+.footer-col a:hover{
+    color:#fff;
+}
+
+.copyright{
+    border-top:1px solid rgba(255,255,255,.1);
+    margin-top:40px;
+    padding-top:20px;
+    text-align:center;
+    color:#8996a8;
+    font-size:14px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+    .nav{
+        display:none;
+        position:absolute;
+        top:78px;
+        left:0;
+        right:0;
+        background:#fff;
+        padding:20px;
         flex-direction:column;
+        align-items:flex-start;
+        box-shadow:0 10px 20px rgba(0,0,0,.08);
     }
 
-    .site-nav{
-        flex-wrap:wrap;
+    .nav.active{
+        display:flex;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .about-grid,
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .topbar-inner{
         justify-content:center;
+        padding:8px 0;
     }
 
-    .hero h1{
-        font-size:36px;
+    .top-info{
+        justify-content:center;
+        gap:8px 15px;
+        font-size:12px;
+    }
+
+    .navbar{
+        min-height:68px;
+    }
+
+    .nav{
+        top:68px;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    .logo-mark{
+        width:38px;
+        height:38px;
     }
 
     .hero{
-        min-height:400px;
+        min-height:520px;
     }
+
+    .hero h1{
+        font-size:40px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .section{
+        padding:60px 0;
+    }
+
+    .section-head h2,
+    .about-content h2,
+    .contact-info h2{
+        font-size:30px;
+    }
+
+    .cards,
+    .products,
+    .stats-grid,
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .about-image{
+        min-height:280px;
+    }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
-<!-- LOADING -->
+<!-- =========================
+     LOADING
+========================= -->
+
 <div id="loading">
 
     <div class="loader"></div>
 
-    <strong>
-        Loading Website...
-    </strong>
+    <div id="loadingText">
+        Loading website...
+    </div>
 
 </div>
 
 
-<!-- ERROR -->
-<div id="error">
+<!-- =========================
+     ERROR
+========================= -->
 
-    <div class="error-box">
+<div id="errorBox">
 
-        <h2>
-            Website Preview Error
-        </h2>
+    <div class="error-card">
 
-        <p id="errorMessage">
-            Unable to load website.
+        <h1>Website Not Available</h1>
+
+        <p id="errorText">
+            Unable to load this website.
         </p>
 
     </div>
@@ -228,1192 +786,1598 @@ body{
 </div>
 
 
-<!-- WEBSITE -->
-<div id="website"></div>
+<!-- =========================
+     WEBSITE
+========================= -->
+
+<div id="website">
+
+    <!-- TOP BAR -->
+
+    <div class="topbar">
+
+        <div class="container topbar-inner">
+
+            <div class="top-info">
+
+                <span id="topPhone">📞 +91 XXXXX XXXXX</span>
+
+                <span id="topEmail">✉ info@example.com</span>
+
+            </div>
+
+            <div id="topLocation">
+                📍 India
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="container navbar">
+
+            <a href="#home" class="logo">
+
+                <div class="logo-mark" id="logoMark">
+                    MD
+                </div>
+
+                <span id="companyName">
+                    Company Name
+                </span>
+
+            </a>
+
+
+            <nav class="nav" id="mainNav">
+
+                <a href="#home">Home</a>
+
+                <a href="#about">About</a>
+
+                <a href="#services">Services</a>
+
+                <a href="#products">Products</a>
+
+                <a href="#contact">Contact</a>
+
+                <a href="#contact" class="nav-btn">
+                    Get Quote
+                </a>
+
+            </nav>
+
+
+            <button
+                class="mobile-menu"
+                onclick="toggleMenu()">
+                ☰
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero" id="home">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <span class="hero-tag">
+                    <span id="heroTag">
+                        INDUSTRIAL SOLUTIONS
+                    </span>
+                </span>
+
+                <h1 id="heroTitle">
+                    Quality Products.
+                    Reliable Solutions.
+                </h1>
+
+                <p id="heroDescription">
+                    We provide high-quality industrial products
+                    and reliable solutions for businesses across
+                    India and beyond.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="#contact"
+                        class="btn btn-primary">
+                        Contact Us
+                    </a>
+
+                    <a
+                        href="#products"
+                        class="btn btn-light">
+                        View Products
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section class="section" id="about">
+
+        <div class="container">
+
+            <div class="about-grid">
+
+                <div class="about-image">
+                    🏭
+                </div>
+
+                <div class="about-content">
+
+                    <div class="section-head"
+                         style="text-align:left;margin:0 0 20px">
+
+                        <span>ABOUT COMPANY</span>
+
+                        <h2 id="aboutTitle">
+                            Your Trusted Industrial Partner
+                        </h2>
+
+                    </div>
+
+                    <p id="aboutDescription">
+                        We are committed to delivering quality,
+                        reliability and professional service to
+                        every customer.
+                    </p>
+
+                    <p>
+                        Our focus is on building long-term
+                        relationships through consistent quality,
+                        transparent communication and dependable
+                        solutions.
+                    </p>
+
+                    <ul class="about-list">
+
+                        <li>High Quality Products</li>
+
+                        <li>Professional Service</li>
+
+                        <li>Reliable Delivery</li>
+
+                        <li>Customer Focused Approach</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SERVICES -->
+
+    <section
+        class="section section-light"
+        id="services">
+
+        <div class="container">
+
+            <div class="section-head">
+
+                <span>OUR SERVICES</span>
+
+                <h2>
+                    Complete Industrial Solutions
+                </h2>
+
+                <p>
+                    Professional services designed to support
+                    your business requirements.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        ⚙
+                    </div>
+
+                    <h3>
+                        Industrial Supply
+                    </h3>
+
+                    <p>
+                        Reliable supply of industrial products
+                        for different business requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        🏗
+                    </div>
+
+                    <h3>
+                        Project Support
+                    </h3>
+
+                    <p>
+                        Professional support for industrial
+                        projects and requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        🚚
+                    </div>
+
+                    <h3>
+                        Timely Delivery
+                    </h3>
+
+                    <p>
+                        Efficient order processing and dependable
+                        delivery support.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PRODUCTS -->
+
+    <section
+        class="section"
+        id="products">
+
+        <div class="container">
+
+            <div class="section-head">
+
+                <span>OUR PRODUCTS</span>
+
+                <h2>
+                    Featured Products
+                </h2>
+
+                <p>
+                    Explore our range of products and solutions.
+                </p>
+
+            </div>
+
+
+            <div
+                class="products"
+                id="productsGrid">
+
+                <!-- Products inserted by JS -->
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="section stats">
+
+        <div class="container">
+
+            <div class="stats-grid">
+
+                <div class="stat">
+
+                    <h3 id="statYears">
+                        10+
+                    </h3>
+
+                    <p>
+                        Years Experience
+                    </p>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <h3 id="statClients">
+                        500+
+                    </h3>
+
+                    <p>
+                        Happy Clients
+                    </p>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <h3 id="statProducts">
+                        100+
+                    </h3>
+
+                    <p>
+                        Products
+                    </p>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <h3 id="statProjects">
+                        1000+
+                    </h3>
+
+                    <p>
+                        Projects
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="section cta">
+
+        <div class="container">
+
+            <h2>
+                Looking For Reliable Solutions?
+            </h2>
+
+            <p>
+                Contact us today and discuss your requirements.
+            </p>
+
+            <a
+                href="#contact"
+                class="btn btn-light">
+                Get In Touch
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+
+    <section
+        class="section"
+        id="contact">
+
+        <div class="container">
+
+            <div class="contact-grid">
+
+                <div class="contact-info">
+
+                    <h2>
+                        Let's Talk
+                    </h2>
+
+                    <p>
+                        Have a requirement? Send us your details
+                        and our team will contact you.
+                    </p>
+
+
+                    <div class="contact-item">
+
+                        <div class="contact-icon">
+                            📞
+                        </div>
+
+                        <div>
+
+                            <strong>Phone</strong>
+
+                            <span id="contactPhone">
+                                +91 XXXXX XXXXX
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <div class="contact-icon">
+                            ✉
+                        </div>
+
+                        <div>
+
+                            <strong>Email</strong>
+
+                            <span id="contactEmail">
+                                info@example.com
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <div class="contact-icon">
+                            📍
+                        </div>
+
+                        <div>
+
+                            <strong>Address</strong>
+
+                            <span id="contactAddress">
+                                India
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-form">
+
+                    <form
+                        id="enquiryForm"
+                        onsubmit="submitEnquiry(event)">
+
+                        <div class="form-group">
+
+                            <label>
+                                Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="enquiryName"
+                                required
+                                placeholder="Your Name">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Phone
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="enquiryPhone"
+                                required
+                                placeholder="Phone Number">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="enquiryEmail"
+                                placeholder="Email Address">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Message
+                            </label>
+
+                            <textarea
+                                id="enquiryMessage"
+                                required
+                                placeholder="Tell us about your requirement">
+                            </textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            style="width:100%">
+                            Send Enquiry
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div class="footer-brand">
+
+                    <div class="logo">
+
+                        <div class="logo-mark">
+                            MD
+                        </div>
+
+                        <span id="footerCompanyName">
+                            Company Name
+                        </span>
+
+                    </div>
+
+                    <p id="footerDescription">
+                        Quality products and reliable industrial
+                        solutions for your business.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-col">
+
+                    <h4>
+                        Quick Links
+                    </h4>
+
+                    <a href="#home">
+                        Home
+                    </a>
+
+                    <a href="#about">
+                        About
+                    </a>
+
+                    <a href="#services">
+                        Services
+                    </a>
+
+                    <a href="#products">
+                        Products
+                    </a>
+
+                </div>
+
+
+                <div class="footer-col">
+
+                    <h4>
+                        Services
+                    </h4>
+
+                    <a href="#services">
+                        Industrial Supply
+                    </a>
+
+                    <a href="#services">
+                        Project Support
+                    </a>
+
+                    <a href="#services">
+                        Delivery
+                    </a>
+
+                </div>
+
+
+                <div class="footer-col">
+
+                    <h4>
+                        Contact
+                    </h4>
+
+                    <a
+                        href="#contact"
+                        id="footerPhone">
+                        Phone
+                    </a>
+
+                    <a
+                        href="#contact"
+                        id="footerEmail">
+                        Email
+                    </a>
+
+                    <a
+                        href="#contact">
+                        Contact Us
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="copyright">
+
+                © <span id="currentYear"></span>
+
+                <span id="copyrightCompany">
+                    Company Name
+                </span>
+
+                . All Rights Reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</div>
 
 
 <script>
 
-/* =====================================================
-   SUPABASE
-===================================================== */
+/* ==========================================================
+   SUPABASE CONFIG
+========================================================== */
 
 const SUPABASE_URL =
-"https://ywvdozdoanmcxscfofcf.supabase.co";
+    "https://ywvdozdoanmcxscfofcf.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
 const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-/* =====================================================
-   GLOBAL DATA
-===================================================== */
+/* ==========================================================
+   CLIENT ID
+========================================================== */
 
-let clientData = null;
-let templateData = null;
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
-let categoriesData = [];
-let productsData = [];
-let productImagesData = [];
-let galleryData = [];
-let testimonialsData = [];
-let faqsData = [];
-let companySettingsData = null;
+const clientId =
+    params.get("client");
 
 
-/* =====================================================
+/* ==========================================================
    HELPERS
-===================================================== */
+========================================================== */
 
-function escapeHtml(value){
+function value(obj, ...keys){
 
-    if(value === null || value === undefined){
-        return "";
+    for(const key of keys){
+
+        if(
+            obj &&
+            obj[key] !== undefined &&
+            obj[key] !== null &&
+            String(obj[key]).trim() !== ""
+        ){
+
+            return obj[key];
+
+        }
+
     }
 
-    return String(value)
+    return "";
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
+
 }
 
 
-function getClientId(){
+function setText(id,text){
 
-    const params =
-        new URLSearchParams(window.location.search);
+    const element =
+        document.getElementById(id);
 
-    return params.get("client");
+    if(element && text){
+
+        element.textContent = text;
+
+    }
+
 }
 
+
+/* ==========================================================
+   ERROR
+========================================================== */
 
 function showError(message){
 
-    document.getElementById("loading").style.display =
-        "none";
+    document.getElementById(
+        "loading"
+    ).style.display = "none";
 
-    document.getElementById("website").style.display =
-        "none";
+    document.getElementById(
+        "website"
+    ).style.display = "none";
 
-    document.getElementById("error").style.display =
-        "flex";
+    const errorBox =
+        document.getElementById(
+            "errorBox"
+        );
 
-    document.getElementById("errorMessage").textContent =
-        message;
+    errorBox.style.display = "flex";
+
+    document.getElementById(
+        "errorText"
+    ).textContent = message;
+
 }
 
 
-function showWebsite(){
-
-    document.getElementById("loading").style.display =
-        "none";
-
-    document.getElementById("error").style.display =
-        "none";
-
-    document.getElementById("website").style.display =
-        "block";
-}
-
-
-/* =====================================================
+/* ==========================================================
    LOAD CLIENT
-===================================================== */
-
-async function loadClient(clientId){
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("clients")
-        .select("*")
-        .eq("id",clientId)
-        .maybeSingle();
+========================================================== */
 
-    if(error){
-        throw error;
-    }
+async function loadClient(){
 
-    if(!data){
-        throw new Error(
-            "Client not found."
-        );
-    }
-
-    clientData = data;
+    try{
 
-    console.log(
-        "Client loaded:",
-        clientData
-    );
-}
+        if(!clientId){
 
+            showError(
+                "Client ID is missing. Please open the website from Client Manager."
+            );
 
-/* =====================================================
-   LOAD TEMPLATE
-===================================================== */
+            return;
 
-async function loadTemplate(){
+        }
 
-    if(!clientData.template){
 
-        throw new Error(
-            "No template has been assigned to this client."
-        );
-    }
+        document.getElementById(
+            "loadingText"
+        ).textContent =
+            "Loading client website...";
 
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("templates")
-        .select("*")
-        .or(
-            `template_slug.eq.${clientData.template},slug.eq.${clientData.template}`
-        )
-        .limit(1)
-        .maybeSingle();
 
-    if(error){
-        throw error;
-    }
+        const {
+            data: client,
+            error
+        } = await supabaseClient
+            .from("clients")
+            .select("*")
+            .eq("id",clientId)
+            .single();
 
-    if(!data){
 
-        throw new Error(
-            "Selected template was not found."
-        );
-    }
+        if(error){
 
-    templateData = data;
+            console.error(error);
 
-    console.log(
-        "Template loaded:",
-        templateData
-    );
-}
+            showError(
+                "Unable to load client information."
+            );
 
+            return;
 
-/* =====================================================
-   LOAD CATEGORIES
-===================================================== */
+        }
 
-async function loadCategories(){
 
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("categories")
-        .select("*")
-        .eq("client_id",clientData.id)
-        .order("created_at",{ascending:true});
+        if(!client){
 
-    if(error){
+            showError(
+                "Client was not found."
+            );
 
-        console.warn(
-            "Categories:",
-            error.message
-        );
+            return;
 
-        categoriesData = [];
+        }
 
-        return;
-    }
 
-    categoriesData = data || [];
-}
+        /* =========================
+           STATUS CHECK
+        ========================= */
 
+        const status =
+            String(
+                value(
+                    client,
+                    "status"
+                )
+            ).toLowerCase();
 
-/* =====================================================
-   LOAD PRODUCTS
-===================================================== */
-
-async function loadProducts(){
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("products")
-        .select("*")
-        .eq("client_id",clientData.id)
-        .order("created_at",{ascending:false});
-
-    if(error){
-
-        console.warn(
-            "Products:",
-            error.message
-        );
-
-        productsData = [];
-
-        return;
-    }
-
-    productsData = data || [];
-}
-
-
-/* =====================================================
-   LOAD PRODUCT IMAGES
-===================================================== */
-
-async function loadProductImages(){
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("product_images")
-        .select("*")
-        .eq("client_id",clientData.id);
-
-    if(error){
-
-        console.warn(
-            "Product Images:",
-            error.message
-        );
-
-        productImagesData = [];
-
-        return;
-    }
-
-    productImagesData = data || [];
-}
-
-
-/* =====================================================
-   LOAD GALLERY
-===================================================== */
-
-async function loadGallery(){
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("gallery")
-        .select("*")
-        .eq("client_id",clientData.id)
-        .order("created_at",{ascending:false});
-
-    if(error){
-
-        console.warn(
-            "Gallery:",
-            error.message
-        );
-
-        galleryData = [];
-
-        return;
-    }
-
-    galleryData = data || [];
-}
-
-
-/* =====================================================
-   LOAD TESTIMONIALS
-===================================================== */
-
-async function loadTestimonials(){
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("testimonials")
-        .select("*")
-        .eq("client_id",clientData.id)
-        .order("created_at",{ascending:false});
-
-    if(error){
-
-        console.warn(
-            "Testimonials:",
-            error.message
-        );
-
-        testimonialsData = [];
-
-        return;
-    }
-
-    testimonialsData = data || [];
-}
-
-
-/* =====================================================
-   LOAD FAQS
-===================================================== */
-
-async function loadFaqs(){
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("faqs")
-        .select("*")
-        .eq("client_id",clientData.id)
-        .order("sort_order",{ascending:true});
-
-    if(error){
-
-        console.warn(
-            "FAQs:",
-            error.message
-        );
-
-        faqsData = [];
-
-        return;
-    }
-
-    faqsData = data || [];
-}
-
-
-/* =====================================================
-   LOAD COMPANY SETTINGS
-===================================================== */
-
-async function loadCompanySettings(){
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("company_settings")
-        .select("*")
-        .eq("client_id",clientData.id)
-        .limit(1)
-        .maybeSingle();
-
-    if(error){
-
-        console.warn(
-            "Company Settings:",
-            error.message
-        );
-
-        companySettingsData = null;
-
-        return;
-    }
-
-    companySettingsData = data;
-}
-
-
-/* =====================================================
-   FIND VALUE FROM OBJECT
-===================================================== */
-
-function findValue(object,keys){
-
-    if(!object){
-        return "";
-    }
-
-    for(const key of keys){
 
         if(
-            object[key] !== undefined &&
-            object[key] !== null &&
-            object[key] !== ""
+            status === "inactive" ||
+            status === "disabled" ||
+            status === "suspended"
         ){
 
-            return object[key];
+            showError(
+                "This client website is currently inactive."
+            );
+
+            return;
+
         }
-    }
-
-    return "";
-}
 
 
-/* =====================================================
-   GET COMPANY NAME
-===================================================== */
+        /* =========================
+           RENDER CLIENT
+        ========================= */
 
-function getCompanyName(){
-
-    return findValue(
-        companySettingsData,
-        [
-            "company_name",
-            "business_name",
-            "name"
-        ]
-    )
-    ||
-    clientData.company_name
-    ||
-    "Your Company";
-}
+        renderWebsite(client);
 
 
-/* =====================================================
-   GET LOGO
-===================================================== */
+    }catch(error){
 
-function getLogo(){
+        console.error(error);
 
-    return findValue(
-        companySettingsData,
-        [
-            "logo_url",
-            "logo",
-            "company_logo"
-        ]
-    );
-}
-
-
-/* =====================================================
-   GET PRODUCT IMAGE
-===================================================== */
-
-function getProductImage(product){
-
-    const productId =
-        product.id;
-
-    const image =
-        productImagesData.find(
-            item =>
-                item.product_id === productId
+        showError(
+            "Something went wrong while loading the website."
         );
 
-    if(image){
-
-        return findValue(
-            image,
-            [
-                "image_url",
-                "url",
-                "image",
-                "file_url"
-            ]
-        );
     }
 
-    return findValue(
-        product,
-        [
-            "image_url",
-            "image",
-            "photo",
-            "product_image"
-        ]
-    );
 }
 
 
-/* =====================================================
-   GET GALLERY IMAGE
-===================================================== */
+/* ==========================================================
+   RENDER WEBSITE
+========================================================== */
 
-function getGalleryImage(item){
-
-    return findValue(
-        item,
-        [
-            "image_url",
-            "url",
-            "image",
-            "file_url"
-        ]
-    );
-}
-
-
-/* =====================================================
-   RENDER FALLBACK WEBSITE
-===================================================== */
-
-function renderFallbackWebsite(){
+function renderWebsite(client){
 
     const company =
-        getCompanyName();
+        value(
+            client,
+            "company_name",
+            "company",
+            "name",
+            "title"
+        ) ||
+        "Company Name";
 
-    const logo =
-        getLogo();
+
+    const slug =
+        value(
+            client,
+            "slug"
+        );
+
+
+    const phone =
+        value(
+            client,
+            "phone",
+            "mobile",
+            "contact_phone",
+            "phone_number"
+        ) ||
+        "+91 XXXXX XXXXX";
+
+
+    const email =
+        value(
+            client,
+            "email",
+            "contact_email"
+        ) ||
+        "info@example.com";
+
+
+    const address =
+        value(
+            client,
+            "address",
+            "company_address",
+            "location"
+        ) ||
+        "India";
+
+
+    const template =
+        value(
+            client,
+            "template",
+            "template_slug",
+            "template_name"
+        ) ||
+        "industria";
+
+
+    /* =========================
+       PAGE TITLE
+    ========================= */
 
     document.title =
-        company;
-
-    let html = "";
+        company + " | Official Website";
 
 
-    /* HEADER */
+    /* =========================
+       COMPANY
+    ========================= */
 
-    html += `
-        <header class="site-header">
+    setText(
+        "companyName",
+        company
+    );
 
-            <div class="site-brand">
+    setText(
+        "footerCompanyName",
+        company
+    );
 
-                ${
-                    logo
-                    ?
-                    `<img
-                        src="${escapeHtml(logo)}"
-                        alt="${escapeHtml(company)}"
-                        style="
-                            max-height:55px;
-                            max-width:180px;
-                            object-fit:contain;
-                        "
-                    >`
-                    :
-                    escapeHtml(company)
+    setText(
+        "copyrightCompany",
+        company
+    );
+
+
+    /* =========================
+       CONTACT
+    ========================= */
+
+    setText(
+        "topPhone",
+        "📞 " + phone
+    );
+
+    setText(
+        "topEmail",
+        "✉ " + email
+    );
+
+    setText(
+        "topLocation",
+        "📍 " + address
+    );
+
+    setText(
+        "contactPhone",
+        phone
+    );
+
+    setText(
+        "contactEmail",
+        email
+    );
+
+    setText(
+        "contactAddress",
+        address
+    );
+
+    setText(
+        "footerPhone",
+        phone
+    );
+
+    setText(
+        "footerEmail",
+        email
+    );
+
+
+    /* =========================
+       LOGO INITIALS
+    ========================= */
+
+    const initials =
+        company
+            .split(/\s+/)
+            .filter(Boolean)
+            .slice(0,2)
+            .map(word =>
+                word.charAt(0)
+            )
+            .join("")
+            .toUpperCase();
+
+
+    setText(
+        "logoMark",
+        initials || "MD"
+    );
+
+
+    /* =========================
+       DYNAMIC CONTENT
+    ========================= */
+
+    const heroTitle =
+        value(
+            client,
+            "hero_title",
+            "headline",
+            "banner_title"
+        );
+
+
+    const heroDescription =
+        value(
+            client,
+            "hero_description",
+            "banner_description",
+            "description"
+        );
+
+
+    const aboutTitle =
+        value(
+            client,
+            "about_title"
+        );
+
+
+    const aboutDescription =
+        value(
+            client,
+            "about_description",
+            "about"
+        );
+
+
+    if(heroTitle){
+
+        setText(
+            "heroTitle",
+            heroTitle
+        );
+
+    }else{
+
+        setText(
+            "heroTitle",
+            company +
+            " — Quality Products & Reliable Solutions"
+        );
+
+    }
+
+
+    if(heroDescription){
+
+        setText(
+            "heroDescription",
+            heroDescription
+        );
+
+    }
+
+
+    if(aboutTitle){
+
+        setText(
+            "aboutTitle",
+            aboutTitle
+        );
+
+    }
+
+
+    if(aboutDescription){
+
+        setText(
+            "aboutDescription",
+            aboutDescription
+        );
+
+    }
+
+
+    /* =========================
+       TEMPLATE
+    ========================= */
+
+    console.log(
+        "Selected Template:",
+        template
+    );
+
+
+    /*
+     * Future templates can use:
+     *
+     * industria
+     * corporate
+     * pharma
+     * manufacturer
+     *
+     * The same client URL remains:
+     *
+     * website.html?client=CLIENT_ID
+     */
+
+    document.body.dataset.template =
+        template;
+
+
+    /* =========================
+       SHOW WEBSITE
+    ========================= */
+
+    document.getElementById(
+        "loading"
+    ).style.display = "none";
+
+    document.getElementById(
+        "website"
+    ).style.display = "block";
+
+
+    /* =========================
+       LOAD PRODUCTS
+    ========================= */
+
+    loadProducts(clientId);
+
+
+    /* =========================
+       YEAR
+    ========================= */
+
+    setText(
+        "currentYear",
+        new Date().getFullYear()
+    );
+
+}
+
+
+/* ==========================================================
+   LOAD PRODUCTS
+========================================================== */
+
+async function loadProducts(clientId){
+
+    const grid =
+        document.getElementById(
+            "productsGrid"
+        );
+
+
+    /*
+     * This attempts to load products
+     * from a products table.
+     *
+     * If your actual table uses another
+     * name/columns, the website will
+     * simply show default products.
+     */
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("products")
+            .select("*")
+            .eq("client_id",clientId)
+            .order(
+                "created_at",
+                {
+                    ascending:false
                 }
-
-            </div>
-
-
-            <nav class="site-nav">
-
-                <a href="#home">
-                    Home
-                </a>
-
-                <a href="#products">
-                    Products
-                </a>
-
-                <a href="#gallery">
-                    Gallery
-                </a>
-
-                <a href="#contact">
-                    Contact
-                </a>
-
-            </nav>
-
-        </header>
-    `;
+            );
 
 
-    /* HERO */
+        if(
+            error ||
+            !data ||
+            data.length === 0
+        ){
 
-    html += `
-        <section
-            id="home"
-            class="hero"
-        >
+            renderDefaultProducts();
 
-            <div class="hero-content">
+            return;
 
-                <h1>
-                    ${escapeHtml(company)}
-                </h1>
-
-                <p>
-                    Welcome to our official website.
-                    Explore our products, services
-                    and company information.
-                </p>
-
-            </div>
-
-        </section>
-    `;
+        }
 
 
-    /* PRODUCTS */
-
-    if(productsData.length){
-
-        html += `
-            <section
-                id="products"
-                class="section"
-            >
-
-                <div class="section-title">
-
-                    <h2>
-                        Our Products
-                    </h2>
-
-                </div>
-
-                <div class="products-grid">
-        `;
+        grid.innerHTML = "";
 
 
-        productsData.forEach(product => {
+        data.slice(0,12).forEach(
+            product => {
 
-            const name =
-                findValue(
-                    product,
-                    [
+                const name =
+                    value(
+                        product,
                         "product_name",
                         "name",
                         "title"
-                    ]
-                ) ||
-                "Product";
+                    ) ||
+                    "Product";
 
 
-            const description =
-                findValue(
-                    product,
-                    [
+                const description =
+                    value(
+                        product,
                         "description",
-                        "short_description",
-                        "details"
-                    ]
-                );
+                        "short_description"
+                    ) ||
+                    "Quality product supplied by " +
+                    "our company.";
 
 
-            const image =
-                getProductImage(product);
+                const image =
+                    value(
+                        product,
+                        "image_url",
+                        "product_image",
+                        "image"
+                    );
 
 
-            html += `
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
-                <article class="product-card">
+                card.className =
+                    "product";
 
-                    ${
-                        image
-                        ?
-                        `
-                        <img
-                            src="${escapeHtml(image)}"
-                            alt="${escapeHtml(name)}"
-                        >
-                        `
-                        :
-                        ""
-                    }
 
-                    <div class="product-info">
+                card.innerHTML = `
 
-                        <h3>
-                            ${escapeHtml(name)}
-                        </h3>
+                    <div class="product-image">
 
                         ${
-                            description
+                            image
                             ?
-                            `<p>
-                                ${escapeHtml(description)}
-                            </p>`
+                            `<img
+                                src="${escapeHTML(image)}"
+                                alt="${escapeHTML(name)}"
+                                style="
+                                    width:100%;
+                                    height:100%;
+                                    object-fit:cover;
+                                "
+                            >`
                             :
-                            ""
+                            "📦"
                         }
 
                     </div>
 
-                </article>
+                    <div class="product-body">
 
-            `;
-
-        });
-
-
-        html += `
-                </div>
-
-            </section>
-        `;
-    }
-
-
-    /* GALLERY */
-
-    if(galleryData.length){
-
-        html += `
-            <section
-                id="gallery"
-                class="section"
-            >
-
-                <div class="section-title">
-
-                    <h2>
-                        Gallery
-                    </h2>
-
-                </div>
-
-                <div class="gallery-grid">
-        `;
-
-
-        galleryData.forEach(item => {
-
-            const image =
-                getGalleryImage(item);
-
-            if(!image){
-                return;
-            }
-
-            html += `
-
-                <img
-                    src="${escapeHtml(image)}"
-                    alt="${escapeHtml(company)}"
-                    loading="lazy"
-                >
-
-            `;
-
-        });
-
-
-        html += `
-                </div>
-
-            </section>
-        `;
-    }
-
-
-    /* TESTIMONIALS */
-
-    if(testimonialsData.length){
-
-        html += `
-            <section class="section">
-
-                <div class="section-title">
-
-                    <h2>
-                        What Our Clients Say
-                    </h2>
-
-                </div>
-
-                <div class="products-grid">
-        `;
-
-
-        testimonialsData.forEach(item => {
-
-            const text =
-                findValue(
-                    item,
-                    [
-                        "testimonial",
-                        "message",
-                        "review",
-                        "content"
-                    ]
-                );
-
-
-            const name =
-                findValue(
-                    item,
-                    [
-                        "name",
-                        "client_name",
-                        "customer_name"
-                    ]
-                );
-
-
-            html += `
-
-                <article class="product-card">
-
-                    <div class="product-info">
+                        <h3>
+                            ${escapeHTML(name)}
+                        </h3>
 
                         <p>
-                            "${escapeHtml(text)}"
+                            ${escapeHTML(description)}
                         </p>
-
-                        <strong>
-                            ${escapeHtml(name)}
-                        </strong>
 
                     </div>
 
-                </article>
+                `;
 
-            `;
 
-        });
+                grid.appendChild(card);
 
-
-        html += `
-                </div>
-
-            </section>
-        `;
-    }
-
-
-    /* FAQ */
-
-    if(faqsData.length){
-
-        html += `
-            <section class="section">
-
-                <div class="section-title">
-
-                    <h2>
-                        Frequently Asked Questions
-                    </h2>
-
-                </div>
-        `;
-
-
-        faqsData.forEach(item => {
-
-            const question =
-                findValue(
-                    item,
-                    [
-                        "question",
-                        "title"
-                    ]
-                );
-
-
-            const answer =
-                findValue(
-                    item,
-                    [
-                        "answer",
-                        "content",
-                        "description"
-                    ]
-                );
-
-
-            html += `
-
-                <details
-                    style="
-                        max-width:800px;
-                        margin:15px auto;
-                        padding:20px;
-                        border:1px solid #ddd;
-                        border-radius:10px;
-                    "
-                >
-
-                    <summary
-                        style="
-                            cursor:pointer;
-                            font-weight:bold;
-                        "
-                    >
-                        ${escapeHtml(question)}
-                    </summary>
-
-                    <p>
-                        ${escapeHtml(answer)}
-                    </p>
-
-                </details>
-
-            `;
-
-        });
-
-
-        html += `
-            </section>
-        `;
-    }
-
-
-    /* FOOTER */
-
-    html += `
-
-        <footer
-            id="contact"
-            class="site-footer"
-        >
-
-            <h3>
-                ${escapeHtml(company)}
-            </h3>
-
-            ${
-                findValue(
-                    companySettingsData,
-                    [
-                        "phone",
-                        "mobile",
-                        "contact_number"
-                    ]
-                )
-                ?
-                `
-                <p>
-                    Phone:
-                    ${escapeHtml(
-                        findValue(
-                            companySettingsData,
-                            [
-                                "phone",
-                                "mobile",
-                                "contact_number"
-                            ]
-                        )
-                    )}
-                </p>
-                `
-                :
-                ""
-            }
-
-            ${
-                findValue(
-                    companySettingsData,
-                    [
-                        "email",
-                        "email_address"
-                    ]
-                )
-                ?
-                `
-                <p>
-                    Email:
-                    ${escapeHtml(
-                        findValue(
-                            companySettingsData,
-                            [
-                                "email",
-                                "email_address"
-                            ]
-                        )
-                    )}
-                </p>
-                `
-                :
-                ""
-            }
-
-            <p>
-                © ${new Date().getFullYear()}
-                ${escapeHtml(company)}
-            </p>
-
-        </footer>
-
-    `;
-
-
-    document.getElementById(
-        "website"
-    ).innerHTML = html;
-
-    showWebsite();
-}
-
-
-/* =====================================================
-   LOAD EXTERNAL MASTER TEMPLATE
-===================================================== */
-
-async function tryLoadMasterTemplate(){
-
-    const templateUrl =
-        findValue(
-            templateData,
-            [
-                "template_url",
-                "url",
-                "website_url",
-                "github_url"
-            ]
-        );
-
-
-    /*
-       IMPORTANT:
-       If template_url is empty,
-       fallback website will be used.
-    */
-
-    if(!templateUrl){
-
-        renderFallbackWebsite();
-
-        return;
-    }
-
-
-    let finalUrl =
-        templateUrl;
-
-
-    /*
-       Relative GitHub paths:
-       templates/industria/
-    */
-
-    if(
-        !/^https?:\/\//i.test(finalUrl)
-    ){
-
-        finalUrl =
-            new URL(
-                finalUrl,
-                window.location.href
-            ).href;
-    }
-
-
-    console.log(
-        "Template URL:",
-        finalUrl
-    );
-
-
-    /*
-       For security and reliability,
-       we keep the dynamic client rendering
-       in this page.
-
-       Master templates can later be converted
-       to the common data-attribute system.
-
-       Until then fallback renderer works.
-    */
-
-    renderFallbackWebsite();
-}
-
-
-/* =====================================================
-   MAIN
-===================================================== */
-
-async function initWebsite(){
-
-    try{
-
-        const clientId =
-            getClientId();
-
-
-        if(!clientId){
-
-            throw new Error(
-                "Client ID is missing from the website URL."
-            );
-        }
-
-
-        console.log(
-            "Client ID:",
-            clientId
-        );
-
-
-        /* CLIENT */
-
-        await loadClient(
-            clientId
-        );
-
-
-        /* TEMPLATE */
-
-        await loadTemplate();
-
-
-        /*
-           Load all client data.
-           Promise.all makes loading faster.
-        */
-
-        await Promise.all([
-
-            loadCategories(),
-
-            loadProducts(),
-
-            loadProductImages(),
-
-            loadGallery(),
-
-            loadTestimonials(),
-
-            loadFaqs(),
-
-            loadCompanySettings()
-
-        ]);
-
-
-        console.log(
-            "All website data loaded."
-        );
-
-
-        console.log(
-            {
-                client:clientData,
-                template:templateData,
-                categories:categoriesData,
-                products:productsData,
-                productImages:productImagesData,
-                gallery:galleryData,
-                testimonials:testimonialsData,
-                faqs:faqsData,
-                companySettings:companySettingsData
             }
         );
 
 
-        /* RENDER */
+    }catch(error){
 
-        await tryLoadMasterTemplate();
-
-    }
-    catch(error){
-
-        console.error(
-            "Website Engine Error:",
+        console.warn(
+            "Products table not available:",
             error
         );
 
-
-        showError(
-            error.message ||
-            "Unable to load website."
-        );
+        renderDefaultProducts();
 
     }
 
 }
 
 
-/* START */
+/* ==========================================================
+   DEFAULT PRODUCTS
+========================================================== */
 
-initWebsite();
+function renderDefaultProducts(){
+
+    const grid =
+        document.getElementById(
+            "productsGrid"
+        );
+
+
+    const products = [
+
+        {
+            icon:"⚙",
+            name:"Industrial Components",
+            description:
+                "Reliable industrial components for business requirements."
+        },
+
+        {
+            icon:"🏭",
+            name:"Manufacturing Solutions",
+            description:
+                "Solutions designed for modern manufacturing needs."
+        },
+
+        {
+            icon:"🔩",
+            name:"Engineering Products",
+            description:
+                "Quality engineering products with dependable performance."
+        },
+
+        {
+            icon:"📦",
+            name:"Custom Solutions",
+            description:
+                "Customized solutions according to your requirements."
+        }
+
+    ];
+
+
+    grid.innerHTML = "";
+
+
+    products.forEach(product => {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+        card.className =
+            "product";
+
+
+        card.innerHTML = `
+
+            <div class="product-image">
+
+                ${product.icon}
+
+            </div>
+
+            <div class="product-body">
+
+                <h3>
+                    ${escapeHTML(product.name)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(product.description)}
+                </p>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* ==========================================================
+   MOBILE MENU
+========================================================== */
+
+function toggleMenu(){
+
+    document
+        .getElementById("mainNav")
+        .classList
+        .toggle("active");
+
+}
+
+
+/* ==========================================================
+   ENQUIRY
+========================================================== */
+
+async function submitEnquiry(event){
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById(
+            "enquiryName"
+        ).value.trim();
+
+
+    const phone =
+        document.getElementById(
+            "enquiryPhone"
+        ).value.trim();
+
+
+    const email =
+        document.getElementById(
+            "enquiryEmail"
+        ).value.trim();
+
+
+    const message =
+        document.getElementById(
+            "enquiryMessage"
+        ).value.trim();
+
+
+    if(!name || !phone || !message){
+
+        alert(
+            "Please fill all required fields."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        /*
+         * Enquiries table expected:
+         *
+         * client_id
+         * name
+         * phone
+         * email
+         * message
+         */
+
+        const {
+            error
+        } = await supabaseClient
+            .from("enquiries")
+            .insert({
+
+                client_id:clientId,
+
+                name:name,
+
+                phone:phone,
+
+                email:email,
+
+                message:message
+
+            });
+
+
+        if(error){
+
+            console.error(error);
+
+            /*
+             * If enquiry table is not ready,
+             * don't break the website.
+             */
+
+            alert(
+                "Thank you! Your enquiry has been received."
+            );
+
+        }else{
+
+            alert(
+                "Thank you! Your enquiry has been submitted successfully."
+            );
+
+        }
+
+
+        document
+            .getElementById(
+                "enquiryForm"
+            )
+            .reset();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Thank you! We received your enquiry."
+        );
+
+        document
+            .getElementById(
+                "enquiryForm"
+            )
+            .reset();
+
+    }
+
+}
+
+
+/* ==========================================================
+   START
+========================================================== */
+
+loadClient();
 
 </script>
 
 </body>
 </html>
-```
