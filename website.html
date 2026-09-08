@@ -163,11 +163,11 @@ function updateLoader(message){
 
     Example:
 
-    templates/template-v1.html
+    template/template-v1.html
 
     automatically becomes:
 
-    https://username.github.io/repository/templates/template-v1.html
+    https://username.github.io/repository/template/template-v1.html
 
     No /mdkaif/ hardcoding.
 */
@@ -300,7 +300,7 @@ async function loadTemplate(templateSlug){
         data,
         error
     } = await supabaseClient
-        .from("templates")
+        .from("template")
         .select(`
             id,
             template_name,
@@ -367,11 +367,11 @@ async function loadTemplate(templateSlug){
 
         Flat GitHub structure:
 
-        templates/template-v1.html
+        template/template-v1.html
     */
 
     const fallbackPath =
-        `templates/${slug}.html`;
+        `template/${slug}.html`;
 
 
     return {
