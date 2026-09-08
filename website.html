@@ -3,35 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading Website...</title>
+
+<title>Website Preview - MD Kaif Web Platform</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{
+html,body{
     margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background:#f5f7fb;
     font-family:Arial,sans-serif;
+}
+
+#loader{
+    position:fixed;
+    inset:0;
     display:flex;
     align-items:center;
     justify-content:center;
-    min-height:100vh;
-    background:#f5f7fb;
+    flex-direction:column;
+    gap:12px;
+    background:#fff;
+    z-index:9999;
 }
-.box{
+
+.spinner{
+    width:42px;
+    height:42px;
+    border:4px solid #e5e7eb;
+    border-top-color:#2563eb;
+    border-radius:50%;
+    animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+#error{
+    display:none;
+    min-height:100vh;
+    align-items:center;
+    justify-content:center;
     text-align:center;
     padding:30px;
+    box-sizing:border-box;
+}
+
+.error-box{
+    max-width:600px;
+    background:#fff;
+    border-radius:16px;
+    padding:35px;
+    box-shadow:0 10px 40px rgba(0,0,0,.08);
+}
+
+.error-box h2{
+    margin-top:0;
+    color:#dc2626;
+}
+
+button{
+    border:0;
+    background:#2563eb;
+    color:#fff;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-    <h2>Loading Website...</h2>
-    <p id="status">Please wait...</p>
+<div id="loader">
+    <div class="spinner"></div>
+    <strong>Loading website...</strong>
+    <span id="loaderText">Connecting to client...</span>
+</div>
+
+<div id="error">
+    <div class="error-box">
+        <h2>Website Preview Error</h2>
+        <p id="errorMessage">
+            Unable to load website.
+        </p>
+
+        <button onclick="location.reload()">
+            Retry
+        </button>
+    </div>
 </div>
 
 <script>
+
+"use strict";
+
+/* =========================================
+   SUPABASE
+========================================= */
 
 const SUPABASE_URL =
     "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -45,111 +118,430 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
-async function loadWebsite(){
 
-    const status =
-        document.getElementById("status");
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const loader =
+    document.getElementById("loader");
+
+const loaderText =
+    document.getElementById("loaderText");
+
+const errorBox =
+    document.getElementById("error");
+
+const errorMessage =
+    document.getElementById("errorMessage");
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function showError(message){
+
+    loader.style.display = "none";
+
+    errorBox.style.display = "flex";
+
+    errorMessage.textContent = message;
+}
+
+
+function updateLoader(message){
+
+    loaderText.textContent = message;
+
+}
+
+
+/*
+    Converts relative template path into
+    absolute URL based on CURRENT page.
+
+    Example:
+
+    templates/template-v1.html
+
+    automatically becomes:
+
+    https://username.github.io/repository/templates/template-v1.html
+
+    No /mdkaif/ hardcoding.
+*/
+function resolveUrl(path){
+
+    return new URL(
+        String(path).trim(),
+        window.location.href
+    ).href;
+
+}
+
+
+/* =========================================
+   GET CLIENT ID
+========================================= */
+
+async function getClientId(){
 
     const params =
-        new URLSearchParams(window.location.search);
+        new URLSearchParams(
+            window.location.search
+        );
 
-    const clientId =
-        params.get("client");
+    return params.get("client");
 
-    if(!clientId){
+}
 
-        status.textContent =
-            "Client ID missing.";
 
-        return;
+/* =========================================
+   LOAD CLIENT
+========================================= */
+
+async function loadClient(clientId){
+
+    updateLoader(
+        "Loading client information..."
+    );
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("clients")
+        .select(`
+            id,
+            company_name,
+            slug,
+            domain,
+            hosting_type,
+            hosting_url,
+            template,
+            status
+        `)
+        .eq("id", clientId)
+        .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Client load error:",
+            error
+        );
+
+        throw new Error(
+            "Client data could not be loaded."
+        );
+
     }
 
-    try{
 
-        const { data: client, error } =
-            await supabaseClient
-                .from("clients")
-                .select(`
-                    id,
-                    company_name,
-                    slug,
-                    template,
-                    status
-                `)
-                .eq("id", clientId)
-                .single();
+    if(!data){
 
-        if(error){
+        throw new Error(
+            "Client not found."
+        );
 
-            console.error(error);
+    }
 
-            status.textContent =
-                "Client not found.";
 
-            return;
-        }
+    if(
+        String(data.status || "")
+            .toLowerCase() !== "active"
+    ){
 
-        if(!client){
+        throw new Error(
+            "This client website is inactive."
+        );
 
-            status.textContent =
-                "Client not found.";
+    }
 
-            return;
-        }
 
-        if(
-            client.status &&
-            String(client.status).toLowerCase() !== "active"
-        ){
+    if(!data.template){
 
-            status.textContent =
-                "This website is inactive.";
+        throw new Error(
+            "No template is assigned to this client."
+        );
 
-            return;
-        }
+    }
 
-        const templateSlug =
-            String(client.template || "")
+
+    return data;
+
+}
+
+
+/* =========================================
+   LOAD TEMPLATE
+========================================= */
+
+async function loadTemplate(templateSlug){
+
+    updateLoader(
+        "Loading selected template..."
+    );
+
+
+    const slug =
+        String(templateSlug)
             .trim()
             .toLowerCase();
 
-        if(!templateSlug){
 
-            status.textContent =
-                "No template assigned to this client.";
+    /*
+        First try Supabase template record.
+    */
 
-            return;
-        }
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("templates")
+        .select(`
+            id,
+            template_name,
+            template_slug,
+            template_url,
+            status
+        `)
+        .eq("template_slug", slug)
+        .maybeSingle();
 
-        /*
-         * IMPORTANT:
-         * GitHub Pages repository = /mdkaif/
-         */
 
-        const basePath = "/mdkaif/";
+    if(error){
 
-        const templateUrl =
-            basePath +
-            "templates/" +
-            encodeURIComponent(templateSlug) +
-            "/index.html?client=" +
-            encodeURIComponent(clientId);
-
-        console.log("Template URL:", templateUrl);
-
-        window.location.replace(templateUrl);
-
-    }catch(err){
-
-        console.error(err);
-
-        status.textContent =
-            "Unable to load website.";
+        console.warn(
+            "Template DB lookup warning:",
+            error
+        );
 
     }
+
+
+    /*
+        If template record exists
+    */
+
+    if(data){
+
+        if(
+            data.status &&
+            String(data.status).toLowerCase() !== "active"
+        ){
+
+            throw new Error(
+                "Selected template is inactive."
+            );
+
+        }
+
+
+        /*
+            If DB has URL, use it.
+        */
+
+        if(
+            data.template_url &&
+            String(data.template_url).trim()
+        ){
+
+            return {
+                ...data,
+                resolved_url:
+                    resolveUrl(
+                        data.template_url
+                    )
+            };
+
+        }
+
+    }
+
+
+    /*
+        FALLBACK
+
+        Flat GitHub structure:
+
+        templates/template-v1.html
+    */
+
+    const fallbackPath =
+        `templates/${slug}.html`;
+
+
+    return {
+
+        template_slug: slug,
+
+        template_name:
+            data?.template_name || slug,
+
+        template_url:
+            fallbackPath,
+
+        resolved_url:
+            resolveUrl(fallbackPath)
+
+    };
+
 }
 
-loadWebsite();
+
+/* =========================================
+   REDIRECT TO TEMPLATE
+========================================= */
+
+function openTemplate(
+    template,
+    clientId
+){
+
+    const url =
+        new URL(
+            template.resolved_url,
+            window.location.href
+        );
+
+
+    /*
+        Send client ID to template.
+
+        Example:
+
+        template-v1.html?client=123
+    */
+
+    url.searchParams.set(
+        "client",
+        clientId
+    );
+
+
+    /*
+        Optional: send client slug
+        if available.
+    */
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const preview =
+        params.get("preview");
+
+
+    if(preview){
+
+        url.searchParams.set(
+            "preview",
+            preview
+        );
+
+    }
+
+
+    window.location.replace(
+        url.href
+    );
+
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+async function init(){
+
+    try{
+
+        const clientId =
+            await getClientId();
+
+
+        if(!clientId){
+
+            throw new Error(
+                "Client ID is missing."
+            );
+
+        }
+
+
+        const client =
+            await loadClient(
+                clientId
+            );
+
+
+        console.log(
+            "CLIENT:",
+            client
+        );
+
+
+        const template =
+            await loadTemplate(
+                client.template
+            );
+
+
+        console.log(
+            "TEMPLATE:",
+            template
+        );
+
+
+        updateLoader(
+            "Opening website template..."
+        );
+
+
+        /*
+            Small delay gives loader
+            time to render properly.
+        */
+
+        setTimeout(() => {
+
+            openTemplate(
+                template,
+                clientId
+            );
+
+        }, 100);
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Website initialization error:",
+            error
+        );
+
+
+        showError(
+            error.message ||
+            "Unable to load website."
+        );
+
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
 
 </script>
 
