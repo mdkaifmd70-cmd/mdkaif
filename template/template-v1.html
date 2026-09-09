@@ -1,38 +1,21 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <meta name="description"
-      content="Professional manufacturing company website template">
+      content="Professional manufacturing company website">
 
-<title>
-    INDUSTRIA | Manufacturing Excellence
-</title>
+<title>INDUSTRIA | Manufacturing Excellence</title>
 
 <style>
 
-:root{
-    --primary:#1d4ed8;
-    --primary-dark:#1e40af;
-    --accent:#f59e0b;
-    --dark:#0b1220;
-    --text:#334155;
-    --muted:#64748b;
-    --light:#f8fafc;
-    --white:#ffffff;
-    --border:#e2e8f0;
-    --radius:18px;
-    --shadow:0 15px 40px rgba(15,23,42,.09);
-}
-
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
 }
 
 html{
@@ -40,10 +23,15 @@ html{
 }
 
 body{
+    margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:var(--light);
-    color:var(--text);
+    background:#f5f7fb;
+    color:#172033;
     line-height:1.6;
+}
+
+img{
+    max-width:100%;
 }
 
 a{
@@ -51,229 +39,268 @@ a{
     color:inherit;
 }
 
-img{
-    max-width:100%;
-    display:block;
-}
-
 button,
 input,
-textarea,
-select{
-    font-family:inherit;
+textarea{
+    font:inherit;
 }
 
-.container{
-    width:min(1180px,92%);
-    margin:auto;
-}
 
-/* =========================
-   TOP BAR
-========================= */
+/* =========================================================
+   TOPBAR
+========================================================= */
 
 .topbar{
-    background:var(--dark);
-    color:#cbd5e1;
+    background:#0b1220;
+    color:#dbe4f0;
     font-size:13px;
-    padding:8px 0;
 }
 
 .topbar-inner{
+    max-width:1200px;
+    margin:auto;
+    padding:9px 24px;
     display:flex;
     justify-content:space-between;
+    align-items:center;
     gap:20px;
+}
+
+.topbar-right{
+    display:flex;
+    gap:18px;
     flex-wrap:wrap;
 }
 
-/* =========================
-   NAVBAR
-========================= */
+.topbar a{
+    color:#fff;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 header{
     position:sticky;
     top:0;
     z-index:1000;
-    background:rgba(255,255,255,.96);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
+    background:#fff;
+    border-bottom:1px solid #e5e7eb;
 }
 
-.nav{
-    min-height:76px;
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    min-height:74px;
+    padding:0 24px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    position:relative;
+    gap:30px;
 }
 
 .logo{
-    font-size:25px;
-    font-weight:900;
-    color:var(--dark);
-}
-
-.logo .client-brand{
-    color:var(--dark);
-}
-
-.navlinks{
     display:flex;
     align-items:center;
-    gap:24px;
-    font-size:14px;
-    font-weight:700;
+    gap:10px;
+    font-size:23px;
+    font-weight:800;
+    letter-spacing:.5px;
+    color:#111827;
+    min-width:0;
 }
 
-.navlinks a:hover{
-    color:var(--primary);
+.logo img{
+    max-height:46px;
+    max-width:180px;
+    object-fit:contain;
 }
+
+.client-brand{
+    white-space:nowrap;
+}
+
+.nav{
+    display:flex;
+    align-items:center;
+    gap:26px;
+}
+
+.nav a{
+    color:#374151;
+    font-size:14px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.nav a:hover{
+    color:#2563eb;
+}
+
+.menu{
+    display:none;
+    border:0;
+    background:transparent;
+    font-size:28px;
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    min-height:650px;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(2,6,23,.92),
+            rgba(2,6,23,.55)
+        ),
+        url("https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1800&q=85");
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    align-items:center;
+
+    color:#fff;
+}
+
+.hero-inner{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+    padding:90px 24px;
+}
+
+.hero-content{
+    max-width:760px;
+}
+
+.eyebrow{
+    display:inline-block;
+    margin-bottom:16px;
+    color:#60a5fa;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.hero h1{
+    margin:0 0 22px;
+    font-size:clamp(42px,6vw,76px);
+    line-height:1.02;
+    letter-spacing:-2px;
+}
+
+.hero p{
+    max-width:680px;
+    margin:0 0 30px;
+    color:#dbe4f0;
+    font-size:18px;
+}
+
+.hero-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 .btn{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    padding:12px 20px;
-    border-radius:11px;
-    font-weight:800;
-    border:1px solid transparent;
-    cursor:pointer;
+    min-height:46px;
+    padding:0 22px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:700;
     transition:.2s;
+    border:1px solid transparent;
 }
 
 .btn-primary{
-    background:var(--primary);
+    background:#2563eb;
     color:#fff;
 }
 
 .btn-primary:hover{
-    background:var(--primary-dark);
-    transform:translateY(-2px);
+    background:#1d4ed8;
 }
 
-.btn-outline{
-    border-color:#fff;
-    color:#fff;
-    background:transparent;
-}
-
-.btn-outline:hover{
+.btn-secondary{
     background:#fff;
-    color:var(--dark);
+    color:#172033;
 }
 
-.menu{
-    display:none;
-    background:none;
-    border:0;
-    font-size:28px;
-    cursor:pointer;
+.btn-secondary:hover{
+    background:#eef2f7;
 }
 
-/* =========================
-   HERO
-========================= */
 
-.hero{
-    min-height:650px;
-
-    display:flex;
-    align-items:center;
-
-    background:
-    linear-gradient(
-        90deg,
-        rgba(2,6,23,.92),
-        rgba(2,6,23,.55)
-    ),
-    url("https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1800&q=85")
-    center/cover;
-}
-
-.hero-content{
-    max-width:780px;
-    color:white;
-    padding:90px 0;
-}
-
-.eyebrow{
-    display:inline-block;
-    color:#93c5fd;
-    font-weight:900;
-    font-size:13px;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    margin-bottom:14px;
-}
-
-.hero h1{
-    font-size:clamp(44px,6vw,76px);
-    line-height:1.02;
-    letter-spacing:-2px;
-    margin-bottom:22px;
-}
-
-.hero p{
-    color:#dbeafe;
-    font-size:18px;
-    max-width:680px;
-    margin-bottom:30px;
-}
-
-.actions{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-}
-
-/* =========================
-   SECTIONS
-========================= */
+/* =========================================================
+   GENERAL SECTION
+========================================================= */
 
 section{
-    padding:85px 0;
+    scroll-margin-top:90px;
+}
+
+.section{
+    max-width:1200px;
+    margin:auto;
+    padding:90px 24px;
 }
 
 .section-head{
     max-width:720px;
-    text-align:center;
-    margin:0 auto 45px;
+    margin-bottom:45px;
 }
 
 .section-head h2{
-    font-size:40px;
-    line-height:1.15;
-    color:var(--dark);
-    margin:8px 0 12px;
+    margin:0 0 14px;
+    font-size:clamp(32px,4vw,48px);
+    line-height:1.1;
+    letter-spacing:-1px;
 }
 
 .section-head p{
-    color:var(--muted);
+    margin:0;
+    color:#64748b;
 }
 
-/* =========================
+
+/* =========================================================
    STATS
-========================= */
+========================================================= */
 
 .stats{
-    margin-top:-45px;
-    position:relative;
+    background:#fff;
+    border-bottom:1px solid #e5e7eb;
 }
 
-.stat-grid{
+.stats-grid{
+    max-width:1200px;
+    margin:auto;
+    padding:0 24px;
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    background:white;
-    border:1px solid var(--border);
-    border-radius:20px;
-    box-shadow:var(--shadow);
-    overflow:hidden;
 }
 
 .stat{
+    padding:35px 20px;
     text-align:center;
-    padding:28px;
-    border-right:1px solid var(--border);
+    border-right:1px solid #e5e7eb;
 }
 
 .stat:last-child{
@@ -282,134 +309,117 @@ section{
 
 .stat strong{
     display:block;
-    font-size:32px;
-    color:var(--dark);
+    font-size:38px;
+    line-height:1;
+    margin-bottom:8px;
+    color:#111827;
 }
 
 .stat span{
-    color:var(--muted);
-    font-size:13px;
-    font-weight:700;
+    color:#64748b;
+    font-size:14px;
 }
 
-/* =========================
+
+/* =========================================================
    ABOUT
-========================= */
+========================================================= */
 
 .about{
+    background:#f8fafc;
+}
+
+.about-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:60px;
+    gap:55px;
     align-items:center;
 }
 
-.visual{
-    min-height:450px;
-
-    border-radius:25px;
+.about .visual{
+    min-height:480px;
+    border-radius:16px;
+    overflow:hidden;
 
     background:
-    linear-gradient(
-        135deg,
-        #dbeafe,
-        #e2e8f0
-    );
-
-    display:grid;
-    place-items:center;
-
-    color:#475569;
-
-    font-size:25px;
-    font-weight:900;
-
-    text-align:center;
-    padding:30px;
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #cbd5e1
+        );
 
     background-size:cover;
     background-position:center;
-}
 
-.checks{
-    display:grid;
-    gap:11px;
-    margin:23px 0;
-}
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-.checks div{
+    color:#64748b;
+    font-size:14px;
     font-weight:700;
 }
 
-.checks span{
-    color:var(--primary);
-    margin-right:8px;
+.about-content h2{
+    margin:0 0 18px;
+    font-size:clamp(32px,4vw,48px);
+    line-height:1.1;
 }
 
-/* =========================
-   CARDS
-========================= */
+.about-content p{
+    color:#64748b;
+}
+
+
+/* =========================================================
+   CARDS / GRID
+========================================================= */
 
 .grid-3{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:21px;
+    gap:24px;
 }
 
 .card{
     background:#fff;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:25px;
-    box-shadow:var(--shadow);
-}
-
-.icon{
-    width:48px;
-    height:48px;
-
-    border-radius:13px;
-
-    background:#dbeafe;
-    color:var(--primary);
-
-    display:grid;
-    place-items:center;
-
-    font-size:22px;
-
-    margin-bottom:17px;
-}
-
-.card h3{
-    color:var(--dark);
-    margin-bottom:8px;
-}
-
-.card p{
-    color:var(--muted);
-    font-size:14px;
-}
-
-/* =========================
-   PRODUCTS
-========================= */
-
-.products .card{
-    padding:0;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
     overflow:hidden;
+    transition:.25s;
 }
 
-.product-image{
-    height:210px;
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(15,23,42,.08);
+}
 
-    background:#cbd5e1;
 
-    display:grid;
-    place-items:center;
+/* =========================================================
+   PRODUCTS
+========================================================= */
 
-    color:#475569;
+.products{
+    background:#fff;
+}
 
-    font-weight:900;
+.products .product-image{
+    height:230px;
+    background:#e2e8f0;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#64748b;
+    font-size:13px;
+    font-weight:700;
+}
+
+.products .product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 }
 
 .product-body{
@@ -417,407 +427,415 @@ section{
 }
 
 .product-code{
-    color:var(--primary);
-    font-size:12px;
-    font-weight:900;
+    color:#2563eb;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:8px;
 }
 
-/* =========================
-   MANUFACTURING PROCESS
-========================= */
+.product-body h3{
+    margin:0 0 9px;
+    font-size:21px;
+}
 
-.process{
-    background:#eef2ff;
+.product-body p{
+    margin:0;
+    color:#64748b;
+    font-size:14px;
+}
+
+
+/* =========================================================
+   MANUFACTURING
+========================================================= */
+
+.manufacturing{
+    background:#f8fafc;
 }
 
 .process-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:18px;
+    gap:22px;
 }
 
 .step{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:23px;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:26px;
 }
 
-.number{
-    width:38px;
-    height:38px;
-
+.step .number{
+    width:44px;
+    height:44px;
     border-radius:50%;
+    background:#dbeafe;
+    color:#2563eb;
 
-    background:var(--primary);
-    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    display:grid;
-    place-items:center;
-
-    font-weight:900;
-
-    margin-bottom:15px;
+    font-weight:800;
+    margin-bottom:18px;
 }
 
-/* =========================
+.step h3{
+    margin:0 0 8px;
+    font-size:19px;
+}
+
+.step p{
+    margin:0;
+    color:#64748b;
+    font-size:14px;
+}
+
+
+/* =========================================================
    QUALITY
-========================= */
+========================================================= */
 
 .quality{
-    background:var(--dark);
-    color:#fff;
-}
-
-.quality .section-head h2{
-    color:#fff;
-}
-
-.quality .section-head p{
-    color:#cbd5e1;
+    background:#fff;
 }
 
 .quality .card{
-    background:#111c30;
-    border-color:#24344d;
+    padding:28px;
+    overflow:visible;
 }
 
-.quality .card h3{
-    color:white;
+.quality .icon{
+    width:48px;
+    height:48px;
+    border-radius:10px;
+    background:#dbeafe;
+    color:#2563eb;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:20px;
+    font-weight:800;
+
+    margin-bottom:18px;
 }
 
-.quality .card p{
-    color:#cbd5e1;
+.quality h3{
+    margin:0 0 8px;
 }
 
-/* =========================
+.quality p{
+    margin:0;
+    color:#64748b;
+}
+
+
+/* =========================================================
    INDUSTRIES
-========================= */
+========================================================= */
+
+.industries-section{
+    background:#f8fafc;
+}
 
 .industries{
     display:flex;
-    justify-content:center;
     flex-wrap:wrap;
-    gap:10px;
+    gap:14px;
 }
 
 .pill{
-    background:white;
-
-    border:1px solid var(--border);
-
-    border-radius:99px;
-
-    padding:11px 18px;
-
-    font-weight:800;
-
-    color:var(--dark);
+    background:#fff;
+    border:1px solid #dbe2ea;
+    border-radius:999px;
+    padding:13px 19px;
+    color:#334155;
+    font-weight:700;
+    font-size:14px;
 }
 
-/* =========================
+
+/* =========================================================
    GALLERY
-========================= */
+========================================================= */
+
+.gallery-section{
+    background:#fff;
+}
 
 .gallery{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:13px;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
 .gallery-item{
-    height:190px;
-
-    border-radius:15px;
-
-    background:#cbd5e1;
-
-    display:grid;
-    place-items:center;
-
-    color:#475569;
-
-    font-weight:800;
-
+    min-height:260px;
+    border-radius:14px;
+    background:#e2e8f0;
     background-size:cover;
     background-position:center;
+    overflow:hidden;
 }
 
-/* =========================
-   TESTIMONIAL
-========================= */
+
+/* =========================================================
+   TESTIMONIALS
+========================================================= */
 
 .testimonials{
-    background:#f1f5f9;
+    background:#f8fafc;
 }
 
 .quote{
     background:#fff;
-
-    border:1px solid var(--border);
-
-    border-radius:17px;
-
-    padding:24px;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:28px;
 }
 
 .quote p{
+    margin:0 0 20px;
+    color:#475569;
     font-size:16px;
 }
 
 .quote strong{
     display:block;
-
-    color:var(--dark);
-
-    margin-top:16px;
+    color:#111827;
 }
 
-/* =========================
+.quote small{
+    display:block;
+    margin-top:3px;
+    color:#64748b;
+}
+
+
+/* =========================================================
    FAQ
-========================= */
+========================================================= */
+
+.faq-section{
+    background:#fff;
+}
 
 .faq{
     max-width:850px;
-    margin:auto;
 }
 
 .faq-item{
-    background:white;
-
-    border:1px solid var(--border);
-
-    border-radius:13px;
-
-    margin-bottom:10px;
-
-    overflow:hidden;
+    border-bottom:1px solid #e5e7eb;
 }
 
 .faq-question{
     width:100%;
-
-    background:none;
-
     border:0;
-
-    padding:18px 20px;
-
-    text-align:left;
-
+    background:transparent;
+    padding:22px 0;
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
-    font-weight:900;
-
-    color:var(--dark);
-
+    gap:20px;
     cursor:pointer;
+    text-align:left;
+    color:#172033;
+    font-weight:700;
+}
+
+.faq-question span:last-child{
+    font-size:22px;
+    color:#2563eb;
 }
 
 .faq-answer{
     display:none;
+    padding:0 0 20px;
+    color:#64748b;
+}
 
-    padding:0 20px 18px;
-
-    color:var(--muted);
+.faq-answer p{
+    margin:0;
 }
 
 .faq-item.open .faq-answer{
     display:block;
 }
 
-/* =========================
+
+/* =========================================================
    CONTACT
-========================= */
+========================================================= */
 
 .contact{
+    background:#0b1220;
+    color:#fff;
+}
+
+.contact .section-head p{
+    color:#94a3b8;
+}
+
+.contact-grid{
     display:grid;
-
-    grid-template-columns:.8fr 1.2fr;
-
-    gap:35px;
-}
-
-.info-list{
-    display:grid;
-    gap:13px;
-}
-
-.info{
-    background:white;
-
-    border:1px solid var(--border);
-
-    border-radius:14px;
-
-    padding:17px;
-}
-
-.info b{
-    display:block;
-
-    color:var(--dark);
-
-    margin-bottom:3px;
-}
-
-form{
-    background:white;
-
-    border:1px solid var(--border);
-
-    border-radius:20px;
-
-    padding:25px;
-
-    box-shadow:var(--shadow);
-}
-
-.form-grid{
-    display:grid;
-
     grid-template-columns:1fr 1fr;
-
-    gap:15px;
+    gap:55px;
 }
 
-.field{
-    display:grid;
-
-    gap:7px;
-
-    margin-bottom:14px;
+.contact-info{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
 }
 
-.field.full{
-    grid-column:1/-1;
+.contact-item{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;
+    padding:20px;
 }
 
-.field label{
+.contact-item small{
+    display:block;
+    color:#94a3b8;
+    margin-bottom:5px;
+}
+
+.contact-item a{
+    color:#fff;
+}
+
+.contact-form{
+    background:#fff;
+    color:#172033;
+    padding:28px;
+    border-radius:14px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
     font-size:13px;
-
-    font-weight:800;
-
-    color:var(--dark);
+    font-weight:700;
+    margin-bottom:7px;
 }
 
-.field input,
-.field textarea,
-.field select{
+.form-group input,
+.form-group textarea{
     width:100%;
-
-    padding:12px;
-
-    border:1px solid var(--border);
-
-    border-radius:10px;
-
-    font:inherit;
-
+    border:1px solid #dbe2ea;
+    border-radius:8px;
+    padding:12px 13px;
     outline:none;
 }
 
-.field textarea{
-    min-height:120px;
-
+.form-group textarea{
+    min-height:130px;
     resize:vertical;
 }
 
-.field input:focus,
-.field textarea:focus,
-.field select:focus{
-    border-color:var(--primary);
+.form-group input:focus,
+.form-group textarea:focus{
+    border-color:#2563eb;
 }
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-    background:#020617;
-
-    color:#94a3b8;
-
-    padding:38px 0;
-}
-
-.footer-row{
-    display:flex;
-
-    justify-content:space-between;
-
-    gap:20px;
-
-    flex-wrap:wrap;
-}
-
-.footer-logo{
-    color:white;
-
-    font-size:21px;
-
-    font-weight:900;
-}
-
-/* =========================
-   TOAST
-========================= */
 
 .toast{
     display:none;
-
-    position:fixed;
-
-    right:20px;
-    bottom:20px;
-
-    background:#0f172a;
-
-    color:white;
-
-    padding:14px 18px;
-
-    border-radius:12px;
-
-    z-index:2000;
-
-    box-shadow:var(--shadow);
+    margin-top:14px;
+    padding:12px;
+    background:#dcfce7;
+    color:#166534;
+    border-radius:8px;
+    font-size:13px;
 }
 
-/* =========================
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    background:#070d18;
+    color:#94a3b8;
+}
+
+.footer-inner{
+    max-width:1200px;
+    margin:auto;
+    padding:45px 24px 25px;
+}
+
+.footer-top{
+    display:flex;
+    justify-content:space-between;
+    gap:30px;
+    padding-bottom:30px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.footer-brand{
+    max-width:500px;
+}
+
+.footer-brand strong{
+    color:#fff;
+    font-size:21px;
+}
+
+.footer-brand div{
+    margin-top:10px;
+    font-size:14px;
+}
+
+.footer-links{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+}
+
+.footer-links a{
+    color:#cbd5e1;
+    font-size:13px;
+}
+
+.footer-bottom{
+    padding-top:22px;
+    font-size:12px;
+}
+
+
+/* =========================================================
    RESPONSIVE
-========================= */
+========================================================= */
 
-@media(max-width:850px){
+@media(max-width:900px){
 
-    .navlinks{
-        display:none;
-
+    .nav{
         position:absolute;
-
-        top:76px;
-
         left:0;
         right:0;
+        top:74px;
 
-        background:white;
-
-        padding:18px;
-
+        display:none;
         flex-direction:column;
-
         align-items:flex-start;
 
-        border-bottom:1px solid var(--border);
+        padding:20px 24px;
 
-        box-shadow:0 10px 25px rgba(0,0,0,.08);
+        background:#fff;
+        border-bottom:1px solid #e5e7eb;
+        box-shadow:0 10px 25px rgba(15,23,42,.08);
     }
 
-    .navlinks.show{
+    .nav.show{
         display:flex;
     }
 
@@ -825,45 +843,80 @@ footer{
         display:block;
     }
 
-    .nav>.btn{
-        display:none;
-    }
-
-    .about,
-    .contact{
+    .about-grid,
+    .contact-grid{
         grid-template-columns:1fr;
     }
 
-    .grid-3{
-        grid-template-columns:1fr 1fr;
+    .process-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .process-grid{
-        grid-template-columns:1fr 1fr;
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stat:nth-child(2){
+        border-right:0;
+    }
+
+    .stat:nth-child(-n+2){
+        border-bottom:1px solid #e5e7eb;
+    }
+
+    .grid-3{
+        grid-template-columns:repeat(2,1fr);
     }
 
     .gallery{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .stat-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .stat{
-        border-bottom:1px solid var(--border);
-    }
-
-    .stat:nth-child(2n){
-        border-right:0;
+        grid-template-columns:repeat(2,1fr);
     }
 
 }
 
-@media(max-width:540px){
 
-    section{
-        padding:62px 0;
+@media(max-width:600px){
+
+    .topbar-inner{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:5px;
+    }
+
+    .topbar-right{
+        gap:10px;
+    }
+
+    .navbar{
+        padding:0 18px;
+    }
+
+    .section{
+        padding:65px 18px;
+    }
+
+    .hero-inner{
+        padding:75px 18px;
+    }
+
+    .hero{
+        min-height:600px;
+    }
+
+    .hero h1{
+        letter-spacing:-1px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat{
+        padding:25px 10px;
+    }
+
+    .stat strong{
+        font-size:29px;
     }
 
     .grid-3,
@@ -872,59 +925,46 @@ footer{
         grid-template-columns:1fr;
     }
 
-    .form-grid{
-        grid-template-columns:1fr;
+    .about .visual{
+        min-height:330px;
     }
 
-    .field.full{
-        grid-column:auto;
+    .footer-top{
+        flex-direction:column;
     }
 
-    .hero{
-        min-height:580px;
-    }
+}
 
-    .hero-content{
-        padding:65px 0;
-    }
 
-    .hero h1{
-        letter-spacing:-1px;
-    }
+/* =========================================================
+   CLIENT LOADING
+========================================================= */
 
-    .topbar-inner{
-        justify-content:center;
-        text-align:center;
-        font-size:11px;
-    }
-
-    .section-head h2{
-        font-size:32px;
-    }
-
+body[data-client-loaded="true"]{
+    opacity:1;
 }
 
 </style>
 
 </head>
 
+
 <body>
 
-<!-- =========================
-     TOP BAR
-========================= -->
+
+<!-- ========================================================
+     TOPBAR
+========================================================= -->
 
 <div class="topbar">
 
-    <div class="container topbar-inner">
+    <div class="topbar-inner">
 
         <span data-content="topbar_text">
             Industrial Manufacturing • Quality • Reliability
         </span>
 
-        <span>
-
-            📞
+        <div class="topbar-right">
 
             <a
                 data-content-link="phone"
@@ -933,10 +973,6 @@ footer{
                 +91 00000 00000
             </a>
 
-            &nbsp; | &nbsp;
-
-            ✉
-
             <a
                 data-content-link="email"
                 data-content="email"
@@ -944,22 +980,24 @@ footer{
                 sales@yourcompany.com
             </a>
 
-        </span>
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- =========================
-     NAVBAR
-========================= -->
+<!-- ========================================================
+     HEADER
+========================================================= -->
 
 <header>
 
-    <div class="container nav">
+    <div class="navbar">
 
-        <a class="logo" href="#home">
+        <a
+            class="logo"
+            href="#home">
 
             <span
                 class="client-brand"
@@ -969,75 +1007,102 @@ footer{
 
         </a>
 
-        <nav class="navlinks" id="nav">
-
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#products">Products</a>
-            <a href="#manufacturing">Manufacturing</a>
-            <a href="#quality">Quality</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#contact">Contact</a>
-
-        </nav>
-
-        <a class="btn btn-primary" href="#contact">
-            Get Quote
-        </a>
 
         <button
             class="menu"
             id="menu"
             type="button"
-            aria-label="Open Menu"
+            aria-label="Open navigation"
             aria-expanded="false">
             ☰
         </button>
+
+
+        <nav
+            class="nav"
+            id="nav">
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+            <a href="#products">
+                Products
+            </a>
+
+            <a href="#manufacturing">
+                Manufacturing
+            </a>
+
+            <a href="#quality">
+                Quality
+            </a>
+
+            <a href="#industries">
+                Industries
+            </a>
+
+            <a href="#gallery">
+                Gallery
+            </a>
+
+            <a href="#contact">
+                Contact
+            </a>
+
+        </nav>
 
     </div>
 
 </header>
 
 
-<main>
-
-<!-- =========================
+<!-- ========================================================
      HERO
-========================= -->
+========================================================= -->
 
-<section class="hero" id="home">
+<section
+    class="hero"
+    id="home">
 
-    <div class="container">
+    <div class="hero-inner">
 
         <div class="hero-content">
 
             <span
                 class="eyebrow"
                 data-content="hero_eyebrow">
-                ENGINEERED FOR PERFORMANCE
+                ENGINEERED FOR INDUSTRY
             </span>
 
-            <h1 data-content="hero_title">
-                Manufacturing excellence built for your business.
+            <h1
+                data-content="hero_title">
+                Manufacturing Excellence Built for Tomorrow
             </h1>
 
-            <p data-content="hero_description">
-                Replace this content with your company's story,
-                manufacturing capabilities and main value proposition.
+            <p
+                data-content="hero_description">
+                High-performance manufacturing solutions,
+                precision engineering and dependable quality
+                for demanding industrial applications.
             </p>
 
-            <div class="actions">
+            <div class="hero-actions">
 
                 <a
-                    class="btn btn-primary"
-                    href="#products">
+                    href="#products"
+                    class="btn btn-primary">
                     Explore Products
                 </a>
 
                 <a
-                    class="btn btn-outline"
-                    href="#contact">
-                    Request a Quote
+                    href="#contact"
+                    class="btn btn-secondary">
+                    Contact Sales
                 </a>
 
             </div>
@@ -1049,102 +1114,62 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ========================================================
      STATS
-========================= -->
+========================================================= -->
 
 <section class="stats">
 
-    <div class="container">
+    <div class="stats-grid">
 
-        <div class="stat-grid">
+        <div class="stat">
 
-            <div class="stat">
-                <strong data-stat="1-value">20+</strong>
-                <span data-stat="1-label">Years Experience</span>
-            </div>
+            <strong data-stat="1-value">
+                20+
+            </strong>
 
-            <div class="stat">
-                <strong data-stat="2-value">50K+</strong>
-                <span data-stat="2-label">Units Delivered</span>
-            </div>
-
-            <div class="stat">
-                <strong data-stat="3-value">25+</strong>
-                <span data-stat="3-label">Markets Served</span>
-            </div>
-
-            <div class="stat">
-                <strong data-stat="4-value">99%</strong>
-                <span data-stat="4-label">Quality Focus</span>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     ABOUT
-========================= -->
-
-<section id="about">
-
-    <div class="container about">
-
-        <div class="visual">
-            FACTORY / COMPANY IMAGE
-        </div>
-
-        <div>
-
-            <span
-                class="eyebrow"
-                data-content="about_eyebrow">
-                ABOUT COMPANY
+            <span data-stat="1-label">
+                Years Experience
             </span>
 
-            <h2 data-content="about_title">
-                Built on quality, capability and trust.
-            </h2>
+        </div>
 
-            <p data-content="about_description">
-                Use this section to introduce the company,
-                manufacturing history, infrastructure,
-                team and business philosophy.
-            </p>
 
-            <div class="checks">
+        <div class="stat">
 
-                <div>
-                    <span>✓</span>
-                    Modern manufacturing infrastructure
-                </div>
+            <strong data-stat="2-value">
+                500+
+            </strong>
 
-                <div>
-                    <span>✓</span>
-                    Experienced technical team
-                </div>
+            <span data-stat="2-label">
+                Projects Delivered
+            </span>
 
-                <div>
-                    <span>✓</span>
-                    Quality-focused production process
-                </div>
+        </div>
 
-                <div>
-                    <span>✓</span>
-                    Reliable domestic & international supply
-                </div>
 
-            </div>
+        <div class="stat">
 
-            <a
-                class="btn btn-primary"
-                href="#contact">
-                Talk to Our Team
-            </a>
+            <strong data-stat="3-value">
+                30+
+            </strong>
+
+            <span data-stat="3-label">
+                Countries Served
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <strong data-stat="4-value">
+                99%
+            </strong>
+
+            <span data-stat="4-label">
+                Quality Focus
+            </span>
 
         </div>
 
@@ -1153,36 +1178,177 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ========================================================
+     ABOUT
+========================================================= -->
+
+<section
+    class="about"
+    id="about">
+
+    <div class="section">
+
+        <div class="about-grid">
+
+
+            <div
+                class="visual"
+                data-content-image="about">
+                FACTORY / COMPANY IMAGE
+            </div>
+
+
+            <div class="about-content">
+
+                <span
+                    class="eyebrow"
+                    data-content="about_eyebrow">
+                    ABOUT COMPANY
+                </span>
+
+                <h2
+                    data-content="about_title">
+                    Precision Manufacturing With a Quality-First Mindset
+                </h2>
+
+                <p
+                    data-content="about_description">
+                    We combine advanced manufacturing capabilities,
+                    skilled professionals and rigorous quality systems
+                    to deliver reliable industrial products and
+                    solutions.
+                </p>
+
+                <p>
+                    From engineering and production to inspection
+                    and final delivery, every stage is managed with
+                    consistency, efficiency and accountability.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================
      PRODUCTS
-========================= -->
+========================================================= -->
 
-<section id="products">
+<section
+    class="products"
+    id="products">
 
-    <div class="container">
+    <div class="section">
 
         <div class="section-head">
 
             <span
                 class="eyebrow"
                 data-content="products_eyebrow">
-                PRODUCT PORTFOLIO
+                OUR PRODUCTS
             </span>
 
-            <h2 data-content="products_title">
-                Products engineered for performance
+            <h2
+                data-content="products_title">
+                Industrial Products Designed for Performance
             </h2>
 
-            <p data-content="products_description">
-                Replace the placeholders with actual products,
-                specifications and enquiry links.
+            <p
+                data-content="products_description">
+                Explore our range of engineered products
+                manufactured for demanding industrial environments.
             </p>
 
         </div>
 
+
         <div
-            class="grid-3"
+            class="grid-3 products"
             data-products>
+
+
+            <article class="card">
+
+                <div class="product-image">
+                    PRODUCT IMAGE
+                </div>
+
+                <div class="product-body">
+
+                    <div class="product-code">
+                        PRD-001
+                    </div>
+
+                    <h3>
+                        Industrial Product
+                    </h3>
+
+                    <p>
+                        High-performance product engineered
+                        for reliable industrial applications.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="product-image">
+                    PRODUCT IMAGE
+                </div>
+
+                <div class="product-body">
+
+                    <div class="product-code">
+                        PRD-002
+                    </div>
+
+                    <h3>
+                        Engineering Component
+                    </h3>
+
+                    <p>
+                        Precision-manufactured components
+                        designed for consistent performance.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="product-image">
+                    PRODUCT IMAGE
+                </div>
+
+                <div class="product-body">
+
+                    <div class="product-code">
+                        PRD-003
+                    </div>
+
+                    <h3>
+                        Custom Solution
+                    </h3>
+
+                    <p>
+                        Customized manufacturing solutions
+                        developed around customer requirements.
+                    </p>
+
+                </div>
+
+            </article>
+
+
         </div>
 
     </div>
@@ -1190,15 +1356,15 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ========================================================
      MANUFACTURING
-========================= -->
+========================================================= -->
 
 <section
-    class="process"
+    class="manufacturing"
     id="manufacturing">
 
-    <div class="container">
+    <div class="section">
 
         <div class="section-head">
 
@@ -1208,20 +1374,97 @@ footer{
                 MANUFACTURING
             </span>
 
-            <h2 data-content="manufacturing_title">
-                From raw material to finished product
+            <h2
+                data-content="manufacturing_title">
+                A Controlled Process From Engineering to Delivery
             </h2>
 
-            <p data-content="manufacturing_description">
-                Show the manufacturing journey and build
-                confidence with prospective buyers.
+            <p
+                data-content="manufacturing_description">
+                Every manufacturing stage follows defined
+                processes, inspections and quality controls.
             </p>
 
         </div>
 
+
         <div
             class="process-grid"
             data-manufacturing>
+
+
+            <div class="step">
+
+                <div class="number">
+                    01
+                </div>
+
+                <h3>
+                    Engineering
+                </h3>
+
+                <p>
+                    Product planning and engineering
+                    according to application requirements.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+                    02
+                </div>
+
+                <h3>
+                    Production
+                </h3>
+
+                <p>
+                    Controlled manufacturing using
+                    modern production processes.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+                    03
+                </div>
+
+                <h3>
+                    Inspection
+                </h3>
+
+                <p>
+                    Detailed inspection and testing
+                    before final approval.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+                    04
+                </div>
+
+                <h3>
+                    Delivery
+                </h3>
+
+                <p>
+                    Secure packaging and dependable
+                    delivery to customers.
+                </p>
+
+            </div>
+
+
         </div>
 
     </div>
@@ -1229,38 +1472,97 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ========================================================
      QUALITY
-========================= -->
+========================================================= -->
 
 <section
     class="quality"
     id="quality">
 
-    <div class="container">
+    <div class="section">
 
         <div class="section-head">
 
             <span
                 class="eyebrow"
                 data-content="quality_eyebrow">
-                QUALITY ASSURANCE
+                QUALITY SYSTEM
             </span>
 
-            <h2 data-content="quality_title">
-                Quality is built into every stage.
+            <h2
+                data-content="quality_title">
+                Quality Built Into Every Stage
             </h2>
 
-            <p data-content="quality_description">
-                Replace these cards with actual certifications,
-                testing facilities and standards.
+            <p
+                data-content="quality_description">
+                Our quality approach focuses on consistency,
+                traceability and continuous improvement.
             </p>
 
         </div>
 
+
         <div
             class="grid-3"
             data-quality>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    ✓
+                </div>
+
+                <h3>
+                    Quality Inspection
+                </h3>
+
+                <p>
+                    Defined inspection procedures
+                    throughout production.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    ✓
+                </div>
+
+                <h3>
+                    Process Control
+                </h3>
+
+                <p>
+                    Controlled processes for
+                    repeatable manufacturing results.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    ✓
+                </div>
+
+                <h3>
+                    Traceability
+                </h3>
+
+                <p>
+                    Clear documentation and
+                    product traceability.
+                </p>
+
+            </div>
+
+
         </div>
 
     </div>
@@ -1268,31 +1570,62 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ========================================================
      INDUSTRIES
-========================= -->
+========================================================= -->
 
-<section>
+<section
+    class="industries-section"
+    id="industries">
 
-    <div class="container">
+    <div class="section">
 
         <div class="section-head">
 
             <span
                 class="eyebrow"
                 data-content="industries_eyebrow">
-                INDUSTRIES WE SERVE
+                INDUSTRIES
             </span>
 
-            <h2 data-content="industries_title">
-                Solutions across multiple sectors
+            <h2
+                data-content="industries_title">
+                Serving Diverse Industrial Sectors
             </h2>
 
         </div>
 
+
         <div
             class="industries"
             data-industries>
+
+
+            <div class="pill">
+                Automotive
+            </div>
+
+            <div class="pill">
+                Engineering
+            </div>
+
+            <div class="pill">
+                Construction
+            </div>
+
+            <div class="pill">
+                Energy
+            </div>
+
+            <div class="pill">
+                Infrastructure
+            </div>
+
+            <div class="pill">
+                Industrial Equipment
+            </div>
+
+
         </div>
 
     </div>
@@ -1300,36 +1633,58 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ========================================================
      GALLERY
-========================= -->
+========================================================= -->
 
-<section id="gallery">
+<section
+    class="gallery-section"
+    id="gallery">
 
-    <div class="container">
+    <div class="section">
 
         <div class="section-head">
 
             <span
                 class="eyebrow"
                 data-content="gallery_eyebrow">
-                OUR FACILITY
+                FACILITY & GALLERY
             </span>
 
-            <h2 data-content="gallery_title">
-                Factory, machinery & products
+            <h2
+                data-content="gallery_title">
+                Inside Our Manufacturing Environment
             </h2>
 
-            <p data-content="gallery_description">
-                Replace these placeholders with actual
-                photographs from the client's facility.
+            <p
+                data-content="gallery_description">
+                A glimpse into our facilities, production
+                capabilities and manufacturing environment.
             </p>
 
         </div>
 
+
         <div
             class="gallery"
             data-gallery>
+
+
+            <div class="gallery-item"
+                 style="background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=80');">
+            </div>
+
+
+            <div class="gallery-item"
+                 style="background-image:url('https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1000&q=80');">
+            </div>
+
+
+            <div class="gallery-item"
+                 style="background-image:url('https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1000&q=80');">
+            </div>
+
+
         </div>
 
     </div>
@@ -1337,13 +1692,14 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ========================================================
      TESTIMONIALS
-========================= -->
+========================================================= -->
 
-<section class="testimonials">
+<section
+    class="testimonials">
 
-    <div class="container">
+    <div class="section">
 
         <div class="section-head">
 
@@ -1353,15 +1709,73 @@ footer{
                 CLIENT FEEDBACK
             </span>
 
-            <h2 data-content="testimonials_title">
-                Trusted by our customers
+            <h2
+                data-content="testimonials_title">
+                Trusted by Industrial Customers
             </h2>
 
         </div>
 
+
         <div
             class="grid-3"
             data-testimonials>
+
+
+            <div class="quote">
+
+                <p>
+                    Excellent product quality and
+                    dependable delivery performance.
+                </p>
+
+                <strong>
+                    Industrial Customer
+                </strong>
+
+                <small>
+                    Manufacturing Sector
+                </small>
+
+            </div>
+
+
+            <div class="quote">
+
+                <p>
+                    Professional communication,
+                    consistent quality and strong support.
+                </p>
+
+                <strong>
+                    Procurement Partner
+                </strong>
+
+                <small>
+                    Engineering Industry
+                </small>
+
+            </div>
+
+
+            <div class="quote">
+
+                <p>
+                    A reliable manufacturing partner
+                    for our long-term requirements.
+                </p>
+
+                <strong>
+                    Business Client
+                </strong>
+
+                <small>
+                    Industrial Sector
+                </small>
+
+            </div>
+
+
         </div>
 
     </div>
@@ -1369,13 +1783,14 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ========================================================
      FAQ
-========================= -->
+========================================================= -->
 
-<section id="faq">
+<section
+    class="faq-section">
 
-    <div class="container">
+    <div class="section">
 
         <div class="section-head">
 
@@ -1385,15 +1800,105 @@ footer{
                 FAQ
             </span>
 
-            <h2 data-content="faq_title">
-                Frequently asked questions
+            <h2
+                data-content="faq_title">
+                Frequently Asked Questions
             </h2>
 
         </div>
 
+
         <div
             class="faq"
             data-faq>
+
+
+            <div class="faq-item">
+
+                <button
+                    type="button"
+                    class="faq-question">
+
+                    <span>
+                        What products do you manufacture?
+                    </span>
+
+                    <span>
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        We manufacture a wide range of
+                        industrial products and customized
+                        engineering solutions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button
+                    type="button"
+                    class="faq-question">
+
+                    <span>
+                        Do you provide customized solutions?
+                    </span>
+
+                    <span>
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Yes. Our manufacturing capabilities
+                        can be adapted to customer-specific
+                        technical requirements.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button
+                    type="button"
+                    class="faq-question">
+
+                    <span>
+                        How can we request a quotation?
+                    </span>
+
+                    <span>
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Contact our sales team using the
+                        contact details provided below.
+                    </p>
+
+                </div>
+
+            </div>
+
+
         </div>
 
     </div>
@@ -1401,175 +1906,185 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ========================================================
      CONTACT
-========================= -->
+========================================================= -->
 
-<section id="contact">
+<section
+    class="contact"
+    id="contact">
 
-    <div class="container">
+    <div class="section">
 
         <div class="section-head">
 
             <span
                 class="eyebrow"
                 data-content="contact_eyebrow">
-                CONTACT SALES
+                CONTACT US
             </span>
 
-            <h2 data-content="contact_title">
-                Let's discuss your requirement
+            <h2
+                data-content="contact_title">
+                Let's Discuss Your Manufacturing Requirements
             </h2>
 
-            <p data-content="contact_description">
-                Use this form for quotations, bulk enquiries
-                and product questions.
+            <p
+                data-content="contact_description">
+                Speak with our team about products,
+                custom manufacturing and industrial solutions.
             </p>
 
         </div>
 
-        <div class="contact">
 
-            <div class="info-list">
+        <div class="contact-grid">
 
-                <div class="info">
 
-                    <b>📞 Phone</b>
+            <div class="contact-info">
+
+
+                <div class="contact-item">
+
+                    <small>
+                        Phone
+                    </small>
 
                     <a
                         data-content-link="phone"
                         data-content="phone"
                         href="tel:+910000000000">
+
                         +91 00000 00000
+
                     </a>
 
                 </div>
 
 
-                <div class="info">
+                <div class="contact-item">
 
-                    <b>✉ Email</b>
+                    <small>
+                        Email
+                    </small>
 
                     <a
                         data-content-link="email"
                         data-content="email"
                         href="mailto:sales@yourcompany.com">
+
                         sales@yourcompany.com
+
                     </a>
 
                 </div>
 
 
-                <div class="info">
+                <div class="contact-item">
 
-                    <b>📍 Factory</b>
+                    <small>
+                        Address
+                    </small>
 
                     <span data-content="address">
-                        Your Industrial Area, India
+
+                        Industrial Area,
+                        India
+
                     </span>
 
                 </div>
 
 
-                <a
-                    class="btn btn-primary"
-                    data-content-link="whatsapp"
-                    href="https://wa.me/910000000000"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    WhatsApp Sales
-                </a>
+                <div>
 
-            </div>
+                    <a
+                        class="btn btn-primary"
+                        data-content-link="whatsapp"
+                        href="https://wa.me/910000000000"
+                        target="_blank"
+                        rel="noopener noreferrer">
 
+                        WhatsApp Sales
 
-            <form id="contactForm">
-
-                <div class="form-grid">
-
-                    <div class="field">
-
-                        <label for="name">
-                            Name
-                        </label>
-
-                        <input
-                            id="name"
-                            name="name"
-                            required
-                            placeholder="Your name">
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label for="company">
-                            Company
-                        </label>
-
-                        <input
-                            id="company"
-                            name="company"
-                            placeholder="Company name">
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label for="phone">
-                            Phone
-                        </label>
-
-                        <input
-                            id="phone"
-                            name="phone"
-                            required
-                            placeholder="+91">
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label for="email">
-                            Email
-                        </label>
-
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder="you@example.com">
-
-                    </div>
-
-
-                    <div class="field full">
-
-                        <label for="requirement">
-                            Requirement
-                        </label>
-
-                        <textarea
-                            id="requirement"
-                            name="requirement"
-                            required
-                            placeholder="Product name, quantity, specifications, etc."></textarea>
-
-                    </div>
+                    </a>
 
                 </div>
 
 
-                <button
-                    class="btn btn-primary"
-                    type="submit">
-                    Send Enquiry
-                </button>
+            </div>
 
-            </form>
+
+            <div class="contact-form">
+
+                <form
+                    id="contactForm">
+
+                    <div class="form-group">
+
+                        <label>
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Your name"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Your email"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Message
+                        </label>
+
+                        <textarea
+                            name="message"
+                            placeholder="Tell us about your requirement"
+                            required></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        Send Enquiry
+
+                    </button>
+
+
+                    <div
+                        class="toast"
+                        id="toast">
+
+                        Thank you. Your enquiry has been received.
+
+                    </div>
+
+                </form>
+
+            </div>
+
 
         </div>
 
@@ -1577,62 +2092,69 @@ footer{
 
 </section>
 
-</main>
 
-
-<!-- =========================
+<!-- ========================================================
      FOOTER
-========================= -->
+========================================================= -->
 
 <footer>
 
-    <div class="container footer-row">
+    <div class="footer-inner">
 
-        <div>
+        <div class="footer-top">
 
-            <div class="footer-logo">
 
-                <span data-client="company_name">
+            <div class="footer-brand">
+
+                <strong
+                    data-client="company_name">
                     INDUSTRIA
-                </span>
+                </strong>
+
+                <div
+                    data-content="footer_description">
+
+                    Professional manufacturing website
+
+                </div>
 
             </div>
 
-            <div data-content="footer_description">
-                Professional manufacturing website
+
+            <div class="footer-links">
+
+                <a
+                    data-content-link="privacy"
+                    href="#">
+                    Privacy
+                </a>
+
+                <a
+                    data-content-link="terms"
+                    href="#">
+                    Terms
+                </a>
+
+                <a
+                    data-content-link="linkedin"
+                    href="#">
+                    LinkedIn
+                </a>
+
             </div>
 
-            <div>
-                © <span id="year"></span>
-            </div>
 
         </div>
 
-        <div>
 
-            <a
-                data-content-link="privacy"
-                href="#">
-                Privacy
-            </a>
+        <div class="footer-bottom">
 
-            ·
-
-            <a
-                data-content-link="terms"
-                href="#">
-                Terms
-            </a>
-
-            ·
-
-            <a
-                data-content-link="linkedin"
-                href="#">
-                LinkedIn
-            </a>
-
-            · WhatsApp
+            ©
+            <span id="year"></span>
+            <span data-client="company_name">
+                INDUSTRIA
+            </span>
+            . All rights reserved.
 
         </div>
 
@@ -1641,50 +2163,38 @@ footer{
 </footer>
 
 
-<!-- =========================
-     TOAST
-========================= -->
-
-<div
-    class="toast"
-    id="toast">
-    Demo enquiry submitted successfully.
-</div>
-
-
-<!-- =========================
-     BASIC TEMPLATE JAVASCRIPT
-========================= -->
+<!-- ========================================================
+     BASIC PAGE JAVASCRIPT
+========================================================= -->
 
 <script>
 
-/* =========================
-   MOBILE MENU
-========================= */
+const menu =
+    document.getElementById("menu");
 
-const menu = document.getElementById("menu");
-const nav = document.getElementById("nav");
+const nav =
+    document.getElementById("nav");
+
 
 if(menu && nav){
 
-    menu.addEventListener("click", function(){
+    menu.addEventListener(
+        "click",
+        function(){
 
-        const isOpen =
-            nav.classList.toggle("show");
+            const isOpen =
+                nav.classList.toggle("show");
 
-        menu.setAttribute(
-            "aria-expanded",
-            isOpen ? "true" : "false"
-        );
+            menu.setAttribute(
+                "aria-expanded",
+                isOpen ? "true" : "false"
+            );
 
-    });
+        }
+    );
 
 }
 
-
-/* =========================
-   CLOSE MOBILE MENU
-========================= */
 
 document
 .querySelectorAll("#nav a")
@@ -1694,7 +2204,11 @@ document
         "click",
         function(){
 
-            nav.classList.remove("show");
+            if(nav){
+
+                nav.classList.remove("show");
+
+            }
 
             if(menu){
 
@@ -1711,15 +2225,12 @@ document
 });
 
 
-/* =========================
-   DEMO FORM
-========================= */
-
 const form =
     document.getElementById("contactForm");
 
 const toast =
     document.getElementById("toast");
+
 
 if(form){
 
@@ -1754,12 +2265,9 @@ if(form){
 }
 
 
-/* =========================
-   YEAR
-========================= */
-
 const year =
     document.getElementById("year");
+
 
 if(year){
 
@@ -1771,9 +2279,9 @@ if(year){
 </script>
 
 
-<!-- =========================
-     MDK CLIENT SYSTEM
-========================= -->
+<!-- ========================================================
+     SUPABASE + CLIENT RUNTIME
+========================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1784,4 +2292,3 @@ if(year){
 
 </body>
 </html>
-```
