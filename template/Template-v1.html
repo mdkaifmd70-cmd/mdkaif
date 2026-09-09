@@ -2002,6 +2002,8 @@ Demo enquiry submitted successfully.
 
 <script>
 
+<script>
+
 /* MOBILE MENU */
 
 const menu =
@@ -2011,12 +2013,10 @@ const nav =
 document.getElementById("nav");
 
 menu.addEventListener(
-"click",
-function(){
-
-nav.classList.toggle("show");
-
-}
+    "click",
+    function(){
+        nav.classList.toggle("show");
+    }
 );
 
 
@@ -2026,14 +2026,12 @@ document
 .querySelectorAll("#nav a")
 .forEach(function(link){
 
-link.addEventListener(
-"click",
-function(){
-
-nav.classList.remove("show");
-
-}
-);
+    link.addEventListener(
+        "click",
+        function(){
+            nav.classList.remove("show");
+        }
+    );
 
 });
 
@@ -2044,22 +2042,22 @@ document
 .querySelectorAll(".faq-question")
 .forEach(function(button){
 
-button.addEventListener(
-"click",
-function(){
+    button.addEventListener(
+        "click",
+        function(){
 
-const item =
-button.parentElement;
+            const item =
+                button.parentElement;
 
-item.classList.toggle("open");
+            item.classList.toggle("open");
 
-button.querySelector("span").textContent =
-item.classList.contains("open")
-? "−"
-: "+";
+            button.querySelector("span").textContent =
+                item.classList.contains("open")
+                ? "−"
+                : "+";
 
-}
-);
+        }
+    );
 
 });
 
@@ -2073,25 +2071,23 @@ const toast =
 document.getElementById("toast");
 
 form.addEventListener(
-"submit",
-function(event){
+    "submit",
+    function(event){
 
-event.preventDefault();
+        event.preventDefault();
 
-toast.style.display="block";
+        toast.style.display = "block";
 
-setTimeout(
-function(){
+        setTimeout(
+            function(){
+                toast.style.display = "none";
+            },
+            3000
+        );
 
-toast.style.display="none";
+        form.reset();
 
-},
-3000
-);
-
-form.reset();
-
-}
+    }
 );
 
 
@@ -2100,9 +2096,15 @@ form.reset();
 document.getElementById("year").textContent =
 new Date().getFullYear();
 
+</script>
+
+
+<!-- MDK CLIENT SYSTEM -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../client-context.js"></script>
 <script src="../client-runtime.js"></script>
+
 
 </body>
 </html>
