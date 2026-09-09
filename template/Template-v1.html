@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -52,12 +53,21 @@ img{
     display:block;
 }
 
+button,
+input,
+textarea,
+select{
+    font-family:inherit;
+}
+
 .container{
     width:min(1180px,92%);
     margin:auto;
 }
 
-/* TOP BAR */
+/* =========================
+   TOP BAR
+========================= */
 
 .topbar{
     background:var(--dark);
@@ -73,7 +83,9 @@ img{
     flex-wrap:wrap;
 }
 
-/* NAVBAR */
+/* =========================
+   NAVBAR
+========================= */
 
 header{
     position:sticky;
@@ -85,10 +97,11 @@ header{
 }
 
 .nav{
-    height:76px;
+    min-height:76px;
     display:flex;
     align-items:center;
     justify-content:space-between;
+    position:relative;
 }
 
 .logo{
@@ -154,7 +167,9 @@ header{
     cursor:pointer;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero{
     min-height:650px;
@@ -168,7 +183,6 @@ header{
         rgba(2,6,23,.92),
         rgba(2,6,23,.55)
     ),
-
     url("https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1800&q=85")
     center/cover;
 }
@@ -209,7 +223,9 @@ header{
     flex-wrap:wrap;
 }
 
-/* SECTIONS */
+/* =========================
+   SECTIONS
+========================= */
 
 section{
     padding:85px 0;
@@ -232,7 +248,9 @@ section{
     color:var(--muted);
 }
 
-/* STATS */
+/* =========================
+   STATS
+========================= */
 
 .stats{
     margin-top:-45px;
@@ -242,14 +260,10 @@ section{
 .stat-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-
     background:white;
-
     border:1px solid var(--border);
     border-radius:20px;
-
     box-shadow:var(--shadow);
-
     overflow:hidden;
 }
 
@@ -275,7 +289,9 @@ section{
     font-weight:700;
 }
 
-/* ABOUT */
+/* =========================
+   ABOUT
+========================= */
 
 .about{
     display:grid;
@@ -323,7 +339,9 @@ section{
     margin-right:8px;
 }
 
-/* CARDS */
+/* =========================
+   CARDS
+========================= */
 
 .grid-3{
     display:grid;
@@ -333,13 +351,9 @@ section{
 
 .card{
     background:#fff;
-
     border:1px solid var(--border);
-
     border-radius:var(--radius);
-
     padding:25px;
-
     box-shadow:var(--shadow);
 }
 
@@ -370,7 +384,9 @@ section{
     font-size:14px;
 }
 
-/* PRODUCTS */
+/* =========================
+   PRODUCTS
+========================= */
 
 .products .card{
     padding:0;
@@ -400,7 +416,9 @@ section{
     font-weight:900;
 }
 
-/* MANUFACTURING PROCESS */
+/* =========================
+   MANUFACTURING PROCESS
+========================= */
 
 .process{
     background:#eef2ff;
@@ -414,11 +432,8 @@ section{
 
 .step{
     background:white;
-
     border:1px solid var(--border);
-
     border-radius:16px;
-
     padding:23px;
 }
 
@@ -439,7 +454,9 @@ section{
     margin-bottom:15px;
 }
 
-/* QUALITY */
+/* =========================
+   QUALITY
+========================= */
 
 .quality{
     background:var(--dark);
@@ -467,7 +484,9 @@ section{
     color:#cbd5e1;
 }
 
-/* INDUSTRIES */
+/* =========================
+   INDUSTRIES
+========================= */
 
 .industries{
     display:flex;
@@ -490,7 +509,9 @@ section{
     color:var(--dark);
 }
 
-/* GALLERY */
+/* =========================
+   GALLERY
+========================= */
 
 .gallery{
     display:grid;
@@ -513,7 +534,9 @@ section{
     font-weight:800;
 }
 
-/* TESTIMONIAL */
+/* =========================
+   TESTIMONIAL
+========================= */
 
 .testimonials{
     background:#f1f5f9;
@@ -541,7 +564,9 @@ section{
     margin-top:16px;
 }
 
-/* FAQ */
+/* =========================
+   FAQ
+========================= */
 
 .faq{
     max-width:850px;
@@ -575,6 +600,8 @@ section{
 
     justify-content:space-between;
 
+    align-items:center;
+
     font-weight:900;
 
     color:var(--dark);
@@ -594,7 +621,9 @@ section{
     display:block;
 }
 
-/* CONTACT */
+/* =========================
+   CONTACT
+========================= */
 
 .contact{
     display:grid;
@@ -670,7 +699,6 @@ form{
 .field input,
 .field textarea,
 .field select{
-
     width:100%;
 
     padding:12px;
@@ -696,7 +724,9 @@ form{
     border-color:var(--primary);
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 footer{
     background:#020617;
@@ -724,7 +754,9 @@ footer{
     font-weight:900;
 }
 
-/* TOAST */
+/* =========================
+   TOAST
+========================= */
 
 .toast{
     display:none;
@@ -747,7 +779,9 @@ footer{
     box-shadow:var(--shadow);
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(max-width:850px){
 
@@ -770,6 +804,8 @@ footer{
         align-items:flex-start;
 
         border-bottom:1px solid var(--border);
+
+        box-shadow:0 10px 25px rgba(0,0,0,.08);
     }
 
     .navlinks.show{
@@ -809,7 +845,7 @@ footer{
         border-bottom:1px solid var(--border);
     }
 
-    .stat:nth-child(2){
+    .stat:nth-child(2n){
         border-right:0;
     }
 
@@ -853,1174 +889,1109 @@ footer{
         font-size:11px;
     }
 
+    .section-head h2{
+        font-size:32px;
+    }
+
 }
 
 </style>
-</head>
 
+</head>
 
 <body>
 
-
-<!-- TOP BAR -->
+<!-- =========================
+     TOP BAR
+========================= -->
 
 <div class="topbar">
 
-<div class="container topbar-inner">
+    <div class="container topbar-inner">
 
-<span>
-Industrial Manufacturing • Quality • Reliability
-</span>
+        <span>
+            Industrial Manufacturing • Quality • Reliability
+        </span>
 
-<span>
-📞 +91 00000 00000 &nbsp; | &nbsp;
-✉ sales@yourcompany.com
-</span>
+        <span>
+            📞 +91 00000 00000 &nbsp; | &nbsp;
+            ✉ sales@yourcompany.com
+        </span>
+
+    </div>
 
 </div>
 
-</div>
 
-
-
-<!-- NAVBAR -->
+<!-- =========================
+     NAVBAR
+========================= -->
 
 <header>
 
-<div class="container nav">
+    <div class="container nav">
 
-<a class="logo" href="#home">
-INDU<span>STRIA</span>
-</a>
+        <a class="logo" href="#home">
+            INDU<span>STRIA</span>
+        </a>
 
+        <nav class="navlinks" id="nav">
 
-<nav class="navlinks" id="nav">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#products">Products</a>
+            <a href="#manufacturing">Manufacturing</a>
+            <a href="#quality">Quality</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
 
-<a href="#home">Home</a>
+        </nav>
 
-<a href="#about">About</a>
+        <a class="btn btn-primary" href="#contact">
+            Get Quote
+        </a>
 
-<a href="#products">Products</a>
+        <button
+            class="menu"
+            id="menu"
+            type="button"
+            aria-label="Open Menu"
+            aria-expanded="false">
 
-<a href="#manufacturing">Manufacturing</a>
+            ☰
 
-<a href="#quality">Quality</a>
+        </button>
 
-<a href="#gallery">Gallery</a>
-
-<a href="#contact">Contact</a>
-
-</nav>
-
-
-<a class="btn btn-primary" href="#contact">
-Get Quote
-</a>
-
-
-<button
-class="menu"
-id="menu"
-aria-label="Open Menu">
-
-☰
-
-</button>
-
-</div>
+    </div>
 
 </header>
 
 
+<main>
 
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero" id="home">
 
-<div class="container">
+    <div class="container">
 
-<div class="hero-content">
+        <div class="hero-content">
 
-<span class="eyebrow">
-ENGINEERED FOR PERFORMANCE
-</span>
+            <span class="eyebrow">
+                ENGINEERED FOR PERFORMANCE
+            </span>
 
-<h1>
-Manufacturing excellence built for your business.
-</h1>
+            <h1>
+                Manufacturing excellence built for your business.
+            </h1>
 
-<p>
-Replace this content with your company's story,
-manufacturing capabilities and main value proposition.
-This reusable template is designed for industrial,
-engineering and manufacturing companies.
-</p>
+            <p>
+                Replace this content with your company's story,
+                manufacturing capabilities and main value proposition.
+                This reusable template is designed for industrial,
+                engineering and manufacturing companies.
+            </p>
 
+            <div class="actions">
 
-<div class="actions">
+                <a
+                    class="btn btn-primary"
+                    href="#products">
 
-<a
-class="btn btn-primary"
-href="#products">
+                    Explore Products
 
-Explore Products
+                </a>
 
-</a>
+                <a
+                    class="btn btn-outline"
+                    href="#contact">
 
+                    Request a Quote
 
-<a
-class="btn btn-outline"
-href="#contact">
+                </a>
 
-Request a Quote
+            </div>
 
-</a>
+        </div>
 
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-
-<!-- STATS -->
+<!-- =========================
+     STATS
+========================= -->
 
 <section class="stats">
 
-<div class="container">
+    <div class="container">
 
-<div class="stat-grid">
+        <div class="stat-grid">
 
-<div class="stat">
+            <div class="stat">
+                <strong>20+</strong>
+                <span>Years Experience</span>
+            </div>
 
-<strong>20+</strong>
+            <div class="stat">
+                <strong>50K+</strong>
+                <span>Units Delivered</span>
+            </div>
 
-<span>
-Years Experience
-</span>
+            <div class="stat">
+                <strong>25+</strong>
+                <span>Markets Served</span>
+            </div>
 
-</div>
+            <div class="stat">
+                <strong>99%</strong>
+                <span>Quality Focus</span>
+            </div>
 
+        </div>
 
-<div class="stat">
-
-<strong>50K+</strong>
-
-<span>
-Units Delivered
-</span>
-
-</div>
-
-
-<div class="stat">
-
-<strong>25+</strong>
-
-<span>
-Markets Served
-</span>
-
-</div>
-
-
-<div class="stat">
-
-<strong>99%</strong>
-
-<span>
-Quality Focus
-</span>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-
-<!-- ABOUT -->
+<!-- =========================
+     ABOUT
+========================= -->
 
 <section id="about">
 
-<div class="container about">
+    <div class="container about">
 
+        <div class="visual">
+            FACTORY / COMPANY IMAGE
+        </div>
 
-<div class="visual">
+        <div>
 
-FACTORY / COMPANY IMAGE
+            <span class="eyebrow">
+                ABOUT COMPANY
+            </span>
 
-</div>
+            <h2>
+                Built on quality, capability and trust.
+            </h2>
 
+            <p>
+                Use this section to introduce the company,
+                manufacturing history, infrastructure,
+                team and business philosophy.
+            </p>
 
-<div>
+            <div class="checks">
 
-<span class="eyebrow">
-ABOUT COMPANY
-</span>
+                <div>
+                    <span>✓</span>
+                    Modern manufacturing infrastructure
+                </div>
 
-<h2>
-Built on quality, capability and trust.
-</h2>
+                <div>
+                    <span>✓</span>
+                    Experienced technical team
+                </div>
 
-<p>
+                <div>
+                    <span>✓</span>
+                    Quality-focused production process
+                </div>
 
-Use this section to introduce the company,
-manufacturing history, infrastructure,
-team and business philosophy.
+                <div>
+                    <span>✓</span>
+                    Reliable domestic & international supply
+                </div>
 
-</p>
+            </div>
 
+            <a
+                class="btn btn-primary"
+                href="#contact">
 
-<div class="checks">
+                Talk to Our Team
 
-<div>
-<span>✓</span>
-Modern manufacturing infrastructure
-</div>
+            </a>
 
-<div>
-<span>✓</span>
-Experienced technical team
-</div>
+        </div>
 
-<div>
-<span>✓</span>
-Quality-focused production process
-</div>
-
-<div>
-<span>✓</span>
-Reliable domestic & international supply
-</div>
-
-</div>
-
-
-<a
-class="btn btn-primary"
-href="#contact">
-
-Talk to Our Team
-
-</a>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-
-<!-- PRODUCTS -->
+<!-- =========================
+     PRODUCTS
+========================= -->
 
 <section id="products">
 
-<div class="container">
+    <div class="container">
+
+        <div class="section-head">
+
+            <span class="eyebrow">
+                PRODUCT PORTFOLIO
+            </span>
+
+            <h2>
+                Products engineered for performance
+            </h2>
+
+            <p>
+                Replace the placeholders with actual products,
+                specifications and enquiry links.
+            </p>
+
+        </div>
+
+        <div class="grid-3">
+
+            <article class="card products">
+
+                <div class="product-image">
+                    PRODUCT IMAGE
+                </div>
+
+                <div class="product-body">
+
+                    <span class="product-code">
+                        PRODUCT CODE: P-001
+                    </span>
+
+                    <h3>
+                        Industrial Product One
+                    </h3>
+
+                    <p>
+                        Short product description,
+                        specifications and applications.
+                    </p>
+
+                    <br>
+
+                    <a
+                        class="btn btn-primary"
+                        href="#contact">
+
+                        Enquire Now
+
+                    </a>
+
+                </div>
+
+            </article>
 
 
-<div class="section-head">
+            <article class="card products">
 
-<span class="eyebrow">
-PRODUCT PORTFOLIO
-</span>
+                <div class="product-image">
+                    PRODUCT IMAGE
+                </div>
 
-<h2>
-Products engineered for performance
-</h2>
+                <div class="product-body">
 
-<p>
-Replace the placeholders with actual products,
-specifications and enquiry links.
-</p>
+                    <span class="product-code">
+                        PRODUCT CODE: P-002
+                    </span>
 
-</div>
+                    <h3>
+                        Industrial Product Two
+                    </h3>
 
+                    <p>
+                        Short product description,
+                        specifications and applications.
+                    </p>
 
-<div class="grid-3">
+                    <br>
 
+                    <a
+                        class="btn btn-primary"
+                        href="#contact">
 
-<!-- PRODUCT 1 -->
+                        Enquire Now
 
-<article class="card products">
+                    </a>
 
-<div class="product-image">
+                </div>
 
-PRODUCT IMAGE
-
-</div>
-
-<div class="product-body">
-
-<span class="product-code">
-PRODUCT CODE: P-001
-</span>
-
-<h3>
-Industrial Product One
-</h3>
-
-<p>
-Short product description,
-specifications and applications.
-</p>
-
-<br>
-
-<a
-class="btn btn-primary"
-href="#contact">
-
-Enquire Now
-
-</a>
-
-</div>
-
-</article>
+            </article>
 
 
+            <article class="card products">
 
-<!-- PRODUCT 2 -->
+                <div class="product-image">
+                    PRODUCT IMAGE
+                </div>
 
-<article class="card products">
+                <div class="product-body">
 
-<div class="product-image">
+                    <span class="product-code">
+                        PRODUCT CODE: P-003
+                    </span>
 
-PRODUCT IMAGE
+                    <h3>
+                        Industrial Product Three
+                    </h3>
 
-</div>
+                    <p>
+                        Short product description,
+                        specifications and applications.
+                    </p>
 
-<div class="product-body">
+                    <br>
 
-<span class="product-code">
-PRODUCT CODE: P-002
-</span>
+                    <a
+                        class="btn btn-primary"
+                        href="#contact">
 
-<h3>
-Industrial Product Two
-</h3>
+                        Enquire Now
 
-<p>
-Short product description,
-specifications and applications.
-</p>
+                    </a>
 
-<br>
+                </div>
 
-<a
-class="btn btn-primary"
-href="#contact">
+            </article>
 
-Enquire Now
+        </div>
 
-</a>
-
-</div>
-
-</article>
-
-
-
-<!-- PRODUCT 3 -->
-
-<article class="card products">
-
-<div class="product-image">
-
-PRODUCT IMAGE
-
-</div>
-
-<div class="product-body">
-
-<span class="product-code">
-PRODUCT CODE: P-003
-</span>
-
-<h3>
-Industrial Product Three
-</h3>
-
-<p>
-Short product description,
-specifications and applications.
-</p>
-
-<br>
-
-<a
-class="btn btn-primary"
-href="#contact">
-
-Enquire Now
-
-</a>
-
-</div>
-
-</article>
-
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-
-<!-- MANUFACTURING -->
+<!-- =========================
+     MANUFACTURING
+========================= -->
 
 <section
-class="process"
-id="manufacturing">
+    class="process"
+    id="manufacturing">
 
-<div class="container">
+    <div class="container">
 
+        <div class="section-head">
 
-<div class="section-head">
+            <span class="eyebrow">
+                MANUFACTURING
+            </span>
 
-<span class="eyebrow">
-MANUFACTURING
-</span>
+            <h2>
+                From raw material to finished product
+            </h2>
 
-<h2>
-From raw material to finished product
-</h2>
+            <p>
+                Show the manufacturing journey and build
+                confidence with prospective buyers.
+            </p>
 
-<p>
-Show the manufacturing journey and build
-confidence with prospective buyers.
-</p>
+        </div>
 
-</div>
+        <div class="process-grid">
 
+            <div class="step">
 
-<div class="process-grid">
+                <div class="number">
+                    01
+                </div>
 
+                <h3>
+                    Raw Material
+                </h3>
 
-<div class="step">
+                <p>
+                    Incoming material inspection
+                    and controlled sourcing.
+                </p>
 
-<div class="number">
-01
-</div>
-
-<h3>
-Raw Material
-</h3>
-
-<p>
-Incoming material inspection
-and controlled sourcing.
-</p>
-
-</div>
+            </div>
 
 
+            <div class="step">
 
-<div class="step">
+                <div class="number">
+                    02
+                </div>
 
-<div class="number">
-02
-</div>
+                <h3>
+                    Production
+                </h3>
 
-<h3>
-Production
-</h3>
+                <p>
+                    Modern machinery and
+                    standardized production processes.
+                </p>
 
-<p>
-Modern machinery and
-standardized production processes.
-</p>
-
-</div>
-
+            </div>
 
 
-<div class="step">
+            <div class="step">
 
-<div class="number">
-03
-</div>
+                <div class="number">
+                    03
+                </div>
 
-<h3>
-Quality Check
-</h3>
+                <h3>
+                    Quality Check
+                </h3>
 
-<p>
-In-process and final inspection
-against specifications.
-</p>
+                <p>
+                    In-process and final inspection
+                    against specifications.
+                </p>
 
-</div>
-
-
-
-<div class="step">
-
-<div class="number">
-04
-</div>
-
-<h3>
-Dispatch
-</h3>
-
-<p>
-Secure packaging, documentation
-and timely delivery.
-</p>
-
-</div>
+            </div>
 
 
-</div>
+            <div class="step">
 
-</div>
+                <div class="number">
+                    04
+                </div>
+
+                <h3>
+                    Dispatch
+                </h3>
+
+                <p>
+                    Secure packaging, documentation
+                    and timely delivery.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-
-<!-- QUALITY -->
+<!-- =========================
+     QUALITY
+========================= -->
 
 <section
-class="quality"
-id="quality">
+    class="quality"
+    id="quality">
 
-<div class="container">
+    <div class="container">
 
+        <div class="section-head">
 
-<div class="section-head">
+            <span class="eyebrow">
+                QUALITY ASSURANCE
+            </span>
 
-<span class="eyebrow">
-QUALITY ASSURANCE
-</span>
+            <h2>
+                Quality is built into every stage.
+            </h2>
 
-<h2>
-Quality is built into every stage.
-</h2>
+            <p>
+                Replace these cards with actual certifications,
+                testing facilities and standards.
+            </p>
 
-<p>
-Replace these cards with actual certifications,
-testing facilities and standards.
-</p>
+        </div>
 
-</div>
+        <div class="grid-3">
 
+            <div class="card">
 
-<div class="grid-3">
+                <div class="icon">
+                    ✓
+                </div>
 
+                <h3>
+                    Quality Control
+                </h3>
 
-<div class="card">
+                <p>
+                    Documented inspection procedures
+                    and controlled production checkpoints.
+                </p>
 
-<div class="icon">
-✓
-</div>
-
-<h3>
-Quality Control
-</h3>
-
-<p>
-Documented inspection procedures
-and controlled production checkpoints.
-</p>
-
-</div>
+            </div>
 
 
+            <div class="card">
 
-<div class="card">
+                <div class="icon">
+                    ⌁
+                </div>
 
-<div class="icon">
-⌁
-</div>
+                <h3>
+                    Testing & Inspection
+                </h3>
 
-<h3>
-Testing & Inspection
-</h3>
+                <p>
+                    Product testing, dimensional checks
+                    and performance verification.
+                </p>
 
-<p>
-Product testing, dimensional checks
-and performance verification.
-</p>
-
-</div>
-
+            </div>
 
 
-<div class="card">
+            <div class="card">
 
-<div class="icon">
-★
-</div>
+                <div class="icon">
+                    ★
+                </div>
 
-<h3>
-Certifications
-</h3>
+                <h3>
+                    Certifications
+                </h3>
 
-<p>
-Add ISO, industry certifications
-and compliance information here.
-</p>
+                <p>
+                    Add ISO, industry certifications
+                    and compliance information here.
+                </p>
 
-</div>
+            </div>
 
+        </div>
 
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-
-<!-- INDUSTRIES -->
+<!-- =========================
+     INDUSTRIES
+========================= -->
 
 <section>
 
-<div class="container">
+    <div class="container">
 
+        <div class="section-head">
 
-<div class="section-head">
+            <span class="eyebrow">
+                INDUSTRIES WE SERVE
+            </span>
 
-<span class="eyebrow">
-INDUSTRIES WE SERVE
-</span>
+            <h2>
+                Solutions across multiple sectors
+            </h2>
 
-<h2>
-Solutions across multiple sectors
-</h2>
+        </div>
 
-</div>
+        <div class="industries">
 
+            <span class="pill">Automotive</span>
+            <span class="pill">Engineering</span>
+            <span class="pill">Construction</span>
+            <span class="pill">Healthcare</span>
+            <span class="pill">Energy</span>
+            <span class="pill">Packaging</span>
+            <span class="pill">Infrastructure</span>
+            <span class="pill">Industrial Equipment</span>
 
-<div class="industries">
+        </div>
 
-<span class="pill">
-Automotive
-</span>
-
-<span class="pill">
-Engineering
-</span>
-
-<span class="pill">
-Construction
-</span>
-
-<span class="pill">
-Healthcare
-</span>
-
-<span class="pill">
-Energy
-</span>
-
-<span class="pill">
-Packaging
-</span>
-
-<span class="pill">
-Infrastructure
-</span>
-
-<span class="pill">
-Industrial Equipment
-</span>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-
-<!-- GALLERY -->
+<!-- =========================
+     GALLERY
+========================= -->
 
 <section id="gallery">
 
-<div class="container">
+    <div class="container">
 
+        <div class="section-head">
 
-<div class="section-head">
+            <span class="eyebrow">
+                OUR FACILITY
+            </span>
 
-<span class="eyebrow">
-OUR FACILITY
-</span>
+            <h2>
+                Factory, machinery & products
+            </h2>
 
-<h2>
-Factory, machinery & products
-</h2>
+            <p>
+                Replace these placeholders with actual
+                photographs from the client's facility.
+            </p>
 
-<p>
-Replace these placeholders with actual
-photographs from the client's facility.
-</p>
+        </div>
 
-</div>
+        <div class="gallery">
 
+            <div class="gallery-item">
+                FACTORY PHOTO
+            </div>
 
-<div class="gallery">
+            <div class="gallery-item">
+                MACHINERY PHOTO
+            </div>
 
-<div class="gallery-item">
-FACTORY PHOTO
-</div>
+            <div class="gallery-item">
+                PRODUCT PHOTO
+            </div>
 
-<div class="gallery-item">
-MACHINERY PHOTO
-</div>
+            <div class="gallery-item">
+                TEAM PHOTO
+            </div>
 
-<div class="gallery-item">
-PRODUCT PHOTO
-</div>
+            <div class="gallery-item">
+                PRODUCTION PHOTO
+            </div>
 
-<div class="gallery-item">
-TEAM PHOTO
-</div>
+            <div class="gallery-item">
+                QUALITY LAB
+            </div>
 
-<div class="gallery-item">
-PRODUCTION PHOTO
-</div>
+            <div class="gallery-item">
+                WAREHOUSE
+            </div>
 
-<div class="gallery-item">
-QUALITY LAB
-</div>
+            <div class="gallery-item">
+                PACKAGING
+            </div>
 
-<div class="gallery-item">
-WAREHOUSE
-</div>
+        </div>
 
-<div class="gallery-item">
-PACKAGING
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-
-<!-- TESTIMONIALS -->
+<!-- =========================
+     TESTIMONIALS
+========================= -->
 
 <section class="testimonials">
 
-<div class="container">
+    <div class="container">
+
+        <div class="section-head">
+
+            <span class="eyebrow">
+                CLIENT FEEDBACK
+            </span>
+
+            <h2>
+                Trusted by our customers
+            </h2>
+
+        </div>
+
+        <div class="grid-3">
+
+            <div class="quote">
+
+                <p>
+                    “Consistent quality, professional communication
+                    and dependable delivery.”
+                </p>
+
+                <strong>
+                    — Procurement Manager
+                </strong>
+
+            </div>
 
 
-<div class="section-head">
+            <div class="quote">
 
-<span class="eyebrow">
-CLIENT FEEDBACK
-</span>
+                <p>
+                    “Their technical team understood our requirements
+                    and delivered a reliable solution.”
+                </p>
 
-<h2>
-Trusted by our customers
-</h2>
+                <strong>
+                    — Operations Head
+                </strong>
 
-</div>
-
-
-<div class="grid-3">
+            </div>
 
 
-<div class="quote">
+            <div class="quote">
 
-<p>
-“Consistent quality, professional communication
-and dependable delivery.”
-</p>
+                <p>
+                    “A trusted manufacturing partner for
+                    our long-term requirements.”
+                </p>
 
-<strong>
-— Procurement Manager
-</strong>
+                <strong>
+                    — Business Director
+                </strong>
 
-</div>
+            </div>
 
+        </div>
 
-
-<div class="quote">
-
-<p>
-“Their technical team understood our requirements
-and delivered a reliable solution.”
-</p>
-
-<strong>
-— Operations Head
-</strong>
-
-</div>
-
-
-
-<div class="quote">
-
-<p>
-“A trusted manufacturing partner for
-our long-term requirements.”
-</p>
-
-<strong>
-— Business Director
-</strong>
-
-</div>
-
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-
-<!-- FAQ -->
+<!-- =========================
+     FAQ
+========================= -->
 
 <section id="faq">
 
-<div class="container">
+    <div class="container">
+
+        <div class="section-head">
+
+            <span class="eyebrow">
+                FAQ
+            </span>
+
+            <h2>
+                Frequently asked questions
+            </h2>
+
+        </div>
+
+        <div class="faq">
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question"
+                    type="button">
+
+                    <span>
+                        What products do you manufacture?
+                    </span>
+
+                    <span>
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    Replace this answer with the client's
+                    product categories and manufacturing capabilities.
+
+                </div>
+
+            </div>
 
 
-<div class="section-head">
+            <div class="faq-item">
 
-<span class="eyebrow">
-FAQ
-</span>
+                <button
+                    class="faq-question"
+                    type="button">
 
-<h2>
-Frequently asked questions
-</h2>
+                    <span>
+                        Can you handle bulk orders?
+                    </span>
 
-</div>
+                    <span>
+                        +
+                    </span>
 
+                </button>
 
-<div class="faq">
+                <div class="faq-answer">
 
+                    Add MOQ, production capacity, lead time
+                    and bulk-order information here.
 
-<div class="faq-item">
+                </div>
 
-<button class="faq-question">
-
-What products do you manufacture?
-
-<span>+</span>
-
-</button>
-
-<div class="faq-answer">
-
-Replace this answer with the client's
-product categories and manufacturing capabilities.
-
-</div>
-
-</div>
+            </div>
 
 
+            <div class="faq-item">
 
-<div class="faq-item">
+                <button
+                    class="faq-question"
+                    type="button">
 
-<button class="faq-question">
+                    <span>
+                        How can I request a quotation?
+                    </span>
 
-Can you handle bulk orders?
+                    <span>
+                        +
+                    </span>
 
-<span>+</span>
+                </button>
 
-</button>
+                <div class="faq-answer">
 
-<div class="faq-answer">
+                    Customers can use the enquiry form,
+                    phone, email or WhatsApp to request a quotation.
 
-Add MOQ, production capacity, lead time
-and bulk-order information here.
+                </div>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-
-
-<div class="faq-item">
-
-<button class="faq-question">
-
-How can I request a quotation?
-
-<span>+</span>
-
-</button>
-
-<div class="faq-answer">
-
-Customers can use the enquiry form,
-phone, email or WhatsApp to request a quotation.
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-
-<!-- CONTACT -->
+<!-- =========================
+     CONTACT
+========================= -->
 
 <section id="contact">
 
-<div class="container">
+    <div class="container">
 
+        <div class="section-head">
 
-<div class="section-head">
+            <span class="eyebrow">
+                CONTACT SALES
+            </span>
 
-<span class="eyebrow">
-CONTACT SALES
-</span>
+            <h2>
+                Let's discuss your requirement
+            </h2>
 
-<h2>
-Let's discuss your requirement
-</h2>
+            <p>
+                Use this form for quotations, bulk enquiries
+                and product questions.
+            </p>
 
-<p>
-Use this form for quotations, bulk enquiries
-and product questions.
-</p>
+        </div>
 
-</div>
+        <div class="contact">
 
+            <div class="info-list">
 
-<div class="contact">
+                <div class="info">
 
+                    <b>
+                        📞 Phone
+                    </b>
 
-<div class="info-list">
+                    +91 00000 00000
 
+                </div>
 
-<div class="info">
 
-<b>
-📞 Phone
-</b>
+                <div class="info">
 
-+91 00000 00000
+                    <b>
+                        ✉ Email
+                    </b>
 
-</div>
+                    sales@yourcompany.com
 
+                </div>
 
-<div class="info">
 
-<b>
-✉ Email
-</b>
+                <div class="info">
 
-sales@yourcompany.com
+                    <b>
+                        📍 Factory
+                    </b>
 
-</div>
+                    Your Industrial Area, India
 
+                </div>
 
-<div class="info">
 
-<b>
-📍 Factory
-</b>
+                <a
+                    class="btn btn-primary"
+                    href="https://wa.me/910000000000"
+                    target="_blank"
+                    rel="noopener noreferrer">
 
-Your Industrial Area, India
+                    WhatsApp Sales
 
-</div>
+                </a>
 
+            </div>
 
-<a
-class="btn btn-primary"
-href="https://wa.me/910000000000"
-target="_blank">
 
-WhatsApp Sales
+            <form id="contactForm">
 
-</a>
+                <div class="form-grid">
 
+                    <div class="field">
 
-</div>
+                        <label for="name">
+                            Name
+                        </label>
 
+                        <input
+                            id="name"
+                            name="name"
+                            required
+                            placeholder="Your name">
 
+                    </div>
 
-<form id="contactForm">
 
+                    <div class="field">
 
-<div class="form-grid">
+                        <label for="company">
+                            Company
+                        </label>
 
+                        <input
+                            id="company"
+                            name="company"
+                            placeholder="Company name">
 
-<div class="field">
+                    </div>
 
-<label>
-Name
-</label>
 
-<input
-required
-placeholder="Your name">
+                    <div class="field">
 
-</div>
+                        <label for="phone">
+                            Phone
+                        </label>
 
+                        <input
+                            id="phone"
+                            name="phone"
+                            required
+                            placeholder="+91">
 
+                    </div>
 
-<div class="field">
 
-<label>
-Company
-</label>
+                    <div class="field">
 
-<input
-placeholder="Company name">
+                        <label for="email">
+                            Email
+                        </label>
 
-</div>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="you@example.com">
 
+                    </div>
 
 
-<div class="field">
+                    <div class="field full">
 
-<label>
-Phone
-</label>
+                        <label for="requirement">
+                            Requirement
+                        </label>
 
-<input
-required
-placeholder="+91">
+                        <textarea
+                            id="requirement"
+                            name="requirement"
+                            required
+                            placeholder="Product name, quantity, specifications, etc."></textarea>
 
-</div>
+                    </div>
 
+                </div>
 
 
-<div class="field">
+                <button
+                    class="btn btn-primary"
+                    type="submit">
 
-<label>
-Email
-</label>
+                    Send Enquiry
 
-<input
-type="email"
-placeholder="you@example.com">
+                </button>
 
-</div>
+            </form>
 
+        </div>
 
-
-<div class="field full">
-
-<label>
-Requirement
-</label>
-
-<textarea
-required
-placeholder="Product name, quantity, specifications, etc.">
-</textarea>
-
-</div>
-
-
-</div>
-
-
-<button
-class="btn btn-primary"
-type="submit">
-
-Send Enquiry
-
-</button>
-
-
-</form>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 </main>
 
 
-
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
-<div class="container footer-row">
+    <div class="container footer-row">
 
+        <div>
 
-<div>
+            <div class="footer-logo">
+                INDUSTRIA
+            </div>
 
-<div class="footer-logo">
-INDUSTRIA
-</div>
+            <div>
+                Professional manufacturing website template
+                • © <span id="year"></span>
+            </div>
 
-<div>
-Professional manufacturing website template
-• © <span id="year"></span>
-</div>
+        </div>
 
-</div>
+        <div>
+            Privacy · Terms · LinkedIn · WhatsApp
+        </div>
 
-
-<div>
-Privacy · Terms · LinkedIn · WhatsApp
-</div>
-
-
-</div>
+    </div>
 
 </footer>
 
 
+<!-- =========================
+     TOAST
+========================= -->
 
 <div
-class="toast"
-id="toast">
+    class="toast"
+    id="toast">
 
-Demo enquiry submitted successfully.
+    Demo enquiry submitted successfully.
 
 </div>
 
 
+<!-- =========================
+     BASIC TEMPLATE JAVASCRIPT
+========================= -->
 
 <script>
 
-<script>
+/* =========================
+   MOBILE MENU
+========================= */
 
-/* MOBILE MENU */
+const menu = document.getElementById("menu");
+const nav = document.getElementById("nav");
 
-const menu =
-document.getElementById("menu");
+if(menu && nav){
 
-const nav =
-document.getElementById("nav");
+    menu.addEventListener("click", function(){
 
-menu.addEventListener(
-    "click",
-    function(){
-        nav.classList.toggle("show");
-    }
-);
+        const isOpen =
+            nav.classList.toggle("show");
+
+        menu.setAttribute(
+            "aria-expanded",
+            isOpen ? "true" : "false"
+        );
+
+    });
+
+}
 
 
-/* CLOSE MOBILE MENU */
+/* =========================
+   CLOSE MOBILE MENU
+========================= */
 
 document
 .querySelectorAll("#nav a")
@@ -2029,14 +2000,25 @@ document
     link.addEventListener(
         "click",
         function(){
+
             nav.classList.remove("show");
+
+            if(menu){
+                menu.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            }
+
         }
     );
 
 });
 
 
-/* FAQ */
+/* =========================
+   FAQ
+========================= */
 
 document
 .querySelectorAll(".faq-question")
@@ -2047,14 +2029,27 @@ document
         function(){
 
             const item =
-                button.parentElement;
+                button.closest(".faq-item");
+
+            const icon =
+                button.querySelector(
+                    "span:last-child"
+                );
+
+            if(!item){
+                return;
+            }
 
             item.classList.toggle("open");
 
-            button.querySelector("span").textContent =
-                item.classList.contains("open")
-                ? "−"
-                : "+";
+            if(icon){
+
+                icon.textContent =
+                    item.classList.contains("open")
+                    ? "−"
+                    : "+";
+
+            }
 
         }
     );
@@ -2062,47 +2057,74 @@ document
 });
 
 
-/* DEMO FORM */
+/* =========================
+   DEMO FORM
+========================= */
 
 const form =
-document.getElementById("contactForm");
+    document.getElementById("contactForm");
 
 const toast =
-document.getElementById("toast");
+    document.getElementById("toast");
 
-form.addEventListener(
-    "submit",
-    function(event){
+if(form){
 
-        event.preventDefault();
+    form.addEventListener(
+        "submit",
+        function(event){
 
-        toast.style.display = "block";
+            event.preventDefault();
 
-        setTimeout(
-            function(){
-                toast.style.display = "none";
-            },
-            3000
-        );
+            if(toast){
 
-        form.reset();
+                toast.style.display =
+                    "block";
 
-    }
-);
+                setTimeout(
+                    function(){
+
+                        toast.style.display =
+                            "none";
+
+                    },
+                    3000
+                );
+
+            }
+
+            form.reset();
+
+        }
+    );
+
+}
 
 
-/* YEAR */
+/* =========================
+   YEAR
+========================= */
 
-document.getElementById("year").textContent =
-new Date().getFullYear();
+const year =
+    document.getElementById("year");
+
+if(year){
+
+    year.textContent =
+        new Date().getFullYear();
+
+}
 
 </script>
 
 
-<!-- MDK CLIENT SYSTEM -->
+<!-- =========================
+     MDK CLIENT SYSTEM
+========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="../client-context.js"></script>
+
 <script src="../client-runtime.js"></script>
 
 
