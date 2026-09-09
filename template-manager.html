@@ -714,10 +714,13 @@ tr:hover td{
 
 
 <script>
+/* =========================================================
+   MD KAIF WEB PLATFORM — TEMPLATE MANAGER
+   Actual GitHub template folder:
+   template/template-v1.html ... template/template-v10.html
 
-/* ================================
-   SUPABASE CONFIG
-================================ */
+   Supabase table remains: templates
+   ========================================================= */
 
 const SUPABASE_URL =
   "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -731,18 +734,100 @@ const supabaseClient =
     SUPABASE_KEY
   );
 
+/* =========================================================
+   ACTUAL TEMPLATE CATALOG
+   These are the real files in GitHub.
+   Do NOT use INDUSTRIA / CORPORATE dummy records.
+   ========================================================= */
 
-/* ================================
-   GLOBAL DATA
-================================ */
+const TEMPLATE_CATALOG = [
+  { slug:"template-v1",  name:"Template V1",  file:"template-v1.html" },
+  { slug:"template-v2",  name:"Template V2",  file:"template-v2.html" },
+  { slug:"template-v3",  name:"Template V3",  file:"template-v3.html" },
+  { slug:"template-v4",  name:"Template V4",  file:"template-v4.html" },
+  { slug:"template-v5",  name:"Template V5",  file:"template-v5.html" },
+  { slug:"template-v6",  name:"Template V6",  file:"template-v6.html" },
+  { slug:"template-v7",  name:"Template V7",  file:"template-v7.html" },
+  { slug:"template-v8",  name:"Template V8",  file:"template-v8.html" },
+  { slug:"template-v9",  name:"Template V9",  file:"template-v9.html" },
+  { slug:"template-v10", name:"Template V10", file:"template-v10.html" }
+];
 
 let templates = [];
 let editingId = null;
 
+/* =========================================================
+   HELPERS
+   ========================================================= */
 
-/* ================================
-   AUTH CHECK
-================================ */
+function normalizeSlug(value){
+  let v = String(value || "").trim().toLowerCase();
+
+  v = v
+    .replace(/^https?:\/\/[^/]+\//, "")
+    .replace(/^templates\//, "")
+    .replace(/^template\//, "")
+    .replace(/\.html$/i, "")
+    .replace(/\/+$/, "");
+
+  if(/^v\d+$/.test(v)){
+    v = "template-" + v;
+  }
+
+  return v;
+}
+
+function getCatalogItem(slug){
+  slug = normalizeSlug(slug);
+  return TEMPLATE_CATALOG.find(
+    item => item.slug === slug
+  ) || null;
+}
+
+function getTemplateUrl(slug){
+  const item = getCatalogItem(slug);
+
+  if(!item){
+    return "";
+  }
+
+  return new URL(
+    "template/" + item.file,
+    window.location.href
+  ).href;
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function escapeAttr(value){
+  return escapeHtml(value);
+}
+
+function escapeJs(value){
+  return String(value ?? "")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/\n/g,"\\n")
+    .replace(/\r/g,"\\r");
+}
+
+function truncate(value,length){
+  value = String(value || "");
+  return value.length <= length
+    ? value
+    : value.substring(0,length) + "...";
+}
+
+/* =========================================================
+   AUTH
+   ========================================================= */
 
 async function checkLogin(){
 
@@ -752,7 +837,6 @@ async function checkLogin(){
   } = await supabaseClient.auth.getUser();
 
   if(error || !user){
-
     window.location.href = "admin.html";
     return false;
   }
@@ -760,10 +844,12 @@ async function checkLogin(){
   return true;
 }
 
-
-/* ================================
-   LOAD TEMPLATES
-================================ */
+/* =========================================================
+   LOAD
+   Important:
+   The 10 real files are ALWAYS shown.
+   Supabase is used only for metadata/status.
+   ========================================================= */
 
 async function loadTemplates(){
 
@@ -789,32 +875,68 @@ async function loadTemplates(){
     });
 
   if(error){
-
-    console.error(error);
-
-    showLoading(false);
-
-    showMessage(
-      "Unable to load templates: " + error.message,
-      "error"
+    console.warn(
+      "Template metadata could not be loaded. Showing real GitHub templates anyway:",
+      error.message
     );
 
-    return;
+    data = [];
   }
 
-  templates = data || [];
+  const dbRows = Array.isArray(data) ? data : [];
+
+  templates = TEMPLATE_CATALOG.map(catalog => {
+
+    const match =
+      dbRows.find(row =>
+        normalizeSlug(row.template_slug) === catalog.slug
+      );
+
+    return {
+      catalog_slug: catalog.slug,
+      catalog_name: catalog.name,
+      catalog_file: catalog.file,
+
+      id: match ? match.id : null,
+
+      template_name:
+        match?.template_name ||
+        catalog.name,
+
+      template_slug:
+        catalog.slug,
+
+      template_url:
+        getTemplateUrl(catalog.slug),
+
+      preview_image:
+        match?.preview_image || null,
+
+      description:
+        match?.description ||
+        "GitHub website template — " + catalog.name,
+
+      status:
+        String(match?.status || "active").toLowerCase() === "inactive"
+          ? "inactive"
+          : "active",
+
+      created_at:
+        match?.created_at || null,
+
+      db_exists:
+        !!match
+    };
+  });
 
   showLoading(false);
-
   updateStats();
-
   renderTemplates();
 }
 
-
-/* ================================
+/* =========================================================
    RENDER
-================================ */
+   ========================================================= */
 
 function renderTemplates(){
 
@@ -830,15 +952,14 @@ function renderTemplates(){
   const filter =
     document.getElementById("statusFilter").value;
 
-  let filtered =
+  const filtered =
     templates.filter(template => {
 
       const searchable = [
-
         template.template_name,
         template.template_slug,
-        template.description
-
+        template.description,
+        template.catalog_file
       ]
       .filter(Boolean)
       .join(" ")
@@ -850,32 +971,25 @@ function renderTemplates(){
 
       const matchesStatus =
         filter === "all" ||
-        String(template.status || "").toLowerCase() === filter;
+        template.status === filter;
 
       return matchesSearch && matchesStatus;
-
     });
 
-
   tbody.innerHTML = "";
-
 
   document.getElementById("tableWrap")
     .style.display = "block";
 
+  const emptyState =
+    document.getElementById("emptyState");
 
   if(filtered.length === 0){
-
-    document.getElementById("emptyState")
-      .style.display = "block";
-
+    emptyState.style.display = "block";
     return;
   }
 
-
-  document.getElementById("emptyState")
-    .style.display = "none";
-
+  emptyState.style.display = "none";
 
   filtered.forEach(template => {
 
@@ -883,9 +997,7 @@ function renderTemplates(){
       document.createElement("tr");
 
     const isActive =
-      String(template.status || "")
-        .toLowerCase() === "active";
-
+      template.status === "active";
 
     const preview =
       template.preview_image
@@ -897,73 +1009,87 @@ function renderTemplates(){
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
         >
         <div class="no-image" style="display:none;">
-          No Image
+          ${escapeHtml(template.template_name)}
         </div>
       `
       : `
         <div class="no-image">
-          No Image
+          ${escapeHtml(template.template_name)}
         </div>
       `;
-
 
     const description =
       template.description
       ? escapeHtml(
-          truncate(template.description, 90)
+          truncate(template.description,90)
         )
       : "—";
-
 
     const created =
       template.created_at
       ? new Date(template.created_at)
           .toLocaleDateString()
-      : "—";
+      : "Built-in";
 
+    const openButton = `
+      <button
+        class="action-btn open"
+        onclick="openTemplate('${escapeJs(template.template_slug)}')"
+      >
+        Open
+      </button>
+    `;
 
-    const urlButton =
-      template.template_url
+    const editButton =
+      template.db_exists
       ? `
         <button
-          class="action-btn open"
-          onclick="openTemplate('${escapeJs(template.template_url)}')"
+          class="action-btn edit"
+          onclick="editTemplate('${escapeJs(template.id)}')"
         >
-          Open
+          Edit
+        </button>
+      `
+      : `
+        <button
+          class="action-btn edit"
+          onclick="registerTemplate('${escapeJs(template.template_slug)}')"
+        >
+          Add to DB
+        </button>
+      `;
+
+    const deleteButton =
+      template.db_exists
+      ? `
+        <button
+          class="action-btn delete"
+          onclick="deleteTemplate('${escapeJs(template.id)}')"
+        >
+          Delete
         </button>
       `
       : "";
 
-
     tr.innerHTML = `
-
-      <td>
-        ${preview}
-      </td>
+      <td>${preview}</td>
 
       <td>
         <div class="template-name">
-          ${escapeHtml(template.template_name || "Unnamed")}
+          ${escapeHtml(template.template_name)}
         </div>
-
         <div class="slug">
-          ${escapeHtml(template.template_slug || "")}
+          ${escapeHtml(template.template_slug)}
         </div>
       </td>
 
       <td>
-        ${
-          template.template_url
-          ? `<span style="font-size:12px;color:#667085;">
-              ${escapeHtml(truncate(template.template_url, 35))}
-             </span>`
-          : "—"
-        }
+        <span style="font-size:12px;color:#667085;">
+          ${escapeHtml(template.template_url)}
+        </span>
       </td>
 
-      <td>
-        ${description}
-      </td>
+      <td>${description}</td>
 
       <td>
         <span class="badge ${isActive ? "active" : "inactive"}">
@@ -971,47 +1097,111 @@ function renderTemplates(){
         </span>
       </td>
 
-      <td>
-        ${created}
-      </td>
+      <td>${escapeHtml(created)}</td>
 
       <td>
-
         <div class="actions">
-
-          ${urlButton}
-
-          <button
-            class="action-btn edit"
-            onclick="editTemplate('${escapeJs(template.id)}')"
-          >
-            Edit
-          </button>
-
-          <button
-            class="action-btn delete"
-            onclick="deleteTemplate('${escapeJs(template.id)}')"
-          >
-            Delete
-          </button>
-
+          ${openButton}
+          ${editButton}
+          ${deleteButton}
         </div>
-
       </td>
-
     `;
 
-
     tbody.appendChild(tr);
-
   });
-
 }
 
+/* =========================================================
+   OPEN REAL GITHUB TEMPLATE
+   ========================================================= */
 
-/* ================================
-   ADD TEMPLATE
-================================ */
+function openTemplate(slug){
+
+  const baseUrl =
+    getTemplateUrl(slug);
+
+  if(!baseUrl){
+    showMessage(
+      "Template file not found in the catalog.",
+      "error"
+    );
+    return;
+  }
+
+  const url =
+    new URL(baseUrl);
+
+  /*
+     No dummy INDUSTRIA / CORPORATE URL.
+     This opens:
+     template/template-v1.html
+     etc.
+  */
+
+  window.open(
+    url.href,
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
+
+/* =========================================================
+   REGISTER A REAL TEMPLATE IN SUPABASE
+   ========================================================= */
+
+async function registerTemplate(slug){
+
+  const catalog =
+    getCatalogItem(slug);
+
+  if(!catalog){
+    showMessage(
+      "Invalid template.",
+      "error"
+    );
+    return;
+  }
+
+  const payload = {
+    template_name: catalog.name,
+    template_slug: catalog.slug,
+    template_url: getTemplateUrl(catalog.slug),
+    preview_image: null,
+    description:
+      "GitHub website template — " + catalog.name,
+    status: "active"
+  };
+
+  const {
+    error
+  } = await supabaseClient
+    .from("templates")
+    .insert([payload]);
+
+  if(error){
+    console.error(error);
+
+    showMessage(
+      "Could not add template to database: " +
+      error.message,
+      "error"
+    );
+
+    return;
+  }
+
+  showMessage(
+    catalog.name + " added to database.",
+    "success"
+  );
+
+  await loadTemplates();
+}
+
+/* =========================================================
+   ADD TEMPLATE MODAL
+   ========================================================= */
 
 function openAddModal(){
 
@@ -1034,13 +1224,11 @@ function openAddModal(){
 
   document.getElementById("templateModal")
     .classList.add("show");
-
 }
 
-
-/* ================================
-   EDIT TEMPLATE
-================================ */
+/* =========================================================
+   EDIT
+   ========================================================= */
 
 function editTemplate(id){
 
@@ -1051,7 +1239,7 @@ function editTemplate(id){
 
   if(!template){
     showMessage(
-      "Template not found.",
+      "Template metadata not found.",
       "error"
     );
     return;
@@ -1064,7 +1252,6 @@ function editTemplate(id){
 
   document.getElementById("saveButton")
     .textContent = "Update Template";
-
 
   document.getElementById("templateName")
     .value = template.template_name || "";
@@ -1087,164 +1274,140 @@ function editTemplate(id){
       ? "inactive"
       : "active";
 
-
   showImagePreview();
-
 
   document.getElementById("templateModal")
     .classList.add("show");
-
 }
 
-
-/* ================================
+/* =========================================================
    SAVE / UPDATE
-================================ */
+   ========================================================= */
 
 document.getElementById("templateForm")
-.addEventListener("submit", async function(e){
+  .addEventListener("submit", async function(e){
 
-  e.preventDefault();
+    e.preventDefault();
 
-  const saveButton =
-    document.getElementById("saveButton");
+    const saveButton =
+      document.getElementById("saveButton");
 
-  const templateName =
-    document.getElementById("templateName")
-      .value
-      .trim();
+    const templateName =
+      document.getElementById("templateName")
+        .value
+        .trim();
 
-  const templateSlug =
-    document.getElementById("templateSlug")
-      .value
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g,"-");
+    let templateSlug =
+      document.getElementById("templateSlug")
+        .value
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g,"-");
 
+    const templateUrl =
+      document.getElementById("templateUrl")
+        .value
+        .trim();
 
-  const templateUrl =
-    document.getElementById("templateUrl")
-      .value
-      .trim();
+    const previewImage =
+      document.getElementById("previewImage")
+        .value
+        .trim();
 
-  const previewImage =
-    document.getElementById("previewImage")
-      .value
-      .trim();
+    const description =
+      document.getElementById("description")
+        .value
+        .trim();
 
-  const description =
-    document.getElementById("description")
-      .value
-      .trim();
+    const status =
+      document.getElementById("status")
+        .value;
 
-  const status =
-    document.getElementById("status")
-      .value;
+    if(!templateName){
+      showMessage(
+        "Template name is required.",
+        "error"
+      );
+      return;
+    }
 
+    if(!templateSlug){
+      showMessage(
+        "Template slug is required.",
+        "error"
+      );
+      return;
+    }
 
-  if(!templateName){
+    templateSlug =
+      normalizeSlug(templateSlug);
 
-    showMessage(
-      "Template name is required.",
-      "error"
-    );
+    saveButton.disabled = true;
 
-    return;
-  }
-
-
-  if(!templateSlug){
-
-    showMessage(
-      "Template slug is required.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  saveButton.disabled = true;
-
-
-  const payload = {
-
-    template_name: templateName,
-
-    template_slug: templateSlug,
-
-    template_url:
-      templateUrl || null,
-
-    preview_image:
-      previewImage || null,
-
-    description:
-      description || null,
-
-    status:
+    const payload = {
+      template_name: templateName,
+      template_slug: templateSlug,
+      template_url:
+        getCatalogItem(templateSlug)
+          ? getTemplateUrl(templateSlug)
+          : (templateUrl || null),
+      preview_image:
+        previewImage || null,
+      description:
+        description || null,
       status
+    };
 
-  };
+    let result;
 
+    if(editingId){
 
-  let result;
+      result =
+        await supabaseClient
+          .from("templates")
+          .update(payload)
+          .eq("id", editingId);
 
+    }else{
 
-  if(editingId){
+      result =
+        await supabaseClient
+          .from("templates")
+          .insert([payload]);
+    }
 
-    result =
-      await supabaseClient
-        .from("templates")
-        .update(payload)
-        .eq("id", editingId);
+    saveButton.disabled = false;
 
-  }else{
+    if(result.error){
 
-    result =
-      await supabaseClient
-        .from("templates")
-        .insert([payload]);
+      console.error(result.error);
 
-  }
+      showMessage(
+        "Error saving template: " +
+        result.error.message,
+        "error"
+      );
 
+      return;
+    }
 
-  saveButton.disabled = false;
-
-
-  if(result.error){
-
-    console.error(result.error);
+    closeModal();
 
     showMessage(
-      "Error saving template: " +
-      result.error.message,
-      "error"
+      editingId
+        ? "Template updated successfully."
+        : "Template added successfully.",
+      "success"
     );
 
-    return;
-  }
+    await loadTemplates();
+  });
 
-
-  closeModal();
-
-
-  showMessage(
-    editingId
-      ? "Template updated successfully."
-      : "Template added successfully.",
-    "success"
-  );
-
-
-  await loadTemplates();
-
-});
-
-
-/* ================================
+/* =========================================================
    DELETE
-================================ */
+   NOTE: deleting removes only the DB metadata.
+   It NEVER deletes the real GitHub HTML file.
+   ========================================================= */
 
 async function deleteTemplate(id){
 
@@ -1257,32 +1420,28 @@ async function deleteTemplate(id){
     return;
   }
 
-
   const confirmed =
     confirm(
-      `Delete template "${template.template_name}"?\n\nThis action cannot be undone.`
+      `Remove "${template.template_name}" from the templates database?\n\nThe GitHub HTML file will NOT be deleted.`
     );
-
 
   if(!confirmed){
     return;
   }
-
 
   const {
     error
   } = await supabaseClient
     .from("templates")
     .delete()
-    .eq("id", id);
-
+    .eq("id",id);
 
   if(error){
 
     console.error(error);
 
     showMessage(
-      "Unable to delete template: " +
+      "Unable to delete template metadata: " +
       error.message,
       "error"
     );
@@ -1290,40 +1449,17 @@ async function deleteTemplate(id){
     return;
   }
 
-
   showMessage(
-    "Template deleted successfully.",
+    "Template metadata removed. The real HTML file remains available.",
     "success"
   );
 
-
   await loadTemplates();
-
 }
 
-
-/* ================================
-   OPEN TEMPLATE
-================================ */
-
-function openTemplate(url){
-
-  if(!url){
-    return;
-  }
-
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* ================================
+/* =========================================================
    IMAGE PREVIEW
-================================ */
+   ========================================================= */
 
 function showImagePreview(){
 
@@ -1338,31 +1474,22 @@ function showImagePreview(){
   const img =
     document.getElementById("previewImageElement");
 
-
   if(!url){
-
     box.style.display = "none";
     return;
   }
 
-
   img.src = url;
-
   box.style.display = "block";
 
-
   img.onerror = function(){
-
     box.style.display = "none";
-
   };
-
 }
 
-
-/* ================================
+/* =========================================================
    STATS
-================================ */
+   ========================================================= */
 
 function updateStats(){
 
@@ -1371,14 +1498,11 @@ function updateStats(){
 
   const active =
     templates.filter(
-      item =>
-        String(item.status || "")
-          .toLowerCase() === "active"
+      item => item.status === "active"
     ).length;
 
   const inactive =
     total - active;
-
 
   document.getElementById("totalTemplates")
     .textContent = total;
@@ -1388,13 +1512,11 @@ function updateStats(){
 
   document.getElementById("inactiveTemplates")
     .textContent = inactive;
-
 }
 
-
-/* ================================
+/* =========================================================
    MODAL
-================================ */
+   ========================================================= */
 
 function closeModal(){
 
@@ -1402,37 +1524,27 @@ function closeModal(){
     .classList.remove("show");
 
   editingId = null;
-
 }
 
-
 document.getElementById("templateModal")
-.addEventListener("click", function(e){
+  .addEventListener("click", function(e){
 
-  if(e.target === this){
-    closeModal();
-  }
+    if(e.target === this){
+      closeModal();
+    }
 
-});
+  });
 
-
-/* ================================
-   LOADING
-================================ */
+/* =========================================================
+   LOADING / MESSAGE
+   ========================================================= */
 
 function showLoading(show){
 
   document.getElementById("loading")
-    .style.display = show
-      ? "block"
-      : "none";
-
+    .style.display =
+      show ? "block" : "none";
 }
-
-
-/* ================================
-   MESSAGE
-================================ */
 
 function showMessage(text,type){
 
@@ -1444,80 +1556,25 @@ function showMessage(text,type){
   message.className =
     "message show " + type;
 
-
   setTimeout(() => {
-
     message.classList.remove("show");
-
-  }, 4500);
-
+  },4500);
 }
 
-
-/* ================================
+/* =========================================================
    LOGOUT
-================================ */
+   ========================================================= */
 
 async function logout(){
 
   await supabaseClient.auth.signOut();
 
   window.location.href = "admin.html";
-
 }
 
-
-/* ================================
-   HELPERS
-================================ */
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-function escapeAttr(value){
-
-  return escapeHtml(value);
-
-}
-
-
-function escapeJs(value){
-
-  return String(value ?? "")
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'")
-    .replace(/"/g,"&quot;")
-    .replace(/\n/g,"\\n")
-    .replace(/\r/g,"\\r");
-
-}
-
-
-function truncate(value,length){
-
-  value = String(value || "");
-
-  if(value.length <= length){
-    return value;
-  }
-
-  return value.substring(0,length) + "...";
-
-}
-
-
-/* ================================
+/* =========================================================
    START
-================================ */
+   ========================================================= */
 
 (async function(){
 
@@ -1531,7 +1588,6 @@ function truncate(value,length){
   await loadTemplates();
 
 })();
-
 </script>
 
 </body>
