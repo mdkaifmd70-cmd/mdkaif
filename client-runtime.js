@@ -7,266 +7,956 @@
     const SUPABASE_KEY =
         "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
-    let runtimeSupabase = null;
+    let sb = null;
 
-    /* ================================
-       GET CLIENT ID FROM URL
-    ================================= */
-
-    function getClientId() {
-
-        if (
-            window.MDKClientContext &&
-            typeof MDKClientContext.urlClientId === "function"
-        ) {
-            return MDKClientContext.urlClientId();
-        }
-
-        try {
-            return new URLSearchParams(
-                window.location.search
-            ).get("client");
-        } catch (error) {
-            return null;
-        }
-    }
-
-
-    /* ================================
+    /* =========================================
        SUPABASE
-    ================================= */
+    ========================================= */
 
     function getSupabase() {
 
-        if (runtimeSupabase) {
-            return runtimeSupabase;
-        }
+        if (sb) return sb;
 
         if (
             !window.supabase ||
             !window.supabase.createClient
         ) {
             console.error(
-                "MDK Runtime: Supabase JS library not loaded."
+                "MDK Runtime: Supabase library not loaded."
             );
             return null;
         }
 
-        runtimeSupabase =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
+        sb = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+        return sb;
+    }
+
+
+    /* =========================================
+       CLIENT ID
+    ========================================= */
+
+    function getClientId() {
+
+        try {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            return params.get("client");
+
+        } catch (error) {
+
+            console.error(
+                "MDK Runtime: Client ID error",
+                error
             );
 
-        return runtimeSupabase;
-    }
-
-
-    /* ================================
-       NESTED VALUE
-       Example:
-       company_name
-       contact.phone
-    ================================= */
-
-    function getValue(object, path) {
-
-        if (!object || !path) {
             return null;
         }
-
-        return path
-            .split(".")
-            .reduce(function (current, key) {
-
-                if (
-                    current === null ||
-                    current === undefined
-                ) {
-                    return null;
-                }
-
-                return current[key];
-
-            }, object);
     }
 
 
-    /* ================================
-       SIMPLE DATA BINDING
+    /* =========================================
+       SAFE VALUE
+    ========================================= */
 
-       HTML:
-       data-client="company_name"
-    ================================= */
+    function value(data, key, fallback = "") {
 
-    function applySimpleBindings(client) {
+        if (
+            data &&
+            data[key] !== null &&
+            data[key] !== undefined &&
+            data[key] !== ""
+        ) {
+            return data[key];
+        }
+
+        return fallback;
+    }
+
+
+    /* =========================================
+       SET TEXT
+    ========================================= */
+
+    function setText(selector, text) {
 
         const elements =
-            document.querySelectorAll(
-                "[data-client]"
-            );
+            document.querySelectorAll(selector);
 
-        elements.forEach(function (element) {
-
-            const field =
-                element.getAttribute(
-                    "data-client"
-                );
-
-            const value =
-                getValue(client, field);
+        elements.forEach(function (el) {
 
             if (
-                value === null ||
-                value === undefined ||
-                value === ""
+                text !== null &&
+                text !== undefined &&
+                text !== ""
             ) {
-                return;
+                el.textContent = text;
             }
 
-            const attribute =
-                element.getAttribute(
-                    "data-client-attr"
-                );
+        });
+    }
 
-            if (attribute) {
 
-                element.setAttribute(
-                    attribute,
-                    String(value)
-                );
+    /* =========================================
+       SET ATTRIBUTE
+    ========================================= */
+
+    function setAttr(selector, attr, val) {
+
+        const elements =
+            document.querySelectorAll(selector);
+
+        elements.forEach(function (el) {
+
+            if (
+                val !== null &&
+                val !== undefined &&
+                val !== ""
+            ) {
+                el.setAttribute(attr, val);
+            }
+
+        });
+    }
+
+
+    /* =========================================
+       CLIENT BASIC DATA
+    ========================================= */
+
+    function applyClient(client) {
+
+        if (!client) return;
+
+        setText(
+            '[data-client="company_name"]',
+            client.company_name
+        );
+
+        setText(
+            '[data-client="domain"]',
+            client.domain
+        );
+
+        document.title =
+            value(
+                client,
+                "company_name",
+                "INDUSTRIA"
+            ) +
+            " | Manufacturing Excellence";
+    }
+
+
+    /* =========================================
+       WEBSITE CONTENT
+    ========================================= */
+
+    function applyWebsiteContent(content) {
+
+        if (!content) return;
+
+
+        /* TOP BAR */
+
+        setText(
+            '[data-content="topbar_text"]',
+            content.topbar_text
+        );
+
+
+        /* PHONE */
+
+        setText(
+            '[data-content="phone"]',
+            content.phone
+        );
+
+        if (content.phone) {
+
+            const phoneClean =
+                String(content.phone)
+                .replace(/[^\d+]/g, "");
+
+            setAttr(
+                '[data-content-link="phone"]',
+                "href",
+                "tel:" + phoneClean
+            );
+        }
+
+
+        /* EMAIL */
+
+        setText(
+            '[data-content="email"]',
+            content.email
+        );
+
+        if (content.email) {
+
+            setAttr(
+                '[data-content-link="email"]',
+                "href",
+                "mailto:" + content.email
+            );
+        }
+
+
+        /* WHATSAPP */
+
+        if (content.whatsapp) {
+
+            const whatsapp =
+                String(content.whatsapp)
+                .replace(/\D/g, "");
+
+            setAttr(
+                '[data-content-link="whatsapp"]',
+                "href",
+                "https://wa.me/" + whatsapp
+            );
+        }
+
+
+        /* ADDRESS */
+
+        setText(
+            '[data-content="address"]',
+            content.address
+        );
+
+
+        /* HERO */
+
+        setText(
+            '[data-content="hero_eyebrow"]',
+            content.hero_eyebrow
+        );
+
+        setText(
+            '[data-content="hero_title"]',
+            content.hero_title
+        );
+
+        setText(
+            '[data-content="hero_description"]',
+            content.hero_description
+        );
+
+
+        if (content.hero_image) {
+
+            const hero =
+                document.querySelector(".hero");
+
+            if (hero) {
+
+                hero.style.backgroundImage =
+                    "linear-gradient(90deg, rgba(2,6,23,.92), rgba(2,6,23,.55)), url('" +
+                    content.hero_image +
+                    "')";
+
+            }
+        }
+
+
+        /* ABOUT */
+
+        setText(
+            '[data-content="about_eyebrow"]',
+            content.about_eyebrow
+        );
+
+        setText(
+            '[data-content="about_title"]',
+            content.about_title
+        );
+
+        setText(
+            '[data-content="about_description"]',
+            content.about_description
+        );
+
+
+        /* ABOUT IMAGE */
+
+        if (content.about_image) {
+
+            const visual =
+                document.querySelector(".about .visual");
+
+            if (visual) {
+
+                visual.style.backgroundImage =
+                    "linear-gradient(135deg, rgba(219,234,254,.15), rgba(226,232,240,.15)), url('" +
+                    content.about_image +
+                    "')";
+
+                visual.style.backgroundSize =
+                    "cover";
+
+                visual.style.backgroundPosition =
+                    "center";
+
+                visual.style.color =
+                    "transparent";
+
+                visual.textContent = "";
+
+            }
+        }
+
+
+        /* STATS */
+
+        setText(
+            '[data-stat="1-value"]',
+            content.stat_1_value
+        );
+
+        setText(
+            '[data-stat="1-label"]',
+            content.stat_1_label
+        );
+
+        setText(
+            '[data-stat="2-value"]',
+            content.stat_2_value
+        );
+
+        setText(
+            '[data-stat="2-label"]',
+            content.stat_2_label
+        );
+
+        setText(
+            '[data-stat="3-value"]',
+            content.stat_3_value
+        );
+
+        setText(
+            '[data-stat="3-label"]',
+            content.stat_3_label
+        );
+
+        setText(
+            '[data-stat="4-value"]',
+            content.stat_4_value
+        );
+
+        setText(
+            '[data-stat="4-label"]',
+            content.stat_4_label
+        );
+
+
+        /* SECTION HEADINGS */
+
+        setText(
+            '[data-content="products_eyebrow"]',
+            content.products_eyebrow
+        );
+
+        setText(
+            '[data-content="products_title"]',
+            content.products_title
+        );
+
+        setText(
+            '[data-content="products_description"]',
+            content.products_description
+        );
+
+
+        setText(
+            '[data-content="manufacturing_eyebrow"]',
+            content.manufacturing_eyebrow
+        );
+
+        setText(
+            '[data-content="manufacturing_title"]',
+            content.manufacturing_title
+        );
+
+        setText(
+            '[data-content="manufacturing_description"]',
+            content.manufacturing_description
+        );
+
+
+        setText(
+            '[data-content="quality_eyebrow"]',
+            content.quality_eyebrow
+        );
+
+        setText(
+            '[data-content="quality_title"]',
+            content.quality_title
+        );
+
+        setText(
+            '[data-content="quality_description"]',
+            content.quality_description
+        );
+
+
+        setText(
+            '[data-content="industries_eyebrow"]',
+            content.industries_eyebrow
+        );
+
+        setText(
+            '[data-content="industries_title"]',
+            content.industries_title
+        );
+
+
+        setText(
+            '[data-content="gallery_eyebrow"]',
+            content.gallery_eyebrow
+        );
+
+        setText(
+            '[data-content="gallery_title"]',
+            content.gallery_title
+        );
+
+        setText(
+            '[data-content="gallery_description"]',
+            content.gallery_description
+        );
+
+
+        setText(
+            '[data-content="testimonials_eyebrow"]',
+            content.testimonials_eyebrow
+        );
+
+        setText(
+            '[data-content="testimonials_title"]',
+            content.testimonials_title
+        );
+
+
+        setText(
+            '[data-content="faq_eyebrow"]',
+            content.faq_eyebrow
+        );
+
+        setText(
+            '[data-content="faq_title"]',
+            content.faq_title
+        );
+
+
+        /* CONTACT */
+
+        setText(
+            '[data-content="contact_eyebrow"]',
+            content.contact_eyebrow
+        );
+
+        setText(
+            '[data-content="contact_title"]',
+            content.contact_title
+        );
+
+        setText(
+            '[data-content="contact_description"]',
+            content.contact_description
+        );
+
+
+        /* FOOTER */
+
+        setText(
+            '[data-content="footer_description"]',
+            content.footer_description
+        );
+
+        setAttr(
+            '[data-content-link="linkedin"]',
+            "href",
+            content.linkedin_url
+        );
+
+        setAttr(
+            '[data-content-link="privacy"]',
+            "href",
+            content.privacy_url
+        );
+
+        setAttr(
+            '[data-content-link="terms"]',
+            "href",
+            content.terms_url
+        );
+    }
+
+
+    /* =========================================
+       PRODUCTS
+    ========================================= */
+
+    function renderProducts(products) {
+
+        const container =
+            document.querySelector(
+                "[data-products]"
+            );
+
+        if (!container || !products) return;
+
+        if (!products.length) return;
+
+        container.innerHTML = "";
+
+        products.forEach(function (product) {
+
+            const article =
+                document.createElement("article");
+
+            article.className =
+                "card products";
+
+            const image =
+                product.image_url
+                ? `
+                    <div class="product-image"
+                         style="
+                         background-image:url('${product.image_url}');
+                         background-size:cover;
+                         background-position:center;
+                         color:transparent;">
+                    </div>
+                  `
+                : `
+                    <div class="product-image">
+                        PRODUCT IMAGE
+                    </div>
+                  `;
+
+            const enquiryUrl =
+                product.enquiry_url ||
+                "#contact";
+
+            article.innerHTML = `
+
+                ${image}
+
+                <div class="product-body">
+
+                    <span class="product-code">
+                        PRODUCT CODE:
+                        ${escapeHTML(product.product_code || "")}
+                    </span>
+
+                    <h3>
+                        ${escapeHTML(product.product_name || "")}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(product.description || "")}
+                    </p>
+
+                    <br>
+
+                    <a
+                        class="btn btn-primary"
+                        href="${escapeAttr(enquiryUrl)}">
+
+                        Enquire Now
+
+                    </a>
+
+                </div>
+
+            `;
+
+            container.appendChild(article);
+
+        });
+    }
+
+
+    /* =========================================
+       MANUFACTURING
+    ========================================= */
+
+    function renderManufacturing(steps) {
+
+        const container =
+            document.querySelector(
+                "[data-manufacturing]"
+            );
+
+        if (!container || !steps) return;
+
+        if (!steps.length) return;
+
+        container.innerHTML = "";
+
+        steps.forEach(function (step, index) {
+
+            const number =
+                step.step_number ||
+                String(index + 1).padStart(2, "0");
+
+            const div =
+                document.createElement("div");
+
+            div.className = "step";
+
+            div.innerHTML = `
+
+                <div class="number">
+                    ${escapeHTML(String(number).padStart(2, "0"))}
+                </div>
+
+                <h3>
+                    ${escapeHTML(step.title || "")}
+                </h3>
+
+                <p>
+                    ${escapeHTML(step.description || "")}
+                </p>
+
+            `;
+
+            container.appendChild(div);
+
+        });
+    }
+
+
+    /* =========================================
+       QUALITY
+    ========================================= */
+
+    function renderQuality(items) {
+
+        const container =
+            document.querySelector(
+                "[data-quality]"
+            );
+
+        if (!container || !items) return;
+
+        if (!items.length) return;
+
+        container.innerHTML = "";
+
+        items.forEach(function (item) {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "card";
+
+            div.innerHTML = `
+
+                <div class="icon">
+                    ${escapeHTML(item.icon || "✓")}
+                </div>
+
+                <h3>
+                    ${escapeHTML(item.title || "")}
+                </h3>
+
+                <p>
+                    ${escapeHTML(item.description || "")}
+                </p>
+
+            `;
+
+            container.appendChild(div);
+
+        });
+    }
+
+
+    /* =========================================
+       INDUSTRIES
+    ========================================= */
+
+    function renderIndustries(items) {
+
+        const container =
+            document.querySelector(
+                "[data-industries]"
+            );
+
+        if (!container || !items) return;
+
+        if (!items.length) return;
+
+        container.innerHTML = "";
+
+        items.forEach(function (item) {
+
+            const span =
+                document.createElement("span");
+
+            span.className = "pill";
+
+            span.textContent =
+                item.name || "";
+
+            container.appendChild(span);
+
+        });
+    }
+
+
+    /* =========================================
+       GALLERY
+    ========================================= */
+
+    function renderGallery(items) {
+
+        const container =
+            document.querySelector(
+                "[data-gallery]"
+            );
+
+        if (!container || !items) return;
+
+        if (!items.length) return;
+
+        container.innerHTML = "";
+
+        items.forEach(function (item) {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "gallery-item";
+
+            if (item.image_url) {
+
+                div.style.backgroundImage =
+                    "url('" +
+                    item.image_url +
+                    "')";
+
+                div.style.backgroundSize =
+                    "cover";
+
+                div.style.backgroundPosition =
+                    "center";
+
+                div.style.color =
+                    "transparent";
 
             } else {
 
-                element.textContent =
-                    String(value);
+                div.textContent =
+                    item.title || "PHOTO";
 
             }
+
+            container.appendChild(div);
 
         });
     }
 
 
-    /* ================================
-       TEMPLATE BINDING
+    /* =========================================
+       TESTIMONIALS
+    ========================================= */
 
-       HTML:
-       data-client-template="{company_name} | Manufacturing"
+    function renderTestimonials(items) {
 
-       Supports:
-       {company_name}
-       {domain}
-       {slug}
-    ================================= */
-
-    function applyTemplateBindings(client) {
-
-        const elements =
-            document.querySelectorAll(
-                "[data-client-template]"
+        const container =
+            document.querySelector(
+                "[data-testimonials]"
             );
 
-        elements.forEach(function (element) {
+        if (!container || !items) return;
 
-            const template =
-                element.getAttribute(
-                    "data-client-template"
-                );
+        if (!items.length) return;
 
-            if (!template) {
-                return;
+        container.innerHTML = "";
+
+        items.forEach(function (item) {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "quote";
+
+            let person =
+                item.customer_name || "";
+
+            if (item.designation) {
+
+                person +=
+                    " — " +
+                    item.designation;
             }
 
-            const result =
-                template.replace(
-                    /\{([^}]+)\}/g,
-                    function (match, field) {
+            div.innerHTML = `
 
-                        const value =
-                            getValue(
-                                client,
-                                field.trim()
-                            );
+                <p>
+                    “${escapeHTML(item.message || "")}”
+                </p>
 
-                        if (
-                            value === null ||
-                            value === undefined
-                        ) {
-                            return match;
-                        }
+                <strong>
+                    ${escapeHTML(person)}
+                </strong>
 
-                        return String(value);
-                    }
-                );
+            `;
 
-            element.textContent = result;
+            container.appendChild(div);
 
         });
     }
 
 
-    /* ================================
-       APPLY ALL WEBSITE BINDINGS
-    ================================= */
+    /* =========================================
+       FAQ
+    ========================================= */
 
-    function applyClientData(client) {
+    function renderFAQ(items) {
 
-        if (!client) {
-            return;
-        }
+        const container =
+            document.querySelector(
+                "[data-faq]"
+            );
 
-        applySimpleBindings(client);
+        if (!container || !items) return;
 
-        applyTemplateBindings(client);
+        if (!items.length) return;
 
-        document.documentElement.setAttribute(
-            "data-client-loaded",
-            "true"
-        );
+        container.innerHTML = "";
 
-        document.body.setAttribute(
-            "data-client-id",
-            String(client.id)
-        );
+        items.forEach(function (item) {
 
-        console.log(
-            "MDK Runtime: Client data applied."
-        );
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "faq-item";
+
+            div.innerHTML = `
+
+                <button
+                    class="faq-question"
+                    type="button">
+
+                    <span>
+                        ${escapeHTML(item.question || "")}
+                    </span>
+
+                    <span>
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    ${escapeHTML(item.answer || "")}
+
+                </div>
+
+            `;
+
+            container.appendChild(div);
+
+        });
+
+
+        container
+        .querySelectorAll(".faq-question")
+        .forEach(function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const item =
+                        button.closest(
+                            ".faq-item"
+                        );
+
+                    const icon =
+                        button.querySelector(
+                            "span:last-child"
+                        );
+
+                    item.classList.toggle("open");
+
+                    if (icon) {
+
+                        icon.textContent =
+                            item.classList.contains("open")
+                            ? "−"
+                            : "+";
+                    }
+
+                }
+            );
+
+        });
     }
 
 
-    /* ================================
-       LOAD CLIENT
-    ================================= */
+    /* =========================================
+       SECURITY HELPERS
+    ========================================= */
 
-    async function loadClient() {
+    function escapeHTML(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    function escapeAttr(value) {
+
+        return String(value)
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    /* =========================================
+       LOAD ALL DATA
+    ========================================= */
+
+    async function loadWebsite() {
 
         const clientId =
             getClientId();
 
-        /*
-         * Normal Template Manager preview
-         * has no ?client=
-         *
-         * So original template remains unchanged.
-         */
-
         if (!clientId) {
 
             console.log(
-                "MDK Runtime: No client parameter. Static template mode."
+                "MDK Runtime: Static template mode."
             );
 
-            return null;
+            return;
         }
 
-
-        const sb =
+        const supabase =
             getSupabase();
 
-        if (!sb) {
-            return null;
-        }
+        if (!supabase) return;
 
 
         console.log(
@@ -275,106 +965,211 @@
         );
 
 
-        const {
-            data,
-            error
-        } = await sb
-            .from("clients")
-            .select("*")
-            .eq("id", clientId)
-            .single();
+        try {
+
+            const results =
+                await Promise.all([
+
+                    supabase
+                    .from("clients")
+                    .select("*")
+                    .eq("id", clientId)
+                    .single(),
+
+                    supabase
+                    .from("client_website_content")
+                    .select("*")
+                    .eq("client_id", clientId)
+                    .maybeSingle(),
+
+                    supabase
+                    .from("client_products")
+                    .select("*")
+                    .eq("client_id", clientId)
+                    .eq("is_active", true)
+                    .order("sort_order"),
+
+                    supabase
+                    .from("client_manufacturing_steps")
+                    .select("*")
+                    .eq("client_id", clientId)
+                    .eq("is_active", true)
+                    .order("sort_order"),
+
+                    supabase
+                    .from("client_quality")
+                    .select("*")
+                    .eq("client_id", clientId)
+                    .eq("is_active", true)
+                    .order("sort_order"),
+
+                    supabase
+                    .from("client_industries")
+                    .select("*")
+                    .eq("client_id", clientId)
+                    .eq("is_active", true)
+                    .order("sort_order"),
+
+                    supabase
+                    .from("client_gallery")
+                    .select("*")
+                    .eq("client_id", clientId)
+                    .eq("is_active", true)
+                    .order("sort_order"),
+
+                    supabase
+                    .from("client_testimonials")
+                    .select("*")
+                    .eq("client_id", clientId)
+                    .eq("is_active", true)
+                    .order("sort_order"),
+
+                    supabase
+                    .from("client_faq")
+                    .select("*")
+                    .eq("client_id", clientId)
+                    .eq("is_active", true)
+                    .order("sort_order")
+                ]);
 
 
-        if (error) {
+            const clientResult =
+                results[0];
 
-            console.error(
-                "MDK Runtime Client Error:",
-                error
-            );
+            if (clientResult.error) {
+
+                console.error(
+                    "Client loading error:",
+                    clientResult.error
+                );
+
+                return;
+            }
+
+
+            const client =
+                clientResult.data;
+
+            if (!client) {
+
+                console.error(
+                    "Client not found:",
+                    clientId
+                );
+
+                return;
+            }
+
+
+            const content =
+                results[1].data;
+
+            const products =
+                results[2].data || [];
+
+            const manufacturing =
+                results[3].data || [];
+
+            const quality =
+                results[4].data || [];
+
+            const industries =
+                results[5].data || [];
+
+            const gallery =
+                results[6].data || [];
+
+            const testimonials =
+                results[7].data || [];
+
+            const faq =
+                results[8].data || [];
+
+
+            /* SAVE GLOBAL */
+
+            window.MDKSiteClient =
+                client;
+
+            window.MDKClientId =
+                client.id;
+
+            window.MDKSiteContent =
+                content;
+
+
+            /* APPLY */
+
+            applyClient(client);
+
+            applyWebsiteContent(content);
+
+            renderProducts(products);
+
+            renderManufacturing(manufacturing);
+
+            renderQuality(quality);
+
+            renderIndustries(industries);
+
+            renderGallery(gallery);
+
+            renderTestimonials(testimonials);
+
+            renderFAQ(faq);
+
+
+            document.documentElement
+                .setAttribute(
+                    "data-client-loaded",
+                    "true"
+                );
+
+            document.body
+                .setAttribute(
+                    "data-client-id",
+                    client.id
+                );
+
+
+            /* CLIENT CONTEXT */
+
+            if (
+                window.MDKClientContext
+            ) {
+
+                MDKClientContext.set(
+                    client
+                );
+            }
+
+
+            /* READY EVENT */
 
             window.dispatchEvent(
                 new CustomEvent(
-                    "mdk-site-error",
+                    "mdk-site-ready",
                     {
-                        detail: error
+                        detail: {
+                            client: client,
+                            content: content,
+                            products: products,
+                            manufacturing: manufacturing,
+                            quality: quality,
+                            industries: industries,
+                            gallery: gallery,
+                            testimonials: testimonials,
+                            faq: faq
+                        }
                     }
                 )
             );
 
-            return null;
-        }
 
-
-        if (!data) {
-
-            console.error(
-                "MDK Runtime: Client not found:",
-                clientId
+            console.log(
+                "MDK Runtime: Website loaded successfully:",
+                client.company_name
             );
-
-            return null;
-        }
-
-
-        /* Save client globally */
-
-        window.MDKSiteClient =
-            data;
-
-        window.MDKClientId =
-            data.id;
-
-
-        /* Save in Client Context */
-
-        if (
-            window.MDKClientContext
-        ) {
-
-            MDKClientContext.set(
-                data
-            );
-        }
-
-
-        /* Apply dynamic website data */
-
-        applyClientData(
-            data
-        );
-
-
-        /* Website ready event */
-
-        window.dispatchEvent(
-            new CustomEvent(
-                "mdk-site-ready",
-                {
-                    detail: data
-                }
-            )
-        );
-
-
-        console.log(
-            "MDK Runtime: Client loaded:",
-            data.company_name
-        );
-
-
-        return data;
-    }
-
-
-    /* ================================
-       INITIALIZE
-    ================================= */
-
-    async function init() {
-
-        try {
-
-            await loadClient();
 
         } catch (error) {
 
@@ -382,13 +1177,15 @@
                 "MDK Runtime Fatal Error:",
                 error
             );
+
         }
+
     }
 
 
-    /* ================================
-       START
-    ================================= */
+    /* =========================================
+       INIT
+    ========================================= */
 
     if (
         document.readyState ===
@@ -397,7 +1194,7 @@
 
         document.addEventListener(
             "DOMContentLoaded",
-            init,
+            loadWebsite,
             {
                 once: true
             }
@@ -405,7 +1202,8 @@
 
     } else {
 
-        init();
+        loadWebsite();
+
     }
 
 })();
