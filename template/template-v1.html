@@ -913,14 +913,29 @@ footer{
 
     <div class="container topbar-inner">
 
-        <span>
-            Industrial Manufacturing • Quality • Reliability
-        </span>
+        <span data-content="topbar_text">
+    Industrial Manufacturing • Quality • Reliability
+</span>
 
-        <span>
-            📞 +91 00000 00000 &nbsp; | &nbsp;
-            ✉ sales@yourcompany.com
-        </span>
+<span>
+    📞
+    <a
+        data-content-link="phone"
+        href="tel:+910000000000"
+        data-content="phone">
+        +91 00000 00000
+    </a>
+
+    &nbsp; | &nbsp;
+
+    ✉
+    <a
+        data-content-link="email"
+        href="mailto:sales@yourcompany.com"
+        data-content="email">
+        sales@yourcompany.com
+    </a>
+</span>
 
     </div>
 
@@ -990,9 +1005,13 @@ footer{
 
         <div class="hero-content">
 
-            <span class="eyebrow">
-                ENGINEERED FOR PERFORMANCE
-            </span>
+           <span
+    class="eyebrow"
+    data-content="hero_eyebrow">
+
+    ENGINEERED FOR PERFORMANCE
+
+</span>
 
             <h1
                 data-client-template="{company_name} — Manufacturing excellence built for your business."
@@ -1000,13 +1019,10 @@ footer{
                 Manufacturing excellence built for your business.
             </h1>
 
-            <p>
-                Replace this content with your company's story,
-                manufacturing capabilities and main value proposition.
-                This reusable template is designed for industrial,
-                engineering and manufacturing companies.
-            </p>
-
+           <p data-content="hero_description">
+    Replace this content with your company's story,
+    manufacturing capabilities and main value proposition.
+</p>
             <div class="actions">
 
                 <a
@@ -1045,24 +1061,23 @@ footer{
         <div class="stat-grid">
 
             <div class="stat">
-                <strong>20+</strong>
-                <span>Years Experience</span>
-            </div>
+    <strong data-stat="1-value">20+</strong>
+    <span data-stat="1-label">Years Experience</span>
+</div>
+           <div class="stat">
+    <strong data-stat="2-value">50K+</strong>
+    <span data-stat="2-label">Units Delivered</span>
+</div>
 
             <div class="stat">
-                <strong>50K+</strong>
-                <span>Units Delivered</span>
-            </div>
+    <strong data-stat="3-value">25+</strong>
+    <span data-stat="3-label">Markets Served</span>
+</div>
 
             <div class="stat">
-                <strong>25+</strong>
-                <span>Markets Served</span>
-            </div>
-
-            <div class="stat">
-                <strong>99%</strong>
-                <span>Quality Focus</span>
-            </div>
+    <strong data-stat="4-value">99%</strong>
+    <span data-stat="4-label">Quality Focus</span>
+</div>
 
         </div>
 
@@ -1088,21 +1103,22 @@ footer{
 
         <div>
 
-            <span class="eyebrow">
-                ABOUT COMPANY
-            </span>
+           <span
+    class="eyebrow"
+    data-content="about_eyebrow">
 
-            <h2
-                data-client-template="{company_name}: Built on quality, capability and trust."
-            >
-                Built on quality, capability and trust.
-            </h2>
+    ABOUT COMPANY
 
-            <p>
-                Use this section to introduce the company,
-                manufacturing history, infrastructure,
-                team and business philosophy.
-            </p>
+</span>
+           <h2 data-content="about_title">
+    Built on quality, capability and trust.
+</h2>
+
+            <p data-content="about_description">
+    Use this section to introduce the company,
+    manufacturing history, infrastructure,
+    team and business philosophy.
+</p>
 
             <div class="checks">
 
