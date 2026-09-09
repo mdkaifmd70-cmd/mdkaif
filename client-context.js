@@ -1,96 +1,208 @@
-(function () {
+(function(){
+
     "use strict";
 
-    const STORAGE_KEY = "mdkaif_active_client";
 
-    const MDKClientContext = {
+    const KEY =
+        "mdkaif_active_client";
 
-        // Save selected client
-        set: function (client) {
-            if (!client || !client.id) {
-                console.error("Invalid client data.");
+
+    /* ==========================================
+       GET CLIENT ID FROM URL
+    ========================================== */
+
+    function getUrlClientId(){
+
+        try{
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            return params.get("client");
+
+        }
+        catch(error){
+
+            console.error(
+                "URL client ID error:",
+                error
+            );
+
+            return null;
+
+        }
+
+    }
+
+
+    /* ==========================================
+       API
+    ========================================== */
+
+    const API = {
+
+
+        /* --------------------------------------
+           SET CLIENT
+        -------------------------------------- */
+
+        set(client){
+
+            if(
+                !client ||
+                !client.id
+            ){
+
                 return false;
+
             }
 
+
             localStorage.setItem(
-                STORAGE_KEY,
+                KEY,
                 JSON.stringify(client)
             );
 
-            // Notify other pages/components
+
             window.dispatchEvent(
-                new CustomEvent("mdk-client-changed", {
-                    detail: client
-                })
+                new CustomEvent(
+                    "mdk-client-changed",
+                    {
+                        detail:client
+                    }
+                )
             );
 
+
             return true;
+
         },
 
-        // Get selected client
-        get: function () {
-            try {
-                const data = localStorage.getItem(STORAGE_KEY);
 
-                if (!data) {
-                    return null;
-                }
+        /* --------------------------------------
+           GET CLIENT
+        -------------------------------------- */
 
-                return JSON.parse(data);
+        get(){
 
-            } catch (error) {
+            try{
+
+                return JSON.parse(
+                    localStorage.getItem(
+                        KEY
+                    ) || "null"
+                );
+
+            }
+            catch(error){
+
                 console.error(
                     "Client context read error:",
                     error
                 );
 
                 return null;
+
             }
+
         },
 
-        // Get selected client ID
-        id: function () {
-            const client = this.get();
 
-            return client ? client.id : null;
+        /* --------------------------------------
+           GET CLIENT ID
+           URL gets priority
+        -------------------------------------- */
+
+        id(){
+
+            const urlClientId =
+                getUrlClientId();
+
+
+            if(urlClientId){
+
+                return urlClientId;
+
+            }
+
+
+            const client =
+                this.get();
+
+
+            return client
+                ? client.id
+                : null;
+
         },
 
-        // Clear selected client
-        clear: function () {
 
-            localStorage.removeItem(STORAGE_KEY);
+        /* --------------------------------------
+           URL CLIENT ID
+        -------------------------------------- */
+
+        urlClientId(){
+
+            return getUrlClientId();
+
+        },
+
+
+        /* --------------------------------------
+           CLEAR
+        -------------------------------------- */
+
+        clear(){
+
+            localStorage.removeItem(
+                KEY
+            );
+
 
             window.dispatchEvent(
-                new CustomEvent("mdk-client-changed", {
-                    detail: null
-                })
+                new CustomEvent(
+                    "mdk-client-changed",
+                    {
+                        detail:null
+                    }
+                )
             );
+
         },
 
-        // Check whether client is selected
-        require: function () {
 
-            const client = this.get();
+        /* --------------------------------------
+           REQUIRE CLIENT
+        -------------------------------------- */
 
-            if (!client) {
+        require(){
+
+            const client =
+                this.get();
+
+
+            if(!client){
 
                 alert(
                     "Please select a client first."
                 );
 
                 return null;
+
             }
 
-            return client;
-        },
 
-        // Check selected client
-        exists: function () {
-            return this.get() !== null;
+            return client;
+
         }
+
     };
 
-    // Make globally available
-    window.MDKClientContext = MDKClientContext;
+
+    window.MDKClientContext =
+        API;
+
 
 })();
