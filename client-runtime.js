@@ -1,17 +1,16 @@
 /* ============================================================
    MDK CLIENT RUNTIME
-   Version: V1
-   Purpose:
-   Load client-specific website data from Supabase
-   without changing the template design.
+   V1
    ============================================================ */
 
 (function () {
+
     "use strict";
 
-    /* ============================================================
-       SUPABASE CONFIG
-       ============================================================ */
+
+    /* ========================================================
+       SUPABASE
+    ======================================================== */
 
     var SUPABASE_URL =
         "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -20,26 +19,37 @@
         "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
 
-    /* ============================================================
-       SUPABASE CLIENT
-       ============================================================ */
+    var db = null;
 
-    function getSupabase() {
+
+    /* ========================================================
+       START
+    ======================================================== */
+
+    function startRuntime() {
+
+        console.log(
+            "MDK Runtime: Starting..."
+        );
+
 
         if (!window.supabase) {
+
             console.error(
                 "MDK Runtime: Supabase library not loaded."
             );
 
-            return null;
+            return;
         }
+
 
         try {
 
-            return window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
-            );
+            db =
+                window.supabase.createClient(
+                    SUPABASE_URL,
+                    SUPABASE_KEY
+                );
 
         } catch (error) {
 
@@ -48,18 +58,20 @@
                 error
             );
 
-            return null;
+            return;
         }
+
+
+        loadClient();
+
     }
 
 
-    /* ============================================================
+    /* ========================================================
        GET CLIENT ID
-       Priority:
-       1. URL ?client=
-       2. MDKClientContext
-       3. localStorage
-       ============================================================ */
+       URL FIRST
+       ?client=UUID
+       ======================================================== */
 
     function getClientId() {
 
@@ -70,19 +82,22 @@
                     window.location.search
                 );
 
-            var urlClient =
+            var urlId =
                 params.get("client");
 
-            if (urlClient) {
-                return urlClient;
+            if (urlId) {
+
+                return urlId;
+
             }
 
         } catch (error) {
 
-            console.error(
-                "MDK Runtime: URL parameter error.",
+            console.warn(
+                "MDK Runtime: URL read failed.",
                 error
             );
+
         }
 
 
@@ -90,23 +105,28 @@
 
             if (
                 window.MDKClientContext &&
-                typeof window.MDKClientContext.id === "function"
+                typeof window.MDKClientContext.id ===
+                    "function"
             ) {
 
                 var contextId =
                     window.MDKClientContext.id();
 
                 if (contextId) {
+
                     return contextId;
+
                 }
+
             }
 
         } catch (error) {
 
-            console.error(
-                "MDK Runtime: Client context error.",
+            console.warn(
+                "MDK Runtime: Context read failed.",
                 error
             );
+
         }
 
 
@@ -119,220 +139,465 @@
 
             if (saved) {
 
-                var parsed =
+                var client =
                     JSON.parse(saved);
 
-                if (parsed && parsed.id) {
-                    return parsed.id;
+                if (
+                    client &&
+                    client.id
+                ) {
+
+                    return client.id;
+
                 }
+
             }
 
         } catch (error) {
 
-            console.error(
-                "MDK Runtime: Local storage error.",
+            console.warn(
+                "MDK Runtime: LocalStorage read failed.",
                 error
             );
+
         }
 
 
         return null;
+
     }
 
 
-    /* ============================================================
-       VALUE HELPER
-       ============================================================ */
+    /* ========================================================
+       SAFE VALUE
+       ======================================================== */
 
-    function value(data, key, fallback) {
-
-        if (!data) {
-            return fallback || "";
-        }
-
-        if (
-            data[key] !== null &&
-            data[key] !== undefined &&
-            String(data[key]).trim() !== ""
-        ) {
-
-            return String(data[key]);
-        }
-
-        return fallback || "";
-    }
-
-
-    /* ============================================================
-       SAFE TEXT
-       ============================================================ */
-
-    function setText(selector, text) {
-
-        try {
-
-            var element =
-                document.querySelector(selector);
-
-            if (!element) {
-                return;
-            }
-
-            if (
-                text !== null &&
-                text !== undefined &&
-                String(text).trim() !== ""
-            ) {
-
-                element.textContent =
-                    String(text);
-            }
-
-        } catch (error) {
-
-            console.error(
-                "MDK Runtime setText error:",
-                selector,
-                error
-            );
-        }
-    }
-
-
-    /* ============================================================
-       SET ATTRIBUTE
-       ============================================================ */
-
-    function setAttr(
-        selector,
-        attribute,
-        valueToSet
+    function getValue(
+        object,
+        key,
+        fallback
     ) {
 
-        try {
+        if (!object) {
 
-            var element =
-                document.querySelector(selector);
+            return fallback || "";
 
-            if (!element) {
-                return;
+        }
+
+
+        if (
+            object[key] !== null &&
+            object[key] !== undefined &&
+            String(object[key]).trim() !== ""
+        ) {
+
+            return String(object[key]);
+
+        }
+
+
+        return fallback || "";
+
+    }
+
+
+    /* ========================================================
+       SET TEXT
+       ======================================================== */
+
+    function setText(
+        selector,
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined ||
+            String(value).trim() === ""
+        ) {
+
+            return;
+
+        }
+
+
+        var elements =
+            document.querySelectorAll(
+                selector
+            );
+
+
+        elements.forEach(
+            function (element) {
+
+                element.textContent =
+                    String(value);
+
             }
+        );
 
-            if (
-                valueToSet !== null &&
-                valueToSet !== undefined &&
-                String(valueToSet).trim() !== ""
-            ) {
+    }
+
+
+    /* ========================================================
+       SET ATTRIBUTE
+       ======================================================== */
+
+    function setAttribute(
+        selector,
+        attribute,
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined ||
+            String(value).trim() === ""
+        ) {
+
+            return;
+
+        }
+
+
+        var elements =
+            document.querySelectorAll(
+                selector
+            );
+
+
+        elements.forEach(
+            function (element) {
 
                 element.setAttribute(
                     attribute,
-                    String(valueToSet)
+                    String(value)
                 );
+
             }
+        );
+
+    }
+
+
+    /* ========================================================
+       ESCAPE HTML
+       ======================================================== */
+
+    function escapeHTML(value) {
+
+        return String(
+            value === null ||
+            value === undefined
+                ? ""
+                : value
+        )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+    }
+
+
+    /* ========================================================
+       LOAD CLIENT
+       ======================================================== */
+
+    async function loadClient() {
+
+        var clientId =
+            getClientId();
+
+
+        if (!clientId) {
+
+            console.log(
+                "MDK Runtime: No client selected. Demo mode."
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "MDK Runtime: Client ID:",
+            clientId
+        );
+
+
+        try {
+
+            /* ================================================
+               CLIENT
+            ================================================= */
+
+            var clientResult =
+                await db
+                    .from("clients")
+                    .select("*")
+                    .eq(
+                        "id",
+                        clientId
+                    )
+                    .single();
+
+
+            if (clientResult.error) {
+
+                console.error(
+                    "MDK Runtime: Client error:",
+                    clientResult.error
+                );
+
+                return;
+
+            }
+
+
+            var client =
+                clientResult.data;
+
+
+            if (!client) {
+
+                console.error(
+                    "MDK Runtime: Client not found."
+                );
+
+                return;
+
+            }
+
+
+            console.log(
+                "MDK Runtime: Loaded:",
+                client.company_name
+            );
+
+
+            /* ================================================
+               SAVE CONTEXT
+            ================================================= */
+
+            try {
+
+                if (
+                    window.MDKClientContext &&
+                    typeof window.MDKClientContext.set ===
+                        "function"
+                ) {
+
+                    window.MDKClientContext.set(
+                        client
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "MDK Runtime: Context save failed.",
+                    error
+                );
+
+            }
+
+
+            /* ================================================
+               CLIENT BASIC DATA
+            ================================================= */
+
+            applyClient(
+                client
+            );
+
+
+            /* ================================================
+               WEBSITE CONTENT
+            ================================================= */
+
+            await loadWebsiteContent(
+                clientId
+            );
+
+
+            /* ================================================
+               PRODUCTS
+            ================================================= */
+
+            var products =
+                await loadTable(
+                    "client_products",
+                    clientId
+                );
+
+            renderProducts(
+                products
+            );
+
+
+            /* ================================================
+               MANUFACTURING
+            ================================================= */
+
+            var manufacturing =
+                await loadTable(
+                    "client_manufacturing_steps",
+                    clientId
+                );
+
+            renderManufacturing(
+                manufacturing
+            );
+
+
+            /* ================================================
+               QUALITY
+            ================================================= */
+
+            var quality =
+                await loadTable(
+                    "client_quality",
+                    clientId
+                );
+
+            renderQuality(
+                quality
+            );
+
+
+            /* ================================================
+               INDUSTRIES
+            ================================================= */
+
+            var industries =
+                await loadTable(
+                    "client_industries",
+                    clientId
+                );
+
+            renderIndustries(
+                industries
+            );
+
+
+            /* ================================================
+               GALLERY
+            ================================================= */
+
+            var gallery =
+                await loadTable(
+                    "client_gallery",
+                    clientId
+                );
+
+            renderGallery(
+                gallery
+            );
+
+
+            /* ================================================
+               TESTIMONIALS
+            ================================================= */
+
+            var testimonials =
+                await loadTable(
+                    "client_testimonials",
+                    clientId
+                );
+
+            renderTestimonials(
+                testimonials
+            );
+
+
+            /* ================================================
+               FAQ
+            ================================================= */
+
+            var faq =
+                await loadTable(
+                    "client_faq",
+                    clientId
+                );
+
+            renderFAQ(
+                faq
+            );
+
+
+            document.body.setAttribute(
+                "data-client-loaded",
+                "true"
+            );
+
+
+            console.log(
+                "MDK Runtime: WEBSITE LOADED SUCCESSFULLY"
+            );
 
         } catch (error) {
 
             console.error(
-                "MDK Runtime setAttr error:",
-                selector,
+                "MDK Runtime ERROR:",
                 error
             );
+
         }
+
     }
 
 
-    /* ============================================================
-       ESCAPE HTML
-       ============================================================ */
+    /* ========================================================
+       APPLY CLIENT
+       ======================================================== */
 
-    function escapeHTML(valueToEscape) {
+    function applyClient(
+        client
+    ) {
 
-        return String(
-            valueToEscape === null ||
-            valueToEscape === undefined
-                ? ""
-                : valueToEscape
-        )
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-
-    /* ============================================================
-       ESCAPE ATTRIBUTE
-       ============================================================ */
-
-    function escapeAttr(valueToEscape) {
-
-        return escapeHTML(valueToEscape);
-    }
-
-
-    /* ============================================================
-       APPLY CLIENT BASIC DATA
-       ============================================================ */
-
-    function applyClient(client) {
-
-        if (!client) {
-            return;
-        }
+        var companyName =
+            getValue(
+                client,
+                "company_name",
+                "INDUSTRIA"
+            );
 
 
         /* COMPANY NAME */
 
-        var companyName =
-            value(
-                client,
-                "company_name",
-                "Your Company"
-            );
+        setText(
+            '[data-client="company_name"]',
+            companyName
+        );
 
 
-        /* LOGO / COMPANY NAME */
+        /* PAGE TITLE */
 
-        var logoText =
-            document.querySelector(
-                ".logo"
-            );
-
-        if (
-            logoText &&
-            !logoText.querySelector("img")
-        ) {
-
-            logoText.textContent =
-                companyName;
-        }
+        document.title =
+            companyName +
+            " | Manufacturing Excellence";
 
 
-        /* FOOTER LOGO */
-
-        var footerLogo =
-            document.querySelector(
-                ".footer-logo"
-            );
-
-        if (footerLogo) {
-
-            footerLogo.textContent =
-                companyName;
-        }
-
-
-        /* DOCUMENT TITLE */
-
-        if (companyName) {
-
-            document.title =
-                companyName;
-        }
-
-
-        /* DATA ATTRIBUTES */
+        /* BODY DATA */
 
         document.body.setAttribute(
             "data-client-id",
@@ -340,592 +605,167 @@
         );
 
         document.body.setAttribute(
-            "data-client-slug",
-            client.slug || ""
-        );
-
-        document.body.setAttribute(
             "data-client-name",
             companyName
         );
 
+        document.body.setAttribute(
+            "data-client-slug",
+            client.slug || ""
+        );
 
-        /* ACTIVE CLIENT CONTEXT */
-
-        try {
-
-            if (
-                window.MDKClientContext &&
-                typeof window.MDKClientContext.set === "function"
-            ) {
-
-                window.MDKClientContext.set(
-                    client
-                );
-            }
-
-        } catch (error) {
-
-            console.error(
-                "MDK Runtime: Could not save client context.",
-                error
-            );
-        }
     }
 
 
-    /* ============================================================
-       APPLY WEBSITE CONTENT
-       ============================================================ */
+    /* ========================================================
+       WEBSITE CONTENT
+       ======================================================== */
 
-    function applyWebsiteContent(content) {
+    async function loadWebsiteContent(
+        clientId
+    ) {
 
-        if (!content) {
+        var result =
+            await db
+                .from(
+                    "client_website_content"
+                )
+                .select("*")
+                .eq(
+                    "client_id",
+                    clientId
+                )
+                .maybeSingle();
+
+
+        if (result.error) {
+
+            console.warn(
+                "MDK Runtime: Website content error:",
+                result.error
+            );
+
             return;
+
         }
 
 
-        /* ========================================================
-           TOP BAR
-           ======================================================== */
+        if (!result.data) {
 
-        setText(
-            ".topbar-inner span:first-child",
-            value(
-                content,
-                "topbar_text",
-                ""
-            )
-        );
-
-
-        /* ========================================================
-           HERO
-           ======================================================== */
-
-        setText(
-            '[data-content="hero_eyebrow"]',
-            value(
-                content,
-                "hero_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="hero_title"]',
-            value(
-                content,
-                "hero_heading",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="hero_description"]',
-            value(
-                content,
-                "hero_description",
-                ""
-            )
-        );
-
-
-        /* HERO IMAGE */
-
-        var heroImage =
-            value(
-                content,
-                "hero_image_url",
-                ""
+            console.log(
+                "MDK Runtime: No website content found."
             );
 
-        if (heroImage) {
+            return;
 
-            var hero =
-                document.querySelector(
-                    ".hero"
-                );
-
-            if (hero) {
-
-                hero.style.backgroundImage =
-                    "linear-gradient(rgba(0,0,0,.50),rgba(0,0,0,.50)),url('" +
-                    heroImage.replace(/'/g, "\\'") +
-                    "')";
-
-                hero.style.backgroundSize =
-                    "cover";
-
-                hero.style.backgroundPosition =
-                    "center";
-            }
         }
 
 
-        /* ========================================================
-           ABOUT
-           ======================================================== */
+        var content =
+            result.data;
+
+
+        /* ================================================
+           TOPBAR
+        ================================================= */
 
         setText(
-            '[data-content="about_eyebrow"]',
-            value(
+            '[data-content="topbar_text"]',
+            getValue(
                 content,
-                "about_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="about_title"]',
-            value(
-                content,
-                "about_heading",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="about_description"]',
-            value(
-                content,
-                "about_description",
-                ""
+                "topbar_text"
             )
         );
 
 
-        /* ABOUT IMAGE */
-
-        var aboutImage =
-            value(
-                content,
-                "about_image_url",
-                ""
-            );
-
-        if (aboutImage) {
-
-            var aboutVisual =
-                document.querySelector(
-                    ".about .visual"
-                );
-
-            if (aboutVisual) {
-
-                aboutVisual.style.backgroundImage =
-                    "url('" +
-                    aboutImage.replace(/'/g, "\\'") +
-                    "')";
-
-                aboutVisual.style.backgroundSize =
-                    "cover";
-
-                aboutVisual.style.backgroundPosition =
-                    "center";
-
-                aboutVisual.textContent =
-                    "";
-            }
-        }
-
-
-        /* ========================================================
-           STATS
-           ======================================================== */
-
-        setText(
-            '[data-stat="1-value"]',
-            value(
-                content,
-                "stat_1_value",
-                ""
-            )
-        );
-
-        setText(
-            '[data-stat="1-label"]',
-            value(
-                content,
-                "stat_1_label",
-                ""
-            )
-        );
-
-
-        setText(
-            '[data-stat="2-value"]',
-            value(
-                content,
-                "stat_2_value",
-                ""
-            )
-        );
-
-        setText(
-            '[data-stat="2-label"]',
-            value(
-                content,
-                "stat_2_label",
-                ""
-            )
-        );
-
-
-        setText(
-            '[data-stat="3-value"]',
-            value(
-                content,
-                "stat_3_value",
-                ""
-            )
-        );
-
-        setText(
-            '[data-stat="3-label"]',
-            value(
-                content,
-                "stat_3_label",
-                ""
-            )
-        );
-
-
-        setText(
-            '[data-stat="4-value"]',
-            value(
-                content,
-                "stat_4_value",
-                ""
-            )
-        );
-
-        setText(
-            '[data-stat="4-label"]',
-            value(
-                content,
-                "stat_4_label",
-                ""
-            )
-        );
-
-
-        /* ========================================================
-           PRODUCTS
-           ======================================================== */
-
-        setText(
-            '[data-content="products_eyebrow"]',
-            value(
-                content,
-                "products_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="products_title"]',
-            value(
-                content,
-                "products_heading",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="products_description"]',
-            value(
-                content,
-                "products_description",
-                ""
-            )
-        );
-
-
-        /* ========================================================
-           MANUFACTURING
-           ======================================================== */
-
-        setText(
-            '[data-content="manufacturing_eyebrow"]',
-            value(
-                content,
-                "manufacturing_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="manufacturing_title"]',
-            value(
-                content,
-                "manufacturing_heading",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="manufacturing_description"]',
-            value(
-                content,
-                "manufacturing_description",
-                ""
-            )
-        );
-
-
-        /* ========================================================
-           QUALITY
-           ======================================================== */
-
-        setText(
-            '[data-content="quality_eyebrow"]',
-            value(
-                content,
-                "quality_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="quality_title"]',
-            value(
-                content,
-                "quality_heading",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="quality_description"]',
-            value(
-                content,
-                "quality_description",
-                ""
-            )
-        );
-
-
-        /* ========================================================
-           INDUSTRIES
-           ======================================================== */
-
-        setText(
-            '[data-content="industries_eyebrow"]',
-            value(
-                content,
-                "industries_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="industries_title"]',
-            value(
-                content,
-                "industries_heading",
-                ""
-            )
-        );
-
-
-        /* ========================================================
-           GALLERY
-           ======================================================== */
-
-        setText(
-            '[data-content="gallery_eyebrow"]',
-            value(
-                content,
-                "gallery_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="gallery_title"]',
-            value(
-                content,
-                "gallery_heading",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="gallery_description"]',
-            value(
-                content,
-                "gallery_description",
-                ""
-            )
-        );
-
-
-        /* ========================================================
-           TESTIMONIALS
-           ======================================================== */
-
-        setText(
-            '[data-content="testimonials_eyebrow"]',
-            value(
-                content,
-                "testimonials_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="testimonials_title"]',
-            value(
-                content,
-                "testimonials_heading",
-                ""
-            )
-        );
-
-
-        /* ========================================================
-           FAQ
-           ======================================================== */
-
-        setText(
-            '[data-content="faq_eyebrow"]',
-            value(
-                content,
-                "faq_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="faq_title"]',
-            value(
-                content,
-                "faq_heading",
-                ""
-            )
-        );
-
-
-        /* ========================================================
-           CONTACT
-           ======================================================== */
-
-        setText(
-            '[data-content="contact_eyebrow"]',
-            value(
-                content,
-                "contact_eyebrow",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="contact_title"]',
-            value(
-                content,
-                "contact_heading",
-                ""
-            )
-        );
-
-        setText(
-            '[data-content="contact_description"]',
-            value(
-                content,
-                "contact_description",
-                ""
-            )
-        );
-
-
-        /* PHONE */
+        /* ================================================
+           PHONE
+        ================================================= */
 
         var phone =
-            value(
+            getValue(
                 content,
-                "phone",
-                ""
+                "phone"
             );
+
 
         if (phone) {
 
-            document
-                .querySelectorAll(
-                    '[data-contact="phone"]'
-                )
-                .forEach(function (element) {
+            setText(
+                '[data-content="phone"]',
+                phone
+            );
 
-                    element.textContent =
-                        phone;
 
-                    if (
-                        element.tagName === "A"
-                    ) {
+            var phoneNumber =
+                phone.replace(
+                    /[^0-9+]/g,
+                    ""
+                );
 
-                        element.href =
-                            "tel:" +
-                            phone.replace(
-                                /[^0-9+]/g,
-                                ""
-                            );
-                    }
-                });
+
+            setAttribute(
+                '[data-content-link="phone"]',
+                "href",
+                "tel:" +
+                phoneNumber
+            );
+
         }
 
 
-        /* EMAIL */
+        /* ================================================
+           EMAIL
+        ================================================= */
 
         var email =
-            value(
+            getValue(
                 content,
-                "email",
-                ""
+                "email"
             );
+
 
         if (email) {
 
-            document
-                .querySelectorAll(
-                    '[data-contact="email"]'
-                )
-                .forEach(function (element) {
+            setText(
+                '[data-content="email"]',
+                email
+            );
 
-                    element.textContent =
-                        email;
 
-                    if (
-                        element.tagName === "A"
-                    ) {
+            setAttribute(
+                '[data-content-link="email"]',
+                "href",
+                "mailto:" +
+                email
+            );
 
-                        element.href =
-                            "mailto:" +
-                            email;
-                    }
-                });
         }
 
 
-        /* ADDRESS */
+        /* ================================================
+           ADDRESS
+        ================================================= */
 
         setText(
-            '[data-contact="address"]',
-            value(
+            '[data-content="address"]',
+            getValue(
                 content,
-                "address",
-                ""
+                "address"
             )
         );
 
 
-        /* WHATSAPP */
+        /* ================================================
+           WHATSAPP
+        ================================================= */
 
         var whatsapp =
-            value(
+            getValue(
                 content,
-                "whatsapp",
-                ""
+                "whatsapp"
             );
+
 
         if (whatsapp) {
 
@@ -935,173 +775,599 @@
                     ""
                 );
 
-            document
-                .querySelectorAll(
-                    '[data-contact="whatsapp"]'
-                )
-                .forEach(function (element) {
 
-                    if (
-                        element.tagName === "A"
-                    ) {
-
-                        element.href =
-                            "https://wa.me/" +
-                            whatsappNumber;
-
-                        element.target =
-                            "_blank";
-                    }
-
-                    if (
-                        element.hasAttribute(
-                            "data-whatsapp-text"
-                        )
-                    ) {
-
-                        element.textContent =
-                            whatsapp;
-                    }
-                });
-        }
-
-
-        /* ========================================================
-           LOGO IMAGE
-           ======================================================== */
-
-        var logoUrl =
-            value(
-                content,
-                "logo_url",
-                ""
+            setAttribute(
+                '[data-content-link="whatsapp"]',
+                "href",
+                "https://wa.me/" +
+                whatsappNumber
             );
 
-        if (logoUrl) {
-
-            var logoImage =
-                document.querySelector(
-                    '[data-content-image="logo"]'
-                );
-
-            if (logoImage) {
-
-                logoImage.src =
-                    logoUrl;
-
-                logoImage.alt =
-                    "Company Logo";
-            }
         }
 
 
-        /* ========================================================
-           FOOTER DESCRIPTION
-           ======================================================== */
+        /* ================================================
+           HERO
+        ================================================= */
 
         setText(
-            '[data-content="footer_description"]',
-            value(
+            '[data-content="hero_eyebrow"]',
+            getValue(
                 content,
-                "footer_description",
-                ""
+                "hero_eyebrow"
             )
         );
 
 
-        /* ========================================================
-           SOCIAL / LEGAL LINKS
-           ======================================================== */
-
-        var linkedin =
-            value(
+        setText(
+            '[data-content="hero_title"]',
+            getValue(
                 content,
-                "linkedin_url",
-                ""
+                "hero_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="hero_description"]',
+            getValue(
+                content,
+                "hero_description"
+            )
+        );
+
+
+        var heroImage =
+            getValue(
+                content,
+                "hero_image_url"
             );
 
-        if (linkedin) {
 
-            document
-                .querySelectorAll(
-                    '[data-link="linkedin"]'
-                )
-                .forEach(function (element) {
+        if (heroImage) {
 
-                    element.href =
-                        linkedin;
+            var hero =
+                document.querySelector(
+                    ".hero"
+                );
 
-                    element.target =
-                        "_blank";
-                });
+
+            if (hero) {
+
+                hero.style.backgroundImage =
+                    "linear-gradient(90deg,rgba(2,6,23,.92),rgba(2,6,23,.55)),url('" +
+                    heroImage.replace(
+                        /'/g,
+                        "\\'"
+                    ) +
+                    "')";
+
+            }
+
         }
 
 
-        var privacy =
-            value(
+        /* ================================================
+           ABOUT
+        ================================================= */
+
+        setText(
+            '[data-content="about_eyebrow"]',
+            getValue(
                 content,
-                "privacy_url",
-                ""
+                "about_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_title"]',
+            getValue(
+                content,
+                "about_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_description"]',
+            getValue(
+                content,
+                "about_description"
+            )
+        );
+
+
+        var aboutImage =
+            getValue(
+                content,
+                "about_image_url"
             );
 
-        if (privacy) {
 
-            document
-                .querySelectorAll(
-                    '[data-link="privacy"]'
-                )
-                .forEach(function (element) {
+        if (aboutImage) {
 
-                    element.href =
-                        privacy;
-                });
+            var visual =
+                document.querySelector(
+                    '[data-content-image="about"]'
+                );
+
+
+            if (visual) {
+
+                visual.style.backgroundImage =
+                    "url('" +
+                    aboutImage.replace(
+                        /'/g,
+                        "\\'"
+                    ) +
+                    "')";
+
+                visual.textContent =
+                    "";
+
+            }
+
         }
 
 
-        var terms =
-            value(
+        /* ================================================
+           STATS
+        ================================================= */
+
+        setText(
+            '[data-stat="1-value"]',
+            getValue(
                 content,
-                "terms_url",
-                ""
-            );
+                "stat_1_value"
+            )
+        );
 
-        if (terms) {
+        setText(
+            '[data-stat="1-label"]',
+            getValue(
+                content,
+                "stat_1_label"
+            )
+        );
 
-            document
-                .querySelectorAll(
-                    '[data-link="terms"]'
-                )
-                .forEach(function (element) {
 
-                    element.href =
-                        terms;
-                });
-        }
+        setText(
+            '[data-stat="2-value"]',
+            getValue(
+                content,
+                "stat_2_value"
+            )
+        );
+
+        setText(
+            '[data-stat="2-label"]',
+            getValue(
+                content,
+                "stat_2_label"
+            )
+        );
+
+
+        setText(
+            '[data-stat="3-value"]',
+            getValue(
+                content,
+                "stat_3_value"
+            )
+        );
+
+        setText(
+            '[data-stat="3-label"]',
+            getValue(
+                content,
+                "stat_3_label"
+            )
+        );
+
+
+        setText(
+            '[data-stat="4-value"]',
+            getValue(
+                content,
+                "stat_4_value"
+            )
+        );
+
+        setText(
+            '[data-stat="4-label"]',
+            getValue(
+                content,
+                "stat_4_label"
+            )
+        );
+
+
+        /* ================================================
+           PRODUCTS SECTION
+        ================================================= */
+
+        setText(
+            '[data-content="products_eyebrow"]',
+            getValue(
+                content,
+                "products_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="products_title"]',
+            getValue(
+                content,
+                "products_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="products_description"]',
+            getValue(
+                content,
+                "products_description"
+            )
+        );
+
+
+        /* ================================================
+           MANUFACTURING
+        ================================================= */
+
+        setText(
+            '[data-content="manufacturing_eyebrow"]',
+            getValue(
+                content,
+                "manufacturing_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="manufacturing_title"]',
+            getValue(
+                content,
+                "manufacturing_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="manufacturing_description"]',
+            getValue(
+                content,
+                "manufacturing_description"
+            )
+        );
+
+
+        /* ================================================
+           QUALITY
+        ================================================= */
+
+        setText(
+            '[data-content="quality_eyebrow"]',
+            getValue(
+                content,
+                "quality_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="quality_title"]',
+            getValue(
+                content,
+                "quality_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="quality_description"]',
+            getValue(
+                content,
+                "quality_description"
+            )
+        );
+
+
+        /* ================================================
+           INDUSTRIES
+        ================================================= */
+
+        setText(
+            '[data-content="industries_eyebrow"]',
+            getValue(
+                content,
+                "industries_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="industries_title"]',
+            getValue(
+                content,
+                "industries_heading"
+            )
+        );
+
+
+        /* ================================================
+           GALLERY
+        ================================================= */
+
+        setText(
+            '[data-content="gallery_eyebrow"]',
+            getValue(
+                content,
+                "gallery_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="gallery_title"]',
+            getValue(
+                content,
+                "gallery_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="gallery_description"]',
+            getValue(
+                content,
+                "gallery_description"
+            )
+        );
+
+
+        /* ================================================
+           TESTIMONIALS
+        ================================================= */
+
+        setText(
+            '[data-content="testimonials_eyebrow"]',
+            getValue(
+                content,
+                "testimonials_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="testimonials_title"]',
+            getValue(
+                content,
+                "testimonials_heading"
+            )
+        );
+
+
+        /* ================================================
+           FAQ
+        ================================================= */
+
+        setText(
+            '[data-content="faq_eyebrow"]',
+            getValue(
+                content,
+                "faq_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="faq_title"]',
+            getValue(
+                content,
+                "faq_heading"
+            )
+        );
+
+
+        /* ================================================
+           CONTACT
+        ================================================= */
+
+        setText(
+            '[data-content="contact_eyebrow"]',
+            getValue(
+                content,
+                "contact_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="contact_title"]',
+            getValue(
+                content,
+                "contact_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="contact_description"]',
+            getValue(
+                content,
+                "contact_description"
+            )
+        );
+
+
+        /* ================================================
+           FOOTER
+        ================================================= */
+
+        setText(
+            '[data-content="footer_description"]',
+            getValue(
+                content,
+                "footer_description"
+            )
+        );
+
+
+        /* ================================================
+           LEGAL LINKS
+        ================================================= */
+
+        setLink(
+            '[data-content-link="privacy"]',
+            getValue(
+                content,
+                "privacy_url"
+            )
+        );
+
+
+        setLink(
+            '[data-content-link="terms"]',
+            getValue(
+                content,
+                "terms_url"
+            )
+        );
+
+
+        setLink(
+            '[data-content-link="linkedin"]',
+            getValue(
+                content,
+                "linkedin_url"
+            )
+        );
+
     }
 
 
-    /* ============================================================
-       GENERIC FIELD HELPER
-       ============================================================ */
+    /* ========================================================
+       LINK
+       ======================================================== */
 
-    function firstValue(
+    function setLink(
+        selector,
+        url
+    ) {
+
+        if (!url) {
+
+            return;
+
+        }
+
+
+        var elements =
+            document.querySelectorAll(
+                selector
+            );
+
+
+        elements.forEach(
+            function (element) {
+
+                element.href =
+                    url;
+
+                if (
+                    url.indexOf(
+                        "http"
+                    ) === 0
+                ) {
+
+                    element.target =
+                        "_blank";
+
+                    element.rel =
+                        "noopener noreferrer";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       LOAD TABLE
+       ======================================================== */
+
+    async function loadTable(
+        table,
+        clientId
+    ) {
+
+        try {
+
+            var result =
+                await db
+                    .from(table)
+                    .select("*")
+                    .eq(
+                        "client_id",
+                        clientId
+                    );
+
+
+            if (result.error) {
+
+                console.warn(
+                    "MDK Runtime:",
+                    table,
+                    result.error
+                );
+
+                return [];
+
+            }
+
+
+            return result.data || [];
+
+        } catch (error) {
+
+            console.warn(
+                "MDK Runtime:",
+                table,
+                error
+            );
+
+            return [];
+
+        }
+
+    }
+
+
+    /* ========================================================
+       GET FIRST AVAILABLE FIELD
+       ======================================================== */
+
+    function first(
         row,
-        keys,
+        fields,
         fallback
     ) {
 
-        if (!row) {
-            return fallback || "";
-        }
-
         for (
             var i = 0;
-            i < keys.length;
+            i < fields.length;
             i++
         ) {
 
             var key =
-                keys[i];
+                fields[i];
+
 
             if (
                 row[key] !== null &&
@@ -1112,47 +1378,48 @@
                 return String(
                     row[key]
                 );
+
             }
+
         }
 
+
         return fallback || "";
+
     }
 
 
-    /* ============================================================
-       RENDER PRODUCTS
-       ============================================================ */
+    /* ========================================================
+       PRODUCTS
+       ======================================================== */
 
-    function renderProducts(products) {
+    function renderProducts(
+        items
+    ) {
 
         var container =
             document.querySelector(
                 "[data-products]"
             );
 
+
         if (!container) {
+
             return;
+
         }
+
 
         container.innerHTML =
             "";
 
 
-        if (
-            !products ||
-            !products.length
-        ) {
-
-            return;
-        }
-
-
-        products.forEach(
-            function (product) {
+        items.forEach(
+            function (item) {
 
                 var name =
-                    firstValue(
-                        product,
+                    first(
+                        item,
                         [
                             "name",
                             "product_name",
@@ -1163,8 +1430,8 @@
 
 
                 var description =
-                    firstValue(
-                        product,
+                    first(
+                        item,
                         [
                             "description",
                             "product_description",
@@ -1175,21 +1442,21 @@
 
 
                 var image =
-                    firstValue(
-                        product,
+                    first(
+                        item,
                         [
                             "image_url",
+                            "product_image_url",
                             "image",
-                            "photo_url",
-                            "product_image_url"
+                            "photo_url"
                         ],
                         ""
                     );
 
 
                 var code =
-                    firstValue(
-                        product,
+                    first(
+                        item,
                         [
                             "product_code",
                             "code",
@@ -1199,31 +1466,38 @@
                     );
 
 
-                var article =
+                var card =
                     document.createElement(
                         "article"
                     );
 
-                article.className =
-                    "card products";
+
+                card.className =
+                    "card";
 
 
                 var imageHTML =
                     image
                         ? (
+                            '<div class="product-image">' +
                             '<img src="' +
-                            escapeAttr(image) +
+                            escapeHTML(image) +
                             '" alt="' +
-                            escapeAttr(name) +
-                            '" style="width:100%;height:220px;object-fit:cover;">'
+                            escapeHTML(name) +
+                            '" style="width:100%;height:100%;object-fit:cover;">' +
+                            '</div>'
                         )
-                        : "";
+                        : (
+                            '<div class="product-image">' +
+                            'PRODUCT IMAGE' +
+                            '</div>'
+                        );
 
 
-                article.innerHTML =
+                card.innerHTML =
                     imageHTML +
-                    '<div style="padding:22px;">' +
-                    '<div class="eyebrow">' +
+                    '<div class="product-body">' +
+                    '<div class="product-code">' +
                     escapeHTML(code) +
                     '</div>' +
                     '<h3>' +
@@ -1236,78 +1510,78 @@
 
 
                 container.appendChild(
-                    article
+                    card
                 );
+
             }
         );
+
     }
 
 
-    /* ============================================================
-       RENDER MANUFACTURING
-       ============================================================ */
+    /* ========================================================
+       MANUFACTURING
+       ======================================================== */
 
-    function renderManufacturing(steps) {
+    function renderManufacturing(
+        items
+    ) {
 
         var container =
             document.querySelector(
                 "[data-manufacturing]"
             );
 
+
         if (!container) {
+
             return;
+
         }
+
 
         container.innerHTML =
             "";
 
 
-        if (
-            !steps ||
-            !steps.length
-        ) {
-
-            return;
-        }
-
-
-        steps.forEach(
-            function (step, index) {
+        items.forEach(
+            function (item, index) {
 
                 var title =
-                    firstValue(
-                        step,
+                    first(
+                        item,
                         [
                             "title",
                             "name",
                             "step_name"
                         ],
-                        "Step " +
-                        (index + 1)
+                        "Manufacturing Step"
                     );
 
 
                 var description =
-                    firstValue(
-                        step,
+                    first(
+                        item,
                         [
                             "description",
-                            "details",
-                            "step_description"
+                            "step_description",
+                            "details"
                         ],
                         ""
                     );
 
 
                 var number =
-                    firstValue(
-                        step,
+                    first(
+                        item,
                         [
                             "step_number",
                             "number",
                             "sequence"
                         ],
-                        String(index + 1)
+                        String(
+                            index + 1
+                        )
                     );
 
 
@@ -1316,12 +1590,13 @@
                         "div"
                     );
 
+
                 card.className =
-                    "card";
+                    "step";
 
 
                 card.innerHTML =
-                    '<div class="eyebrow">STEP ' +
+                    '<div class="number">' +
                     escapeHTML(number) +
                     '</div>' +
                     '<h3>' +
@@ -1335,56 +1610,55 @@
                 container.appendChild(
                     card
                 );
+
             }
         );
+
     }
 
 
-    /* ============================================================
-       RENDER QUALITY
-       ============================================================ */
+    /* ========================================================
+       QUALITY
+       ======================================================== */
 
-    function renderQuality(items) {
+    function renderQuality(
+        items
+    ) {
 
         var container =
             document.querySelector(
                 "[data-quality]"
             );
 
+
         if (!container) {
+
             return;
+
         }
+
 
         container.innerHTML =
             "";
-
-
-        if (
-            !items ||
-            !items.length
-        ) {
-
-            return;
-        }
 
 
         items.forEach(
             function (item) {
 
                 var title =
-                    firstValue(
+                    first(
                         item,
                         [
                             "title",
                             "name",
                             "quality_name"
                         ],
-                        "Quality"
+                        "Quality Assurance"
                     );
 
 
                 var description =
-                    firstValue(
+                    first(
                         item,
                         [
                             "description",
@@ -1395,7 +1669,7 @@
 
 
                 var icon =
-                    firstValue(
+                    first(
                         item,
                         [
                             "icon",
@@ -1410,12 +1684,13 @@
                         "div"
                     );
 
+
                 card.className =
                     "card";
 
 
                 card.innerHTML =
-                    '<div style="font-size:32px;margin-bottom:12px;">' +
+                    '<div class="icon">' +
                     escapeHTML(icon) +
                     '</div>' +
                     '<h3>' +
@@ -1429,44 +1704,43 @@
                 container.appendChild(
                     card
                 );
+
             }
         );
+
     }
 
 
-    /* ============================================================
-       RENDER INDUSTRIES
-       ============================================================ */
+    /* ========================================================
+       INDUSTRIES
+       ======================================================== */
 
-    function renderIndustries(items) {
+    function renderIndustries(
+        items
+    ) {
 
         var container =
             document.querySelector(
                 "[data-industries]"
             );
 
+
         if (!container) {
+
             return;
+
         }
+
 
         container.innerHTML =
             "";
-
-
-        if (
-            !items ||
-            !items.length
-        ) {
-
-            return;
-        }
 
 
         items.forEach(
             function (item) {
 
                 var name =
-                    firstValue(
+                    first(
                         item,
                         [
                             "name",
@@ -1477,93 +1751,73 @@
                     );
 
 
-                var description =
-                    firstValue(
-                        item,
-                        [
-                            "description",
-                            "details"
-                        ],
-                        ""
-                    );
-
-
-                var card =
+                var pill =
                     document.createElement(
                         "div"
                     );
 
-                card.className =
-                    "industry";
+
+                pill.className =
+                    "pill";
 
 
-                card.innerHTML =
-                    '<strong>' +
-                    escapeHTML(name) +
-                    '</strong>' +
-                    (
-                        description
-                            ? '<span>' +
-                              escapeHTML(description) +
-                              '</span>'
-                            : ""
-                    );
+                pill.textContent =
+                    name;
 
 
                 container.appendChild(
-                    card
+                    pill
                 );
+
             }
         );
+
     }
 
 
-    /* ============================================================
-       RENDER GALLERY
-       ============================================================ */
+    /* ========================================================
+       GALLERY
+       ======================================================== */
 
-    function renderGallery(items) {
+    function renderGallery(
+        items
+    ) {
 
         var container =
             document.querySelector(
                 "[data-gallery]"
             );
 
+
         if (!container) {
+
             return;
+
         }
+
 
         container.innerHTML =
             "";
-
-
-        if (
-            !items ||
-            !items.length
-        ) {
-
-            return;
-        }
 
 
         items.forEach(
             function (item) {
 
                 var image =
-                    firstValue(
+                    first(
                         item,
                         [
                             "image_url",
+                            "gallery_image_url",
                             "image",
-                            "photo_url",
-                            "gallery_image_url"
+                            "photo_url"
                         ],
                         ""
                     );
 
 
                 var title =
-                    firstValue(
+                    first(
                         item,
                         [
                             "title",
@@ -1575,65 +1829,77 @@
 
 
                 if (!image) {
+
                     return;
+
                 }
 
 
-                var figure =
+                var element =
                     document.createElement(
-                        "figure"
+                        "div"
                     );
 
 
-                figure.innerHTML =
-                    '<img src="' +
-                    escapeAttr(image) +
-                    '" alt="' +
-                    escapeAttr(title) +
-                    '" style="width:100%;height:100%;object-fit:cover;">';
+                element.className =
+                    "gallery-item";
+
+
+                element.style.backgroundImage =
+                    "url('" +
+                    image.replace(
+                        /'/g,
+                        "\\'"
+                    ) +
+                    "')";
+
+
+                element.setAttribute(
+                    "title",
+                    title
+                );
 
 
                 container.appendChild(
-                    figure
+                    element
                 );
+
             }
         );
+
     }
 
 
-    /* ============================================================
-       RENDER TESTIMONIALS
-       ============================================================ */
+    /* ========================================================
+       TESTIMONIALS
+       ======================================================== */
 
-    function renderTestimonials(items) {
+    function renderTestimonials(
+        items
+    ) {
 
         var container =
             document.querySelector(
                 "[data-testimonials]"
             );
 
+
         if (!container) {
+
             return;
+
         }
+
 
         container.innerHTML =
             "";
-
-
-        if (
-            !items ||
-            !items.length
-        ) {
-
-            return;
-        }
 
 
         items.forEach(
             function (item) {
 
                 var name =
-                    firstValue(
+                    first(
                         item,
                         [
                             "name",
@@ -1646,7 +1912,7 @@
 
 
                 var message =
-                    firstValue(
+                    first(
                         item,
                         [
                             "message",
@@ -1659,7 +1925,7 @@
 
 
                 var company =
-                    firstValue(
+                    first(
                         item,
                         [
                             "company",
@@ -1675,12 +1941,13 @@
                         "div"
                     );
 
+
                 card.className =
-                    "card";
+                    "quote";
 
 
                 card.innerHTML =
-                    '<p style="font-size:17px;line-height:1.7;">“' +
+                    '<p>“' +
                     escapeHTML(message) +
                     '”</p>' +
                     '<strong>' +
@@ -1688,9 +1955,9 @@
                     '</strong>' +
                     (
                         company
-                            ? '<div style="margin-top:5px;opacity:.7;">' +
+                            ? '<small>' +
                               escapeHTML(company) +
-                              '</div>'
+                              '</small>'
                             : ""
                     );
 
@@ -1698,44 +1965,43 @@
                 container.appendChild(
                     card
                 );
+
             }
         );
+
     }
 
 
-    /* ============================================================
-       RENDER FAQ
-       ============================================================ */
+    /* ========================================================
+       FAQ
+       ======================================================== */
 
-    function renderFAQ(items) {
+    function renderFAQ(
+        items
+    ) {
 
         var container =
             document.querySelector(
                 "[data-faq]"
             );
 
+
         if (!container) {
+
             return;
+
         }
+
 
         container.innerHTML =
             "";
-
-
-        if (
-            !items ||
-            !items.length
-        ) {
-
-            return;
-        }
 
 
         items.forEach(
             function (item) {
 
                 var question =
-                    firstValue(
+                    first(
                         item,
                         [
                             "question",
@@ -1747,7 +2013,7 @@
 
 
                 var answer =
-                    firstValue(
+                    first(
                         item,
                         [
                             "answer",
@@ -1762,6 +2028,7 @@
                     document.createElement(
                         "div"
                     );
+
 
                 wrapper.className =
                     "faq-item";
@@ -1784,11 +2051,10 @@
                 container.appendChild(
                     wrapper
                 );
+
             }
         );
 
-
-        /* FAQ CLICK EVENTS */
 
         container
             .querySelectorAll(
@@ -1804,6 +2070,7 @@
                             var item =
                                 button.parentElement;
 
+
                             item.classList.toggle(
                                 "open"
                             );
@@ -1814,6 +2081,7 @@
                                     "span:last-child"
                                 );
 
+
                             if (icon) {
 
                                 icon.textContent =
@@ -1822,463 +2090,37 @@
                                     )
                                         ? "−"
                                         : "+";
+
                             }
+
                         }
                     );
+
                 }
             );
+
     }
 
 
-    /* ============================================================
-       LOAD ONE TABLE
-       ============================================================ */
+    /* ========================================================
+       INITIALIZE
+       ======================================================== */
 
-    async function loadTable(
-        supabaseClient,
-        tableName,
-        clientId
+    if (
+        document.readyState ===
+        "loading"
     ) {
 
-        try {
-
-            var result =
-                await supabaseClient
-                    .from(tableName)
-                    .select("*")
-                    .eq(
-                        "client_id",
-                        clientId
-                    );
-
-
-            if (result.error) {
-
-                console.warn(
-                    "MDK Runtime: " +
-                    tableName +
-                    " could not be loaded.",
-                    result.error
-                );
-
-                return [];
-            }
-
-
-            return result.data || [];
-
-        } catch (error) {
-
-            console.warn(
-                "MDK Runtime: " +
-                tableName +
-                " loading error.",
-                error
-            );
-
-            return [];
-        }
-    }
-
-
-    /* ============================================================
-       LOAD WEBSITE
-       ============================================================ */
-
-    async function loadWebsite() {
-
-        console.log(
-            "MDK Client Runtime: START"
+        document.addEventListener(
+            "DOMContentLoaded",
+            startRuntime
         );
 
+    } else {
 
-        var clientId =
-            getClientId();
+        startRuntime();
 
-
-        if (!clientId) {
-
-            console.warn(
-                "MDK Client Runtime: No client ID found."
-            );
-
-            document.body.setAttribute(
-                "data-client-loaded",
-                "false"
-            );
-
-            return;
-        }
-
-
-        console.log(
-            "MDK Client Runtime: Client ID =",
-            clientId
-        );
-
-
-        var supabaseClient =
-            getSupabase();
-
-
-        if (!supabaseClient) {
-
-            return;
-        }
-
-
-        try {
-
-            /* ====================================================
-               CLIENT
-               ==================================================== */
-
-            var clientResult =
-                await supabaseClient
-                    .from("clients")
-                    .select(
-                        "id,company_name,slug,domain,hosting_type,hosting_url,template,status"
-                    )
-                    .eq(
-                        "id",
-                        clientId
-                    )
-                    .single();
-
-
-            if (clientResult.error) {
-
-                console.error(
-                    "MDK Runtime: Client loading failed.",
-                    clientResult.error
-                );
-
-                return;
-            }
-
-
-            var client =
-                clientResult.data;
-
-
-            if (!client) {
-
-                console.error(
-                    "MDK Runtime: Client not found."
-                );
-
-                return;
-            }
-
-
-            console.log(
-                "MDK Client Runtime: Client loaded:",
-                client.company_name
-            );
-
-
-            /* ====================================================
-               WEBSITE CONTENT
-               ==================================================== */
-
-            var contentResult =
-                await supabaseClient
-                    .from(
-                        "client_website_content"
-                    )
-                    .select("*")
-                    .eq(
-                        "client_id",
-                        clientId
-                    )
-                    .maybeSingle();
-
-
-            if (
-                contentResult.error
-            ) {
-
-                console.warn(
-                    "MDK Runtime: Website content loading failed.",
-                    contentResult.error
-                );
-
-            }
-
-
-            var websiteContent =
-                contentResult.data || {};
-
-
-            /* ====================================================
-               CHILD TABLES
-               ==================================================== */
-
-            var results =
-                await Promise.all([
-                    loadTable(
-                        supabaseClient,
-                        "client_products",
-                        clientId
-                    ),
-
-                    loadTable(
-                        supabaseClient,
-                        "client_manufacturing_steps",
-                        clientId
-                    ),
-
-                    loadTable(
-                        supabaseClient,
-                        "client_quality",
-                        clientId
-                    ),
-
-                    loadTable(
-                        supabaseClient,
-                        "client_industries",
-                        clientId
-                    ),
-
-                    loadTable(
-                        supabaseClient,
-                        "client_gallery",
-                        clientId
-                    ),
-
-                    loadTable(
-                        supabaseClient,
-                        "client_testimonials",
-                        clientId
-                    ),
-
-                    loadTable(
-                        supabaseClient,
-                        "client_faq",
-                        clientId
-                    )
-                ]);
-
-
-            var products =
-                results[0];
-
-            var manufacturing =
-                results[1];
-
-            var quality =
-                results[2];
-
-            var industries =
-                results[3];
-
-            var gallery =
-                results[4];
-
-            var testimonials =
-                results[5];
-
-            var faq =
-                results[6];
-
-
-            /* ====================================================
-               APPLY EVERYTHING
-               ==================================================== */
-
-            applyClient(
-                client
-            );
-
-
-            applyWebsiteContent(
-                websiteContent
-            );
-
-
-            renderProducts(
-                products
-            );
-
-
-            renderManufacturing(
-                manufacturing
-            );
-
-
-            renderQuality(
-                quality
-            );
-
-
-            renderIndustries(
-                industries
-            );
-
-
-            renderGallery(
-                gallery
-            );
-
-
-            renderTestimonials(
-                testimonials
-            );
-
-
-            renderFAQ(
-                faq
-            );
-
-
-            /* ====================================================
-               LOADED STATUS
-               ==================================================== */
-
-            document.body.setAttribute(
-                "data-client-loaded",
-                "true"
-            );
-
-
-            document.body.setAttribute(
-                "data-client-company",
-                client.company_name || ""
-            );
-
-
-            console.log(
-                "MDK Client Runtime: WEBSITE LOADED SUCCESSFULLY"
-            );
-
-
-            console.log(
-                "Products:",
-                products.length
-            );
-
-
-            console.log(
-                "Manufacturing:",
-                manufacturing.length
-            );
-
-
-            console.log(
-                "Quality:",
-                quality.length
-            );
-
-
-            console.log(
-                "Industries:",
-                industries.length
-            );
-
-
-            console.log(
-                "Gallery:",
-                gallery.length
-            );
-
-
-            console.log(
-                "Testimonials:",
-                testimonials.length
-            );
-
-
-            console.log(
-                "FAQ:",
-                faq.length
-            );
-
-
-            /* ====================================================
-               CUSTOM EVENT
-               ==================================================== */
-
-            try {
-
-                window.dispatchEvent(
-                    new CustomEvent(
-                        "mdk-site-ready",
-                        {
-                            detail: {
-                                client: client,
-                                content: websiteContent,
-                                products: products,
-                                manufacturing: manufacturing,
-                                quality: quality,
-                                industries: industries,
-                                gallery: gallery,
-                                testimonials: testimonials,
-                                faq: faq
-                            }
-                        }
-                    )
-                );
-
-            } catch (eventError) {
-
-                console.warn(
-                    "MDK Runtime: Custom event failed.",
-                    eventError
-                );
-            }
-
-
-        } catch (error) {
-
-            console.error(
-                "MDK Client Runtime ERROR:",
-                error
-            );
-
-            document.body.setAttribute(
-                "data-client-loaded",
-                "false"
-            );
-        }
     }
 
-
-    /* ============================================================
-       INITIALIZE
-       ============================================================ */
-
-    function initialize() {
-
-        console.log(
-            "MDK Client Runtime: INITIALIZING"
-        );
-
-
-        if (
-            document.readyState ===
-            "loading"
-        ) {
-
-            document.addEventListener(
-                "DOMContentLoaded",
-                function () {
-
-                    loadWebsite();
-
-                }
-            );
-
-        } else {
-
-            loadWebsite();
-        }
-    }
-
-
-    /* ============================================================
-       START
-       ============================================================ */
-
-    initialize();
 
 })();
