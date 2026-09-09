@@ -8,7 +8,11 @@
 <meta name="description"
 content="Professional manufacturing company website template">
 
-<title>INDUSTRIA | Manufacturing Excellence</title>
+<title
+    data-client-template="{company_name} | Manufacturing Excellence"
+>
+    INDUSTRIA | Manufacturing Excellence
+</title>
 
 <style>
 
@@ -110,8 +114,8 @@ header{
     color:var(--dark);
 }
 
-.logo span{
-    color:var(--primary);
+.logo .client-brand{
+    color:var(--dark);
 }
 
 .navlinks{
@@ -932,7 +936,14 @@ footer{
     <div class="container nav">
 
         <a class="logo" href="#home">
-            INDU<span>STRIA</span>
+
+            <span
+                class="client-brand"
+                data-client="company_name"
+            >
+                INDUSTRIA
+            </span>
+
         </a>
 
         <nav class="navlinks" id="nav">
@@ -983,7 +994,9 @@ footer{
                 ENGINEERED FOR PERFORMANCE
             </span>
 
-            <h1>
+            <h1
+                data-client-template="{company_name} — Manufacturing excellence built for your business."
+            >
                 Manufacturing excellence built for your business.
             </h1>
 
@@ -1066,7 +1079,10 @@ footer{
 
     <div class="container about">
 
-        <div class="visual">
+        <div
+            class="visual"
+            data-client-template="{company_name} FACTORY / COMPANY IMAGE"
+        >
             FACTORY / COMPANY IMAGE
         </div>
 
@@ -1076,7 +1092,9 @@ footer{
                 ABOUT COMPANY
             </span>
 
-            <h2>
+            <h2
+                data-client-template="{company_name}: Built on quality, capability and trust."
+            >
                 Built on quality, capability and trust.
             </h2>
 
@@ -1799,7 +1817,11 @@ footer{
                         📍 Factory
                     </b>
 
-                    Your Industrial Area, India
+                    <span
+                        data-client="domain"
+                    >
+                        Your Industrial Area, India
+                    </span>
 
                 </div>
 
@@ -1927,7 +1949,11 @@ footer{
         <div>
 
             <div class="footer-logo">
-                INDUSTRIA
+
+                <span data-client="company_name">
+                    INDUSTRIA
+                </span>
+
             </div>
 
             <div>
