@@ -1,3 +1,4 @@
+```javascript
 (function () {
     "use strict";
 
@@ -8,6 +9,7 @@
         "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
     let sb = null;
+
 
     /* =========================================
        SUPABASE
@@ -158,6 +160,7 @@
 
     /* =========================================
        WEBSITE CONTENT
+       DATABASE COLUMN NAMES ARE USED HERE
     ========================================= */
 
     function applyWebsiteContent(content) {
@@ -165,7 +168,9 @@
         if (!content) return;
 
 
-        /* TOP BAR */
+        /* =====================================
+           TOP BAR
+        ===================================== */
 
         setText(
             '[data-content="topbar_text"]',
@@ -173,7 +178,35 @@
         );
 
 
-        /* PHONE */
+        /* =====================================
+           LOGO
+        ===================================== */
+
+        if (content.logo_url) {
+
+            const logoElements =
+                document.querySelectorAll(
+                    '[data-content-image="logo"]'
+                );
+
+            logoElements.forEach(function (el) {
+
+                el.src = content.logo_url;
+
+                if (
+                    el.tagName &&
+                    el.tagName.toLowerCase() === "img"
+                ) {
+                    el.style.display = "";
+                }
+
+            });
+        }
+
+
+        /* =====================================
+           PHONE
+        ===================================== */
 
         setText(
             '[data-content="phone"]',
@@ -194,7 +227,9 @@
         }
 
 
-        /* EMAIL */
+        /* =====================================
+           EMAIL
+        ===================================== */
 
         setText(
             '[data-content="email"]',
@@ -211,7 +246,9 @@
         }
 
 
-        /* WHATSAPP */
+        /* =====================================
+           WHATSAPP
+        ===================================== */
 
         if (content.whatsapp) {
 
@@ -227,7 +264,9 @@
         }
 
 
-        /* ADDRESS */
+        /* =====================================
+           ADDRESS
+        ===================================== */
 
         setText(
             '[data-content="address"]',
@@ -235,7 +274,15 @@
         );
 
 
-        /* HERO */
+        /* =====================================
+           HERO
+           
+           DB:
+           hero_eyebrow
+           hero_heading
+           hero_description
+           hero_image_url
+        ===================================== */
 
         setText(
             '[data-content="hero_eyebrow"]',
@@ -244,7 +291,7 @@
 
         setText(
             '[data-content="hero_title"]',
-            content.hero_title
+            content.hero_heading
         );
 
         setText(
@@ -253,7 +300,7 @@
         );
 
 
-        if (content.hero_image) {
+        if (content.hero_image_url) {
 
             const hero =
                 document.querySelector(".hero");
@@ -262,14 +309,22 @@
 
                 hero.style.backgroundImage =
                     "linear-gradient(90deg, rgba(2,6,23,.92), rgba(2,6,23,.55)), url('" +
-                    content.hero_image +
+                    content.hero_image_url +
                     "')";
 
             }
         }
 
 
-        /* ABOUT */
+        /* =====================================
+           ABOUT
+           
+           DB:
+           about_eyebrow
+           about_heading
+           about_description
+           about_image_url
+        ===================================== */
 
         setText(
             '[data-content="about_eyebrow"]',
@@ -278,7 +333,7 @@
 
         setText(
             '[data-content="about_title"]',
-            content.about_title
+            content.about_heading
         );
 
         setText(
@@ -289,16 +344,18 @@
 
         /* ABOUT IMAGE */
 
-        if (content.about_image) {
+        if (content.about_image_url) {
 
             const visual =
-                document.querySelector(".about .visual");
+                document.querySelector(
+                    ".about .visual"
+                );
 
             if (visual) {
 
                 visual.style.backgroundImage =
                     "linear-gradient(135deg, rgba(219,234,254,.15), rgba(226,232,240,.15)), url('" +
-                    content.about_image +
+                    content.about_image_url +
                     "')";
 
                 visual.style.backgroundSize =
@@ -316,7 +373,9 @@
         }
 
 
-        /* STATS */
+        /* =====================================
+           STATS
+        ===================================== */
 
         setText(
             '[data-stat="1-value"]',
@@ -359,7 +418,14 @@
         );
 
 
-        /* SECTION HEADINGS */
+        /* =====================================
+           PRODUCTS SECTION
+           
+           DB:
+           products_eyebrow
+           products_heading
+           products_description
+        ===================================== */
 
         setText(
             '[data-content="products_eyebrow"]',
@@ -368,7 +434,7 @@
 
         setText(
             '[data-content="products_title"]',
-            content.products_title
+            content.products_heading
         );
 
         setText(
@@ -377,6 +443,10 @@
         );
 
 
+        /* =====================================
+           MANUFACTURING SECTION
+        ===================================== */
+
         setText(
             '[data-content="manufacturing_eyebrow"]',
             content.manufacturing_eyebrow
@@ -384,7 +454,7 @@
 
         setText(
             '[data-content="manufacturing_title"]',
-            content.manufacturing_title
+            content.manufacturing_heading
         );
 
         setText(
@@ -393,6 +463,10 @@
         );
 
 
+        /* =====================================
+           QUALITY SECTION
+        ===================================== */
+
         setText(
             '[data-content="quality_eyebrow"]',
             content.quality_eyebrow
@@ -400,7 +474,7 @@
 
         setText(
             '[data-content="quality_title"]',
-            content.quality_title
+            content.quality_heading
         );
 
         setText(
@@ -409,6 +483,10 @@
         );
 
 
+        /* =====================================
+           INDUSTRIES SECTION
+        ===================================== */
+
         setText(
             '[data-content="industries_eyebrow"]',
             content.industries_eyebrow
@@ -416,9 +494,13 @@
 
         setText(
             '[data-content="industries_title"]',
-            content.industries_title
+            content.industries_heading
         );
 
+
+        /* =====================================
+           GALLERY SECTION
+        ===================================== */
 
         setText(
             '[data-content="gallery_eyebrow"]',
@@ -427,7 +509,7 @@
 
         setText(
             '[data-content="gallery_title"]',
-            content.gallery_title
+            content.gallery_heading
         );
 
         setText(
@@ -436,6 +518,10 @@
         );
 
 
+        /* =====================================
+           TESTIMONIALS SECTION
+        ===================================== */
+
         setText(
             '[data-content="testimonials_eyebrow"]',
             content.testimonials_eyebrow
@@ -443,9 +529,13 @@
 
         setText(
             '[data-content="testimonials_title"]',
-            content.testimonials_title
+            content.testimonials_heading
         );
 
+
+        /* =====================================
+           FAQ SECTION
+        ===================================== */
 
         setText(
             '[data-content="faq_eyebrow"]',
@@ -454,11 +544,13 @@
 
         setText(
             '[data-content="faq_title"]',
-            content.faq_title
+            content.faq_heading
         );
 
 
-        /* CONTACT */
+        /* =====================================
+           CONTACT
+        ===================================== */
 
         setText(
             '[data-content="contact_eyebrow"]',
@@ -467,7 +559,7 @@
 
         setText(
             '[data-content="contact_title"]',
-            content.contact_title
+            content.contact_heading
         );
 
         setText(
@@ -476,12 +568,19 @@
         );
 
 
-        /* FOOTER */
+        /* =====================================
+           FOOTER
+        ===================================== */
 
         setText(
             '[data-content="footer_description"]',
             content.footer_description
         );
+
+
+        /* =====================================
+           SOCIAL / LEGAL LINKS
+        ===================================== */
 
         setAttr(
             '[data-content-link="linkedin"]',
@@ -533,7 +632,7 @@
                 ? `
                     <div class="product-image"
                          style="
-                         background-image:url('${product.image_url}');
+                         background-image:url('${escapeAttr(product.image_url)}');
                          background-size:cover;
                          background-position:center;
                          color:transparent;">
@@ -619,7 +718,9 @@
             div.innerHTML = `
 
                 <div class="number">
-                    ${escapeHTML(String(number).padStart(2, "0"))}
+                    ${escapeHTML(
+                        String(number).padStart(2, "0")
+                    )}
                 </div>
 
                 <h3>
@@ -665,15 +766,21 @@
             div.innerHTML = `
 
                 <div class="icon">
-                    ${escapeHTML(item.icon || "✓")}
+                    ${escapeHTML(
+                        item.icon || "✓"
+                    )}
                 </div>
 
                 <h3>
-                    ${escapeHTML(item.title || "")}
+                    ${escapeHTML(
+                        item.title || ""
+                    )}
                 </h3>
 
                 <p>
-                    ${escapeHTML(item.description || "")}
+                    ${escapeHTML(
+                        item.description || ""
+                    )}
                 </p>
 
             `;
@@ -706,7 +813,8 @@
             const span =
                 document.createElement("span");
 
-            span.className = "pill";
+            span.className =
+                "pill";
 
             span.textContent =
                 item.name || "";
@@ -761,7 +869,8 @@
             } else {
 
                 div.textContent =
-                    item.title || "PHOTO";
+                    item.title ||
+                    "PHOTO";
 
             }
 
@@ -793,7 +902,8 @@
             const div =
                 document.createElement("div");
 
-            div.className = "quote";
+            div.className =
+                "quote";
 
             let person =
                 item.customer_name || "";
@@ -808,7 +918,9 @@
             div.innerHTML = `
 
                 <p>
-                    “${escapeHTML(item.message || "")}”
+                    “${escapeHTML(
+                        item.message || ""
+                    )}”
                 </p>
 
                 <strong>
@@ -855,7 +967,9 @@
                     type="button">
 
                     <span>
-                        ${escapeHTML(item.question || "")}
+                        ${escapeHTML(
+                            item.question || ""
+                        )}
                     </span>
 
                     <span>
@@ -866,7 +980,9 @@
 
                 <div class="faq-answer">
 
-                    ${escapeHTML(item.answer || "")}
+                    ${escapeHTML(
+                        item.answer || ""
+                    )}
 
                 </div>
 
@@ -878,37 +994,43 @@
 
 
         container
-        .querySelectorAll(".faq-question")
-        .forEach(function (button) {
+            .querySelectorAll(
+                ".faq-question"
+            )
+            .forEach(function (button) {
 
-            button.addEventListener(
-                "click",
-                function () {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    const item =
-                        button.closest(
-                            ".faq-item"
+                        const item =
+                            button.closest(
+                                ".faq-item"
+                            );
+
+                        const icon =
+                            button.querySelector(
+                                "span:last-child"
+                            );
+
+                        item.classList.toggle(
+                            "open"
                         );
 
-                    const icon =
-                        button.querySelector(
-                            "span:last-child"
-                        );
+                        if (icon) {
 
-                    item.classList.toggle("open");
+                            icon.textContent =
+                                item.classList.contains(
+                                    "open"
+                                )
+                                ? "−"
+                                : "+";
+                        }
 
-                    if (icon) {
-
-                        icon.textContent =
-                            item.classList.contains("open")
-                            ? "−"
-                            : "+";
                     }
+                );
 
-                }
-            );
-
-        });
+            });
     }
 
 
@@ -919,19 +1041,40 @@
     function escapeHTML(value) {
 
         return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
     }
 
 
     function escapeAttr(value) {
 
         return String(value)
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
     }
 
 
@@ -970,68 +1113,148 @@
             const results =
                 await Promise.all([
 
-                    supabase
-                    .from("clients")
-                    .select("*")
-                    .eq("id", clientId)
-                    .single(),
+                    /* CLIENT */
 
                     supabase
-                    .from("client_website_content")
-                    .select("*")
-                    .eq("client_id", clientId)
-                    .maybeSingle(),
+                        .from("clients")
+                        .select("*")
+                        .eq("id", clientId)
+                        .single(),
+
+
+                    /* WEBSITE CONTENT */
 
                     supabase
-                    .from("client_products")
-                    .select("*")
-                    .eq("client_id", clientId)
-                    .eq("is_active", true)
-                    .order("sort_order"),
+                        .from("client_website_content")
+                        .select("*")
+                        .eq("client_id", clientId)
+                        .maybeSingle(),
+
+
+                    /* PRODUCTS */
 
                     supabase
-                    .from("client_manufacturing_steps")
-                    .select("*")
-                    .eq("client_id", clientId)
-                    .eq("is_active", true)
-                    .order("sort_order"),
+                        .from("client_products")
+                        .select("*")
+                        .eq("client_id", clientId)
+                        .eq("is_active", true)
+                        .order("sort_order"),
+
+
+                    /* MANUFACTURING */
 
                     supabase
-                    .from("client_quality")
-                    .select("*")
-                    .eq("client_id", clientId)
-                    .eq("is_active", true)
-                    .order("sort_order"),
+                        .from(
+                            "client_manufacturing_steps"
+                        )
+                        .select("*")
+                        .eq(
+                            "client_id",
+                            clientId
+                        )
+                        .eq(
+                            "is_active",
+                            true
+                        )
+                        .order(
+                            "sort_order"
+                        ),
+
+
+                    /* QUALITY */
 
                     supabase
-                    .from("client_industries")
-                    .select("*")
-                    .eq("client_id", clientId)
-                    .eq("is_active", true)
-                    .order("sort_order"),
+                        .from("client_quality")
+                        .select("*")
+                        .eq(
+                            "client_id",
+                            clientId
+                        )
+                        .eq(
+                            "is_active",
+                            true
+                        )
+                        .order(
+                            "sort_order"
+                        ),
+
+
+                    /* INDUSTRIES */
 
                     supabase
-                    .from("client_gallery")
-                    .select("*")
-                    .eq("client_id", clientId)
-                    .eq("is_active", true)
-                    .order("sort_order"),
+                        .from("client_industries")
+                        .select("*")
+                        .eq(
+                            "client_id",
+                            clientId
+                        )
+                        .eq(
+                            "is_active",
+                            true
+                        )
+                        .order(
+                            "sort_order"
+                        ),
+
+
+                    /* GALLERY */
 
                     supabase
-                    .from("client_testimonials")
-                    .select("*")
-                    .eq("client_id", clientId)
-                    .eq("is_active", true)
-                    .order("sort_order"),
+                        .from("client_gallery")
+                        .select("*")
+                        .eq(
+                            "client_id",
+                            clientId
+                        )
+                        .eq(
+                            "is_active",
+                            true
+                        )
+                        .order(
+                            "sort_order"
+                        ),
+
+
+                    /* TESTIMONIALS */
 
                     supabase
-                    .from("client_faq")
-                    .select("*")
-                    .eq("client_id", clientId)
-                    .eq("is_active", true)
-                    .order("sort_order")
+                        .from("client_testimonials")
+                        .select("*")
+                        .eq(
+                            "client_id",
+                            clientId
+                        )
+                        .eq(
+                            "is_active",
+                            true
+                        )
+                        .order(
+                            "sort_order"
+                        ),
+
+
+                    /* FAQ */
+
+                    supabase
+                        .from("client_faq")
+                        .select("*")
+                        .eq(
+                            "client_id",
+                            clientId
+                        )
+                        .eq(
+                            "is_active",
+                            true
+                        )
+                        .order(
+                            "sort_order"
+                        )
                 ]);
 
+
+            /* =====================================
+               CLIENT RESULT
+            ===================================== */
 
             const clientResult =
                 results[0];
@@ -1061,6 +1284,10 @@
             }
 
 
+            /* =====================================
+               DATA
+            ===================================== */
+
             const content =
                 results[1].data;
 
@@ -1086,7 +1313,30 @@
                 results[8].data || [];
 
 
-            /* SAVE GLOBAL */
+            /* =====================================
+               LOG ERRORS FOR CHILD TABLES
+            ===================================== */
+
+            results.slice(1).forEach(
+                function (result, index) {
+
+                    if (result.error) {
+
+                        console.error(
+                            "MDK Runtime: Query error index " +
+                            (index + 1),
+                            result.error
+                        );
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================
+               GLOBAL DATA
+            ===================================== */
 
             window.MDKSiteClient =
                 client;
@@ -1098,26 +1348,50 @@
                 content;
 
 
-            /* APPLY */
+            /* =====================================
+               APPLY DATA
+            ===================================== */
 
-            applyClient(client);
+            applyClient(
+                client
+            );
 
-            applyWebsiteContent(content);
+            applyWebsiteContent(
+                content
+            );
 
-            renderProducts(products);
+            renderProducts(
+                products
+            );
 
-            renderManufacturing(manufacturing);
+            renderManufacturing(
+                manufacturing
+            );
 
-            renderQuality(quality);
+            renderQuality(
+                quality
+            );
 
-            renderIndustries(industries);
+            renderIndustries(
+                industries
+            );
 
-            renderGallery(gallery);
+            renderGallery(
+                gallery
+            );
 
-            renderTestimonials(testimonials);
+            renderTestimonials(
+                testimonials
+            );
 
-            renderFAQ(faq);
+            renderFAQ(
+                faq
+            );
 
+
+            /* =====================================
+               LOADED STATE
+            ===================================== */
 
             document.documentElement
                 .setAttribute(
@@ -1132,7 +1406,9 @@
                 );
 
 
-            /* CLIENT CONTEXT */
+            /* =====================================
+               CLIENT CONTEXT
+            ===================================== */
 
             if (
                 window.MDKClientContext
@@ -1144,22 +1420,41 @@
             }
 
 
-            /* READY EVENT */
+            /* =====================================
+               READY EVENT
+            ===================================== */
 
             window.dispatchEvent(
                 new CustomEvent(
                     "mdk-site-ready",
                     {
                         detail: {
-                            client: client,
-                            content: content,
-                            products: products,
-                            manufacturing: manufacturing,
-                            quality: quality,
-                            industries: industries,
-                            gallery: gallery,
-                            testimonials: testimonials,
-                            faq: faq
+                            client:
+                                client,
+
+                            content:
+                                content,
+
+                            products:
+                                products,
+
+                            manufacturing:
+                                manufacturing,
+
+                            quality:
+                                quality,
+
+                            industries:
+                                industries,
+
+                            gallery:
+                                gallery,
+
+                            testimonials:
+                                testimonials,
+
+                            faq:
+                                faq
                         }
                     }
                 )
@@ -1207,3 +1502,4 @@
     }
 
 })();
+```
