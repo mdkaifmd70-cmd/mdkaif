@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Category Manager</title>
+<title>Category Manager | MD Kaif Web Platform</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="client-context.js"></script>
 
 <style>
 *{
@@ -16,28 +17,39 @@
 }
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f1f5f9;
-    color:#0f172a;
+    font-family:Inter,Arial,sans-serif;
+    background:#f5f7fb;
+    color:#1f2937;
 }
 
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:24px;
+}
+
+/* HEADER */
 .header{
-    height:70px;
-    background:#0f172a;
-    color:white;
+    background:#fff;
+    border-radius:16px;
+    padding:20px 24px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    padding:0 25px;
+    align-items:center;
+    gap:20px;
+    box-shadow:0 4px 18px rgba(0,0,0,.06);
+    margin-bottom:20px;
 }
 
-.logo{
-    font-size:21px;
-    font-weight:900;
+.header-left h1{
+    font-size:25px;
+    color:#111827;
+    margin-bottom:5px;
 }
 
-.logo span{
-    color:#60a5fa;
+.header-left p{
+    color:#6b7280;
+    font-size:14px;
 }
 
 .header-right{
@@ -46,139 +58,172 @@ body{
     gap:12px;
 }
 
-.user-email{
-    font-size:13px;
-    color:#cbd5e1;
-}
-
-.logout{
-    background:#334155;
-    color:white;
-    border:0;
-    padding:9px 15px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-.container{
-    max-width:1400px;
-    margin:auto;
-    padding:25px;
-}
-
-.top{
+.client-box{
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    gap:15px;
-    margin-bottom:20px;
-    flex-wrap:wrap;
+    gap:8px;
 }
 
-.top h1{
-    font-size:27px;
-}
-
-.muted{
-    color:#64748b;
-    font-size:14px;
-    margin-top:5px;
-}
-
-.client-panel{
-    background:white;
-    border:1px solid #e2e8f0;
-    border-radius:15px;
-    padding:18px;
-    margin-bottom:20px;
-}
-
-.client-panel label{
-    display:block;
+.client-box label{
     font-size:13px;
-    font-weight:800;
-    margin-bottom:8px;
+    font-weight:600;
+    color:#6b7280;
 }
 
-.client-selector{
-    display:flex;
-    gap:12px;
-    align-items:center;
+.client-box select{
+    min-width:210px;
 }
 
-.client-selector select{
-    max-width:550px;
-}
-
-.selected-client{
-    background:#dbeafe;
-    color:#1d4ed8;
-    padding:9px 12px;
-    border-radius:8px;
-    font-size:13px;
-    font-weight:800;
-}
-
-.filters{
-    background:white;
-    padding:18px;
-    border-radius:15px;
-    border:1px solid #e2e8f0;
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:12px;
-    margin-bottom:20px;
-}
-
-input,
+/* INPUTS */
 select,
+input,
 textarea{
     width:100%;
-    padding:11px 12px;
-    border:1px solid #cbd5e1;
+    padding:11px 13px;
+    border:1px solid #d7dce5;
     border-radius:9px;
     outline:none;
-    font:inherit;
+    background:#fff;
+    font-size:14px;
 }
 
-input:focus,
 select:focus,
+input:focus,
 textarea:focus{
-    border-color:#2563eb;
+    border-color:#4f46e5;
+    box-shadow:0 0 0 3px rgba(79,70,229,.10);
 }
 
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+/* BUTTONS */
 .btn{
-    border:0;
+    border:none;
     border-radius:9px;
     padding:11px 16px;
-    font-weight:800;
     cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.2s;
 }
 
-.primary{
-    background:#2563eb;
-    color:white;
+.btn:hover{
+    transform:translateY(-1px);
 }
 
-.primary:hover{
-    background:#1d4ed8;
+.btn-primary{
+    background:#4f46e5;
+    color:#fff;
 }
 
-.secondary{
-    background:#e2e8f0;
-    color:#334155;
+.btn-secondary{
+    background:#eef2ff;
+    color:#3730a3;
 }
 
-.danger{
+.btn-danger{
     background:#fee2e2;
     color:#b91c1c;
 }
 
-.table-card{
-    background:white;
-    border:1px solid #e2e8f0;
-    border-radius:15px;
-    overflow:auto;
+.btn-edit{
+    background:#ecfeff;
+    color:#0e7490;
+}
+
+.btn-small{
+    padding:7px 11px;
+    font-size:12px;
+}
+
+/* STATS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#fff;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.stat-label{
+    color:#6b7280;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.stat-value{
+    font-size:27px;
+    font-weight:700;
+    color:#111827;
+}
+
+/* TOOLBAR */
+.toolbar{
+    background:#fff;
+    padding:16px;
+    border-radius:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.toolbar-left{
+    display:flex;
+    gap:10px;
+    flex:1;
+}
+
+.search{
+    max-width:350px;
+}
+
+.filter{
+    max-width:220px;
+}
+
+/* SECTIONS */
+.section{
+    background:#fff;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+}
+
+.section-title{
+    font-size:19px;
+    font-weight:700;
+    color:#111827;
+}
+
+.section-subtitle{
+    color:#6b7280;
+    font-size:13px;
+    margin-top:3px;
+}
+
+/* TABLE */
+.table-wrap{
+    overflow-x:auto;
 }
 
 table{
@@ -187,96 +232,119 @@ table{
     min-width:850px;
 }
 
-th,
-td{
-    padding:14px;
-    border-bottom:1px solid #e2e8f0;
-    text-align:left;
-    font-size:13px;
-}
-
 th{
     background:#f8fafc;
-    color:#64748b;
-    font-size:11px;
+    color:#6b7280;
+    text-align:left;
+    padding:13px;
+    font-size:12px;
     text-transform:uppercase;
+    letter-spacing:.04em;
+    border-bottom:1px solid #e5e7eb;
 }
 
-.category-img{
-    width:55px;
-    height:55px;
-    object-fit:cover;
+td{
+    padding:13px;
+    border-bottom:1px solid #edf0f4;
+    font-size:14px;
+    vertical-align:middle;
+}
+
+tr:hover td{
+    background:#fafbff;
+}
+
+.thumb{
+    width:48px;
+    height:48px;
     border-radius:8px;
-    background:#e2e8f0;
+    object-fit:cover;
+    background:#f3f4f6;
+}
+
+.no-image{
+    width:48px;
+    height:48px;
+    border-radius:8px;
+    background:#f3f4f6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    color:#9ca3af;
 }
 
 .badge{
+    display:inline-flex;
+    align-items:center;
     padding:5px 9px;
-    border-radius:50px;
+    border-radius:999px;
     font-size:11px;
-    font-weight:800;
+    font-weight:700;
 }
 
-.active{
+.badge-active{
     background:#dcfce7;
-    color:#166534;
+    color:#15803d;
 }
 
-.inactive{
+.badge-inactive{
     background:#fee2e2;
-    color:#991b1b;
+    color:#b91c1c;
 }
 
 .actions{
     display:flex;
     gap:7px;
+    flex-wrap:wrap;
 }
 
-.empty{
-    text-align:center;
-    padding:40px;
-    color:#64748b;
-}
-
+/* MODAL */
 .modal{
+    display:none;
     position:fixed;
     inset:0;
-    background:#0008;
-    display:none;
+    background:rgba(15,23,42,.55);
+    z-index:1000;
     align-items:center;
     justify-content:center;
     padding:20px;
-    z-index:100;
 }
 
 .modal.show{
     display:flex;
 }
 
-.modal-box{
-    background:white;
-    width:min(700px,100%);
-    max-height:92vh;
-    overflow:auto;
-    border-radius:18px;
-    padding:25px;
+.modal-content{
+    width:100%;
+    max-width:650px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#fff;
+    border-radius:17px;
+    padding:24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
-.modal-head{
+.modal-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
     margin-bottom:20px;
 }
 
+.modal-header h2{
+    font-size:21px;
+}
+
 .close{
-    border:0;
-    background:#f1f5f9;
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    font-size:20px;
+    width:34px;
+    height:34px;
+    border:none;
+    background:#f3f4f6;
+    border-radius:8px;
     cursor:pointer;
+    font-size:20px;
 }
 
 .form-grid{
@@ -285,71 +353,143 @@ th{
     gap:15px;
 }
 
-.full{
+.form-group{
+    margin-bottom:2px;
+}
+
+.form-group.full{
     grid-column:1/-1;
 }
 
-.group label{
+.form-group label{
     display:block;
     font-size:13px;
-    font-weight:800;
+    font-weight:600;
+    color:#374151;
     margin-bottom:7px;
 }
 
+.required{
+    color:#dc2626;
+}
+
 .modal-footer{
-    margin-top:22px;
     display:flex;
     justify-content:flex-end;
     gap:10px;
+    margin-top:22px;
 }
 
+/* EMPTY */
+.empty{
+    text-align:center;
+    padding:45px 20px;
+    color:#9ca3af;
+}
+
+.empty strong{
+    display:block;
+    color:#4b5563;
+    margin-bottom:5px;
+}
+
+/* TOAST */
 .toast{
     position:fixed;
-    right:20px;
-    bottom:20px;
-    background:#0f172a;
-    color:white;
+    right:22px;
+    bottom:22px;
+    background:#111827;
+    color:#fff;
     padding:13px 18px;
     border-radius:10px;
-    display:none;
-    z-index:500;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    opacity:0;
+    transform:translateY(20px);
+    pointer-events:none;
+    transition:.25s;
+    z-index:3000;
+    font-size:14px;
 }
 
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.toast.success{
+    background:#166534;
+}
+
+.toast.error{
+    background:#b91c1c;
+}
+
+/* LOADING */
 .loading{
     text-align:center;
-    padding:35px;
-    color:#64748b;
+    padding:30px;
+    color:#6b7280;
 }
 
-@media(max-width:700px){
+/* RESPONSIVE */
+@media(max-width:900px){
 
-    .container{
-        padding:15px;
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
     }
 
-    .filters{
+    .header-right{
+        width:100%;
+    }
+
+    .client-box{
+        width:100%;
+    }
+
+    .client-box select{
+        flex:1;
+    }
+
+    .stats{
         grid-template-columns:1fr;
+    }
+
+    .toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .toolbar-left{
+        flex-direction:column;
+    }
+
+    .search,
+    .filter{
+        max-width:none;
+    }
+}
+
+@media(max-width:650px){
+
+    .container{
+        padding:12px;
     }
 
     .form-grid{
         grid-template-columns:1fr;
     }
 
-    .full{
+    .form-group.full{
         grid-column:auto;
     }
 
-    .client-selector{
-        flex-direction:column;
-        align-items:stretch;
+    .section{
+        padding:15px;
     }
 
-    .header{
-        padding:0 15px;
-    }
-
-    .user-email{
-        display:none;
+    .header-left h1{
+        font-size:21px;
     }
 }
 </style>
@@ -357,259 +497,368 @@ th{
 
 <body>
 
-<header class="header">
+<div class="container">
 
-    <div class="logo">
-        WEB<span>PLATFORM</span>
-    </div>
+    <!-- HEADER -->
+    <div class="header">
 
-    <div class="header-right">
-
-        <span
-            class="user-email"
-            id="userEmail">
-        </span>
-
-        <button
-            class="logout"
-            id="logoutBtn">
-            Logout
-        </button>
-
-    </div>
-
-</header>
-
-
-<main class="container">
-
-    <div class="top">
-
-        <div>
-
+        <div class="header-left">
             <h1>Category Manager</h1>
-
-            <p class="muted">
-                Manage product categories for client websites.
-            </p>
-
+            <p>Manage categories and subcategories for each client.</p>
         </div>
 
-        <button
-            class="btn primary"
-            id="addCategoryBtn">
+        <div class="header-right">
 
-            + Add Category
+            <div class="client-box" id="clientSelectorBox">
+                <label>Client</label>
 
-        </button>
-
-    </div>
-
-
-    <!-- CLIENT SELECTOR -->
-
-    <div
-        class="client-panel"
-        id="clientPanel">
-
-        <label>
-            Select Client Website
-        </label>
-
-        <div class="client-selector">
-
-            <select
-                id="clientSelector">
-
-                <option value="">
-                    Loading clients...
-                </option>
-
-            </select>
-
-            <div
-                class="selected-client"
-                id="selectedClientLabel">
-
-                No Client Selected
-
+                <select id="clientSelector">
+                    <option value="">Select Client</option>
+                </select>
             </div>
 
-        </div>
+            <button class="btn btn-primary" onclick="openCategoryModal()">
+                + Add Category
+            </button>
 
-        <p
-            class="muted"
-            id="clientHelp">
-
-            Select a client before creating categories.
-
-        </p>
-
-    </div>
-
-
-    <!-- FILTER -->
-
-    <div class="filters">
-
-        <input
-            id="search"
-            placeholder="Search category...">
-
-        <select id="statusFilter">
-
-            <option value="">
-                All Status
-            </option>
-
-            <option value="active">
-                Active
-            </option>
-
-            <option value="inactive">
-                Inactive
-            </option>
-
-        </select>
-
-    </div>
-
-
-    <!-- TABLE -->
-
-    <div class="table-card">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Image</th>
-
-                    <th>Category</th>
-
-                    <th>Slug</th>
-
-                    <th>Description</th>
-
-                    <th>Order</th>
-
-                    <th>Status</th>
-
-                    <th>Actions</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="categoryRows">
-
-                <tr>
-
-                    <td
-                        colspan="7"
-                        class="loading">
-
-                        Select a client.
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</main>
-
-
-<!-- MODAL -->
-
-<div
-    class="modal"
-    id="categoryModal">
-
-    <div class="modal-box">
-
-        <div class="modal-head">
-
-            <div>
-
-                <h2 id="modalTitle">
-                    Add Category
-                </h2>
-
-                <p
-                    class="muted"
-                    id="modalClientName">
-                </p>
-
-            </div>
-
-            <button
-                class="close"
-                id="closeModal">
-
-                ×
-
+            <button class="btn btn-secondary" onclick="openSubcategoryModal()">
+                + Add Subcategory
             </button>
 
         </div>
 
+    </div>
+
+
+    <!-- STATS -->
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-label">Total Categories</div>
+            <div class="stat-value" id="categoryCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">Total Subcategories</div>
+            <div class="stat-value" id="subcategoryCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">Active Items</div>
+            <div class="stat-value" id="activeCount">0</div>
+        </div>
+
+    </div>
+
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+
+        <div class="toolbar-left">
+
+            <input
+                type="text"
+                id="searchInput"
+                class="search"
+                placeholder="Search category or subcategory..."
+                oninput="renderAll()"
+            >
+
+            <select
+                id="categoryFilter"
+                class="filter"
+                onchange="renderAll()"
+            >
+                <option value="">All Categories</option>
+            </select>
+
+            <select
+                id="statusFilter"
+                class="filter"
+                onchange="renderAll()"
+            >
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- CATEGORY SECTION -->
+    <div class="section">
+
+        <div class="section-header">
+
+            <div>
+                <div class="section-title">Categories</div>
+                <div class="section-subtitle">
+                    Main product/service categories
+                </div>
+            </div>
+
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Category</th>
+                        <th>Slug</th>
+                        <th>Description</th>
+                        <th>Order</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="categoryTableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUBCATEGORY SECTION -->
+    <div class="section">
+
+        <div class="section-header">
+
+            <div>
+                <div class="section-title">Subcategories</div>
+                <div class="section-subtitle">
+                    Subcategories linked with the selected client categories
+                </div>
+            </div>
+
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Subcategory</th>
+                        <th>Category</th>
+                        <th>Slug</th>
+                        <th>Description</th>
+                        <th>Order</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="subcategoryTableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CATEGORY MODAL -->
+<div class="modal" id="categoryModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="categoryModalTitle">Add Category</h2>
+
+            <button class="close" onclick="closeCategoryModal()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>
+                    Category Name <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="categoryName"
+                    placeholder="e.g. Industrial Products"
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label>Slug</label>
+
+                <input
+                    type="text"
+                    id="categorySlug"
+                    placeholder="industrial-products"
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label>Sort Order</label>
+
+                <input
+                    type="number"
+                    id="categorySortOrder"
+                    value="0"
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label>Status</label>
+
+                <select id="categoryStatus">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+
+
+            <div class="form-group full">
+                <label>Image URL</label>
+
+                <input
+                    type="url"
+                    id="categoryImage"
+                    placeholder="https://..."
+                >
+            </div>
+
+
+            <div class="form-group full">
+                <label>Description</label>
+
+                <textarea
+                    id="categoryDescription"
+                    placeholder="Category description..."
+                ></textarea>
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeCategoryModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveCategory()"
+            >
+                Save Category
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SUBCATEGORY MODAL -->
+<div class="modal" id="subcategoryModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="subcategoryModalTitle">
+                Add Subcategory
+            </h2>
+
+            <button class="close" onclick="closeSubcategoryModal()">
+                ×
+            </button>
+
+        </div>
 
         <div class="form-grid">
 
 
-            <div class="group">
+            <div class="form-group full">
 
                 <label>
-                    Category Name *
+                    Parent Category <span class="required">*</span>
                 </label>
 
-                <input
-                    id="categoryName"
-                    placeholder="Industrial Pumps">
+                <select id="subcategoryCategory">
+                    <option value="">
+                        Select Category
+                    </option>
+                </select>
 
             </div>
 
 
-            <div class="group">
+            <div class="form-group">
 
                 <label>
-                    Slug
+                    Subcategory Name <span class="required">*</span>
                 </label>
 
                 <input
-                    id="categorySlug"
-                    placeholder="industrial-pumps">
+                    type="text"
+                    id="subcategoryName"
+                    placeholder="e.g. Hydraulic Pumps"
+                >
 
             </div>
 
 
-            <div class="group">
+            <div class="form-group">
 
-                <label>
-                    Sort Order
-                </label>
+                <label>Slug</label>
 
                 <input
-                    id="sortOrder"
+                    type="text"
+                    id="subcategorySlug"
+                    placeholder="hydraulic-pumps"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Sort Order</label>
+
+                <input
                     type="number"
-                    value="0">
+                    id="subcategorySortOrder"
+                    value="0"
+                >
 
             </div>
 
 
-            <div class="group">
+            <div class="form-group">
 
-                <label>
-                    Status
-                </label>
+                <label>Status</label>
 
-                <select id="categoryStatus">
+                <select id="subcategoryStatus">
 
                     <option value="active">
                         Active
@@ -624,36 +873,29 @@ th{
             </div>
 
 
-            <div class="group full">
+            <div class="form-group full">
 
-                <label>
-                    Description
-                </label>
-
-                <textarea
-                    id="categoryDescription"
-                    rows="5"
-                    placeholder="Category description"></textarea>
-
-            </div>
-
-
-            <div class="group full">
-
-                <label>
-                    Image URL
-                </label>
+                <label>Image URL</label>
 
                 <input
-                    id="categoryImage"
-                    placeholder="https://...">
-
-                <p class="muted">
-                    Supabase Storage upload will be connected later.
-                </p>
+                    type="url"
+                    id="subcategoryImage"
+                    placeholder="https://..."
+                >
 
             </div>
 
+
+            <div class="form-group full">
+
+                <label>Description</label>
+
+                <textarea
+                    id="subcategoryDescription"
+                    placeholder="Subcategory description..."
+                ></textarea>
+
+            </div>
 
         </div>
 
@@ -661,19 +903,17 @@ th{
         <div class="modal-footer">
 
             <button
-                class="btn secondary"
-                id="cancelBtn">
-
+                class="btn btn-secondary"
+                onclick="closeSubcategoryModal()"
+            >
                 Cancel
-
             </button>
 
             <button
-                class="btn primary"
-                id="saveBtn">
-
-                Save Category
-
+                class="btn btn-primary"
+                onclick="saveSubcategory()"
+            >
+                Save Subcategory
             </button>
 
         </div>
@@ -683,17 +923,10 @@ th{
 </div>
 
 
-<div
-    class="toast"
-    id="toast">
-</div>
+<div class="toast" id="toast"></div>
 
 
 <script>
-
-/* =========================================================
-   SUPABASE
-========================================================= */
 
 const SUPABASE_URL =
 "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -708,194 +941,289 @@ window.supabase.createClient(
 );
 
 
-/* =========================================================
-   STATE
-========================================================= */
+/* ============================================================
+   GLOBAL VARIABLES
+============================================================ */
 
 let currentUser = null;
-
 let currentRole = null;
-
 let currentClientId = null;
 
 let clients = [];
 
 let categories = [];
+let subcategories = [];
 
 let editingCategoryId = null;
+let editingSubcategoryId = null;
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
+/* ============================================================
+   INITIALIZATION
+============================================================ */
 
-const $ =
-id => document.getElementById(id);
-
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-    .replace(/[&<>"']/g,function(c){
-
-        return {
-
-            "&":"&amp;",
-            "<":"&lt;",
-            ">":"&gt;",
-            '"':"&quot;",
-            "'":"&#039;"
-
-        }[c];
-
-    });
-
-}
+document.addEventListener("DOMContentLoaded", init);
 
 
-function slugify(text){
+async function init(){
 
-    return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g,"-")
-    .replace(/^-|-$/g,"");
+    try{
 
-}
+        const {
+            data:{
+                user
+            },
+            error:userError
+        } =
+        await supabaseClient.auth.getUser();
 
+        if(userError || !user){
 
-function showToast(message){
-
-    $("toast").textContent =
-    message;
-
-    $("toast").style.display =
-    "block";
-
-    setTimeout(function(){
-
-        $("toast").style.display =
-        "none";
-
-    },2500);
-
-}
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-async function initialize(){
-
-    const {
-        data:{
-            user
+            window.location.href = "admin.html";
+            return;
         }
-    } =
-    await supabaseClient
-    .auth
-    .getUser();
+
+        currentUser = user;
 
 
-    if(!user){
-
-        alert(
-            "Please login first."
-        );
-
-        window.location.href =
-        "admin.html";
-
-        return;
-
-    }
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select("id,role,client_id,full_name")
+            .eq("id",user.id)
+            .single();
 
 
-    currentUser =
-    user;
+        if(profileError){
 
+            console.error(profileError);
 
-    $("userEmail").textContent =
-    user.email;
-
-
-    const {
-        data:profile,
-        error
-    } =
-    await supabaseClient
-    .from("profiles")
-    .select(
-        "id,role,client_id,full_name"
-    )
-    .eq(
-        "id",
-        user.id
-    )
-    .single();
-
-
-    if(error){
-
-        alert(
-            "Profile error:\n"
-            +
-            error.message
-        );
-
-        return;
-
-    }
-
-
-    currentRole =
-    profile.role;
-
-
-    if(
-        currentRole ===
-        "super_admin"
-    ){
-
-        await loadClients();
-
-    }else{
-
-        if(!profile.client_id){
-
-            alert(
-                "Your account is not assigned to a client."
+            showToast(
+                "Unable to load profile.",
+                "error"
             );
 
             return;
+        }
+
+
+        currentRole = profile.role;
+
+        currentClientId =
+            profile.client_id || null;
+
+
+        /* SUPER ADMIN */
+
+        if(
+            currentRole === "super_admin" ||
+            currentRole === "admin"
+        ){
+
+            await loadClients();
+
+            const contextClient =
+                getContextClient();
+
+
+            if(contextClient && contextClient.id){
+
+                currentClientId =
+                    contextClient.id;
+
+                document.getElementById(
+                    "clientSelector"
+                ).value =
+                    contextClient.id;
+
+                await loadEverything();
+
+            }
+
+            else if(currentClientId){
+
+                document.getElementById(
+                    "clientSelector"
+                ).value =
+                    currentClientId;
+
+                await loadEverything();
+
+            }
+
+            else{
+
+                clearUI();
+            }
 
         }
 
 
-        currentClientId =
-        profile.client_id;
+        /* NORMAL CLIENT USER */
+
+        else{
+
+            if(!currentClientId){
+
+                showToast(
+                    "No client is assigned to this account.",
+                    "error"
+                );
+
+                clearUI();
+                return;
+            }
 
 
-        $("clientSelector")
-        .disabled =
-        true;
+            document.getElementById(
+                "clientSelectorBox"
+            ).style.display = "none";
 
 
-        await loadOwnClient(
-            currentClientId
+            await loadEverything();
+        }
+
+
+        /* CLIENT SELECTOR */
+
+        document.getElementById(
+            "clientSelector"
+        ).addEventListener(
+            "change",
+            async function(){
+
+                const id = this.value;
+
+                if(!id){
+
+                    currentClientId = null;
+
+                    if(window.MDKClientContext){
+                        MDKClientContext.clear();
+                    }
+
+                    clearUI();
+                    return;
+                }
+
+
+                currentClientId = id;
+
+
+                const client =
+                    clients.find(
+                        c => c.id === id
+                    );
+
+
+                if(
+                    client &&
+                    window.MDKClientContext
+                ){
+
+                    MDKClientContext.set(client);
+                }
+
+
+                await loadEverything();
+            }
         );
 
-        await loadCategories();
+
+        /* CONTEXT CHANGE */
+
+        window.addEventListener(
+            "mdk-client-changed",
+            async function(event){
+
+                const client =
+                    event.detail;
+
+                if(!client){
+
+                    currentClientId = null;
+
+                    clearUI();
+                    return;
+                }
+
+
+                if(
+                    currentRole === "super_admin" ||
+                    currentRole === "admin"
+                ){
+
+                    currentClientId =
+                        client.id;
+
+                    const selector =
+                        document.getElementById(
+                            "clientSelector"
+                        );
+
+                    if(selector){
+                        selector.value =
+                            client.id;
+                    }
+
+                    await loadEverything();
+                }
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Something went wrong.",
+            "error"
+        );
 
     }
 
 }
 
 
-/* =========================================================
+/* ============================================================
+   CLIENT CONTEXT
+============================================================ */
+
+function getContextClient(){
+
+    try{
+
+        if(
+            window.MDKClientContext &&
+            typeof MDKClientContext.get === "function"
+        ){
+
+            return MDKClientContext.get();
+
+        }
+
+    }
+    catch(error){
+
+        console.warn(
+            "Client context error:",
+            error
+        );
+
+    }
+
+    return null;
+}
+
+
+/* ============================================================
    LOAD CLIENTS
-========================================================= */
+============================================================ */
 
 async function loadClients(){
 
@@ -904,755 +1232,885 @@ async function loadClients(){
         error
     } =
     await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,domain,status"
-    )
-    .order(
-        "company_name",
-        {
-            ascending:true
-        }
-    );
-
-
-    if(error){
-
-        alert(
-            "Clients load failed:\n"
-            +
-            error.message
-        );
-
-        return;
-
-    }
-
-
-    clients =
-    data || [];
-
-
-    $("clientSelector")
-    .innerHTML =
-
-    `<option value="">
-        -- Select Client --
-    </option>`
-
-    +
-
-    clients.map(function(c){
-
-        return `
-
-        <option value="${c.id}">
-
-            ${escapeHTML(
-                c.company_name
-            )}
-
-            ${
-                c.domain
-                ?
-                " — " +
-                escapeHTML(
-                    c.domain
-                )
-                :
-                ""
-            }
-
-        </option>
-
-        `;
-
-    }).join("");
-
-
-    const savedClient =
-    localStorage.getItem(
-        "selectedClientId"
-    );
-
-
-    if(
-        savedClient
-        &&
-        clients.some(
-            c=>c.id===savedClient
+        .from("clients")
+        .select(
+            "id,company_name,domain,status"
         )
-    ){
-
-        await setSelectedClient(
-            savedClient
+        .order(
+            "company_name",
+            {
+                ascending:true
+            }
         );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOAD OWN CLIENT
-========================================================= */
-
-async function loadOwnClient(
-    clientId
-){
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,domain,status"
-    )
-    .eq(
-        "id",
-        clientId
-    )
-    .single();
 
 
     if(error){
 
-        alert(
-            "Client load failed:\n"
-            +
-            error.message
+        console.error(error);
+
+        showToast(
+            "Unable to load clients.",
+            "error"
         );
 
         return;
-
     }
 
 
-    clients =
-    [data];
+    clients = data || [];
 
 
-    $("clientSelector")
-    .innerHTML = `
-
-        <option value="${data.id}">
-
-            ${escapeHTML(
-                data.company_name
-            )}
-
-        </option>
-
-    `;
-
-
-    $("selectedClientLabel")
-    .textContent =
-    data.company_name;
-
-
-    $("clientHelp")
-    .textContent =
-    "Managing categories for " +
-    data.company_name;
-
-}
-
-
-/* =========================================================
-   CLIENT CHANGE
-========================================================= */
-
-$("clientSelector")
-.addEventListener(
-    "change",
-    async function(){
-
-        const clientId =
-        this.value;
-
-
-        if(!clientId){
-
-            currentClientId =
-            null;
-
-
-            $("selectedClientLabel")
-            .textContent =
-            "No Client Selected";
-
-
-            $("categoryRows")
-            .innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="7"
-                    class="loading">
-
-                    Select a client.
-
-                </td>
-
-            </tr>
-
-            `;
-
-            return;
-
-        }
-
-
-        await setSelectedClient(
-            clientId
+    const selector =
+        document.getElementById(
+            "clientSelector"
         );
 
-    }
-);
+
+    selector.innerHTML =
+        `<option value="">
+            Select Client
+        </option>`;
 
 
-/* =========================================================
-   SET CLIENT
-========================================================= */
+    clients.forEach(client => {
 
-async function setSelectedClient(
-    clientId
-){
+        const option =
+            document.createElement("option");
 
-    currentClientId =
-    clientId;
+        option.value =
+            client.id;
 
+        option.textContent =
+            client.company_name;
 
-    localStorage.setItem(
-        "selectedClientId",
-        clientId
-    );
+        selector.appendChild(option);
 
-
-    $("clientSelector")
-    .value =
-    clientId;
-
-
-    const client =
-    clients.find(
-        c=>c.id===clientId
-    );
-
-
-    $("selectedClientLabel")
-    .textContent =
-    client
-    ?
-    client.company_name
-    :
-    "Selected Client";
-
-
-    $("clientHelp")
-    .textContent =
-    client
-    ?
-    "Managing categories for " +
-    client.company_name
-    :
-    "";
-
-
-    await loadCategories();
+    });
 
 }
 
 
-/* =========================================================
-   LOAD CATEGORIES
-========================================================= */
+/* ============================================================
+   LOAD EVERYTHING
+============================================================ */
 
-async function loadCategories(){
+async function loadEverything(){
 
     if(!currentClientId){
 
-        categories =
-        [];
-
-        renderCategories();
-
+        clearUI();
         return;
-
     }
 
 
-    $("categoryRows")
-    .innerHTML = `
+    await Promise.all([
+        loadCategories(),
+        loadSubcategories()
+    ]);
 
-    <tr>
+}
 
-        <td
-            colspan="7"
-            class="loading">
 
-            Loading categories...
+/* ============================================================
+   LOAD CATEGORIES
+============================================================ */
 
-        </td>
-
-    </tr>
-
-    `;
-
+async function loadCategories(){
 
     const {
         data,
         error
     } =
     await supabaseClient
-    .from("categories")
-    .select("*")
-    .eq(
-        "client_id",
-        currentClientId
-    )
-    .order(
-        "sort_order",
-        {
-            ascending:true
-        }
-    );
+        .from("categories")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClientId
+        )
+        .order(
+            "sort_order",
+            {
+                ascending:true
+            }
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
 
 
     if(error){
 
-        alert(
-            "Categories load failed:\n"
-            +
-            error.message
+        console.error(
+            "Category load error:",
+            error
+        );
+
+        showToast(
+            "Unable to load categories.",
+            "error"
         );
 
         return;
-
     }
 
 
     categories =
-    data || [];
+        data || [];
 
 
-    renderCategories();
+    populateCategoryFilters();
+
+    populateSubcategoryCategorySelect();
+
+    renderAll();
 
 }
 
 
-/* =========================================================
-   RENDER
-========================================================= */
+/* ============================================================
+   LOAD SUBCATEGORIES
+============================================================ */
 
-function renderCategories(){
+async function loadSubcategories(){
 
-    const search =
-    $("search")
-    .value
-    .toLowerCase()
-    .trim();
-
-
-    const status =
-    $("statusFilter")
-    .value;
-
-
-    const filtered =
-    categories.filter(function(c){
-
-        const matchesSearch =
-        !search
-        ||
-        c.name
-        .toLowerCase()
-        .includes(search)
-        ||
-        c.slug
-        .toLowerCase()
-        .includes(search);
-
-
-        const matchesStatus =
-        !status
-        ||
-        c.status === status;
-
-
-        return (
-            matchesSearch
-            &&
-            matchesStatus
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("subcategories")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClientId
+        )
+        .order(
+            "sort_order",
+            {
+                ascending:true
+            }
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
         );
 
-    });
 
+    if(error){
 
-    if(!filtered.length){
-
-        $("categoryRows")
-        .innerHTML = `
-
-        <tr>
-
-            <td
-                colspan="7"
-                class="empty">
-
-                No categories found.
-
-            </td>
-
-        </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-    $("categoryRows")
-    .innerHTML =
-
-    filtered.map(function(c){
-
-        const image =
-        c.image_url
-        ||
-        "https://placehold.co/100x100?text=Category";
-
-
-        return `
-
-        <tr>
-
-            <td>
-
-                <img
-                    class="category-img"
-                    src="${escapeHTML(image)}"
-                    onerror="this.src='https://placehold.co/100x100?text=Category'">
-
-            </td>
-
-
-            <td>
-
-                <strong>
-
-                    ${escapeHTML(
-                        c.name
-                    )}
-
-                </strong>
-
-            </td>
-
-
-            <td>
-
-                ${escapeHTML(
-                    c.slug
-                )}
-
-            </td>
-
-
-            <td>
-
-                ${escapeHTML(
-                    c.description
-                    ||
-                    "—"
-                )}
-
-            </td>
-
-
-            <td>
-
-                ${c.sort_order ?? 0}
-
-            </td>
-
-
-            <td>
-
-                <span
-                    class="badge
-                    ${
-                        c.status ===
-                        "active"
-                        ?
-                        "active"
-                        :
-                        "inactive"
-                    }">
-
-                    ${escapeHTML(
-                        c.status
-                    )}
-
-                </span>
-
-            </td>
-
-
-            <td>
-
-                <div class="actions">
-
-                    <button
-                        class="btn secondary"
-                        onclick="editCategory('${c.id}')">
-
-                        Edit
-
-                    </button>
-
-
-                    <button
-                        class="btn danger"
-                        onclick="deleteCategory('${c.id}')">
-
-                        Delete
-
-                    </button>
-
-                </div>
-
-            </td>
-
-        </tr>
-
-        `;
-
-    }).join("");
-
-}
-
-
-/* =========================================================
-   OPEN ADD
-========================================================= */
-
-$("addCategoryBtn")
-.onclick =
-function(){
-
-    if(!currentClientId){
-
-        alert(
-            "Please select a client first."
+        console.error(
+            "Subcategory load error:",
+            error
         );
 
-        return;
-
-    }
-
-
-    editingCategoryId =
-    null;
-
-
-    $("modalTitle")
-    .textContent =
-    "Add Category";
-
-
-    const client =
-    clients.find(
-        c=>c.id===currentClientId
-    );
-
-
-    $("modalClientName")
-    .textContent =
-    client
-    ?
-    "Client: " +
-    client.company_name
-    :
-    "";
-
-
-    $("categoryName").value =
-    "";
-
-    $("categorySlug").value =
-    "";
-
-    $("categoryDescription").value =
-    "";
-
-    $("categoryImage").value =
-    "";
-
-    $("sortOrder").value =
-    "0";
-
-    $("categoryStatus").value =
-    "active";
-
-
-    $("categoryModal")
-    .classList.add(
-        "show"
-    );
-
-};
-
-
-/* =========================================================
-   AUTO SLUG
-========================================================= */
-
-$("categoryName")
-.addEventListener(
-    "input",
-    function(){
+        /*
+          Table may not exist yet.
+        */
 
         if(
-            !editingCategoryId
+            error.code === "42P01" ||
+            String(error.message)
+                .toLowerCase()
+                .includes("does not exist")
         ){
 
-            $("categorySlug")
-            .value =
-            slugify(
-                this.value
+            showToast(
+                "Please create the subcategories table first.",
+                "error"
             );
 
         }
 
+        subcategories = [];
+
+        renderAll();
+
+        return;
     }
-);
 
 
-/* =========================================================
-   EDIT
-========================================================= */
-
-window.editCategory =
-function(id){
-
-    const c =
-    categories.find(
-        x=>x.id===id
-    );
+    subcategories =
+        data || [];
 
 
-    if(!c)return;
+    renderAll();
+
+}
 
 
-    editingCategoryId =
-    id;
+/* ============================================================
+   POPULATE CATEGORY FILTERS
+============================================================ */
+
+function populateCategoryFilters(){
+
+    const filter =
+        document.getElementById(
+            "categoryFilter"
+        );
 
 
-    $("modalTitle")
-    .textContent =
-    "Edit Category";
+    const oldValue =
+        filter.value;
 
 
-    const client =
-    clients.find(
-        x=>x.id===currentClientId
-    );
+    filter.innerHTML =
+        `<option value="">
+            All Categories
+        </option>`;
 
 
-    $("modalClientName")
-    .textContent =
-    client
-    ?
-    "Client: " +
-    client.company_name
-    :
-    "";
+    categories.forEach(category => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            category.id;
+
+        option.textContent =
+            category.name;
+
+        filter.appendChild(option);
+
+    });
 
 
-    $("categoryName").value =
-    c.name || "";
+    if(
+        categories.some(
+            c => c.id === oldValue
+        )
+    ){
+
+        filter.value = oldValue;
+
+    }
+
+}
 
 
-    $("categorySlug").value =
-    c.slug || "";
+/* ============================================================
+   SUBCATEGORY CATEGORY SELECT
+============================================================ */
+
+function populateSubcategoryCategorySelect(){
+
+    const select =
+        document.getElementById(
+            "subcategoryCategory"
+        );
 
 
-    $("categoryDescription").value =
-    c.description || "";
+    const oldValue =
+        select.value;
 
 
-    $("categoryImage").value =
-    c.image_url || "";
+    select.innerHTML =
+        `<option value="">
+            Select Category
+        </option>`;
 
 
-    $("sortOrder").value =
-    c.sort_order ?? 0;
+    categories.forEach(category => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            category.id;
+
+        option.textContent =
+            category.name;
+
+        select.appendChild(option);
+
+    });
 
 
-    $("categoryStatus").value =
-    c.status || "active";
+    if(
+        categories.some(
+            c => c.id === oldValue
+        )
+    ){
+
+        select.value =
+            oldValue;
+
+    }
+
+}
 
 
-    $("categoryModal")
-    .classList.add(
-        "show"
-    );
+/* ============================================================
+   RENDER ALL
+============================================================ */
 
-};
+function renderAll(){
+
+    renderCategories();
+
+    renderSubcategories();
+
+    updateStats();
+
+}
 
 
-/* =========================================================
-   SAVE
-========================================================= */
+/* ============================================================
+   RENDER CATEGORIES
+============================================================ */
 
-$("saveBtn")
-.onclick =
-async function(){
+function renderCategories(){
+
+    const tbody =
+        document.getElementById(
+            "categoryTableBody"
+        );
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    const categoryFilter =
+        document.getElementById(
+            "categoryFilter"
+        ).value;
+
+
+    let list =
+        categories.filter(category => {
+
+            const matchesSearch =
+                !search ||
+                String(category.name || "")
+                    .toLowerCase()
+                    .includes(search) ||
+                String(category.slug || "")
+                    .toLowerCase()
+                    .includes(search) ||
+                String(category.description || "")
+                    .toLowerCase()
+                    .includes(search);
+
+
+            const matchesStatus =
+                !status ||
+                category.status === status;
+
+
+            const matchesCategory =
+                !categoryFilter ||
+                category.id === categoryFilter;
+
+
+            return (
+                matchesSearch &&
+                matchesStatus &&
+                matchesCategory
+            );
+
+        });
+
+
+    if(!list.length){
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7">
+                    <div class="empty">
+                        <strong>No categories found</strong>
+                        Add a category or change your filters.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    tbody.innerHTML =
+        list.map(category => {
+
+            const image =
+                category.image_url
+                ? `
+                    <img
+                        class="thumb"
+                        src="${escapeAttr(category.image_url)}"
+                        alt=""
+                        onerror="this.outerHTML='<div class=&quot;no-image&quot;>No Image</div>'"
+                    >
+                  `
+                : `
+                    <div class="no-image">
+                        No Image
+                    </div>
+                  `;
+
+
+            const statusBadge =
+                category.status === "active"
+                ? `
+                    <span class="badge badge-active">
+                        Active
+                    </span>
+                  `
+                : `
+                    <span class="badge badge-inactive">
+                        Inactive
+                    </span>
+                  `;
+
+
+            return `
+                <tr>
+
+                    <td>
+                        ${image}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(category.name || "")}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${escapeHtml(category.slug || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            truncate(
+                                category.description || "-",
+                                70
+                            )
+                        )}
+                    </td>
+
+                    <td>
+                        ${Number(category.sort_order || 0)}
+                    </td>
+
+                    <td>
+                        ${statusBadge}
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="btn btn-edit btn-small"
+                                onclick="editCategory('${category.id}')"
+                            >
+                                Edit
+                            </button>
+
+                            <button
+                                class="btn btn-danger btn-small"
+                                onclick="deleteCategory('${category.id}')"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* ============================================================
+   RENDER SUBCATEGORIES
+============================================================ */
+
+function renderSubcategories(){
+
+    const tbody =
+        document.getElementById(
+            "subcategoryTableBody"
+        );
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    const categoryFilter =
+        document.getElementById(
+            "categoryFilter"
+        ).value;
+
+
+    let list =
+        subcategories.filter(sub => {
+
+            const category =
+                categories.find(
+                    c => c.id === sub.category_id
+                );
+
+
+            const matchesSearch =
+                !search ||
+                String(sub.name || "")
+                    .toLowerCase()
+                    .includes(search) ||
+                String(sub.slug || "")
+                    .toLowerCase()
+                    .includes(search) ||
+                String(sub.description || "")
+                    .toLowerCase()
+                    .includes(search) ||
+                String(category?.name || "")
+                    .toLowerCase()
+                    .includes(search);
+
+
+            const matchesStatus =
+                !status ||
+                sub.status === status;
+
+
+            const matchesCategory =
+                !categoryFilter ||
+                sub.category_id === categoryFilter;
+
+
+            return (
+                matchesSearch &&
+                matchesStatus &&
+                matchesCategory
+            );
+
+        });
+
+
+    if(!list.length){
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8">
+                    <div class="empty">
+                        <strong>No subcategories found</strong>
+                        Add a subcategory under a category.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    tbody.innerHTML =
+        list.map(sub => {
+
+            const category =
+                categories.find(
+                    c => c.id === sub.category_id
+                );
+
+
+            const image =
+                sub.image_url
+                ? `
+                    <img
+                        class="thumb"
+                        src="${escapeAttr(sub.image_url)}"
+                        alt=""
+                        onerror="this.outerHTML='<div class=&quot;no-image&quot;>No Image</div>'"
+                    >
+                  `
+                : `
+                    <div class="no-image">
+                        No Image
+                    </div>
+                  `;
+
+
+            const statusBadge =
+                sub.status === "active"
+                ? `
+                    <span class="badge badge-active">
+                        Active
+                    </span>
+                  `
+                : `
+                    <span class="badge badge-inactive">
+                        Inactive
+                    </span>
+                  `;
+
+
+            return `
+                <tr>
+
+                    <td>
+                        ${image}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(sub.name || "")}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${
+                            escapeHtml(
+                                category?.name || "-"
+                            )
+                        }
+                    </td>
+
+                    <td>
+                        ${escapeHtml(sub.slug || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            truncate(
+                                sub.description || "-",
+                                60
+                            )
+                        )}
+                    </td>
+
+                    <td>
+                        ${Number(sub.sort_order || 0)}
+                    </td>
+
+                    <td>
+                        ${statusBadge}
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="btn btn-edit btn-small"
+                                onclick="editSubcategory('${sub.id}')"
+                            >
+                                Edit
+                            </button>
+
+                            <button
+                                class="btn btn-danger btn-small"
+                                onclick="deleteSubcategory('${sub.id}')"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* ============================================================
+   STATS
+============================================================ */
+
+function updateStats(){
+
+    document.getElementById(
+        "categoryCount"
+    ).textContent =
+        categories.length;
+
+
+    document.getElementById(
+        "subcategoryCount"
+    ).textContent =
+        subcategories.length;
+
+
+    const activeCategories =
+        categories.filter(
+            c => c.status === "active"
+        ).length;
+
+
+    const activeSubcategories =
+        subcategories.filter(
+            s => s.status === "active"
+        ).length;
+
+
+    document.getElementById(
+        "activeCount"
+    ).textContent =
+        activeCategories +
+        activeSubcategories;
+
+}
+
+
+/* ============================================================
+   CATEGORY MODAL
+============================================================ */
+
+function openCategoryModal(){
 
     if(!currentClientId){
 
-        alert(
-            "Please select a client."
+        showToast(
+            "Please select a client first.",
+            "error"
         );
 
         return;
+    }
 
+
+    editingCategoryId = null;
+
+
+    document.getElementById(
+        "categoryModalTitle"
+    ).textContent =
+        "Add Category";
+
+
+    document.getElementById(
+        "categoryName"
+    ).value = "";
+
+
+    document.getElementById(
+        "categorySlug"
+    ).value = "";
+
+
+    document.getElementById(
+        "categorySortOrder"
+    ).value = 0;
+
+
+    document.getElementById(
+        "categoryStatus"
+    ).value =
+        "active";
+
+
+    document.getElementById(
+        "categoryImage"
+    ).value = "";
+
+
+    document.getElementById(
+        "categoryDescription"
+    ).value = "";
+
+
+    document.getElementById(
+        "categoryModal"
+    ).classList.add("show");
+
+}
+
+
+function closeCategoryModal(){
+
+    document.getElementById(
+        "categoryModal"
+    ).classList.remove("show");
+
+}
+
+
+/* ============================================================
+   SAVE CATEGORY
+============================================================ */
+
+async function saveCategory(){
+
+    if(!currentClientId){
+
+        showToast(
+            "Please select a client first.",
+            "error"
+        );
+
+        return;
     }
 
 
     const name =
-    $("categoryName")
-    .value
-    .trim();
+        document.getElementById(
+            "categoryName"
+        ).value.trim();
 
 
     if(!name){
 
-        alert(
-            "Category name is required."
+        showToast(
+            "Category name is required.",
+            "error"
         );
 
         return;
-
     }
 
 
+    const slugInput =
+        document.getElementById(
+            "categorySlug"
+        );
+
+
     let slug =
-    $("categorySlug")
-    .value
-    .trim();
+        slugInput.value.trim();
 
 
     if(!slug){
 
         slug =
-        slugify(name);
+            generateSlug(name);
 
     }
 
@@ -1660,144 +2118,224 @@ async function(){
     const payload = {
 
         client_id:
-        currentClientId,
+            currentClientId,
 
-        name:name,
+        name:
+            name,
 
-        slug:slug,
+        slug:
+            slug,
 
         description:
-        $("categoryDescription")
-        .value
-        .trim()
-        ||
-        null,
+            document.getElementById(
+                "categoryDescription"
+            ).value.trim(),
 
         image_url:
-        $("categoryImage")
-        .value
-        .trim()
-        ||
-        null,
+            document.getElementById(
+                "categoryImage"
+            ).value.trim(),
 
         sort_order:
-        parseInt(
-            $("sortOrder")
-            .value
-        )
-        ||
-        0,
+            parseInt(
+                document.getElementById(
+                    "categorySortOrder"
+                ).value
+            ) || 0,
 
         status:
-        $("categoryStatus")
-        .value
+            document.getElementById(
+                "categoryStatus"
+            ).value
 
     };
 
 
+    let error;
+
+
     if(editingCategoryId){
 
-        delete payload.client_id;
+        const result =
+            await supabaseClient
+                .from("categories")
+                .update(payload)
+                .eq(
+                    "id",
+                    editingCategoryId
+                )
+                .eq(
+                    "client_id",
+                    currentClientId
+                );
 
 
-        const {
-            error
-        } =
-        await supabaseClient
-        .from("categories")
-        .update(
-            payload
-        )
-        .eq(
-            "id",
-            editingCategoryId
-        )
-        .eq(
-            "client_id",
-            currentClientId
-        );
+        error =
+            result.error;
+
+    }
+
+    else{
+
+        const result =
+            await supabaseClient
+                .from("categories")
+                .insert(payload);
 
 
-        if(error){
-
-            alert(
-                "Update failed:\n"
-                +
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        showToast(
-            "Category updated successfully."
-        );
-
-    }else{
-
-        const {
-            error
-        } =
-        await supabaseClient
-        .from("categories")
-        .insert(
-            payload
-        );
-
-
-        if(error){
-
-            alert(
-                "Create failed:\n"
-                +
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        showToast(
-            "Category created successfully."
-        );
+        error =
+            result.error;
 
     }
 
 
-    closeModal();
+    if(error){
 
-    await loadCategories();
+        console.error(error);
 
-};
+        showToast(
+            error.message ||
+            "Unable to save category.",
+            "error"
+        );
+
+        return;
+    }
 
 
-/* =========================================================
-   DELETE
-========================================================= */
+    closeCategoryModal();
 
-window.deleteCategory =
-async function(id){
 
-    const category =
-    categories.find(
-        c=>c.id===id
+    showToast(
+        editingCategoryId
+        ? "Category updated successfully."
+        : "Category added successfully.",
+        "success"
     );
 
 
-    if(!category)return;
+    await loadCategories();
+
+    await loadSubcategories();
+
+}
 
 
-    if(
-        !confirm(
-            `Delete "${category.name}"?`
-        )
-    ){
+/* ============================================================
+   EDIT CATEGORY
+============================================================ */
 
+function editCategory(id){
+
+    const category =
+        categories.find(
+            c => c.id === id
+        );
+
+
+    if(!category){
         return;
+    }
 
+
+    editingCategoryId = id;
+
+
+    document.getElementById(
+        "categoryModalTitle"
+    ).textContent =
+        "Edit Category";
+
+
+    document.getElementById(
+        "categoryName"
+    ).value =
+        category.name || "";
+
+
+    document.getElementById(
+        "categorySlug"
+    ).value =
+        category.slug || "";
+
+
+    document.getElementById(
+        "categorySortOrder"
+    ).value =
+        category.sort_order || 0;
+
+
+    document.getElementById(
+        "categoryStatus"
+    ).value =
+        category.status || "active";
+
+
+    document.getElementById(
+        "categoryImage"
+    ).value =
+        category.image_url || "";
+
+
+    document.getElementById(
+        "categoryDescription"
+    ).value =
+        category.description || "";
+
+
+    document.getElementById(
+        "categoryModal"
+    ).classList.add("show");
+
+}
+
+
+/* ============================================================
+   DELETE CATEGORY
+============================================================ */
+
+async function deleteCategory(id){
+
+    if(!currentClientId){
+        return;
+    }
+
+
+    const category =
+        categories.find(
+            c => c.id === id
+        );
+
+
+    if(!category){
+        return;
+    }
+
+
+    const hasSubcategories =
+        subcategories.some(
+            s => s.category_id === id
+        );
+
+
+    let message =
+        `Delete category "${category.name}"?`;
+
+
+    if(hasSubcategories){
+
+        message +=
+            "\n\nThis category has " +
+            subcategories.filter(
+                s => s.category_id === id
+            ).length +
+            " subcategory/subcategories. They will also be deleted.";
+
+    }
+
+
+    if(!confirm(message)){
+        return;
     }
 
 
@@ -1805,106 +2343,712 @@ async function(id){
         error
     } =
     await supabaseClient
-    .from("categories")
-    .delete()
-    .eq(
-        "id",
-        id
-    )
-    .eq(
-        "client_id",
-        currentClientId
-    );
+        .from("categories")
+        .delete()
+        .eq(
+            "id",
+            id
+        )
+        .eq(
+            "client_id",
+            currentClientId
+        );
 
 
     if(error){
 
-        alert(
-            "Delete failed:\n"
-            +
-            error.message
+        console.error(error);
+
+        showToast(
+            error.message ||
+            "Unable to delete category.",
+            "error"
         );
 
         return;
-
     }
 
 
     showToast(
-        "Category deleted."
+        "Category deleted successfully.",
+        "success"
     );
 
 
     await loadCategories();
 
-};
-
-
-/* =========================================================
-   CLOSE MODAL
-========================================================= */
-
-function closeModal(){
-
-    $("categoryModal")
-    .classList.remove(
-        "show"
-    );
+    await loadSubcategories();
 
 }
 
 
-$("closeModal")
-.onclick =
-closeModal;
+/* ============================================================
+   SUBCATEGORY MODAL
+============================================================ */
+
+function openSubcategoryModal(){
+
+    if(!currentClientId){
+
+        showToast(
+            "Please select a client first.",
+            "error"
+        );
+
+        return;
+    }
 
 
-$("cancelBtn")
-.onclick =
-closeModal;
+    if(!categories.length){
+
+        showToast(
+            "Please create a category first.",
+            "error"
+        );
+
+        return;
+    }
 
 
-/* =========================================================
-   FILTER
-========================================================= */
-
-$("search")
-.oninput =
-renderCategories;
+    editingSubcategoryId = null;
 
 
-$("statusFilter")
-.onchange =
-renderCategories;
+    document.getElementById(
+        "subcategoryModalTitle"
+    ).textContent =
+        "Add Subcategory";
 
 
-/* =========================================================
-   LOGOUT
-========================================================= */
+    document.getElementById(
+        "subcategoryName"
+    ).value = "";
 
-$("logoutBtn")
-.onclick =
-async function(){
 
-    await supabaseClient
-    .auth
-    .signOut();
+    document.getElementById(
+        "subcategorySlug"
+    ).value = "";
 
-    localStorage.removeItem(
-        "selectedClientId"
+
+    document.getElementById(
+        "subcategorySortOrder"
+    ).value = 0;
+
+
+    document.getElementById(
+        "subcategoryStatus"
+    ).value =
+        "active";
+
+
+    document.getElementById(
+        "subcategoryImage"
+    ).value = "";
+
+
+    document.getElementById(
+        "subcategoryDescription"
+    ).value = "";
+
+
+    const filter =
+        document.getElementById(
+            "categoryFilter"
+        ).value;
+
+
+    document.getElementById(
+        "subcategoryCategory"
+    ).value =
+        filter || "";
+
+
+    document.getElementById(
+        "subcategoryModal"
+    ).classList.add("show");
+
+}
+
+
+function closeSubcategoryModal(){
+
+    document.getElementById(
+        "subcategoryModal"
+    ).classList.remove("show");
+
+}
+
+
+/* ============================================================
+   SAVE SUBCATEGORY
+============================================================ */
+
+async function saveSubcategory(){
+
+    if(!currentClientId){
+
+        showToast(
+            "Please select a client first.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const categoryId =
+        document.getElementById(
+            "subcategoryCategory"
+        ).value;
+
+
+    const name =
+        document.getElementById(
+            "subcategoryName"
+        ).value.trim();
+
+
+    if(!categoryId){
+
+        showToast(
+            "Please select a parent category.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!name){
+
+        showToast(
+            "Subcategory name is required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /*
+      Extra safety:
+      Make sure selected category belongs
+      to current client.
+    */
+
+    const categoryExists =
+        categories.some(
+            c => c.id === categoryId
+        );
+
+
+    if(!categoryExists){
+
+        showToast(
+            "Invalid category selected.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    let slug =
+        document.getElementById(
+            "subcategorySlug"
+        ).value.trim();
+
+
+    if(!slug){
+
+        slug =
+            generateSlug(name);
+
+    }
+
+
+    const payload = {
+
+        client_id:
+            currentClientId,
+
+        category_id:
+            categoryId,
+
+        name:
+            name,
+
+        slug:
+            slug,
+
+        description:
+            document.getElementById(
+                "subcategoryDescription"
+            ).value.trim(),
+
+        image_url:
+            document.getElementById(
+                "subcategoryImage"
+            ).value.trim(),
+
+        sort_order:
+            parseInt(
+                document.getElementById(
+                    "subcategorySortOrder"
+                ).value
+            ) || 0,
+
+        status:
+            document.getElementById(
+                "subcategoryStatus"
+            ).value
+
+    };
+
+
+    let error;
+
+
+    if(editingSubcategoryId){
+
+        const result =
+            await supabaseClient
+                .from("subcategories")
+                .update(payload)
+                .eq(
+                    "id",
+                    editingSubcategoryId
+                )
+                .eq(
+                    "client_id",
+                    currentClientId
+                );
+
+
+        error =
+            result.error;
+
+    }
+
+    else{
+
+        const result =
+            await supabaseClient
+                .from("subcategories")
+                .insert(payload);
+
+
+        error =
+            result.error;
+
+    }
+
+
+    if(error){
+
+        console.error(error);
+
+        showToast(
+            error.message ||
+            "Unable to save subcategory.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    closeSubcategoryModal();
+
+
+    showToast(
+        editingSubcategoryId
+        ? "Subcategory updated successfully."
+        : "Subcategory added successfully.",
+        "success"
     );
 
-    window.location.href =
-    "admin.html";
 
-};
+    await loadSubcategories();
+
+}
 
 
-/* =========================================================
-   START
-========================================================= */
+/* ============================================================
+   EDIT SUBCATEGORY
+============================================================ */
 
-initialize();
+function editSubcategory(id){
+
+    const sub =
+        subcategories.find(
+            s => s.id === id
+        );
+
+
+    if(!sub){
+        return;
+    }
+
+
+    editingSubcategoryId = id;
+
+
+    document.getElementById(
+        "subcategoryModalTitle"
+    ).textContent =
+        "Edit Subcategory";
+
+
+    document.getElementById(
+        "subcategoryCategory"
+    ).value =
+        sub.category_id || "";
+
+
+    document.getElementById(
+        "subcategoryName"
+    ).value =
+        sub.name || "";
+
+
+    document.getElementById(
+        "subcategorySlug"
+    ).value =
+        sub.slug || "";
+
+
+    document.getElementById(
+        "subcategorySortOrder"
+    ).value =
+        sub.sort_order || 0;
+
+
+    document.getElementById(
+        "subcategoryStatus"
+    ).value =
+        sub.status || "active";
+
+
+    document.getElementById(
+        "subcategoryImage"
+    ).value =
+        sub.image_url || "";
+
+
+    document.getElementById(
+        "subcategoryDescription"
+    ).value =
+        sub.description || "";
+
+
+    document.getElementById(
+        "subcategoryModal"
+    ).classList.add("show");
+
+}
+
+
+/* ============================================================
+   DELETE SUBCATEGORY
+============================================================ */
+
+async function deleteSubcategory(id){
+
+    if(!currentClientId){
+        return;
+    }
+
+
+    const sub =
+        subcategories.find(
+            s => s.id === id
+        );
+
+
+    if(!sub){
+        return;
+    }
+
+
+    if(
+        !confirm(
+            `Delete subcategory "${sub.name}"?`
+        )
+    ){
+
+        return;
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("subcategories")
+        .delete()
+        .eq(
+            "id",
+            id
+        )
+        .eq(
+            "client_id",
+            currentClientId
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        showToast(
+            error.message ||
+            "Unable to delete subcategory.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    showToast(
+        "Subcategory deleted successfully.",
+        "success"
+    );
+
+
+    await loadSubcategories();
+
+}
+
+
+/* ============================================================
+   CLEAR UI
+============================================================ */
+
+function clearUI(){
+
+    categories = [];
+
+    subcategories = [];
+
+    document.getElementById(
+        "categoryTableBody"
+    ).innerHTML = `
+        <tr>
+            <td colspan="7">
+                <div class="empty">
+                    <strong>No client selected</strong>
+                    Select a client to manage categories.
+                </div>
+            </td>
+        </tr>
+    `;
+
+
+    document.getElementById(
+        "subcategoryTableBody"
+    ).innerHTML = `
+        <tr>
+            <td colspan="8">
+                <div class="empty">
+                    <strong>No client selected</strong>
+                    Select a client to manage subcategories.
+                </div>
+            </td>
+        </tr>
+    `;
+
+
+    updateStats();
+
+}
+
+
+/* ============================================================
+   HELPERS
+============================================================ */
+
+function generateSlug(text){
+
+    return String(text)
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g,"-")
+        .replace(/^-+|-+$/g,"");
+
+}
+
+
+function truncate(text,length){
+
+    text =
+        String(text || "");
+
+
+    if(text.length <= length){
+        return text;
+    }
+
+
+    return text.substring(
+        0,
+        length
+    ) + "...";
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttr(value){
+
+    return escapeHtml(value);
+
+}
+
+
+/* ============================================================
+   TOAST
+============================================================ */
+
+function showToast(
+    message,
+    type="success"
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.className =
+        "toast show " +
+        type;
+
+
+    clearTimeout(
+        window.__toastTimer
+    );
+
+
+    window.__toastTimer =
+        setTimeout(
+            () => {
+
+                toast.className =
+                    "toast";
+
+            },
+            3000
+        );
+
+}
+
+
+/* ============================================================
+   CLOSE MODALS ON BACKDROP CLICK
+============================================================ */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target.id ===
+            "categoryModal"
+        ){
+
+            closeCategoryModal();
+
+        }
+
+
+        if(
+            event.target.id ===
+            "subcategoryModal"
+        ){
+
+            closeSubcategoryModal();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   AUTO SLUG
+============================================================ */
+
+document.getElementById(
+    "categoryName"
+).addEventListener(
+    "input",
+    function(){
+
+        const slug =
+            document.getElementById(
+                "categorySlug"
+            );
+
+
+        if(
+            !editingCategoryId &&
+            !slug.value.trim()
+        ){
+
+            slug.value =
+                generateSlug(
+                    this.value
+                );
+
+        }
+
+    }
+);
+
+
+document.getElementById(
+    "subcategoryName"
+).addEventListener(
+    "input",
+    function(){
+
+        const slug =
+            document.getElementById(
+                "subcategorySlug"
+            );
+
+
+        if(
+            !editingSubcategoryId &&
+            !slug.value.trim()
+        ){
+
+            slug.value =
+                generateSlug(
+                    this.value
+                );
+
+        }
+
+    }
+);
 
 </script>
 
