@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +7,7 @@
 <title>Gallery Manager - MD Kaif Web Platform</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../client-context.js"></script>
 
 <style>
 
@@ -469,6 +469,7 @@ textarea{
     .gallery-grid{
         grid-template-columns:1fr;
     }
+
 }
 
 .hidden{
@@ -501,6 +502,7 @@ textarea{
 <div class="container">
 
     <!-- SUPER ADMIN CLIENT -->
+
     <div
         class="client-box"
         id="clientBox">
@@ -521,6 +523,7 @@ textarea{
 
 
     <!-- PRODUCT -->
+
     <div class="product-box">
 
         <label>
@@ -539,6 +542,7 @@ textarea{
 
 
     <!-- SEARCH -->
+
     <div class="toolbar">
 
         <div class="toolbar-row">
@@ -550,7 +554,6 @@ textarea{
                 oninput="renderGallery()"
             >
 
-
             <select
                 id="categoryFilter"
                 onchange="renderGallery()">
@@ -560,7 +563,6 @@ textarea{
                 </option>
 
             </select>
-
 
             <select
                 id="statusFilter"
@@ -586,6 +588,7 @@ textarea{
 
 
     <!-- STATS -->
+
     <div class="stats">
 
         <div class="stat">
@@ -676,6 +679,7 @@ textarea{
 
 
         <!-- TITLE -->
+
         <div class="form-group">
 
             <label>
@@ -692,6 +696,7 @@ textarea{
 
 
         <!-- FILE -->
+
         <div class="form-group">
 
             <label>
@@ -715,6 +720,7 @@ textarea{
 
 
         <!-- PREVIEW -->
+
         <div
             class="preview"
             id="previewBox">
@@ -736,6 +742,7 @@ textarea{
 
 
         <!-- PROGRESS -->
+
         <div
             class="progress-wrap"
             id="progressWrap">
@@ -750,6 +757,7 @@ textarea{
 
 
         <!-- STATUS -->
+
         <div
             class="upload-status"
             id="uploadStatus">
@@ -758,6 +766,7 @@ textarea{
 
 
         <!-- CATEGORY + ORDER -->
+
         <div class="form-row">
 
             <div class="form-group">
@@ -793,6 +802,7 @@ textarea{
 
 
         <!-- CAPTION -->
+
         <div class="form-group">
 
             <label>
@@ -808,6 +818,7 @@ textarea{
 
 
         <!-- STATUS -->
+
         <div class="form-group">
 
             <label>
@@ -830,6 +841,7 @@ textarea{
 
 
         <!-- FOOTER -->
+
         <div class="modal-footer">
 
             <button
@@ -865,9 +877,9 @@ textarea{
 
 <script>
 
-/* =========================
+/* =========================================================
    SUPABASE
-========================= */
+========================================================= */
 
 const SUPABASE_URL =
 "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -886,30 +898,25 @@ window.supabase.createClient(
 );
 
 
-/* =========================
+/* =========================================================
    GLOBAL VARIABLES
-========================= */
+========================================================= */
 
 let currentUser = null;
-
 let currentRole = null;
-
 let currentClientId = null;
 
 let clients = [];
-
 let products = [];
-
 let gallery = [];
 
 let editingId = null;
-
 let editingImageUrl = null;
 
 
-/* =========================
+/* =========================================================
    ELEMENTS
-========================= */
+========================================================= */
 
 const clientSelect =
 document.getElementById(
@@ -922,9 +929,98 @@ document.getElementById(
 );
 
 
-/* =========================
+/* =========================================================
+   CLIENT CONTEXT
+========================================================= */
+
+function getContextClient(){
+
+    try{
+
+        if(
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.get === "function"
+        ){
+
+            return window.MDKClientContext.get();
+
+        }
+
+    }
+    catch(error){
+
+        console.warn(
+            "Client context read failed:",
+            error
+        );
+
+    }
+
+    return null;
+
+}
+
+
+/* =========================================================
+   CLEAR CLIENT UI
+========================================================= */
+
+function clearClientUI(){
+
+    currentClientId = null;
+
+    products = [];
+    gallery = [];
+
+    productSelect.innerHTML =
+    `
+    <option value="">
+        -- Select Product --
+    </option>
+    `;
+
+    resetGallery();
+
+}
+
+
+/* =========================================================
+   SET ACTIVE CLIENT
+========================================================= */
+
+async function setActiveClient(clientId){
+
+    currentClientId =
+        clientId || null;
+
+    products = [];
+    gallery = [];
+
+    productSelect.innerHTML =
+    `
+    <option value="">
+        -- Select Product --
+    </option>
+    `;
+
+    resetGallery();
+
+
+    if(!currentClientId){
+
+        return;
+
+    }
+
+
+    await loadProducts();
+
+}
+
+
+/* =========================================================
    INITIALIZE
-========================= */
+========================================================= */
 
 async function initialize(){
 
@@ -949,6 +1045,7 @@ async function initialize(){
                 "admin.html";
 
             return;
+
         }
 
 
@@ -980,7 +1077,14 @@ async function initialize(){
             profile.role;
 
 
-        if(currentRole === "super_admin"){
+        /* =================================================
+           SUPER ADMIN / ADMIN
+        ================================================= */
+
+        if(
+            currentRole === "super_admin" ||
+            currentRole === "admin"
+        ){
 
             document.getElementById(
                 "clientBox"
@@ -990,7 +1094,68 @@ async function initialize(){
 
             await loadClients();
 
+
+            /*
+               Priority 1:
+               Active Client Manager / Dashboard client
+            */
+
+            const contextClient =
+                getContextClient();
+
+
+            if(
+                contextClient &&
+                contextClient.id
+            ){
+
+                currentClientId =
+                    contextClient.id;
+
+
+                clientSelect.value =
+                    contextClient.id;
+
+
+                await loadProducts();
+
+            }
+
+            /*
+               Priority 2:
+               Profile assigned client
+            */
+
+            else if(profile.client_id){
+
+                currentClientId =
+                    profile.client_id;
+
+
+                clientSelect.value =
+                    profile.client_id;
+
+
+                await loadProducts();
+
+            }
+
+            /*
+               No client selected
+            */
+
+            else{
+
+                clearClientUI();
+
+            }
+
         }
+
+        /* =================================================
+           NORMAL CLIENT USER
+        ================================================= */
+
         else{
 
             currentClientId =
@@ -999,12 +1164,15 @@ async function initialize(){
 
             if(!currentClientId){
 
+                clearClientUI();
+
                 showMessage(
                     "No client assigned to this user.",
                     "error"
                 );
 
                 return;
+
             }
 
 
@@ -1015,7 +1183,11 @@ async function initialize(){
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Initialization error:",
+            error
+        );
+
 
         showMessage(
             error.message ||
@@ -1028,9 +1200,9 @@ async function initialize(){
 }
 
 
-/* =========================
-   CLIENTS
-========================= */
+/* =========================================================
+   LOAD CLIENTS
+========================================================= */
 
 async function loadClients(){
 
@@ -1060,9 +1232,11 @@ async function loadClients(){
 
 
     clientSelect.innerHTML =
-    `<option value="">
+    `
+    <option value="">
         Select Client
-    </option>`;
+    </option>
+    `;
 
 
     clients.forEach(client => {
@@ -1091,56 +1265,73 @@ async function loadClients(){
     clientSelect.onchange =
     async function(){
 
-        currentClientId =
+        const clientId =
             this.value || null;
 
 
-        products = [];
+        /*
+           Save selected client
+           to global client context
+        */
 
-        gallery = [];
+        if(
+            clientId &&
+            window.MDKClientContext
+        ){
+
+            const selectedClient =
+                clients.find(
+                    client =>
+                        client.id === clientId
+                );
 
 
-        productSelect.innerHTML =
-        `<option value="">
-            -- Select Product --
-        </option>`;
+            if(selectedClient){
 
+                MDKClientContext.set(
+                    selectedClient
+                );
 
-        resetGallery();
-
-
-        if(currentClientId){
-
-            await loadProducts();
+            }
 
         }
+
+
+        await setActiveClient(
+            clientId
+        );
 
     };
 
 }
 
 
-/* =========================
+/* =========================================================
    LOAD PRODUCTS
-========================= */
+========================================================= */
 
 async function loadProducts(){
 
     if(!currentClientId){
 
         productSelect.innerHTML =
-        `<option value="">
+        `
+        <option value="">
             -- Select Product --
-        </option>`;
+        </option>
+        `;
 
         return;
+
     }
 
 
     productSelect.innerHTML =
-    `<option value="">
+    `
+    <option value="">
         Loading products...
-    </option>`;
+    </option>
+    `;
 
 
     const {
@@ -1166,19 +1357,28 @@ async function loadProducts(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "Product loading error:",
+            error
+        );
+
 
         productSelect.innerHTML =
-        `<option value="">
+        `
+        <option value="">
             Error loading products
-        </option>`;
+        </option>
+        `;
+
 
         showMessage(
             error.message,
             "error"
         );
 
+
         return;
+
     }
 
 
@@ -1187,9 +1387,11 @@ async function loadProducts(){
 
 
     productSelect.innerHTML =
-    `<option value="">
+    `
+    <option value="">
         -- Select Product --
-    </option>`;
+    </option>
+    `;
 
 
     products.forEach(product => {
@@ -1219,9 +1421,9 @@ async function loadProducts(){
 }
 
 
-/* =========================
+/* =========================================================
    PRODUCT CHANGE
-========================= */
+========================================================= */
 
 productSelect.addEventListener(
     "change",
@@ -1237,6 +1439,7 @@ productSelect.addEventListener(
             resetGallery();
 
             return;
+
         }
 
 
@@ -1246,9 +1449,82 @@ productSelect.addEventListener(
 );
 
 
-/* =========================
+/* =========================================================
+   CLIENT CONTEXT CHANGE
+========================================================= */
+
+window.addEventListener(
+    "mdk-client-changed",
+    async function(event){
+
+        const client =
+            event.detail;
+
+
+        /*
+           Only super_admin/admin
+           should react to global
+           client switching.
+        */
+
+        if(
+            currentRole !== "super_admin" &&
+            currentRole !== "admin"
+        ){
+
+            return;
+
+        }
+
+
+        if(
+            client &&
+            client.id
+        ){
+
+            currentClientId =
+                client.id;
+
+
+            if(clientSelect){
+
+                clientSelect.value =
+                    client.id;
+
+            }
+
+
+            products = [];
+            gallery = [];
+
+
+            productSelect.innerHTML =
+            `
+            <option value="">
+                -- Select Product --
+            </option>
+            `;
+
+
+            resetGallery();
+
+
+            await loadProducts();
+
+        }
+        else{
+
+            clearClientUI();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
    LOAD GALLERY
-========================= */
+========================================================= */
 
 async function loadGallery(){
 
@@ -1260,15 +1536,18 @@ async function loadGallery(){
         resetGallery();
 
         return;
+
     }
 
 
     document.getElementById(
         "galleryContainer"
     ).innerHTML =
-    `<div class="loading">
+    `
+    <div class="loading">
         Loading gallery...
-    </div>`;
+    </div>
+    `;
 
 
     const {
@@ -1302,7 +1581,11 @@ async function loadGallery(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "Gallery loading error:",
+            error
+        );
+
 
         document.getElementById(
             "galleryContainer"
@@ -1323,12 +1606,15 @@ async function loadGallery(){
         </div>
         `;
 
+
         showMessage(
             error.message,
             "error"
         );
 
+
         return;
+
     }
 
 
@@ -1343,9 +1629,9 @@ async function loadGallery(){
 }
 
 
-/* =========================
+/* =========================================================
    RESET GALLERY
-========================= */
+========================================================= */
 
 function resetGallery(){
 
@@ -1384,12 +1670,22 @@ function resetGallery(){
     ).textContent =
         "0";
 
+
+    document.getElementById(
+        "categoryFilter"
+    ).innerHTML =
+    `
+    <option value="">
+        All Categories
+    </option>
+    `;
+
 }
 
 
-/* =========================
+/* =========================================================
    CATEGORY FILTER
-========================= */
+========================================================= */
 
 function populateCategoryFilter(){
 
@@ -1446,9 +1742,9 @@ function populateCategoryFilter(){
 }
 
 
-/* =========================
-   RENDER
-========================= */
+/* =========================================================
+   RENDER GALLERY
+========================================================= */
 
 function renderGallery(){
 
@@ -1530,6 +1826,7 @@ function renderGallery(){
         resetGallery();
 
         return;
+
     }
 
 
@@ -1551,6 +1848,7 @@ function renderGallery(){
         `;
 
         return;
+
     }
 
 
@@ -1573,9 +1871,9 @@ function renderGallery(){
 }
 
 
-/* =========================
+/* =========================================================
    CARD
-========================= */
+========================================================= */
 
 function createCard(item){
 
@@ -1696,9 +1994,9 @@ function createCard(item){
 }
 
 
-/* =========================
+/* =========================================================
    STATS
-========================= */
+========================================================= */
 
 function updateStats(){
 
@@ -1740,17 +2038,13 @@ function updateStats(){
 }
 
 
-/* =========================
+/* =========================================================
    OPEN MODAL
-========================= */
+========================================================= */
 
-function openModal(
-    id = null
-){
+function openModal(id = null){
 
-    if(
-        !currentClientId
-    ){
+    if(!currentClientId){
 
         showMessage(
             "Please select a client first.",
@@ -1758,12 +2052,11 @@ function openModal(
         );
 
         return;
+
     }
 
 
-    if(
-        !productSelect.value
-    ){
+    if(!productSelect.value){
 
         showMessage(
             "Please select a product first.",
@@ -1771,6 +2064,7 @@ function openModal(
         );
 
         return;
+
     }
 
 
@@ -1793,8 +2087,13 @@ function openModal(
         );
 
 
-        if(!item)
+        if(!item){
+
+            closeModal();
+
             return;
+
+        }
 
 
         document.getElementById(
@@ -1903,9 +2202,9 @@ function openModal(
 }
 
 
-/* =========================
+/* =========================================================
    CLOSE MODAL
-========================= */
+========================================================= */
 
 function closeModal(){
 
@@ -1928,9 +2227,9 @@ function closeModal(){
 }
 
 
-/* =========================
+/* =========================================================
    CLEAR FORM
-========================= */
+========================================================= */
 
 function clearForm(){
 
@@ -1977,9 +2276,9 @@ function clearForm(){
 }
 
 
-/* =========================
+/* =========================================================
    FILE PREVIEW
-========================= */
+========================================================= */
 
 document.getElementById(
     "imageFile"
@@ -1994,6 +2293,7 @@ document.getElementById(
         if(!file){
 
             return;
+
         }
 
 
@@ -2008,12 +2308,15 @@ document.getElementById(
                 "error"
             );
 
+
             this.value =
                 "";
+
 
             resetPreview();
 
             return;
+
         }
 
 
@@ -2031,12 +2334,15 @@ document.getElementById(
                 "error"
             );
 
+
             this.value =
                 "";
+
 
             resetPreview();
 
             return;
+
         }
 
 
@@ -2077,15 +2383,13 @@ document.getElementById(
 );
 
 
-/* =========================
+/* =========================================================
    SAVE GALLERY
-========================= */
+========================================================= */
 
 async function saveGallery(){
 
-    if(
-        !currentClientId
-    ){
+    if(!currentClientId){
 
         showMessage(
             "Please select a client.",
@@ -2093,12 +2397,11 @@ async function saveGallery(){
         );
 
         return;
+
     }
 
 
-    if(
-        !productSelect.value
-    ){
+    if(!productSelect.value){
 
         showMessage(
             "Please select a product.",
@@ -2106,6 +2409,7 @@ async function saveGallery(){
         );
 
         return;
+
     }
 
 
@@ -2129,6 +2433,7 @@ async function saveGallery(){
         );
 
         return;
+
     }
 
 
@@ -2143,6 +2448,7 @@ async function saveGallery(){
         );
 
         return;
+
     }
 
 
@@ -2168,9 +2474,9 @@ async function saveGallery(){
             editingImageUrl;
 
 
-        /* =========================
-           UPLOAD
-        ========================= */
+        /* =================================================
+           UPLOAD IMAGE
+        ================================================= */
 
         if(file){
 
@@ -2180,9 +2486,7 @@ async function saveGallery(){
             );
 
 
-            setProgress(
-                15
-            );
+            setProgress(15);
 
 
             const extension =
@@ -2228,9 +2532,7 @@ async function saveGallery(){
                 throw uploadError;
 
 
-            setProgress(
-                60
-            );
+            setProgress(60);
 
 
             const {
@@ -2262,16 +2564,14 @@ async function saveGallery(){
                 publicData.publicUrl;
 
 
-            setProgress(
-                75
-            );
+            setProgress(75);
 
         }
 
 
-        /* =========================
+        /* =================================================
            PAYLOAD
-        ========================= */
+        ================================================= */
 
         const payload = {
 
@@ -2314,9 +2614,9 @@ async function saveGallery(){
         };
 
 
-        /* =========================
+        /* =================================================
            UPDATE
-        ========================= */
+        ================================================= */
 
         if(editingId){
 
@@ -2352,9 +2652,7 @@ async function saveGallery(){
                 throw error;
 
 
-            setProgress(
-                100
-            );
+            setProgress(100);
 
 
             showMessage(
@@ -2365,9 +2663,9 @@ async function saveGallery(){
         }
 
 
-        /* =========================
+        /* =================================================
            INSERT
-        ========================= */
+        ================================================= */
 
         else{
 
@@ -2391,9 +2689,7 @@ async function saveGallery(){
                 throw error;
 
 
-            setProgress(
-                100
-            );
+            setProgress(100);
 
 
             showMessage(
@@ -2419,7 +2715,10 @@ async function saveGallery(){
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Save gallery error:",
+            error
+        );
 
 
         setUploadStatus(
@@ -2442,6 +2741,11 @@ async function saveGallery(){
             false;
 
 
+        /*
+           editingId is still available
+           here before closeModal()
+        */
+
         saveBtn.textContent =
             editingId
             ? "Update Image"
@@ -2452,9 +2756,9 @@ async function saveGallery(){
 }
 
 
-/* =========================
+/* =========================================================
    EDIT
-========================= */
+========================================================= */
 
 function editGallery(id){
 
@@ -2463,9 +2767,9 @@ function editGallery(id){
 }
 
 
-/* =========================
+/* =========================================================
    DELETE
-========================= */
+========================================================= */
 
 async function deleteGallery(id){
 
@@ -2564,7 +2868,10 @@ async function deleteGallery(id){
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Delete gallery error:",
+            error
+        );
 
 
         showMessage(
@@ -2578,13 +2885,11 @@ async function deleteGallery(id){
 }
 
 
-/* =========================
+/* =========================================================
    STORAGE PATH
-========================= */
+========================================================= */
 
-function getStoragePathFromUrl(
-    url
-){
+function getStoragePathFromUrl(url){
 
     if(!url)
         return null;
@@ -2602,11 +2907,10 @@ function getStoragePathFromUrl(
             );
 
 
-        if(
-            index === -1
-        ){
+        if(index === -1){
 
             return null;
+
         }
 
 
@@ -2623,14 +2927,15 @@ function getStoragePathFromUrl(
         console.warn(error);
 
         return null;
+
     }
 
 }
 
 
-/* =========================
+/* =========================================================
    PREVIEW RESET
-========================= */
+========================================================= */
 
 function resetPreview(){
 
@@ -2656,9 +2961,9 @@ function resetPreview(){
 }
 
 
-/* =========================
-   STATUS
-========================= */
+/* =========================================================
+   UPLOAD STATUS
+========================================================= */
 
 function setUploadStatus(
     text,
@@ -2712,13 +3017,11 @@ function clearUploadStatus(){
 }
 
 
-/* =========================
+/* =========================================================
    PROGRESS
-========================= */
+========================================================= */
 
-function setProgress(
-    value
-){
+function setProgress(value){
 
     document.getElementById(
         "progressWrap"
@@ -2734,9 +3037,9 @@ function setProgress(
 }
 
 
-/* =========================
+/* =========================================================
    MESSAGE
-========================= */
+========================================================= */
 
 function showMessage(
     text,
@@ -2775,13 +3078,11 @@ function showMessage(
 }
 
 
-/* =========================
-   ESCAPE
-========================= */
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
-function escapeHtml(
-    value
-){
+function escapeHtml(value){
 
     return String(
         value ?? ""
@@ -2810,9 +3111,7 @@ function escapeHtml(
 }
 
 
-function escapeAttribute(
-    value
-){
+function escapeAttribute(value){
 
     return escapeHtml(
         value
@@ -2821,9 +3120,9 @@ function escapeAttribute(
 }
 
 
-/* =========================
+/* =========================================================
    MODAL OUTSIDE CLICK
-========================= */
+========================================================= */
 
 document.getElementById(
     "galleryModal"
@@ -2843,9 +3142,9 @@ document.getElementById(
 );
 
 
-/* =========================
-   ESC
-========================= */
+/* =========================================================
+   ESC KEY
+========================================================= */
 
 document.addEventListener(
     "keydown",
@@ -2863,9 +3162,9 @@ document.addEventListener(
 );
 
 
-/* =========================
+/* =========================================================
    START
-========================= */
+========================================================= */
 
 initialize();
 
@@ -2873,5 +3172,3 @@ initialize();
 
 </body>
 </html>
-```
-
