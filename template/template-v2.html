@@ -1,5051 +1,2815 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description"
-      content="Professional corporate company website template">
-
-<meta name="theme-color" content="#0f172a">
-
-<link id="favicon" rel="icon" href="">
-
 <title>VERTEX | Corporate Excellence</title>
+<meta name="description" content="Professional corporate business website.">
+
+<link rel="icon" id="favicon" href="">
 
 <style>
-
 :root{
-    --primary:#0f172a;
-    --primary-2:#1e293b;
-    --accent:#0ea5a4;
-    --accent-dark:#087f7e;
-    --blue:#2563eb;
-    --white:#ffffff;
-    --text:#334155;
-    --muted:#64748b;
-    --light:#f8fafc;
-    --light-2:#f1f5f9;
-    --border:#e2e8f0;
-    --success:#16a34a;
-    --danger:#dc2626;
-    --radius:18px;
-    --shadow:0 15px 45px rgba(15,23,42,.08);
-    --shadow-lg:0 25px 70px rgba(15,23,42,.14);
+  --primary:#0f172a;
+  --primary-2:#1e293b;
+  --accent:#0ea5a4;
+  --accent-dark:#087f7e;
+  --blue:#2563eb;
+  --white:#fff;
+  --text:#172033;
+  --muted:#64748b;
+  --light:#f8fafc;
+  --border:#e2e8f0;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --radius:18px;
+  --shadow:0 15px 40px rgba(15,23,42,.08);
+  --shadow-lg:0 25px 60px rgba(15,23,42,.14);
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 html{
-    scroll-behavior:smooth;
+  scroll-behavior:smooth;
 }
 
 body{
-    font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-    color:var(--text);
-    background:#fff;
-    line-height:1.6;
-}
-
-img{
-    max-width:100%;
-    display:block;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  color:var(--text);
+  background:#fff;
+  line-height:1.6;
 }
 
 a{
-    text-decoration:none;
-    color:inherit;
+  text-decoration:none;
+  color:inherit;
 }
 
-button,
-input,
-textarea,
-select{
-    font:inherit;
+img{
+  max-width:100%;
+  display:block;
 }
 
 .container{
-    width:min(1180px,92%);
-    margin:auto;
+  width:min(1180px,92%);
+  margin:auto;
 }
 
-.section{
-    padding:100px 0;
-}
-
-.section-sm{
-    padding:70px 0;
+section{
+  padding:90px 0;
 }
 
 .section-head{
-    max-width:720px;
-    margin:0 auto 55px;
-    text-align:center;
+  max-width:700px;
+  margin:0 auto 45px;
+  text-align:center;
 }
 
-.section-tag{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    color:var(--accent);
-    font-size:13px;
-    font-weight:800;
-    text-transform:uppercase;
-    letter-spacing:1.7px;
-    margin-bottom:14px;
+.section-head span{
+  display:inline-block;
+  color:var(--accent);
+  font-weight:800;
+  font-size:13px;
+  letter-spacing:2px;
+  margin-bottom:10px;
 }
 
-.section-tag::before{
-    content:"";
-    width:26px;
-    height:2px;
-    background:var(--accent);
+.section-head h2{
+  font-size:38px;
+  line-height:1.15;
+  color:var(--primary);
+  margin-bottom:14px;
 }
 
-.section-title{
-    color:var(--primary);
-    font-size:clamp(32px,4vw,48px);
-    line-height:1.12;
-    font-weight:850;
-    letter-spacing:-1.5px;
-    margin-bottom:17px;
-}
-
-.section-description{
-    color:var(--muted);
-    font-size:16px;
+.section-head p{
+  color:var(--muted);
 }
 
 .btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:9px;
-    min-height:48px;
-    padding:0 22px;
-    border-radius:10px;
-    border:1px solid transparent;
-    cursor:pointer;
-    transition:.25s ease;
-    font-size:14px;
-    font-weight:750;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:13px 21px;
+  border-radius:10px;
+  font-weight:700;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:.25s;
 }
 
 .btn-primary{
-    background:var(--accent);
-    color:#fff;
+  background:var(--accent);
+  color:#fff;
 }
 
 .btn-primary:hover{
-    background:var(--accent-dark);
-    transform:translateY(-2px);
-}
-
-.btn-dark{
-    background:var(--primary);
-    color:#fff;
-}
-
-.btn-dark:hover{
-    background:#020617;
-    transform:translateY(-2px);
+  background:var(--accent-dark);
+  transform:translateY(-2px);
 }
 
 .btn-outline{
-    background:transparent;
-    border-color:rgba(255,255,255,.35);
-    color:#fff;
+  border-color:rgba(255,255,255,.35);
+  color:#fff;
 }
 
 .btn-outline:hover{
-    background:#fff;
-    color:var(--primary);
-}
-
-.btn-light{
-    background:#fff;
-    color:var(--primary);
-}
-
-.btn-light:hover{
-    transform:translateY(-2px);
+  background:#fff;
+  color:var(--primary);
 }
 
 /* TOPBAR */
-
 .topbar{
-    background:var(--primary);
-    color:#cbd5e1;
-    font-size:12px;
-    padding:9px 0;
+  background:var(--primary);
+  color:#cbd5e1;
+  font-size:13px;
 }
 
 .topbar-inner{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
+  min-height:40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
 }
 
 .topbar-left,
 .topbar-right{
-    display:flex;
-    align-items:center;
-    gap:20px;
+  display:flex;
+  gap:20px;
+  align-items:center;
+  flex-wrap:wrap;
 }
 
 .topbar a:hover{
-    color:#fff;
+  color:#fff;
 }
 
 /* NAVBAR */
-
 .navbar{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:rgba(255,255,255,.96);
-    backdrop-filter:blur(16px);
-    border-bottom:1px solid rgba(226,232,240,.85);
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:#fff;
+  border-bottom:1px solid var(--border);
 }
 
 .nav-inner{
-    min-height:78px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:25px;
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
 }
 
 .logo{
-    display:flex;
-    align-items:center;
-    gap:11px;
-    font-weight:900;
-    color:var(--primary);
-    font-size:22px;
-    letter-spacing:-.5px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:900;
+  font-size:20px;
+  color:var(--primary);
 }
 
 .logo-mark{
-    width:39px;
-    height:39px;
-    border-radius:10px;
-    display:grid;
-    place-items:center;
-    background:var(--primary);
-    color:#fff;
-    font-size:17px;
-    font-weight:900;
-    overflow:hidden;
+  width:42px;
+  height:42px;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  overflow:hidden;
 }
 
 .logo-mark img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    background:#fff;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#fff;
 }
 
-.logo small{
-    display:block;
-    font-size:8px;
-    letter-spacing:2px;
-    color:var(--accent);
-    margin-top:-3px;
+.logo-text small{
+  display:block;
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--muted);
+  font-weight:700;
 }
 
 .nav-links{
-    display:flex;
-    align-items:center;
-    gap:27px;
+  display:flex;
+  align-items:center;
+  gap:27px;
 }
 
 .nav-links a{
-    color:#475569;
-    font-size:13px;
-    font-weight:700;
-    transition:.2s;
+  color:#334155;
+  font-size:14px;
+  font-weight:700;
 }
 
 .nav-links a:hover{
-    color:var(--accent);
-}
-
-.nav-actions{
-    display:flex;
-    align-items:center;
-    gap:10px;
+  color:var(--accent);
 }
 
 .menu-btn{
-    display:none;
-    width:43px;
-    height:43px;
-    border:1px solid var(--border);
-    background:#fff;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:22px;
+  display:none;
+  border:0;
+  background:transparent;
+  font-size:27px;
+  cursor:pointer;
 }
 
 /* HERO */
-
 .hero{
-    position:relative;
-    min-height:680px;
-    overflow:hidden;
-    background:
-        linear-gradient(
-            90deg,
-            rgba(2,6,23,.94) 0%,
-            rgba(2,6,23,.84) 45%,
-            rgba(2,6,23,.35) 100%
-        ),
-        url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2000&q=85")
-        center/cover;
+  position:relative;
+  overflow:hidden;
+  padding:110px 0 100px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 85% 15%,rgba(14,165,164,.30),transparent 30%),
+    radial-gradient(circle at 10% 90%,rgba(37,99,235,.22),transparent 28%),
+    linear-gradient(135deg,#0f172a,#172554);
 }
 
-.hero::after{
-    content:"";
-    position:absolute;
-    right:-130px;
-    bottom:-180px;
-    width:500px;
-    height:500px;
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:50%;
-}
-
-.hero-inner{
-    min-height:680px;
-    display:grid;
-    grid-template-columns:1.1fr .9fr;
-    align-items:center;
-    gap:60px;
-    position:relative;
-    z-index:2;
-}
-
-.hero-content{
-    max-width:720px;
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  align-items:center;
+  gap:50px;
 }
 
 .hero-label{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    color:#5eead4;
-    font-size:12px;
-    font-weight:850;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    margin-bottom:20px;
-}
-
-.hero-label span{
-    width:34px;
-    height:2px;
-    background:#5eead4;
+  color:#5eead4;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:2px;
+  margin-bottom:18px;
 }
 
 .hero h1{
-    color:#fff;
-    font-size:clamp(44px,6vw,74px);
-    line-height:1.02;
-    letter-spacing:-3px;
-    font-weight:900;
-    margin-bottom:25px;
+  font-size:62px;
+  line-height:1.04;
+  max-width:800px;
+  margin-bottom:22px;
 }
 
 .hero h1 strong{
-    color:#5eead4;
+  color:#5eead4;
 }
 
 .hero p{
-    color:#cbd5e1;
-    max-width:650px;
-    font-size:17px;
-    margin-bottom:34px;
+  color:#cbd5e1;
+  max-width:680px;
+  font-size:18px;
+  margin-bottom:30px;
 }
 
 .hero-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
 .hero-card{
-    justify-self:end;
-    width:min(390px,100%);
-    background:rgba(255,255,255,.1);
-    backdrop-filter:blur(15px);
-    border:1px solid rgba(255,255,255,.2);
-    border-radius:22px;
-    padding:27px;
-    color:#fff;
+  padding:30px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(15px);
+  border-radius:24px;
+  box-shadow:var(--shadow-lg);
 }
 
-.hero-card-label{
-    color:#99f6e4;
-    text-transform:uppercase;
-    font-size:11px;
-    font-weight:800;
-    letter-spacing:1.5px;
-    margin-bottom:8px;
+.hero-card-item{
+  padding:20px 0;
+  border-bottom:1px solid rgba(255,255,255,.12);
 }
 
-.hero-card h3{
-    font-size:25px;
-    line-height:1.2;
-    margin-bottom:18px;
+.hero-card-item:last-child{
+  border-bottom:0;
 }
 
-.hero-card-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+.hero-card-item strong{
+  display:block;
+  font-size:30px;
+  color:#5eead4;
 }
 
-.hero-mini{
-    padding:17px;
-    background:rgba(255,255,255,.08);
-    border-radius:13px;
-}
-
-.hero-mini strong{
-    display:block;
-    font-size:25px;
-}
-
-.hero-mini span{
-    color:#cbd5e1;
-    font-size:11px;
+.hero-card-item span{
+  color:#cbd5e1;
+  font-size:13px;
 }
 
 /* STATS */
-
 .stats{
-    margin-top:-55px;
-    position:relative;
-    z-index:5;
+  padding:0;
+  margin-top:-1px;
+  background:var(--primary);
 }
 
 .stats-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    background:#fff;
-    border-radius:20px;
-    box-shadow:var(--shadow-lg);
-    overflow:hidden;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
 }
 
 .stat{
-    padding:30px 24px;
-    text-align:center;
-    border-right:1px solid var(--border);
+  padding:30px 20px;
+  text-align:center;
+  border-right:1px solid rgba(255,255,255,.1);
 }
 
 .stat:last-child{
-    border-right:0;
+  border-right:0;
 }
 
 .stat strong{
-    display:block;
-    color:var(--primary);
-    font-size:34px;
-    line-height:1;
-    margin-bottom:8px;
+  display:block;
+  color:#5eead4;
+  font-size:32px;
 }
 
 .stat span{
-    color:var(--muted);
-    font-size:12px;
-    font-weight:700;
+  color:#cbd5e1;
+  font-size:13px;
 }
 
 /* ABOUT */
-
-.about-grid{
-    display:grid;
-    grid-template-columns:.9fr 1.1fr;
-    gap:75px;
-    align-items:center;
+.about{
+  background:#fff;
 }
 
-.about-visual{
-    position:relative;
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
 }
 
 .about-main-image{
-    min-height:510px;
-    border-radius:25px;
-    background:
-        linear-gradient(
-            0deg,
-            rgba(15,23,42,.12),
-            rgba(15,23,42,.12)
-        ),
-        url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85")
-        center/cover;
-}
-
-.about-main-image.has-image{
-    background-image:
-        linear-gradient(
-            0deg,
-            rgba(15,23,42,.12),
-            rgba(15,23,42,.12)
-        );
-    background-size:cover;
-    background-position:center;
+  height:470px;
+  border-radius:24px;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,rgba(14,165,164,.85),rgba(15,23,42,.8)),
+    url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80")
+    center/cover;
+  position:relative;
+  box-shadow:var(--shadow-lg);
 }
 
 .about-badge{
-    position:absolute;
-    right:-25px;
-    bottom:35px;
-    width:175px;
-    padding:24px;
-    border-radius:18px;
-    background:var(--accent);
-    color:#fff;
-    box-shadow:var(--shadow-lg);
+  position:absolute;
+  right:25px;
+  bottom:25px;
+  background:#fff;
+  color:var(--primary);
+  border-radius:16px;
+  padding:20px 24px;
+  box-shadow:var(--shadow);
 }
 
 .about-badge strong{
-    display:block;
-    font-size:34px;
-    line-height:1;
-    margin-bottom:6px;
+  display:block;
+  font-size:28px;
+  color:var(--accent);
 }
 
-.about-badge span{
-    font-size:12px;
+.about-content span{
+  color:var(--accent);
+  font-weight:800;
+  letter-spacing:2px;
+  font-size:13px;
 }
 
-.about-content .section-title{
-    text-align:left;
+.about-content h2{
+  font-size:42px;
+  line-height:1.15;
+  margin:10px 0 18px;
+  color:var(--primary);
 }
 
 .about-content p{
-    color:var(--muted);
-    margin-bottom:18px;
+  color:var(--muted);
+  margin-bottom:18px;
 }
 
-.about-list{
-    list-style:none;
-    display:grid;
-    gap:13px;
-    margin:25px 0 30px;
+.about-points{
+  display:grid;
+  gap:12px;
+  margin-top:25px;
 }
 
-.about-list li{
-    display:flex;
-    gap:12px;
-    align-items:flex-start;
-    font-weight:700;
-    color:#334155;
-    font-size:14px;
+.about-point{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
 }
 
-.check{
-    flex:0 0 22px;
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    background:#ccfbf1;
-    color:#0f766e;
-    display:grid;
-    place-items:center;
-    font-size:12px;
-    font-weight:900;
+.about-point b{
+  color:var(--accent);
 }
 
-/* BUSINESS */
-
-.verticals{
-    background:var(--light);
+/* CARDS */
+.card-grid{
+  display:grid;
+  gap:22px;
 }
 
 .vertical-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
+  grid-template-columns:repeat(3,1fr);
 }
 
-.vertical-card{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:30px;
-    transition:.25s;
+.service-grid{
+  grid-template-columns:repeat(3,1fr);
 }
 
-.vertical-card:hover{
-    transform:translateY(-6px);
-    box-shadow:var(--shadow);
+.vertical-card,
+.service-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px;
+  box-shadow:var(--shadow);
+  transition:.25s;
+}
+
+.vertical-card:hover,
+.service-card:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--shadow-lg);
 }
 
 .icon{
-    width:48px;
-    height:48px;
-    border-radius:13px;
-    display:grid;
-    place-items:center;
-    background:#ecfeff;
-    color:var(--accent-dark);
-    font-size:22px;
-    margin-bottom:22px;
+  width:50px;
+  height:50px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#ecfeff;
+  color:var(--accent);
+  font-size:22px;
+  margin-bottom:18px;
 }
 
-.vertical-card h3{
-    color:var(--primary);
-    font-size:20px;
-    margin-bottom:9px;
-}
-
-.vertical-card p{
-    color:var(--muted);
-    font-size:14px;
-}
-
-/* SERVICES */
-
-.service-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-}
-
-.service-card{
-    padding:31px;
-    border:1px solid var(--border);
-    border-radius:18px;
-    background:#fff;
-}
-
-.service-number{
-    font-size:12px;
-    font-weight:900;
-    color:var(--accent);
-    letter-spacing:1px;
-    margin-bottom:25px;
-}
-
+.vertical-card h3,
 .service-card h3{
-    color:var(--primary);
-    font-size:21px;
-    margin-bottom:10px;
+  color:var(--primary);
+  margin-bottom:8px;
 }
 
+.vertical-card p,
 .service-card p{
-    color:var(--muted);
-    font-size:14px;
-    margin-bottom:20px;
+  color:var(--muted);
+  font-size:14px;
 }
 
-.service-card a{
-    color:var(--accent-dark);
-    font-size:13px;
-    font-weight:800;
+#business,
+#services{
+  background:var(--light);
 }
 
 /* PRODUCTS */
-
 .products{
-    background:var(--light);
+  background:#fff;
 }
 
 .product-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:22px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
 }
 
 .product-card{
-    overflow:hidden;
-    border-radius:18px;
-    background:#fff;
-    border:1px solid var(--border);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:var(--shadow);
+  transition:.25s;
+}
+
+.product-card:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--shadow-lg);
 }
 
 .product-image{
-    height:230px;
-    background-position:center;
-    background-size:cover;
-    background-color:#e2e8f0;
+  height:230px;
+  background:#f1f5f9;
+  overflow:hidden;
+}
+
+.product-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .product-body{
-    padding:24px;
+  padding:22px;
+}
+
+.product-code{
+  color:var(--accent);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1px;
+  margin-bottom:5px;
 }
 
 .product-body h3{
-    color:var(--primary);
-    font-size:20px;
-    margin-bottom:8px;
+  color:var(--primary);
+  margin-bottom:7px;
 }
 
 .product-body p{
-    color:var(--muted);
-    font-size:14px;
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:17px;
 }
 
-.product-empty,
-.gallery-empty,
-.testimonial-empty,
-.faq-empty{
-    grid-column:1/-1;
-    text-align:center;
-    padding:35px;
-    color:var(--muted);
+.product-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.product-meta span{
+  background:#f1f5f9;
+  border-radius:7px;
+  padding:5px 8px;
+  font-size:11px;
+  color:#475569;
 }
 
 /* WHY */
-
 .why{
-    background:var(--primary);
-    color:#fff;
-    overflow:hidden;
+  background:var(--primary);
+  color:#fff;
 }
 
 .why-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:70px;
-    align-items:center;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
 }
 
-.why .section-title{
-    color:#fff;
-    text-align:left;
+.why h2{
+  font-size:42px;
+  line-height:1.15;
+  margin-bottom:18px;
 }
 
-.why-description{
-    color:#94a3b8;
-    margin-bottom:30px;
+.why p{
+  color:#cbd5e1;
 }
 
 .why-list{
-    display:grid;
-    gap:15px;
+  display:grid;
+  gap:18px;
+  margin-top:30px;
 }
 
 .why-item{
-    display:flex;
-    gap:15px;
-    padding:17px;
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:13px;
+  display:flex;
+  gap:15px;
 }
 
 .why-item-icon{
-    flex:0 0 42px;
-    width:42px;
-    height:42px;
-    display:grid;
-    place-items:center;
-    border-radius:10px;
-    background:rgba(20,184,166,.15);
-    color:#5eead4;
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  border-radius:10px;
+  background:rgba(14,165,164,.16);
+  color:#5eead4;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:900;
 }
 
 .why-item h4{
-    margin-bottom:3px;
+  margin-bottom:3px;
 }
 
 .why-item p{
-    color:#94a3b8;
-    font-size:12px;
+  font-size:13px;
 }
 
 .why-visual{
-    min-height:500px;
-    border-radius:25px;
-    background:
-        linear-gradient(
-            rgba(15,23,42,.15),
-            rgba(15,23,42,.3)
-        ),
-        url("https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=85")
-        center/cover;
+  min-height:430px;
+  border-radius:25px;
+  background:
+    linear-gradient(135deg,rgba(14,165,164,.25),rgba(37,99,235,.25)),
+    url("https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80")
+    center/cover;
 }
 
 /* LEADERSHIP */
-
 .leader-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:22px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
 }
 
 .leader-card{
-    border:1px solid var(--border);
-    border-radius:18px;
-    overflow:hidden;
-    background:#fff;
+  text-align:center;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:var(--shadow);
 }
 
 .leader-photo{
-    height:310px;
-    background-position:center;
-    background-size:cover;
+  width:100px;
+  height:100px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  background:#e2e8f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:35px;
+  font-weight:900;
+  color:var(--accent);
 }
 
-.leader-card:nth-child(1) .leader-photo{
-    background-image:url("https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=85");
+.leader-card h3{
+  color:var(--primary);
 }
 
-.leader-card:nth-child(2) .leader-photo{
-    background-image:url("https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=85");
-}
-
-.leader-card:nth-child(3) .leader-photo{
-    background-image:url("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=85");
-}
-
-.leader-info{
-    padding:22px;
-}
-
-.leader-info h3{
-    color:var(--primary);
-    font-size:19px;
-}
-
-.leader-info span{
-    color:var(--accent-dark);
-    font-size:12px;
-    font-weight:800;
+.leader-card p{
+  color:var(--muted);
+  font-size:13px;
 }
 
 /* PROJECTS */
-
 .projects{
-    background:var(--light);
+  background:var(--light);
 }
 
 .project-grid{
-    display:grid;
-    grid-template-columns:1.2fr .8fr .8fr;
-    grid-template-rows:250px 250px;
-    gap:18px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
 }
 
 .project{
-    position:relative;
-    overflow:hidden;
-    border-radius:18px;
-    background-position:center;
-    background-size:cover;
-}
-
-.project:nth-child(1){
-    grid-row:span 2;
-    background-image:url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=85");
+  min-height:230px;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  background:
+    linear-gradient(0deg,rgba(15,23,42,.9),transparent 65%),
+    url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80")
+    center/cover;
 }
 
 .project:nth-child(2){
-    background-image:url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=85");
+  background-image:
+    linear-gradient(0deg,rgba(15,23,42,.9),transparent 65%),
+    url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80");
 }
 
 .project:nth-child(3){
-    background-image:url("https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=900&q=85");
+  background-image:
+    linear-gradient(0deg,rgba(15,23,42,.9),transparent 65%),
+    url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80");
 }
 
 .project:nth-child(4){
-    background-image:url("https://images.unsplash.com/photo-1497366811360-6870744d04b2?auto=format&fit=crop&w=900&q=85");
+  background-image:
+    linear-gradient(0deg,rgba(15,23,42,.9),transparent 65%),
+    url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80");
 }
 
 .project:nth-child(5){
-    background-image:url("https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=85");
+  background-image:
+    linear-gradient(0deg,rgba(15,23,42,.9),transparent 65%),
+    url("https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=900&q=80");
 }
 
-.project-overlay{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:flex-end;
-    padding:22px;
-    background:linear-gradient(
-        transparent 35%,
-        rgba(2,6,23,.85)
-    );
-    color:#fff;
+.project-content{
+  position:absolute;
+  left:22px;
+  right:22px;
+  bottom:20px;
+  color:#fff;
 }
 
-.project-overlay h3{
-    font-size:18px;
+.project-content h3{
+  margin-bottom:4px;
 }
 
-.project-overlay span{
-    display:block;
-    color:#cbd5e1;
-    font-size:11px;
+.project-content p{
+  color:#cbd5e1;
+  font-size:12px;
 }
 
 /* ACHIEVEMENTS */
-
 .achievement-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
 }
 
 .achievement{
-    padding:28px;
-    border:1px solid var(--border);
-    border-radius:18px;
-    text-align:center;
+  text-align:center;
+  padding:30px 15px;
+  border:1px solid var(--border);
+  border-radius:18px;
 }
 
 .achievement strong{
-    display:block;
-    color:var(--primary);
-    font-size:38px;
-    margin-bottom:3px;
+  display:block;
+  font-size:38px;
+  color:var(--accent);
 }
 
 .achievement span{
-    color:var(--muted);
-    font-size:12px;
-    font-weight:700;
+  color:var(--muted);
+  font-size:13px;
 }
 
 /* CLIENTS */
-
 .clients{
-    background:var(--light);
+  background:var(--light);
 }
 
 .client-strip{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:14px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:15px;
 }
 
 .client-logo{
-    height:90px;
-    display:grid;
-    place-items:center;
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:13px;
-    color:#64748b;
-    font-size:18px;
-    font-weight:900;
-    letter-spacing:1px;
+  min-height:90px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:15px;
+  color:#64748b;
+  font-weight:900;
+  font-size:14px;
 }
 
 /* GALLERY */
-
 .gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
 }
 
 .gallery-item{
-    height:220px;
-    border-radius:15px;
-    overflow:hidden;
-    background-position:center;
-    background-size:cover;
-    background-color:#e2e8f0;
+  height:220px;
+  border-radius:15px;
+  overflow:hidden;
+  background:#e2e8f0;
+}
+
+.gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.3s;
+}
+
+.gallery-item:hover img{
+  transform:scale(1.06);
+}
+
+.gallery-placeholder{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--muted);
+  font-size:13px;
 }
 
 /* TESTIMONIALS */
+.testimonials{
+  background:var(--light);
+}
 
 .testimonial-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
 }
 
 .testimonial{
-    padding:30px;
-    border:1px solid var(--border);
-    border-radius:18px;
-    background:#fff;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:28px;
+  box-shadow:var(--shadow);
 }
 
 .quote{
-    color:var(--accent);
-    font-size:34px;
-    line-height:1;
-    margin-bottom:18px;
+  color:var(--accent);
+  font-size:35px;
+  line-height:1;
 }
 
-.testimonial p{
-    color:#475569;
-    font-size:14px;
-    margin-bottom:25px;
+.testimonial-message{
+  color:#475569;
+  margin:12px 0 20px;
 }
 
-.testimonial-person{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.testimonial-author{
+  font-weight:800;
+  color:var(--primary);
 }
 
-.person-avatar{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:var(--primary);
-    color:#fff;
-    display:grid;
-    place-items:center;
-    font-weight:800;
-}
-
-.person-info strong{
-    display:block;
-    color:var(--primary);
-    font-size:13px;
-}
-
-.person-info span{
-    color:var(--muted);
-    font-size:11px;
+.testimonial-role{
+  color:var(--muted);
+  font-size:12px;
 }
 
 /* FAQ */
-
-.faq{
-    background:var(--light);
-}
-
 .faq-wrap{
-    max-width:850px;
-    margin:auto;
+  max-width:850px;
+  margin:auto;
 }
 
 .faq-item{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:13px;
-    margin-bottom:12px;
-    overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:13px;
+  margin-bottom:12px;
+  overflow:hidden;
+  background:#fff;
 }
 
 .faq-question{
-    width:100%;
-    border:0;
-    background:#fff;
-    padding:21px 22px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    cursor:pointer;
-    text-align:left;
-    color:var(--primary);
-    font-weight:800;
-}
-
-.faq-icon{
-    width:28px;
-    height:28px;
-    display:grid;
-    place-items:center;
-    border-radius:50%;
-    background:var(--light-2);
-    transition:.25s;
+  width:100%;
+  background:#fff;
+  border:0;
+  padding:20px;
+  text-align:left;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  cursor:pointer;
+  font-weight:800;
+  color:var(--primary);
+  font-size:15px;
 }
 
 .faq-answer{
-    max-height:0;
-    overflow:hidden;
-    transition:.3s ease;
+  display:none;
+  padding:0 20px 20px;
+  color:var(--muted);
+  font-size:14px;
 }
 
-.faq-answer-inner{
-    padding:0 22px 21px;
-    color:var(--muted);
-    font-size:14px;
-}
-
-.faq-item.active .faq-answer{
-    max-height:400px;
-}
-
-.faq-item.active .faq-icon{
-    transform:rotate(45deg);
-    background:#ccfbf1;
-    color:var(--accent-dark);
+.faq-item.open .faq-answer{
+  display:block;
 }
 
 /* CTA */
-
 .cta{
-    padding:85px 0;
+  padding:35px 0;
 }
 
 .cta-box{
-    position:relative;
-    overflow:hidden;
-    border-radius:25px;
-    padding:65px;
-    background:
-        linear-gradient(
-            120deg,
-            rgba(15,23,42,.97),
-            rgba(15,23,42,.87)
-        ),
-        url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=80")
-        center/cover;
-    color:#fff;
+  border-radius:25px;
+  padding:55px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(14,165,164,.3),transparent 30%),
+    linear-gradient(135deg,var(--primary),#172554);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:30px;
 }
 
-.cta-box::after{
-    content:"";
-    position:absolute;
-    right:-100px;
-    top:-180px;
-    width:400px;
-    height:400px;
-    border:1px solid rgba(94,234,212,.18);
-    border-radius:50%;
+.cta-box h2{
+  font-size:35px;
+  margin-bottom:8px;
 }
 
-.cta-content{
-    position:relative;
-    z-index:2;
-    max-width:680px;
-}
-
-.cta h2{
-    font-size:clamp(32px,4vw,48px);
-    line-height:1.1;
-    margin-bottom:15px;
-}
-
-.cta p{
-    color:#cbd5e1;
-    margin-bottom:28px;
+.cta-box p{
+  color:#cbd5e1;
 }
 
 /* CONTACT */
-
 .contact{
-    background:var(--light);
+  background:var(--light);
 }
 
 .contact-grid{
-    display:grid;
-    grid-template-columns:.85fr 1.15fr;
-    gap:45px;
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:30px;
 }
 
-.contact-info{
-    padding:10px 0;
+.contact-info,
+.form-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:32px;
+  box-shadow:var(--shadow);
 }
 
-.contact-info h3{
-    color:var(--primary);
-    font-size:28px;
-    margin-bottom:12px;
+.contact-info h2{
+  font-size:30px;
+  color:var(--primary);
+  margin-bottom:10px;
 }
 
 .contact-info>p{
-    color:var(--muted);
-    font-size:14px;
-    margin-bottom:30px;
+  color:var(--muted);
+  margin-bottom:25px;
 }
 
 .contact-list{
-    display:grid;
-    gap:16px;
+  display:grid;
+  gap:17px;
 }
 
-.contact-item{
-    display:flex;
-    gap:14px;
-    align-items:flex-start;
+.contact-row{
+  display:flex;
+  gap:12px;
 }
 
 .contact-icon{
-    width:43px;
-    height:43px;
-    border-radius:11px;
-    display:grid;
-    place-items:center;
-    background:#ccfbf1;
-    color:var(--accent-dark);
-    flex:0 0 43px;
+  width:40px;
+  height:40px;
+  border-radius:9px;
+  background:#ecfeff;
+  color:var(--accent);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex:0 0 40px;
 }
 
-.contact-item strong{
-    display:block;
-    color:var(--primary);
-    font-size:13px;
+.contact-row small{
+  display:block;
+  color:var(--muted);
 }
 
-.contact-item span{
-    color:var(--muted);
-    font-size:12px;
-}
-
-.form-card{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:30px;
-    box-shadow:var(--shadow);
+.contact-row strong{
+  color:var(--primary);
 }
 
 .form-card h3{
-    color:var(--primary);
-    font-size:24px;
-    margin-bottom:5px;
-}
-
-.form-card>p{
-    color:var(--muted);
-    font-size:13px;
-    margin-bottom:24px;
+  font-size:25px;
+  color:var(--primary);
+  margin-bottom:20px;
 }
 
 .form-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
 }
 
 .field{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
+  margin-bottom:15px;
 }
 
 .field.full{
-    grid-column:1/-1;
+  grid-column:1/-1;
 }
 
 .field label{
-    color:var(--primary);
-    font-size:12px;
-    font-weight:800;
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  color:#475569;
+  margin-bottom:6px;
 }
 
 .field input,
-.field textarea,
-.field select{
-    width:100%;
-    border:1px solid var(--border);
-    background:#fff;
-    border-radius:10px;
-    padding:12px 13px;
-    outline:none;
-    color:var(--text);
-    font-size:13px;
-}
-
 .field textarea{
-    min-height:120px;
-    resize:vertical;
+  width:100%;
+  padding:13px 14px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  outline:none;
+  font:inherit;
 }
 
 .field input:focus,
-.field textarea:focus,
-.field select:focus{
-    border-color:var(--accent);
-    box-shadow:0 0 0 3px rgba(14,165,164,.1);
+.field textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(14,165,164,.1);
 }
 
-.submit-btn{
-    width:100%;
+.field textarea{
+  min-height:130px;
+  resize:vertical;
 }
 
 /* FOOTER */
-
 .footer{
-    background:#020617;
-    color:#94a3b8;
-    padding-top:65px;
+  background:#020617;
+  color:#94a3b8;
+  padding:55px 0 25px;
 }
 
 .footer-grid{
-    display:grid;
-    grid-template-columns:1.5fr 1fr 1fr 1fr;
-    gap:45px;
-    padding-bottom:50px;
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr;
+  gap:40px;
+  padding-bottom:40px;
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.footer-brand .logo{
-    color:#fff;
-    margin-bottom:17px;
+.footer-brand{
+  max-width:430px;
+}
+
+.footer-brand h3{
+  color:#fff;
+  font-size:22px;
+  margin-bottom:10px;
 }
 
 .footer-brand p{
-    font-size:13px;
-    max-width:330px;
+  font-size:13px;
 }
 
 .footer h4{
-    color:#fff;
-    font-size:13px;
-    margin-bottom:18px;
+  color:#fff;
+  margin-bottom:15px;
 }
 
-.footer-links{
-    display:grid;
-    gap:10px;
+.footer a{
+  display:block;
+  margin-bottom:8px;
+  font-size:13px;
 }
 
-.footer-links a{
-    font-size:12px;
-}
-
-.footer-links a:hover{
-    color:#fff;
+.footer a:hover{
+  color:#5eead4;
 }
 
 .footer-bottom{
-    border-top:1px solid rgba(255,255,255,.08);
-    padding:20px 0;
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-    font-size:11px;
+  padding-top:22px;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  font-size:12px;
 }
 
-.footer-bottom a{
-    color:#5eead4;
+/* EMPTY */
+.empty-state{
+  grid-column:1/-1;
+  padding:45px 20px;
+  border:1px dashed var(--border);
+  border-radius:18px;
+  text-align:center;
+  color:var(--muted);
+  background:#f8fafc;
 }
 
 /* TOAST */
-
-.toast{
-    position:fixed;
-    right:22px;
-    bottom:22px;
-    z-index:5000;
-    background:var(--primary);
-    color:#fff;
-    padding:14px 18px;
-    border-radius:12px;
-    box-shadow:var(--shadow-lg);
-    transform:translateY(100px);
-    opacity:0;
-    pointer-events:none;
-    transition:.3s;
-    font-size:13px;
-    font-weight:700;
+#toast{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  z-index:3000;
+  background:#0f172a;
+  color:#fff;
+  padding:14px 20px;
+  border-radius:10px;
+  box-shadow:var(--shadow-lg);
+  transform:translateY(120px);
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
 }
 
-.toast.show{
-    transform:translateY(0);
-    opacity:1;
+#toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+#toast.success{
+  background:var(--success);
+}
+
+#toast.error{
+  background:var(--danger);
 }
 
 /* RESPONSIVE */
+@media(max-width:900px){
 
-@media(max-width:1050px){
+  .hero-grid,
+  .about-grid,
+  .why-grid,
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
 
-    .nav-links{
-        gap:17px;
-    }
+  .hero h1{
+    font-size:48px;
+  }
 
-    .hero-inner{
-        grid-template-columns:1fr;
-    }
+  .vertical-grid,
+  .service-grid,
+  .product-grid,
+  .leader-grid,
+  .project-grid,
+  .testimonial-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-    .hero-card{
-        display:none;
-    }
+  .gallery-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
 
-    .about-grid,
-    .why-grid{
-        grid-template-columns:1fr;
-        gap:45px;
-    }
+  .achievement-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-    .service-grid,
-    .vertical-grid,
-    .product-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+  .client-strip{
+    grid-template-columns:repeat(3,1fr);
+  }
 
-    .leader-grid,
-    .testimonial-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+  .cta-box{
+    flex-direction:column;
+    align-items:flex-start;
+  }
 
-    .footer-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
+  .nav-links{
+    position:absolute;
+    left:0;
+    right:0;
+    top:76px;
+    background:#fff;
+    padding:20px;
+    display:none;
+    flex-direction:column;
+    align-items:flex-start;
+    border-bottom:1px solid var(--border);
+    box-shadow:var(--shadow);
+  }
 
-@media(max-width:820px){
+  .nav-links.active{
+    display:flex;
+  }
 
-    .topbar-left{
-        display:none;
-    }
-
-    .topbar-inner{
-        justify-content:center;
-    }
-
-    .nav-actions .btn{
-        display:none;
-    }
-
-    .menu-btn{
-        display:block;
-    }
-
-    .nav-links{
-        position:absolute;
-        top:78px;
-        left:0;
-        right:0;
-        background:#fff;
-        border-bottom:1px solid var(--border);
-        padding:20px 4%;
-        display:none;
-        flex-direction:column;
-        align-items:flex-start;
-        gap:16px;
-        box-shadow:var(--shadow);
-    }
-
-    .nav-links.active{
-        display:flex;
-    }
-
-    .stats-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .stat:nth-child(2){
-        border-right:0;
-    }
-
-    .stat:nth-child(-n+2){
-        border-bottom:1px solid var(--border);
-    }
-
-    .project-grid{
-        grid-template-columns:1fr 1fr;
-        grid-template-rows:220px 220px 220px;
-    }
-
-    .project:nth-child(1){
-        grid-column:1/-1;
-        grid-row:auto;
-    }
-
-    .gallery-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .achievement-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .client-strip{
-        grid-template-columns:repeat(3,1fr);
-    }
+  .menu-btn{
+    display:block;
+  }
 }
 
 @media(max-width:600px){
 
-    .section{
-        padding:72px 0;
-    }
+  section{
+    padding:65px 0;
+  }
 
-    .section-head{
-        margin-bottom:38px;
-    }
+  .topbar-left{
+    display:none;
+  }
 
-    .hero,
-    .hero-inner{
-        min-height:620px;
-    }
+  .topbar-inner{
+    justify-content:center;
+    padding:8px 0;
+  }
 
-    .hero h1{
-        letter-spacing:-2px;
-    }
+  .hero{
+    padding:80px 0;
+  }
 
-    .hero p{
-        font-size:15px;
-    }
+  .hero h1{
+    font-size:39px;
+  }
 
-    .about-main-image{
-        min-height:390px;
-    }
+  .hero p{
+    font-size:16px;
+  }
 
-    .about-badge{
-        right:12px;
-        bottom:20px;
-    }
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-    .service-grid,
-    .vertical-grid,
-    .product-grid,
-    .leader-grid,
-    .testimonial-grid{
-        grid-template-columns:1fr;
-    }
+  .stat:nth-child(2){
+    border-right:0;
+  }
 
-    .stats{
-        margin-top:-35px;
-    }
+  .vertical-grid,
+  .service-grid,
+  .product-grid,
+  .leader-grid,
+  .project-grid,
+  .testimonial-grid,
+  .gallery-grid,
+  .achievement-grid,
+  .client-strip{
+    grid-template-columns:1fr;
+  }
 
-    .stat{
-        padding:23px 12px;
-    }
+  .gallery-item{
+    height:250px;
+  }
 
-    .stat strong{
-        font-size:27px;
-    }
+  .form-grid{
+    grid-template-columns:1fr;
+  }
 
-    .why-visual{
-        min-height:350px;
-    }
+  .field.full{
+    grid-column:auto;
+  }
 
-    .project-grid{
-        grid-template-columns:1fr;
-        grid-template-rows:250px 220px 220px 220px 220px;
-    }
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
 
-    .project:nth-child(1){
-        grid-column:auto;
-    }
+  .footer-bottom{
+    flex-direction:column;
+  }
 
-    .gallery-grid{
-        grid-template-columns:1fr 1fr;
-    }
+  .cta-box{
+    padding:35px 25px;
+  }
 
-    .gallery-item{
-        height:170px;
-    }
-
-    .achievement-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .client-strip{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .cta-box{
-        padding:38px 25px;
-    }
-
-    .contact-grid{
-        grid-template-columns:1fr;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .field.full{
-        grid-column:auto;
-    }
-
-    .footer-grid{
-        grid-template-columns:1fr;
-        gap:30px;
-    }
-
-    .footer-bottom{
-        flex-direction:column;
-    }
-
-    .hero-buttons{
-        flex-direction:column;
-        align-items:flex-start;
-    }
+  .cta-box h2{
+    font-size:28px;
+  }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-
+<!-- TOPBAR -->
 <div class="topbar">
-
-    <div class="container topbar-inner">
-
-        <div class="topbar-left">
-
-            <span id="topTagline">
-                Building Businesses. Creating Impact.
-            </span>
-
-            <a id="topEmail"
-               href="mailto:info@company.com">
-                info@company.com
-            </a>
-
-        </div>
-
-        <div class="topbar-right">
-
-            <a id="topPhone"
-               href="tel:+911234567890">
-                +91 12345 67890
-            </a>
-
-            <span id="businessHours">
-                Mon - Sat: 9:00 AM - 6:00 PM
-            </span>
-
-        </div>
-
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <a id="topPhone" href="#">+91 XXXXX XXXXX</a>
+      <a id="topEmail" href="#">info@example.com</a>
     </div>
 
+    <div class="topbar-right">
+      <span id="topAddress">Corporate Excellence</span>
+    </div>
+  </div>
 </div>
 
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container nav-inner">
 
-<!-- NAVIGATION -->
+    <a href="#home" class="logo">
+      <div class="logo-mark" id="logoMark">V</div>
+      <div class="logo-text">
+        <span id="brandName">VERTEX GROUP</span>
+        <small>BUSINESS • EXCELLENCE</small>
+      </div>
+    </a>
 
-<header class="navbar">
-
-    <div class="container nav-inner">
-
-        <a href="#home" class="logo">
-
-            <div class="logo-mark"
-                 id="logoMark">
-
-                <span id="logoLetter">V</span>
-
-                <img id="companyLogo"
-                     src=""
-                     alt="Company Logo"
-                     style="display:none;">
-
-            </div>
-
-            <div>
-
-                <span id="brandName">
-                    VERTEX
-                </span>
-
-                <small id="brandTagline">
-                    GROUP
-                </small>
-
-            </div>
-
-        </a>
-
-
-        <nav class="nav-links"
-             id="navLinks">
-
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#business">Business</a>
-            <a href="#services">Services</a>
-            <a href="#products">Products</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-
-        </nav>
-
-
-        <div class="nav-actions">
-
-            <a href="#contact"
-               class="btn btn-dark">
-                Let's Talk →
-            </a>
-
-            <button class="menu-btn"
-                    id="menuBtn"
-                    type="button">
-                ☰
-            </button>
-
-        </div>
-
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#business">Business</a>
+      <a href="#services">Services</a>
+      <a href="#products">Products</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact" class="btn btn-primary">Contact</a>
     </div>
 
-</header>
-
+    <button class="menu-btn" id="menuBtn">☰</button>
+  </div>
+</nav>
 
 <!-- HERO -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
 
-<section class="hero"
-         id="home">
+    <div>
+      <div class="hero-label">BUSINESS • ENGINEERING • EXCELLENCE</div>
 
-    <div class="container hero-inner">
+      <h1 id="heroTitle">
+        Growing Ideas Into <strong>Real Business.</strong>
+      </h1>
 
-        <div class="hero-content">
+      <p id="heroDescription">
+        Building reliable products, professional services and long-term business partnerships through quality, innovation and commitment.
+      </p>
 
-            <div class="hero-label">
-
-                <span></span>
-
-                <span id="heroLabelText">
-                    CORPORATE EXCELLENCE
-                </span>
-
-            </div>
-
-
-            <h1>
-
-                <span id="heroTitleLine">
-                    Growing Ideas Into
-                </span>
-
-                <br>
-
-                <strong id="heroTitleStrong">
-                    Real Business.
-                </strong>
-
-            </h1>
-
-
-            <p id="heroDescription">
-
-                We build sustainable businesses through strategic thinking,
-                innovation, technology and a strong commitment to our customers
-                and partners.
-
-            </p>
-
-
-            <div class="hero-buttons">
-
-                <a href="#about"
-                   class="btn btn-primary">
-                    Discover Our Company →
-                </a>
-
-                <a href="#contact"
-                   class="btn btn-outline">
-                    Talk To Us
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <div class="hero-card">
-
-            <div class="hero-card-label">
-                Our Performance
-            </div>
-
-            <h3 id="heroPerformanceText">
-                Experience that creates
-                measurable business value.
-            </h3>
-
-
-            <div class="hero-card-row">
-
-                <div class="hero-mini">
-
-                    <strong id="heroStat1">
-                        20+
-                    </strong>
-
-                    <span id="heroStatLabel1">
-                        Years Experience
-                    </span>
-
-                </div>
-
-
-                <div class="hero-mini">
-
-                    <strong id="heroStat2">
-                        25+
-                    </strong>
-
-                    <span id="heroStatLabel2">
-                        Markets Served
-                    </span>
-
-                </div>
-
-
-                <div class="hero-mini">
-
-                    <strong id="heroStat3">
-                        500+
-                    </strong>
-
-                    <span id="heroStatLabel3">
-                        Projects Delivered
-                    </span>
-
-                </div>
-
-
-                <div class="hero-mini">
-
-                    <strong id="heroStat4">
-                        98%
-                    </strong>
-
-                    <span id="heroStatLabel4">
-                        Client Retention
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
+      <div class="hero-buttons">
+        <a href="#products" class="btn btn-primary">Explore Products</a>
+        <a href="#contact" class="btn btn-outline">Talk To Us</a>
+      </div>
     </div>
 
-</section>
+    <div class="hero-card">
+      <div class="hero-card-item">
+        <strong id="heroStat1">0+</strong>
+        <span>Products & Solutions</span>
+      </div>
 
+      <div class="hero-card-item">
+        <strong id="heroStat2">0+</strong>
+        <span>Business Categories</span>
+      </div>
+
+      <div class="hero-card-item">
+        <strong id="heroStat3">0+</strong>
+        <span>Projects & Gallery</span>
+      </div>
+
+      <div class="hero-card-item">
+        <strong id="heroStat4">100%</strong>
+        <span>Customer Focus</span>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- STATS -->
-
 <section class="stats">
+  <div class="container stats-grid">
 
-    <div class="container stats-grid">
-
-        <div class="stat">
-            <strong id="stat1Value">20+</strong>
-            <span id="stat1Label">Years of Excellence</span>
-        </div>
-
-        <div class="stat">
-            <strong id="stat2Value">500+</strong>
-            <span id="stat2Label">Projects Delivered</span>
-        </div>
-
-        <div class="stat">
-            <strong id="stat3Value">25+</strong>
-            <span id="stat3Label">Markets & Locations</span>
-        </div>
-
-        <div class="stat">
-            <strong id="stat4Value">98%</strong>
-            <span id="stat4Label">Client Satisfaction</span>
-        </div>
-
+    <div class="stat">
+      <strong id="statProducts">0</strong>
+      <span>Products</span>
     </div>
 
-</section>
+    <div class="stat">
+      <strong id="statCategories">0</strong>
+      <span>Categories</span>
+    </div>
 
+    <div class="stat">
+      <strong id="statGallery">0</strong>
+      <span>Projects</span>
+    </div>
+
+    <div class="stat">
+      <strong id="statTestimonials">0</strong>
+      <span>Client Reviews</span>
+    </div>
+
+  </div>
+</section>
 
 <!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container about-grid">
 
-<section class="section"
-         id="about">
-
-    <div class="container about-grid">
-
-        <div class="about-visual">
-
-            <div class="about-main-image"
-                 id="aboutImage">
-            </div>
-
-
-            <div class="about-badge">
-
-                <strong id="aboutYears">
-                    20+
-                </strong>
-
-                <span id="aboutBadgeText">
-                    Years of trust, innovation and business growth.
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="about-content">
-
-            <div class="section-tag">
-                ABOUT OUR COMPANY
-            </div>
-
-
-            <h2 class="section-title"
-                id="aboutTitle">
-
-                A company built around
-                trust, people and progress.
-
-            </h2>
-
-
-            <p id="aboutText">
-
-                We are a diversified organization focused on creating
-                meaningful value for customers, employees, partners and
-                communities.
-
-            </p>
-
-
-            <p id="aboutText2">
-
-                Our approach combines strategic thinking, operational
-                excellence and continuous innovation to help businesses
-                perform better in a rapidly changing world.
-
-            </p>
-
-
-            <ul class="about-list">
-
-                <li>
-                    <span class="check">✓</span>
-                    Customer-first business approach
-                </li>
-
-                <li>
-                    <span class="check">✓</span>
-                    Transparent and responsible operations
-                </li>
-
-                <li>
-                    <span class="check">✓</span>
-                    Long-term partnerships and relationships
-                </li>
-
-                <li>
-                    <span class="check">✓</span>
-                    Continuous improvement and innovation
-                </li>
-
-            </ul>
-
-
-            <a href="#business"
-               class="btn btn-dark">
-                Explore Our Business →
-            </a>
-
-        </div>
-
+    <div class="about-main-image" id="aboutImage">
+      <div class="about-badge">
+        <strong>01</strong>
+        <span>Professional Excellence</span>
+      </div>
     </div>
 
-</section>
+    <div class="about-content">
+      <span>ABOUT US</span>
 
+      <h2 id="aboutTitle">Built For Growth. Designed For Excellence.</h2>
+
+      <p id="aboutText">
+        We combine professional expertise, quality products and customer-focused service to create sustainable business value.
+      </p>
+
+      <div class="about-points">
+        <div class="about-point">
+          <b>✓</b>
+          <span>Quality-focused products and services</span>
+        </div>
+
+        <div class="about-point">
+          <b>✓</b>
+          <span>Professional technical support</span>
+        </div>
+
+        <div class="about-point">
+          <b>✓</b>
+          <span>Long-term customer relationships</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- BUSINESS -->
+<section id="business">
+  <div class="container">
 
-<section class="section verticals"
-         id="business">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                OUR BUSINESS
-            </div>
-
-            <h2 class="section-title">
-                Diverse capabilities.
-                One strong vision.
-            </h2>
-
-            <p class="section-description">
-                Our business verticals are designed to serve different
-                industries while maintaining the same standards of quality,
-                reliability and professionalism.
-            </p>
-
-        </div>
-
-
-        <div class="vertical-grid">
-
-            <article class="vertical-card">
-                <div class="icon">◈</div>
-                <h3>Technology</h3>
-                <p>
-                    Digital solutions, technology services and modern
-                    platforms designed for business growth.
-                </p>
-            </article>
-
-
-            <article class="vertical-card">
-                <div class="icon">◆</div>
-                <h3>Consulting</h3>
-                <p>
-                    Strategic advisory and business consulting focused on
-                    measurable outcomes.
-                </p>
-            </article>
-
-
-            <article class="vertical-card">
-                <div class="icon">▣</div>
-                <h3>Trading & Distribution</h3>
-                <p>
-                    Reliable sourcing, distribution and supply solutions
-                    connecting businesses with markets.
-                </p>
-            </article>
-
-
-            <article class="vertical-card">
-                <div class="icon">⌂</div>
-                <h3>Infrastructure</h3>
-                <p>
-                    End-to-end infrastructure solutions for commercial and
-                    enterprise requirements.
-                </p>
-            </article>
-
-
-            <article class="vertical-card">
-                <div class="icon">◎</div>
-                <h3>Professional Services</h3>
-                <p>
-                    Specialized services helping organizations improve
-                    operations and customer experience.
-                </p>
-            </article>
-
-
-            <article class="vertical-card">
-                <div class="icon">↗</div>
-                <h3>New Ventures</h3>
-                <p>
-                    Exploring emerging opportunities, new markets and
-                    innovative business models.
-                </p>
-            </article>
-
-        </div>
-
+    <div class="section-head">
+      <span>BUSINESS VERTICALS</span>
+      <h2>Multiple Capabilities. One Reliable Partner.</h2>
+      <p>Flexible business capabilities designed to support modern organizations.</p>
     </div>
 
-</section>
+    <div class="card-grid vertical-grid">
 
+      <div class="vertical-card">
+        <div class="icon">⚙</div>
+        <h3>Manufacturing</h3>
+        <p>Professional manufacturing capabilities focused on quality, efficiency and consistency.</p>
+      </div>
+
+      <div class="vertical-card">
+        <div class="icon">▣</div>
+        <h3>Engineering</h3>
+        <p>Engineering solutions built around practical requirements and dependable performance.</p>
+      </div>
+
+      <div class="vertical-card">
+        <div class="icon">◈</div>
+        <h3>Technology</h3>
+        <p>Technology-driven solutions helping businesses improve operations and productivity.</p>
+      </div>
+
+      <div class="vertical-card">
+        <div class="icon">◆</div>
+        <h3>Trading</h3>
+        <p>Reliable sourcing and supply capabilities for professional business requirements.</p>
+      </div>
+
+      <div class="vertical-card">
+        <div class="icon">◎</div>
+        <h3>Consulting</h3>
+        <p>Business guidance and technical support tailored to individual requirements.</p>
+      </div>
+
+      <div class="vertical-card">
+        <div class="icon">↗</div>
+        <h3>Projects</h3>
+        <p>End-to-end project support focused on delivery, quality and customer satisfaction.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- SERVICES -->
+<section id="services">
+  <div class="container">
 
-<section class="section"
-         id="services">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                WHAT WE DO
-            </div>
-
-            <h2 class="section-title">
-                Capabilities that move
-                businesses forward.
-            </h2>
-
-            <p class="section-description">
-                From strategy to execution, we bring people, technology and
-                processes together to solve complex business challenges.
-            </p>
-
-        </div>
-
-
-        <div class="service-grid">
-
-            <article class="service-card">
-
-                <div class="service-number">
-                    01 / STRATEGY
-                </div>
-
-                <h3>Business Strategy</h3>
-
-                <p>
-                    Define clear goals, identify opportunities and build
-                    practical strategies for sustainable growth.
-                </p>
-
-                <a href="#contact">
-                    Learn More →
-                </a>
-
-            </article>
-
-
-            <article class="service-card">
-
-                <div class="service-number">
-                    02 / DIGITAL
-                </div>
-
-                <h3>Digital Transformation</h3>
-
-                <p>
-                    Modernize business operations using technology,
-                    automation and data-driven decision making.
-                </p>
-
-                <a href="#contact">
-                    Learn More →
-                </a>
-
-            </article>
-
-
-            <article class="service-card">
-
-                <div class="service-number">
-                    03 / OPERATIONS
-                </div>
-
-                <h3>Operational Excellence</h3>
-
-                <p>
-                    Improve processes, efficiency and performance through
-                    structured operational systems.
-                </p>
-
-                <a href="#contact">
-                    Learn More →
-                </a>
-
-            </article>
-
-
-            <article class="service-card">
-
-                <div class="service-number">
-                    04 / MARKETS
-                </div>
-
-                <h3>Market Expansion</h3>
-
-                <p>
-                    Identify new opportunities and create strategies for
-                    entering and growing in new markets.
-                </p>
-
-                <a href="#contact">
-                    Learn More →
-                </a>
-
-            </article>
-
-
-            <article class="service-card">
-
-                <div class="service-number">
-                    05 / ADVISORY
-                </div>
-
-                <h3>Business Advisory</h3>
-
-                <p>
-                    Practical advisory support for leadership, growth,
-                    transformation and organizational development.
-                </p>
-
-                <a href="#contact">
-                    Learn More →
-                </a>
-
-            </article>
-
-
-            <article class="service-card">
-
-                <div class="service-number">
-                    06 / PARTNERSHIPS
-                </div>
-
-                <h3>Strategic Partnerships</h3>
-
-                <p>
-                    Build strong partnerships that unlock new capabilities,
-                    customers and business opportunities.
-                </p>
-
-                <a href="#contact">
-                    Learn More →
-                </a>
-
-            </article>
-
-        </div>
-
+    <div class="section-head">
+      <span>OUR SERVICES</span>
+      <h2>Professional Support From Idea To Execution.</h2>
+      <p>Services designed to make business operations simpler and more effective.</p>
     </div>
 
-</section>
+    <div class="card-grid service-grid">
 
+      <div class="service-card">
+        <div class="icon">01</div>
+        <h3>Product Development</h3>
+        <p>Development support focused on practical requirements, quality and performance.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon">02</div>
+        <h3>Technical Support</h3>
+        <p>Responsive technical assistance for products, projects and business operations.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon">03</div>
+        <h3>Project Management</h3>
+        <p>Structured execution and coordination for successful project delivery.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon">04</div>
+        <h3>Supply Solutions</h3>
+        <p>Dependable sourcing, procurement and supply support for business requirements.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon">05</div>
+        <h3>Quality Assurance</h3>
+        <p>Quality-focused processes designed to maintain consistency and customer confidence.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="icon">06</div>
+        <h3>Business Consulting</h3>
+        <p>Practical advice helping organizations identify opportunities and improve results.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="container">
 
-<section class="section products"
-         id="products">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                OUR PRODUCTS
-            </div>
-
-            <h2 class="section-title">
-                Solutions designed
-                for real-world needs.
-            </h2>
-
-            <p class="section-description">
-                A flexible product showcase area connected with the platform's
-                product management system.
-            </p>
-
-        </div>
-
-
-        <div class="product-grid"
-             id="productGrid"
-             data-products>
-
-            <div class="product-empty">
-                Loading products...
-            </div>
-
-        </div>
-
+    <div class="section-head">
+      <span>OUR PRODUCTS</span>
+      <h2>Solutions Built Around Your Requirements.</h2>
+      <p>Explore our products and connect with our team for detailed information.</p>
     </div>
 
-</section>
+    <div class="product-grid" id="productGrid" data-products>
+      <div class="empty-state">Loading products...</div>
+    </div>
 
+  </div>
+</section>
 
 <!-- WHY -->
+<section class="why">
+  <div class="container why-grid">
 
-<section class="section why">
+    <div>
+      <span style="color:#5eead4;font-size:13px;font-weight:800;letter-spacing:2px">
+        WHY CHOOSE US
+      </span>
 
-    <div class="container why-grid">
+      <h2>Built On Trust. Driven By Results.</h2>
 
-        <div>
+      <p>
+        We believe successful business relationships are built through quality,
+        transparency, technical expertise and consistent support.
+      </p>
 
-            <div class="section-tag">
-                WHY CHOOSE US
-            </div>
+      <div class="why-list">
 
-            <h2 class="section-title">
-                Built for performance.
-                Driven by responsibility.
-            </h2>
-
-            <p class="why-description">
-                We believe strong businesses are built through consistent
-                execution, transparent communication and long-term thinking.
-            </p>
-
-
-            <div class="why-list">
-
-                <div class="why-item">
-
-                    <div class="why-item-icon">✓</div>
-
-                    <div>
-                        <h4>Customer Focus</h4>
-                        <p>
-                            Every decision starts with understanding customer
-                            requirements.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="why-item">
-
-                    <div class="why-item-icon">◆</div>
-
-                    <div>
-                        <h4>Innovation</h4>
-                        <p>
-                            We continuously explore better ideas,
-                            technologies and processes.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="why-item">
-
-                    <div class="why-item-icon">◈</div>
-
-                    <div>
-                        <h4>Professional Excellence</h4>
-                        <p>
-                            Strong systems and disciplined execution create
-                            reliable outcomes.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="why-item">
-
-                    <div class="why-item-icon">∞</div>
-
-                    <div>
-                        <h4>Long-Term Vision</h4>
-                        <p>
-                            We focus on relationships and sustainable growth,
-                            not short-term results.
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-
+        <div class="why-item">
+          <div class="why-item-icon">✓</div>
+          <div>
+            <h4>Consistent Quality</h4>
+            <p>Focused processes and attention to detail at every stage.</p>
+          </div>
         </div>
 
+        <div class="why-item">
+          <div class="why-item-icon">✓</div>
+          <div>
+            <h4>Technical Expertise</h4>
+            <p>Professional knowledge supporting real-world business requirements.</p>
+          </div>
+        </div>
 
-        <div class="why-visual"></div>
+        <div class="why-item">
+          <div class="why-item-icon">✓</div>
+          <div>
+            <h4>Customer First</h4>
+            <p>Long-term relationships matter more than one-time transactions.</p>
+          </div>
+        </div>
 
+        <div class="why-item">
+          <div class="why-item-icon">✓</div>
+          <div>
+            <h4>Reliable Delivery</h4>
+            <p>Commitment to timelines, communication and dependable execution.</p>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-</section>
+    <div class="why-visual"></div>
 
+  </div>
+</section>
 
 <!-- LEADERSHIP -->
+<section id="leadership">
+  <div class="container">
 
-<section class="section"
-         id="leadership">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                LEADERSHIP
-            </div>
-
-            <h2 class="section-title">
-                Experienced people.
-                Clear leadership.
-            </h2>
-
-            <p class="section-description">
-                Our leadership team brings together experience, expertise and
-                a shared commitment to building a better organization.
-            </p>
-
-        </div>
-
-
-        <div class="leader-grid">
-
-            <article class="leader-card">
-
-                <div class="leader-photo"></div>
-
-                <div class="leader-info">
-
-                    <h3>Alex Morgan</h3>
-
-                    <span>FOUNDER & CEO</span>
-
-                </div>
-
-            </article>
-
-
-            <article class="leader-card">
-
-                <div class="leader-photo"></div>
-
-                <div class="leader-info">
-
-                    <h3>Sarah Williams</h3>
-
-                    <span>DIRECTOR — OPERATIONS</span>
-
-                </div>
-
-            </article>
-
-
-            <article class="leader-card">
-
-                <div class="leader-photo"></div>
-
-                <div class="leader-info">
-
-                    <h3>Daniel Carter</h3>
-
-                    <span>CHIEF BUSINESS OFFICER</span>
-
-                </div>
-
-            </article>
-
-        </div>
-
+    <div class="section-head">
+      <span>LEADERSHIP</span>
+      <h2>People Behind The Vision.</h2>
+      <p>Experienced professionals working together toward sustainable growth.</p>
     </div>
 
-</section>
+    <div class="leader-grid">
 
+      <div class="leader-card">
+        <div class="leader-photo">MD</div>
+        <h3>Managing Director</h3>
+        <p>Leadership & Strategy</p>
+      </div>
+
+      <div class="leader-card">
+        <div class="leader-photo">OP</div>
+        <h3>Operations Head</h3>
+        <p>Operations & Delivery</p>
+      </div>
+
+      <div class="leader-card">
+        <div class="leader-photo">TD</div>
+        <h3>Technical Director</h3>
+        <p>Technology & Quality</p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="container">
 
-<section class="section projects"
-         id="projects">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                OUR WORK
-            </div>
-
-            <h2 class="section-title">
-                Selected projects
-                and achievements.
-            </h2>
-
-            <p class="section-description">
-                Showcase important projects, company initiatives and major
-                business achievements.
-            </p>
-
-        </div>
-
-
-        <div class="project-grid">
-
-            <div class="project">
-
-                <div class="project-overlay">
-
-                    <div>
-                        <h3>Corporate Headquarters</h3>
-                        <span>Infrastructure & Development</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="project">
-
-                <div class="project-overlay">
-
-                    <div>
-                        <h3>Digital Transformation</h3>
-                        <span>Technology</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="project">
-
-                <div class="project-overlay">
-
-                    <div>
-                        <h3>Market Expansion</h3>
-                        <span>Business Growth</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="project">
-
-                <div class="project-overlay">
-
-                    <div>
-                        <h3>Enterprise Operations</h3>
-                        <span>Consulting</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="project">
-
-                <div class="project-overlay">
-
-                    <div>
-                        <h3>Strategic Partnership</h3>
-                        <span>Corporate Development</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="section-head">
+      <span>PROJECTS</span>
+      <h2>Experience That Creates Confidence.</h2>
+      <p>A snapshot of professional project environments and capabilities.</p>
     </div>
 
-</section>
+    <div class="project-grid">
 
+      <div class="project">
+        <div class="project-content">
+          <h3>Corporate Facility</h3>
+          <p>Professional infrastructure</p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-content">
+          <h3>Business Operations</h3>
+          <p>Modern working environment</p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-content">
+          <h3>Technology Project</h3>
+          <p>Technology-driven execution</p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-content">
+          <h3>Industrial Solution</h3>
+          <p>Professional implementation</p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-content">
+          <h3>Client Project</h3>
+          <p>Quality-focused delivery</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- ACHIEVEMENTS -->
+<section>
+  <div class="container">
 
-<section class="section">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                OUR IMPACT
-            </div>
-
-            <h2 class="section-title">
-                Numbers that tell
-                our story.
-            </h2>
-
-        </div>
-
-
-        <div class="achievement-grid">
-
-            <div class="achievement">
-                <strong id="achievement1Value">20+</strong>
-                <span id="achievement1Label">
-                    Years Experience
-                </span>
-            </div>
-
-            <div class="achievement">
-                <strong id="achievement2Value">500+</strong>
-                <span id="achievement2Label">
-                    Projects Completed
-                </span>
-            </div>
-
-            <div class="achievement">
-                <strong id="achievement3Value">25+</strong>
-                <span id="achievement3Label">
-                    Markets Served
-                </span>
-            </div>
-
-            <div class="achievement">
-                <strong id="achievement4Value">98%</strong>
-                <span id="achievement4Label">
-                    Client Satisfaction
-                </span>
-            </div>
-
-        </div>
-
+    <div class="section-head">
+      <span>ACHIEVEMENTS</span>
+      <h2>Progress Measured Through Results.</h2>
     </div>
 
-</section>
+    <div class="achievement-grid">
 
+      <div class="achievement">
+        <strong id="achievementProducts">0+</strong>
+        <span>Products</span>
+      </div>
+
+      <div class="achievement">
+        <strong id="achievementCategories">0+</strong>
+        <span>Categories</span>
+      </div>
+
+      <div class="achievement">
+        <strong id="achievementProjects">0+</strong>
+        <span>Projects</span>
+      </div>
+
+      <div class="achievement">
+        <strong>100%</strong>
+        <span>Commitment</span>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- CLIENTS -->
+<section class="clients">
+  <div class="container">
 
-<section class="section-sm clients">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                OUR CLIENTS
-            </div>
-
-            <h2 class="section-title">
-                Trusted by businesses.
-            </h2>
-
-        </div>
-
-
-        <div class="client-strip">
-
-            <div class="client-logo">NOVA</div>
-            <div class="client-logo">AXION</div>
-            <div class="client-logo">ORBIT</div>
-            <div class="client-logo">PRIME</div>
-            <div class="client-logo">ZENITH</div>
-
-        </div>
-
+    <div class="section-head">
+      <span>OUR CLIENTS</span>
+      <h2>Trusted Business Relationships.</h2>
+      <p>Building long-term partnerships through dependable products and service.</p>
     </div>
 
-</section>
+    <div class="client-strip">
+      <div class="client-logo">CLIENT 01</div>
+      <div class="client-logo">CLIENT 02</div>
+      <div class="client-logo">CLIENT 03</div>
+      <div class="client-logo">CLIENT 04</div>
+      <div class="client-logo">CLIENT 05</div>
+    </div>
 
+  </div>
+</section>
 
 <!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
 
-<section class="section"
-         id="gallery">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                COMPANY GALLERY
-            </div>
-
-            <h2 class="section-title">
-                Inside our world.
-            </h2>
-
-            <p class="section-description">
-                Company events, offices, projects, team moments and business
-                activities.
-            </p>
-
-        </div>
-
-
-        <div class="gallery-grid"
-             id="galleryGrid"
-             data-gallery>
-
-            <div class="gallery-empty">
-                Loading gallery...
-            </div>
-
-        </div>
-
+    <div class="section-head">
+      <span>GALLERY</span>
+      <h2>Inside Our Work.</h2>
+      <p>Explore our latest projects, products and business activities.</p>
     </div>
 
-</section>
+    <div class="gallery-grid" id="galleryGrid" data-gallery>
+      <div class="empty-state">Loading gallery...</div>
+    </div>
 
+  </div>
+</section>
 
 <!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
 
-<section class="section"
-         id="testimonials">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                CLIENT STORIES
-            </div>
-
-            <h2 class="section-title">
-                What our partners say.
-            </h2>
-
-        </div>
-
-
-        <div class="testimonial-grid"
-             id="testimonialGrid"
-             data-testimonials>
-
-            <div class="testimonial-empty">
-                Loading testimonials...
-            </div>
-
-        </div>
-
+    <div class="section-head">
+      <span>TESTIMONIALS</span>
+      <h2>What Our Clients Say.</h2>
+      <p>Real relationships create lasting business value.</p>
     </div>
 
-</section>
+    <div class="testimonial-grid" id="testimonialGrid" data-testimonials>
+      <div class="empty-state">Loading testimonials...</div>
+    </div>
 
+  </div>
+</section>
 
 <!-- FAQ -->
+<section id="faq">
+  <div class="container">
 
-<section class="section faq"
-         id="faq">
-
-    <div class="container">
-
-        <div class="section-head">
-
-            <div class="section-tag">
-                FAQ
-            </div>
-
-            <h2 class="section-title">
-                Frequently asked questions.
-            </h2>
-
-        </div>
-
-
-        <div class="faq-wrap"
-             id="faqList"
-             data-faq>
-
-            <div class="faq-empty">
-                Loading FAQs...
-            </div>
-
-        </div>
-
+    <div class="section-head">
+      <span>FAQ</span>
+      <h2>Frequently Asked Questions.</h2>
+      <p>Quick answers to common customer questions.</p>
     </div>
 
-</section>
+    <div class="faq-wrap" id="faqList" data-faq>
+      <div class="empty-state">Loading FAQs...</div>
+    </div>
 
+  </div>
+</section>
 
 <!-- CTA -->
-
 <section class="cta">
+  <div class="container">
 
-    <div class="container">
+    <div class="cta-box">
+      <div>
+        <h2>Let's Build Something Valuable.</h2>
+        <p>Tell us what you need and our team will get back to you.</p>
+      </div>
 
-        <div class="cta-box">
-
-            <div class="cta-content">
-
-                <h2 id="ctaTitle">
-                    Let's build something
-                    valuable together.
-                </h2>
-
-                <p id="ctaText">
-                    Tell us about your business requirement, project or
-                    opportunity and our team will get back to you.
-                </p>
-
-                <a href="#contact"
-                   class="btn btn-primary">
-                    Start a Conversation →
-                </a>
-
-            </div>
-
-        </div>
-
+      <a href="#contact" class="btn btn-primary">Start A Conversation</a>
     </div>
 
+  </div>
 </section>
-
 
 <!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container contact-grid">
 
-<section class="section contact"
-         id="contact">
+    <div class="contact-info">
 
-    <div class="container contact-grid">
+      <h2>Let's Talk Business.</h2>
 
+      <p>
+        Have a requirement, product enquiry or project discussion?
+        Send us your details.
+      </p>
 
-        <div class="contact-info">
+      <div class="contact-list">
 
-            <div class="section-tag">
-                CONTACT US
-            </div>
-
-            <h3>
-                Let's discuss your
-                next opportunity.
-            </h3>
-
-            <p id="contactDescription">
-                Whether you are looking for a business partner, service
-                provider, product or strategic solution, we would be happy
-                to hear from you.
-            </p>
-
-
-            <div class="contact-list">
-
-                <div class="contact-item">
-
-                    <div class="contact-icon">⌂</div>
-
-                    <div>
-                        <strong>Corporate Office</strong>
-
-                        <span id="contactAddress">
-                            123 Business Avenue, New Delhi, India
-                        </span>
-                    </div>
-
-                </div>
-
-
-                <div class="contact-item">
-
-                    <div class="contact-icon">☎</div>
-
-                    <div>
-                        <strong>Phone</strong>
-
-                        <span id="contactPhone">
-                            +91 12345 67890
-                        </span>
-                    </div>
-
-                </div>
-
-
-                <div class="contact-item">
-
-                    <div class="contact-icon">@</div>
-
-                    <div>
-                        <strong>Email</strong>
-
-                        <span id="contactEmail">
-                            info@company.com
-                        </span>
-                    </div>
-
-                </div>
-
-
-                <div class="contact-item">
-
-                    <div class="contact-icon">◷</div>
-
-                    <div>
-                        <strong>Business Hours</strong>
-
-                        <span id="contactHours">
-                            Monday - Saturday, 9:00 AM - 6:00 PM
-                        </span>
-                    </div>
-
-                </div>
-
-            </div>
-
+        <div class="contact-row">
+          <div class="contact-icon">☎</div>
+          <div>
+            <small>Phone</small>
+            <strong id="contactPhone">+91 XXXXX XXXXX</strong>
+          </div>
         </div>
 
-
-        <div class="form-card">
-
-            <h3>
-                Send an Enquiry
-            </h3>
-
-            <p>
-                Fill in your details and our team will contact you.
-            </p>
-
-
-            <form id="enquiryForm">
-
-                <div class="form-grid">
-
-                    <div class="field">
-
-                        <label>
-                            Full Name *
-                        </label>
-
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Your name"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            Company Name
-                        </label>
-
-                        <input
-                            type="text"
-                            name="company"
-                            placeholder="Company name"
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            Email *
-                        </label>
-
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="you@example.com"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            Phone *
-                        </label>
-
-                        <input
-                            type="tel"
-                            name="phone"
-                            placeholder="+91"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="field full">
-
-                        <label>
-                            Requirement
-                        </label>
-
-                        <select name="requirement">
-
-                            <option value="">
-                                Select requirement
-                            </option>
-
-                            <option value="Business Enquiry">
-                                Business Enquiry
-                            </option>
-
-                            <option value="Product Enquiry">
-                                Product Enquiry
-                            </option>
-
-                            <option value="Service Enquiry">
-                                Service Enquiry
-                            </option>
-
-                            <option value="Partnership">
-                                Partnership
-                            </option>
-
-                            <option value="Other">
-                                Other
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="field full">
-
-                        <label>
-                            Message *
-                        </label>
-
-                        <textarea
-                            name="message"
-                            placeholder="Tell us about your requirement..."
-                            required
-                        ></textarea>
-
-                    </div>
-
-
-                    <div class="field full">
-
-                        <button
-                            type="submit"
-                            class="btn btn-dark submit-btn"
-                            id="submitEnquiryBtn">
-                            Submit Enquiry →
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </form>
-
+        <div class="contact-row">
+          <div class="contact-icon">@</div>
+          <div>
+            <small>Email</small>
+            <strong id="contactEmail">info@example.com</strong>
+          </div>
         </div>
+
+        <div class="contact-row">
+          <div class="contact-icon">⌂</div>
+          <div>
+            <small>Address</small>
+            <strong id="contactAddress">Corporate Office</strong>
+          </div>
+        </div>
+
+      </div>
 
     </div>
 
+    <div class="form-card">
+
+      <h3>Send An Enquiry</h3>
+
+      <form id="enquiryForm">
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>Your Name *</label>
+            <input type="text" id="name" required>
+          </div>
+
+          <div class="field">
+            <label>Company</label>
+            <input type="text" id="company">
+          </div>
+
+          <div class="field">
+            <label>Email *</label>
+            <input type="email" id="email" required>
+          </div>
+
+          <div class="field">
+            <label>Phone *</label>
+            <input type="tel" id="phone" required>
+          </div>
+
+          <div class="field full">
+            <label>Requirement</label>
+            <input type="text" id="requirement">
+          </div>
+
+          <div class="field full">
+            <label>Message</label>
+            <textarea id="message"></textarea>
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          Send Enquiry
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
 </section>
 
-
 <!-- FOOTER -->
-
 <footer class="footer">
 
-    <div class="container">
+  <div class="container footer-grid">
 
-        <div class="footer-grid">
-
-
-            <div class="footer-brand">
-
-                <a href="#home"
-                   class="logo">
-
-                    <div class="logo-mark">
-
-                        <span id="footerLogoLetter">
-                            V
-                        </span>
-
-                        <img id="footerCompanyLogo"
-                             src=""
-                             alt="Company Logo"
-                             style="display:none;">
-
-                    </div>
-
-                    <div>
-
-                        <span id="footerCompanyName">
-                            VERTEX
-                        </span>
-
-                        <small>
-                            GROUP
-                        </small>
-
-                    </div>
-
-                </a>
-
-
-                <p id="footerAbout">
-                    Building businesses through innovation, trust,
-                    professional excellence and long-term partnerships.
-                </p>
-
-            </div>
-
-
-            <div>
-
-                <h4>
-                    Company
-                </h4>
-
-                <div class="footer-links">
-
-                    <a href="#about">
-                        About Us
-                    </a>
-
-                    <a href="#business">
-                        Our Business
-                    </a>
-
-                    <a href="#leadership">
-                        Leadership
-                    </a>
-
-                    <a href="#projects">
-                        Projects
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <div>
-
-                <h4>
-                    Solutions
-                </h4>
-
-                <div class="footer-links">
-
-                    <a href="#services">
-                        Services
-                    </a>
-
-                    <a href="#products">
-                        Products
-                    </a>
-
-                    <a href="#gallery">
-                        Gallery
-                    </a>
-
-                    <a href="#faq">
-                        FAQ
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <div>
-
-                <h4>
-                    Contact
-                </h4>
-
-                <div class="footer-links">
-
-                    <a id="footerPhoneLink"
-                       href="tel:+911234567890">
-                        +91 12345 67890
-                    </a>
-
-                    <a id="footerEmailLink"
-                       href="mailto:info@company.com">
-                        info@company.com
-                    </a>
-
-                    <a href="#contact">
-                        Send Enquiry
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="footer-bottom">
-
-            <span>
-
-                ©
-                <span id="year"></span>
-
-                <span id="copyrightName">
-                    VERTEX GROUP
-                </span>.
-
-                All Rights Reserved.
-
-            </span>
-
-
-            <span>
-                Designed by
-                <a href="#">
-                    MD Kaif Web Platform
-                </a>
-            </span>
-
-        </div>
-
+    <div class="footer-brand">
+      <h3 id="footerCompany">VERTEX GROUP</h3>
+      <p id="footerTagline">
+        Professional business solutions built around quality, reliability and long-term partnerships.
+      </p>
     </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#products">Products</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div>
+      <h4>Contact</h4>
+      <a id="footerPhone" href="#">Phone</a>
+      <a id="footerEmail" href="#">Email</a>
+      <span id="footerAddress">Address</span>
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+    <span>
+      © <span id="year"></span> <span id="footerCompanyBottom">VERTEX GROUP</span>. All rights reserved.
+    </span>
+
+    <span>This website is powered by MD Kaif Web Platform</span>
+  </div>
 
 </footer>
 
+<div id="toast"></div>
 
-<!-- TOAST -->
-
-<div class="toast"
-     id="toast">
-    Thank you! Your enquiry has been received.
-</div>
-
-
-<!-- SUPABASE -->
-
+<!-- COMMON PLATFORM FILES -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- PLATFORM CONTEXT -->
-
 <script src="../client-context.js"></script>
-
 <script src="../client-runtime.js"></script>
 
-
-<!-- V2 ADAPTER -->
-
 <script>
-
-(function(){
-
-"use strict";
-
-
 /* =========================================================
-   SUPABASE
+   V2 DYNAMIC WEBSITE ENGINE
+   Uses the SAME CLIENT_ID and Supabase architecture
    ========================================================= */
 
-const SUPABASE_URL =
-    "https://ywvdozdoanmcxscfofcf.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+let companyData = {};
+let productsData = [];
+let categoriesData = [];
+let galleryData = [];
+let testimonialsData = [];
+let faqsData = [];
 
 
-/* =========================================================
-   DATA
-   ========================================================= */
-
-let CLIENT_ID = null;
-
-let companySettings = {};
-
-let products = [];
-
-let gallery = [];
-
-let testimonials = [];
-
-let faqs = [];
-
-
-/* =========================================================
+/* -------------------------
    HELPERS
-   ========================================================= */
+------------------------- */
 
-function setText(id,value){
-
-    const element =
-        document.getElementById(id);
-
-    if(element){
-
-        element.textContent =
-            value !== null &&
-            value !== undefined &&
-            String(value).trim() !== ""
-                ? value
-                : "";
-
-    }
-
+function esc(value){
+  if(value === null || value === undefined) return "";
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
-
-function value(value,fallback=""){
-
+function firstValue(obj, keys, fallback=""){
+  for(const key of keys){
     if(
-        value === null ||
-        value === undefined ||
-        String(value).trim() === ""
+      obj &&
+      obj[key] !== null &&
+      obj[key] !== undefined &&
+      String(obj[key]).trim() !== ""
     ){
-
-        return fallback;
-
+      return obj[key];
     }
+  }
+  return fallback;
+}
 
-    return value;
+function imageValue(obj){
+  return firstValue(obj,[
+    "main_image_url",
+    "image_url",
+    "image",
+    "product_image_url",
+    "photo_url",
+    "media_url",
+    "thumbnail_url",
+    "url"
+  ],"");
+}
 
+function showToast(message,type=""){
+  const toast=document.getElementById("toast");
+
+  toast.textContent=message;
+  toast.className="";
+  toast.id="toast";
+
+  if(type) toast.classList.add(type);
+
+  requestAnimationFrame(()=>{
+    toast.classList.add("show");
+  });
+
+  clearTimeout(window.__toastTimer);
+
+  window.__toastTimer=setTimeout(()=>{
+    toast.classList.remove("show");
+  },3500);
 }
 
 
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-function initials(name){
-
-    const words =
-        String(name || "Client")
-        .trim()
-        .split(/\s+/)
-        .filter(Boolean);
-
-    if(!words.length){
-        return "CL";
-    }
-
-    return words
-        .slice(0,2)
-        .map(word => word.charAt(0).toUpperCase())
-        .join("");
-
-}
-
-
-function getImage(row){
-
-    return value(
-        row.main_image_url,
-        value(
-            row.image_url,
-            value(
-                row.photo_url,
-                value(
-                    row.url,
-                    ""
-                )
-            )
-        )
-    );
-
-}
-
-
-function getProductDescription(row){
-
-    return value(
-        row.short_description,
-        value(
-            row.description,
-            value(
-                row.specifications,
-                "Professional solution designed for real-world business requirements."
-            )
-        )
-    );
-
-}
-
-
-/* =========================================================
-   CLIENT CONTEXT
-   ========================================================= */
-
-function getClientId(){
-
-    try{
-
-        if(
-            typeof MDKClientContext !== "undefined" &&
-            MDKClientContext.get
-        ){
-
-            const client =
-                MDKClientContext.get();
-
-            if(client){
-
-                return client.id ||
-                       client.client_id ||
-                       null;
-
-            }
-
-        }
-
-    }catch(error){
-
-        console.warn(
-            "MDKClientContext error:",
-            error
-        );
-
-    }
-
-
-    /*
-       Fallback only for direct testing.
-       Replace with a real client UUID if required.
-    */
-
-    return null;
-
-}
-
-
-/* =========================================================
+/* -------------------------
    COMPANY SETTINGS
-   ========================================================= */
+------------------------- */
 
-async function loadCompanySettings(){
+async function loadCompany(){
 
-    if(!CLIENT_ID){
-        return;
-    }
+  const {data,error}=await supabaseClient
+    .from("company_settings")
+    .select("*")
+    .eq("client_id",CLIENT_ID)
+    .limit(1)
+    .maybeSingle();
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("company_settings")
-            .select("*")
-            .eq("client_id",CLIENT_ID)
-            .limit(1)
-            .maybeSingle();
+  if(error){
+    console.error("Company Settings Error:",error);
+    return;
+  }
 
+  companyData=data || {};
 
-    if(error){
-
-        console.error(
-            "Company Settings:",
-            error
-        );
-
-        return;
-
-    }
-
-
-    companySettings =
-        data || {};
-
+  renderCompany();
 }
-
-
-/* =========================================================
-   PRODUCTS
-   ========================================================= */
-
-async function loadProducts(){
-
-    if(!CLIENT_ID){
-        return;
-    }
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("products")
-            .select("*")
-            .eq("client_id",CLIENT_ID)
-            .order("sort_order",{
-                ascending:true,
-                nullsFirst:false
-            });
-
-
-    if(error){
-
-        console.error(
-            "Products:",
-            error
-        );
-
-        products = [];
-
-        return;
-
-    }
-
-
-    products =
-        data || [];
-
-}
-
-
-/* =========================================================
-   GALLERY
-   ========================================================= */
-
-async function loadGallery(){
-
-    if(!CLIENT_ID){
-        return;
-    }
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("gallery")
-                .select("*")
-                .eq("client_id",CLIENT_ID);
-
-
-        if(error){
-
-            console.warn(
-                "Gallery:",
-                error.message
-            );
-
-            gallery = [];
-
-            return;
-
-        }
-
-
-        gallery =
-            data || [];
-
-    }catch(error){
-
-        console.warn(
-            "Gallery:",
-            error
-        );
-
-        gallery = [];
-
-    }
-
-}
-
-
-/* =========================================================
-   TESTIMONIALS
-   ========================================================= */
-
-async function loadTestimonials(){
-
-    if(!CLIENT_ID){
-        return;
-    }
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("testimonials")
-                .select("*")
-                .eq("client_id",CLIENT_ID);
-
-
-        if(error){
-
-            console.warn(
-                "Testimonials:",
-                error.message
-            );
-
-            testimonials = [];
-
-            return;
-
-        }
-
-
-        testimonials =
-            data || [];
-
-    }catch(error){
-
-        console.warn(
-            "Testimonials:",
-            error
-        );
-
-        testimonials = [];
-
-    }
-
-}
-
-
-/* =========================================================
-   FAQ
-   ========================================================= */
-
-async function loadFAQs(){
-
-    if(!CLIENT_ID){
-        return;
-    }
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("faqs")
-            .select("*")
-            .eq("client_id",CLIENT_ID)
-            .eq("status","active")
-            .order("sort_order",{
-                ascending:true
-            });
-
-
-    if(error){
-
-        console.error(
-            "FAQs:",
-            error
-        );
-
-        faqs = [];
-
-        return;
-
-    }
-
-
-    faqs =
-        data || [];
-
-}
-
-
-/* =========================================================
-   COMPANY RENDER
-   ========================================================= */
 
 function renderCompany(){
 
-    const c =
-        companySettings || {};
+  const companyName=firstValue(
+    companyData,
+    ["company_name","website_title","site_name"],
+    "VERTEX GROUP"
+  );
+
+  const tagline=firstValue(
+    companyData,
+    ["tagline","website_tagline","short_description"],
+    "Professional business solutions built around quality, reliability and long-term partnerships."
+  );
+
+  const about=firstValue(
+    companyData,
+    ["about","about_us","description"],
+    "We combine professional expertise, quality products and customer-focused service to create sustainable business value."
+  );
+
+  const phone=firstValue(
+    companyData,
+    ["phone","mobile","contact_phone"],
+    "+91 XXXXX XXXXX"
+  );
+
+  const email=firstValue(
+    companyData,
+    ["email","contact_email"],
+    "info@example.com"
+  );
+
+  const addressParts=[
+    companyData.address,
+    companyData.city,
+    companyData.state,
+    companyData.country,
+    companyData.postal_code
+  ].filter(Boolean);
+
+  const address=addressParts.length
+    ? addressParts.join(", ")
+    : "Corporate Office";
+
+  const logo=firstValue(
+    companyData,
+    ["logo_url","logo","company_logo"],
+    ""
+  );
+
+  const favicon=firstValue(
+    companyData,
+    ["favicon_url","favicon"],
+    ""
+  );
+
+  const meta=firstValue(
+    companyData,
+    ["meta_description","description"],
+    tagline
+  );
+
+  document.title=companyName+" | Corporate Excellence";
+
+  const metaTag=document.querySelector('meta[name="description"]');
+  if(metaTag) metaTag.setAttribute("content",meta);
+
+  if(favicon){
+    document.getElementById("favicon").href=favicon;
+  }
+
+  document.getElementById("brandName").textContent=companyName;
+  document.getElementById("footerCompany").textContent=companyName;
+  document.getElementById("footerCompanyBottom").textContent=companyName;
+
+  document.getElementById("footerTagline").textContent=tagline;
+
+  document.getElementById("topPhone").textContent=phone;
+  document.getElementById("topPhone").href="tel:"+phone.replace(/\s/g,"");
+
+  document.getElementById("topEmail").textContent=email;
+  document.getElementById("topEmail").href="mailto:"+email;
+
+  document.getElementById("topAddress").textContent=address;
+
+  document.getElementById("contactPhone").textContent=phone;
+  document.getElementById("contactEmail").textContent=email;
+  document.getElementById("contactAddress").textContent=address;
+
+  document.getElementById("footerPhone").textContent=phone;
+  document.getElementById("footerPhone").href="tel:"+phone.replace(/\s/g,"");
+
+  document.getElementById("footerEmail").textContent=email;
+  document.getElementById("footerEmail").href="mailto:"+email;
+
+  document.getElementById("footerAddress").textContent=address;
+
+  document.getElementById("aboutText").textContent=about;
+
+  /*
+    Keep V2's visual headline style but make company dynamic.
+  */
+  document.getElementById("heroTitle").innerHTML=
+    "Growing <strong>"+esc(companyName)+"</strong><br>With Real Business.";
 
+  document.getElementById("heroDescription").textContent=tagline;
 
-    const companyName =
-        value(
-            c.website_title,
-            value(
-                c.company_name,
-                "VERTEX"
-            )
-        );
+  if(logo){
 
+    document.getElementById("logoMark").innerHTML=
+      '<img src="'+esc(logo)+'" alt="'+esc(companyName)+'">';
+  }else{
 
-    const tagline =
-        value(
-            c.tagline,
-            "GROUP"
-        );
-
-
-    document.title =
-        value(
-            c.website_title,
-            companyName + " | Corporate Excellence"
-        );
-
-
-    const meta =
-        document.querySelector(
-            'meta[name="description"]'
-        );
-
-
-    if(meta){
-
-        meta.setAttribute(
-            "content",
-            value(
-                c.meta_description,
-                "Professional corporate company website"
-            )
-        );
-
-    }
-
-
-    /* FAVICON */
-
-    if(c.favicon_url){
-
-        const favicon =
-            document.getElementById(
-                "favicon"
-            );
-
-        if(favicon){
-
-            favicon.href =
-                c.favicon_url;
-
-        }
-
-    }
-
-
-    /* BRAND */
-
-    setText(
-        "brandName",
-        companyName
-    );
-
-    setText(
-        "brandTagline",
-        tagline
-    );
-
-    setText(
-        "footerCompanyName",
-        companyName
-    );
-
-    setText(
-        "copyrightName",
-        companyName
-    );
-
-
-    /* LOGO */
-
-    if(c.logo_url){
-
-        const logo =
-            document.getElementById(
-                "companyLogo"
-            );
-
-        const footerLogo =
-            document.getElementById(
-                "footerCompanyLogo"
-            );
-
-        const letter =
-            document.getElementById(
-                "logoLetter"
-            );
-
-        const footerLetter =
-            document.getElementById(
-                "footerLogoLetter"
-            );
-
-
-        if(logo){
-
-            logo.src =
-                c.logo_url;
-
-            logo.style.display =
-                "block";
-
-        }
-
-
-        if(footerLogo){
-
-            footerLogo.src =
-                c.logo_url;
-
-            footerLogo.style.display =
-                "block";
-
-        }
-
-
-        if(letter){
-            letter.style.display =
-                "none";
-        }
-
-
-        if(footerLetter){
-            footerLetter.style.display =
-                "none";
-        }
-
-    }else{
-
-        const firstLetter =
-            companyName
-                .charAt(0)
-                .toUpperCase();
-
-        setText(
-            "logoLetter",
-            firstLetter
-        );
-
-        setText(
-            "footerLogoLetter",
-            firstLetter
-        );
-
-    }
-
-
-    /* TOPBAR */
-
-    setText(
-        "topTagline",
-        value(
-            c.tagline,
-            "Building Businesses. Creating Impact."
-        )
-    );
-
-
-    const email =
-        value(
-            c.email,
-            "info@company.com"
-        );
-
-
-    const phone =
-        value(
-            c.phone,
-            "+91 12345 67890"
-        );
-
-
-    setText(
-        "topEmail",
-        email
-    );
-
-    setText(
-        "topPhone",
-        phone
-    );
-
-
-    const topEmail =
-        document.getElementById(
-            "topEmail"
-        );
-
-    if(topEmail){
-
-        topEmail.href =
-            "mailto:" + email;
-
-    }
-
-
-    const topPhone =
-        document.getElementById(
-            "topPhone"
-        );
-
-    if(topPhone){
-
-        topPhone.href =
-            "tel:" +
-            phone.replace(
-                /[^0-9+]/g,
-                ""
-            );
-
-    }
-
-
-    /* ADDRESS */
-
-    const address =
-        [
-            c.address,
-            c.city,
-            c.state,
-            c.country,
-            c.postal_code
-        ]
-        .filter(Boolean)
-        .join(", ");
-
-
-    setText(
-        "contactAddress",
-        value(
-            address,
-            "Corporate Office"
-        )
-    );
-
-
-    setText(
-        "contactPhone",
-        phone
-    );
-
-    setText(
-        "contactEmail",
-        email
-    );
-
-
-    const footerPhone =
-        document.getElementById(
-            "footerPhoneLink"
-        );
-
-    if(footerPhone){
-
-        footerPhone.textContent =
-            phone;
-
-        footerPhone.href =
-            "tel:" +
-            phone.replace(
-                /[^0-9+]/g,
-                ""
-            );
-
-    }
-
-
-    const footerEmail =
-        document.getElementById(
-            "footerEmailLink"
-        );
-
-    if(footerEmail){
-
-        footerEmail.textContent =
-            email;
-
-        footerEmail.href =
-            "mailto:" + email;
-
-    }
-
-
-    /* BUSINESS HOURS */
-
-    const hours =
-        value(
-            c.business_hours,
-            "Monday - Saturday, 9:00 AM - 6:00 PM"
-        );
-
-
-    setText(
-        "businessHours",
-        hours
-            .replace(
-                /^Monday/i,
-                "Mon"
-            )
-    );
-
-
-    setText(
-        "contactHours",
-        hours
-    );
-
-
-    /* ABOUT */
-
-    const about =
-        value(
-            c.about,
-            "We are a diversified organization focused on creating meaningful value for customers, employees, partners and communities."
-        );
-
-
-    setText(
-        "aboutText",
-        about
-    );
-
-
-    setText(
-        "aboutText2",
-        value(
-            c.vision,
-            "Our approach combines strategic thinking, operational excellence and continuous innovation to help businesses perform better in a rapidly changing world."
-        )
-    );
-
-
-    /* HERO */
-
-    const heroDescription =
-        value(
-            c.about,
-            "We build sustainable businesses through strategic thinking, innovation, technology and a strong commitment to our customers and partners."
-        );
-
-
-    setText(
-        "heroDescription",
-        heroDescription
-    );
-
-
-    setText(
-        "heroLabelText",
-        value(
-            c.tagline,
-            "CORPORATE EXCELLENCE"
-        )
-    );
-
-
-    /* HERO TITLE */
-
-    /*
-       If company_settings has a custom hero_title,
-       use it. Otherwise keep the V2 design title.
-    */
-
-    const heroTitle =
-        value(
-            c.hero_title,
-            ""
-        );
-
-
-    if(heroTitle){
-
-        const parts =
-            heroTitle.trim().split(/\s+/);
-
-
-        if(parts.length >= 3){
-
-            const splitPoint =
-                Math.ceil(
-                    parts.length / 2
-                );
-
-            setText(
-                "heroTitleLine",
-                parts
-                    .slice(
-                        0,
-                        splitPoint
-                    )
-                    .join(" ")
-            );
-
-            setText(
-                "heroTitleStrong",
-                parts
-                    .slice(
-                        splitPoint
-                    )
-                    .join(" ")
-            );
-
-        }else{
-
-            setText(
-                "heroTitleLine",
-                heroTitle
-            );
-
-            setText(
-                "heroTitleStrong",
-                ""
-            );
-
-        }
-
-    }
-
-
-    /* ABOUT IMAGE */
-
-    if(c.about_image_url){
-
-        const aboutImage =
-            document.getElementById(
-                "aboutImage"
-            );
-
-        if(aboutImage){
-
-            aboutImage.style.backgroundImage =
-                "linear-gradient(0deg,rgba(15,23,42,.12),rgba(15,23,42,.12)),url('" +
-                c.about_image_url +
-                "')";
-
-        }
-
-    }
-
-
-    /* FOOTER */
-
-    setText(
-        "footerAbout",
-        about
-    );
-
+    document.getElementById("logoMark").textContent=
+      companyName.trim().charAt(0).toUpperCase();
+  }
 }
 
 
-/* =========================================================
-   PRODUCTS RENDER
-   ========================================================= */
+/* -------------------------
+   PRODUCTS
+------------------------- */
+
+async function loadProducts(){
+
+  const {data,error}=await supabaseClient
+    .from("products")
+    .select("*")
+    .eq("client_id",CLIENT_ID)
+    .order("name",{ascending:true});
+
+  if(error){
+    console.error("Products Error:",error);
+    productsData=[];
+    renderProducts();
+    return;
+  }
+
+  productsData=data || [];
+
+  renderProducts();
+}
 
 function renderProducts(){
 
-    const grid =
-        document.getElementById(
-            "productGrid"
-        );
+  const grid=document.getElementById("productGrid");
 
-    if(!grid){
-        return;
-    }
+  if(!productsData.length){
 
+    grid.innerHTML=`
+      <div class="empty-state">
+        Products will appear here once they are added from the Product Manager.
+      </div>
+    `;
 
-    if(!products.length){
+    return;
+  }
 
-        grid.innerHTML = `
-            <div class="product-empty">
-                No products available at the moment.
-            </div>
-        `;
+  grid.innerHTML=productsData.map(product=>{
 
-        return;
+    const name=firstValue(
+      product,
+      ["name","product_name"],
+      "Product"
+    );
 
-    }
+    const code=firstValue(
+      product,
+      ["product_code","code"],
+      ""
+    );
 
+    const description=firstValue(
+      product,
+      ["short_description","description"],
+      "Professional product solution."
+    );
 
-    grid.innerHTML =
-        products
-            .slice(0,12)
-            .map(function(product){
+    const pack=firstValue(
+      product,
+      ["pack_size","units_per_pack"],
+      ""
+    );
 
-                const image =
-                    getImage(product);
+    const specification=firstValue(
+      product,
+      ["specifications","specification"],
+      ""
+    );
 
-                const imageStyle =
-                    image
-                        ? `style="background-image:url('${escapeHTML(image)}')"`
-                        : "";
+    const image=imageValue(product);
 
+    return `
+      <div class="product-card">
 
-                return `
-                    <article class="product-card">
+        <div class="product-image">
+          ${
+            image
+            ? `<img src="${esc(image)}" alt="${esc(name)}" loading="lazy">`
+            : `<div class="gallery-placeholder">Product Image</div>`
+          }
+        </div>
 
-                        <div
-                            class="product-image"
-                            ${imageStyle}>
-                        </div>
+        <div class="product-body">
 
-                        <div class="product-body">
+          ${
+            code
+            ? `<div class="product-code">${esc(code)}</div>`
+            : ""
+          }
 
-                            <h3>
-                                ${escapeHTML(
-                                    value(
-                                        product.name,
-                                        "Product"
-                                    )
-                                )}
-                            </h3>
+          <h3>${esc(name)}</h3>
 
-                            <p>
-                                ${escapeHTML(
-                                    getProductDescription(
-                                        product
-                                    )
-                                )}
-                            </p>
+          <p>${esc(description)}</p>
 
-                        </div>
+          <div class="product-meta">
 
-                    </article>
-                `;
+            ${
+              pack
+              ? `<span>Pack: ${esc(pack)}</span>`
+              : ""
+            }
 
-            })
-            .join("");
+            ${
+              specification
+              ? `<span>${esc(String(specification).slice(0,45))}</span>`
+              : ""
+            }
 
+          </div>
+
+          <a
+            href="#contact"
+            class="btn btn-primary"
+            onclick="selectProduct('${esc(name).replace(/'/g,"&#39;")}')"
+          >
+            Enquire Now
+          </a>
+
+        </div>
+      </div>
+    `;
+
+  }).join("");
+}
+
+function selectProduct(name){
+
+  const requirement=document.getElementById("requirement");
+
+  if(requirement){
+    requirement.value=name;
+  }
+
+  location.hash="contact";
 }
 
 
-/* =========================================================
-   GALLERY RENDER
-   ========================================================= */
+/* -------------------------
+   CATEGORIES
+------------------------- */
+
+async function loadCategories(){
+
+  const {data,error}=await supabaseClient
+    .from("categories")
+    .select("*")
+    .eq("client_id",CLIENT_ID)
+    .order("name",{ascending:true});
+
+  if(error){
+    console.error("Categories Error:",error);
+    categoriesData=[];
+    return;
+  }
+
+  categoriesData=data || [];
+}
+
+
+/* -------------------------
+   GALLERY
+------------------------- */
+
+async function loadGallery(){
+
+  const {data,error}=await supabaseClient
+    .from("gallery")
+    .select("*")
+    .eq("client_id",CLIENT_ID);
+
+  if(error){
+
+    console.warn("Gallery Error:",error);
+    galleryData=[];
+    renderGallery();
+    return;
+  }
+
+  galleryData=data || [];
+
+  renderGallery();
+}
 
 function renderGallery(){
 
-    const grid =
-        document.getElementById(
-            "galleryGrid"
-        );
+  const grid=document.getElementById("galleryGrid");
 
-    if(!grid){
-        return;
+  if(!galleryData.length){
+
+    grid.innerHTML=`
+      <div class="empty-state">
+        Gallery images will appear here once they are added from the Gallery Manager.
+      </div>
+    `;
+
+    return;
+  }
+
+  grid.innerHTML=galleryData.map(item=>{
+
+    const image=imageValue(item);
+
+    const title=firstValue(
+      item,
+      ["title","name","caption"],
+      "Gallery"
+    );
+
+    if(!image){
+      return `
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            ${esc(title)}
+          </div>
+        </div>
+      `;
     }
 
+    return `
+      <div class="gallery-item">
+        <img
+          src="${esc(image)}"
+          alt="${esc(title)}"
+          loading="lazy"
+        >
+      </div>
+    `;
 
-    if(!gallery.length){
-
-        grid.innerHTML = `
-            <div class="gallery-empty">
-                No gallery images available at the moment.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    grid.innerHTML =
-        gallery
-            .slice(0,16)
-            .map(function(item){
-
-                const image =
-                    getImage(item);
-
-
-                if(!image){
-                    return "";
-                }
-
-
-                return `
-                    <div
-                        class="gallery-item"
-                        style="
-                            background-image:
-                            url('${escapeHTML(image)}');
-                        "
-                        title="${escapeHTML(
-                            value(
-                                item.title,
-                                "Company Gallery"
-                            )
-                        )}">
-                    </div>
-                `;
-
-            })
-            .join("");
-
+  }).join("");
 }
 
 
-/* =========================================================
-   TESTIMONIALS RENDER
-   ========================================================= */
+/* -------------------------
+   TESTIMONIALS
+------------------------- */
+
+async function loadTestimonials(){
+
+  const {data,error}=await supabaseClient
+    .from("testimonials")
+    .select("*")
+    .eq("client_id",CLIENT_ID);
+
+  if(error){
+
+    console.warn("Testimonials Error:",error);
+    testimonialsData=[];
+    renderTestimonials();
+    return;
+  }
+
+  testimonialsData=data || [];
+
+  renderTestimonials();
+}
 
 function renderTestimonials(){
 
-    const grid =
-        document.getElementById(
-            "testimonialGrid"
-        );
+  const grid=document.getElementById("testimonialGrid");
 
-    if(!grid){
-        return;
-    }
+  if(!testimonialsData.length){
 
+    grid.innerHTML=`
+      <div class="empty-state">
+        Client testimonials will appear here once they are added from the Testimonials Manager.
+      </div>
+    `;
 
-    if(!testimonials.length){
+    return;
+  }
 
-        grid.innerHTML = `
-            <div class="testimonial-empty">
-                No testimonials available at the moment.
-            </div>
-        `;
+  grid.innerHTML=testimonialsData.map(item=>{
 
-        return;
+    const message=firstValue(
+      item,
+      ["message","testimonial","content","review","text"],
+      "Excellent service and professional support."
+    );
 
-    }
+    const name=firstValue(
+      item,
+      ["name","customer_name","author_name","client_name"],
+      "Client"
+    );
 
+    const company=firstValue(
+      item,
+      ["company_name","company","organization"],
+      ""
+    );
 
-    grid.innerHTML =
-        testimonials
-            .slice(0,9)
-            .map(function(item){
+    const role=firstValue(
+      item,
+      ["role","designation","position"],
+      ""
+    );
 
-                const name =
-                    value(
-                        item.customer_name,
-                        value(
-                            item.name,
-                            value(
-                                item.client_name,
-                                "Client"
-                            )
-                        )
-                    );
+    let rating=Number(
+      firstValue(item,["rating","stars"],5)
+    );
 
+    if(!rating || rating<1) rating=5;
+    if(rating>5) rating=5;
 
-                const role =
-                    value(
-                        item.designation,
-                        value(
-                            item.role,
-                            value(
-                                item.company_name,
-                                "Valued Client"
-                            )
-                        )
-                    );
+    const stars="★".repeat(Math.round(rating));
 
+    return `
+      <div class="testimonial">
 
-                const message =
-                    value(
-                        item.testimonial,
-                        value(
-                            item.message,
-                            value(
-                                item.review,
-                                "Excellent service and professional support."
-                            )
-                        )
-                    );
+        <div class="quote">“</div>
 
+        <div style="color:#f59e0b;font-size:14px;margin-top:5px">
+          ${stars}
+        </div>
 
-                return `
-                    <article class="testimonial">
+        <p class="testimonial-message">
+          ${esc(message)}
+        </p>
 
-                        <div class="quote">
-                            “
-                        </div>
+        <div class="testimonial-author">
+          ${esc(name)}
+        </div>
 
-                        <p>
-                            ${escapeHTML(message)}
-                        </p>
+        <div class="testimonial-role">
+          ${esc(
+            [role,company].filter(Boolean).join(" • ")
+          )}
+        </div>
 
-                        <div class="testimonial-person">
+      </div>
+    `;
 
-                            <div class="person-avatar">
-                                ${escapeHTML(
-                                    initials(name)
-                                )}
-                            </div>
-
-                            <div class="person-info">
-
-                                <strong>
-                                    ${escapeHTML(name)}
-                                </strong>
-
-                                <span>
-                                    ${escapeHTML(role)}
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-                `;
-
-            })
-            .join("");
-
+  }).join("");
 }
 
 
-/* =========================================================
-   FAQ RENDER
-   ========================================================= */
+/* -------------------------
+   FAQ
+------------------------- */
+
+async function loadFAQs(){
+
+  const {data,error}=await supabaseClient
+    .from("faqs")
+    .select("*")
+    .eq("client_id",CLIENT_ID)
+    .eq("status","active")
+    .order("sort_order",{ascending:true});
+
+  if(error){
+
+    console.warn("FAQ Error:",error);
+    faqsData=[];
+    renderFAQs();
+    return;
+  }
+
+  faqsData=data || [];
+
+  renderFAQs();
+}
 
 function renderFAQs(){
 
-    const wrap =
-        document.getElementById(
-            "faqList"
-        );
+  const wrap=document.getElementById("faqList");
 
-    if(!wrap){
-        return;
-    }
+  if(!faqsData.length){
 
+    wrap.innerHTML=`
+      <div class="empty-state">
+        FAQs will appear here once they are added from the FAQ Manager.
+      </div>
+    `;
 
-    if(!faqs.length){
+    return;
+  }
 
-        wrap.innerHTML = `
-            <div class="faq-empty">
-                No FAQs available at the moment.
-            </div>
-        `;
+  wrap.innerHTML=faqsData.map((faq,index)=>{
 
-        return;
-
-    }
-
-
-    wrap.innerHTML =
-        faqs
-            .slice(0,20)
-            .map(function(item){
-
-                const question =
-                    value(
-                        item.question,
-                        value(
-                            item.title,
-                            "Frequently Asked Question"
-                        )
-                    );
-
-
-                const answer =
-                    value(
-                        item.answer,
-                        value(
-                            item.description,
-                            "Please contact our team for more information."
-                        )
-                    );
-
-
-                return `
-                    <div class="faq-item">
-
-                        <button
-                            class="faq-question"
-                            type="button">
-
-                            <span>
-                                ${escapeHTML(question)}
-                            </span>
-
-                            <span class="faq-icon">
-                                +
-                            </span>
-
-                        </button>
-
-                        <div class="faq-answer">
-
-                            <div class="faq-answer-inner">
-                                ${escapeHTML(answer)}
-                            </div>
-
-                        </div>
-
-                    </div>
-                `;
-
-            })
-            .join("");
-
-
-    bindFAQs();
-
-}
-
-
-/* =========================================================
-   FAQ EVENTS
-   ========================================================= */
-
-function bindFAQs(){
-
-    document
-        .querySelectorAll(
-            ".faq-question"
-        )
-        .forEach(function(button){
-
-            button.addEventListener(
-                "click",
-                function(){
-
-                    const currentItem =
-                        button.parentElement;
-
-
-                    document
-                        .querySelectorAll(
-                            ".faq-item"
-                        )
-                        .forEach(function(item){
-
-                            if(
-                                item !==
-                                currentItem
-                            ){
-
-                                item.classList
-                                    .remove(
-                                        "active"
-                                    );
-
-                            }
-
-                        });
-
-
-                    currentItem
-                        .classList
-                        .toggle(
-                            "active"
-                        );
-
-                }
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   FORM
-   ========================================================= */
-
-async function submitEnquiry(event){
-
-    event.preventDefault();
-
-
-    if(!CLIENT_ID){
-
-        showToast(
-            "Website client is not configured."
-        );
-
-        return;
-
-    }
-
-
-    const form =
-        event.target;
-
-
-    const formData =
-        new FormData(form);
-
-
-    const customerName =
-        String(
-            formData.get("name") || ""
-        ).trim();
-
-
-    const companyName =
-        String(
-            formData.get("company") || ""
-        ).trim();
-
-
-    const email =
-        String(
-            formData.get("email") || ""
-        ).trim();
-
-
-    const phone =
-        String(
-            formData.get("phone") || ""
-        ).trim();
-
-
-    const requirement =
-        String(
-            formData.get("requirement") || ""
-        ).trim();
-
-
-    const message =
-        String(
-            formData.get("message") || ""
-        ).trim();
-
-
-    const button =
-        document.getElementById(
-            "submitEnquiryBtn"
-        );
-
-
-    if(button){
-
-        button.disabled =
-            true;
-
-        button.textContent =
-            "Submitting...";
-
-    }
-
-
-    try{
-
-        const {
-            error
-        } =
-            await supabaseClient
-                .from("enquiries")
-                .insert({
-
-                    client_id:
-                        CLIENT_ID,
-
-                    customer_name:
-                        customerName,
-
-                    company_name:
-                        companyName,
-
-                    phone:
-                        phone,
-
-                    email:
-                        email,
-
-                    requirement:
-                        requirement,
-
-                    notes:
-                        message,
-
-                    source:
-                        "website",
-
-                    status:
-                        "new"
-
-                });
-
-
-        if(error){
-
-            console.error(
-                "Enquiry Insert:",
-                error
-            );
-
-            throw error;
-
-        }
-
-
-        form.reset();
-
-        showToast(
-            "Thank you! Your enquiry has been received."
-        );
-
-
-    }catch(error){
-
-        console.error(
-            error
-        );
-
-        showToast(
-            "Unable to submit enquiry. Please try again."
-        );
-
-    }finally{
-
-        if(button){
-
-            button.disabled =
-                false;
-
-            button.textContent =
-                "Submit Enquiry →";
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-let toastTimer = null;
-
-
-function showToast(message){
-
-    const toast =
-        document.getElementById(
-            "toast"
-        );
-
-
-    if(!toast){
-        return;
-    }
-
-
-    toast.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
+    const question=firstValue(
+      faq,
+      ["question","faq_question","title"],
+      "Frequently asked question"
     );
 
-
-    clearTimeout(
-        toastTimer
+    const answer=firstValue(
+      faq,
+      ["answer","faq_answer","content","description"],
+      "Please contact us for more information."
     );
 
+    return `
+      <div class="faq-item">
 
-    toastTimer =
-        setTimeout(function(){
+        <button class="faq-question" type="button">
+          <span>${esc(question)}</span>
+          <span>+</span>
+        </button>
 
-            toast.classList.remove(
-                "show"
-            );
+        <div class="faq-answer">
+          ${esc(answer)}
+        </div>
 
-        },3500);
+      </div>
+    `;
 
-}
+  }).join("");
 
+  document.querySelectorAll(".faq-question").forEach(button=>{
 
-/* =========================================================
-   DEFAULT STATS
-   ========================================================= */
+    button.addEventListener("click",()=>{
 
-function renderDefaultStats(){
+      const item=button.parentElement;
 
-    /*
-       These remain design defaults because
-       current company_settings does not have
-       dedicated statistic fields.
-    */
+      document.querySelectorAll(".faq-item").forEach(other=>{
+        if(other!==item){
+          other.classList.remove("open");
 
-    const stats = [
+          const icon=other.querySelector(".faq-question span:last-child");
+          if(icon) icon.textContent="+";
+        }
+      });
 
-        [
-            "stat1Value",
-            "stat1Label",
-            "20+",
-            "Years of Excellence"
-        ],
+      item.classList.toggle("open");
 
-        [
-            "stat2Value",
-            "stat2Label",
-            "500+",
-            "Projects Delivered"
-        ],
+      const icon=button.querySelector("span:last-child");
 
-        [
-            "stat3Value",
-            "stat3Label",
-            "25+",
-            "Markets & Locations"
-        ],
-
-        [
-            "stat4Value",
-            "stat4Label",
-            "98%",
-            "Client Satisfaction"
-        ]
-
-    ];
-
-
-    stats.forEach(function(item){
-
-        setText(
-            item[0],
-            item[2]
-        );
-
-        setText(
-            item[1],
-            item[3]
-        );
+      if(icon){
+        icon.textContent=item.classList.contains("open") ? "−" : "+";
+      }
 
     });
 
-
-    setText(
-        "heroStat1",
-        "20+"
-    );
-
-    setText(
-        "heroStat2",
-        "25+"
-    );
-
-    setText(
-        "heroStat3",
-        "500+"
-    );
-
-    setText(
-        "heroStat4",
-        "98%"
-    );
-
-
-    setText(
-        "achievement1Value",
-        "20+"
-    );
-
-    setText(
-        "achievement2Value",
-        "500+"
-    );
-
-    setText(
-        "achievement3Value",
-        "25+"
-    );
-
-    setText(
-        "achievement4Value",
-        "98%"
-    );
-
+  });
 }
 
 
-/* =========================================================
-   INITIALIZE
-   ========================================================= */
+/* -------------------------
+   STATS
+------------------------- */
 
-async function initializeV2(){
+function renderStats(){
 
-    document.getElementById(
-        "year"
-    ).textContent =
-        new Date().getFullYear();
+  const p=productsData.length;
+  const c=categoriesData.length;
+  const g=galleryData.length;
+  const t=testimonialsData.length;
 
+  document.getElementById("statProducts").textContent=p;
+  document.getElementById("statCategories").textContent=c;
+  document.getElementById("statGallery").textContent=g;
+  document.getElementById("statTestimonials").textContent=t;
 
-    renderDefaultStats();
+  document.getElementById("heroStat1").textContent=p+"+";
+  document.getElementById("heroStat2").textContent=c+"+";
+  document.getElementById("heroStat3").textContent=g+"+";
+  document.getElementById("heroStat4").textContent="100%";
 
-
-    CLIENT_ID =
-        getClientId();
-
-
-    if(!CLIENT_ID){
-
-        console.warn(
-            "V2: No active CLIENT_ID found."
-        );
-
-        /*
-           Do not break the design if context
-           is not yet available.
-        */
-
-        renderCompany();
-
-        return;
-
-    }
-
-
-    try{
-
-        await Promise.all([
-
-            loadCompanySettings(),
-
-            loadProducts(),
-
-            loadGallery(),
-
-            loadTestimonials(),
-
-            loadFAQs()
-
-        ]);
-
-
-        renderCompany();
-
-        renderProducts();
-
-        renderGallery();
-
-        renderTestimonials();
-
-        renderFAQs();
-
-
-    }catch(error){
-
-        console.error(
-            "V2 initialization error:",
-            error
-        );
-
-    }
-
+  document.getElementById("achievementProducts").textContent=p+"+";
+  document.getElementById("achievementCategories").textContent=c+"+";
+  document.getElementById("achievementProjects").textContent=g+"+";
 }
 
 
-/* =========================================================
+/* -------------------------
+   ENQUIRY
+------------------------- */
+
+document.getElementById("enquiryForm").addEventListener("submit",async function(e){
+
+  e.preventDefault();
+
+  if(!CLIENT_ID){
+
+    showToast("Client ID is not available.","error");
+    return;
+  }
+
+  const submitBtn=document.getElementById("submitBtn");
+
+  submitBtn.disabled=true;
+  submitBtn.textContent="Sending...";
+
+  const payload={
+    client_id:CLIENT_ID,
+    customer_name:document.getElementById("name").value.trim(),
+    company_name:document.getElementById("company").value.trim(),
+    email:document.getElementById("email").value.trim(),
+    phone:document.getElementById("phone").value.trim(),
+    requirement:document.getElementById("requirement").value.trim(),
+    notes:document.getElementById("message").value.trim(),
+    source:"website",
+    status:"new"
+  };
+
+  try{
+
+    const {error}=await supabaseClient
+      .from("enquiries")
+      .insert([payload]);
+
+    if(error){
+      console.error("Enquiry Insert Error:",error);
+      throw error;
+    }
+
+    showToast(
+      "Thank you. Your enquiry has been submitted successfully.",
+      "success"
+    );
+
+    this.reset();
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Unable to submit enquiry. Please try again.",
+      "error"
+    );
+
+  }finally{
+
+    submitBtn.disabled=false;
+    submitBtn.textContent="Send Enquiry";
+  }
+
+});
+
+
+/* -------------------------
    MOBILE MENU
-   ========================================================= */
+------------------------- */
 
-const menuBtn =
-    document.getElementById(
-        "menuBtn"
+document.getElementById("menuBtn").addEventListener("click",()=>{
+
+  document.getElementById("navLinks")
+    .classList.toggle("active");
+
+});
+
+document.querySelectorAll("#navLinks a").forEach(link=>{
+
+  link.addEventListener("click",()=>{
+    document.getElementById("navLinks")
+      .classList.remove("active");
+  });
+
+});
+
+
+/* -------------------------
+   INIT
+------------------------- */
+
+async function initV2(){
+
+  document.getElementById("year").textContent=
+    new Date().getFullYear();
+
+  if(typeof CLIENT_ID==="undefined" || !CLIENT_ID){
+
+    console.error("V2: CLIENT_ID unavailable.");
+    showToast("Client ID is not configured.","error");
+    return;
+  }
+
+  if(typeof supabaseClient==="undefined"){
+
+    console.error("V2: supabaseClient unavailable.");
+    showToast("Supabase client is not available.","error");
+    return;
+  }
+
+  console.log("V2: Client ID:",CLIENT_ID);
+
+  try{
+
+    await Promise.all([
+      loadCompany(),
+      loadProducts(),
+      loadCategories(),
+      loadGallery(),
+      loadTestimonials(),
+      loadFAQs()
+    ]);
+
+    renderStats();
+
+    console.log("V2: ALL DATA LOADED");
+
+  }catch(error){
+
+    console.error("V2 Load Error:",error);
+
+    showToast(
+      "Some website data could not be loaded.",
+      "error"
     );
-
-const navLinks =
-    document.getElementById(
-        "navLinks"
-    );
-
-
-if(menuBtn){
-
-    menuBtn.addEventListener(
-        "click",
-        function(){
-
-            navLinks.classList
-                .toggle("active");
-
-
-            menuBtn.innerHTML =
-                navLinks.classList
-                    .contains("active")
-                    ? "✕"
-                    : "☰";
-
-        }
-    );
-
+  }
 }
 
 
-document
-    .querySelectorAll(
-        ".nav-links a"
-    )
-    .forEach(function(link){
+/*
+  Wait until the existing MDK runtime has created
+  supabaseClient / CLIENT_ID.
+*/
+function startWhenRuntimeReady(){
 
-        link.addEventListener(
-            "click",
-            function(){
+  let attempts=0;
 
-                navLinks.classList
-                    .remove("active");
+  const timer=setInterval(()=>{
 
-                menuBtn.innerHTML =
-                    "☰";
+    attempts++;
 
-            }
-        );
+    if(
+      typeof CLIENT_ID!=="undefined" &&
+      CLIENT_ID &&
+      typeof supabaseClient!=="undefined"
+    ){
 
-    });
+      clearInterval(timer);
+      initV2();
+      return;
+    }
 
+    if(attempts>=100){
 
-/* =========================================================
-   SMOOTH SCROLL
-   ========================================================= */
+      clearInterval(timer);
 
-document
-    .querySelectorAll(
-        'a[href^="#"]'
-    )
-    .forEach(function(anchor){
+      console.error(
+        "V2: Runtime was not ready after waiting."
+      );
 
-        anchor.addEventListener(
-            "click",
-            function(event){
+      showToast(
+        "Website runtime could not initialize.",
+        "error"
+      );
+    }
 
-                const selector =
-                    this.getAttribute(
-                        "href"
-                    );
-
-
-                if(
-                    !selector ||
-                    selector === "#"
-                ){
-
-                    return;
-
-                }
-
-
-                const target =
-                    document.querySelector(
-                        selector
-                    );
-
-
-                if(target){
-
-                    event.preventDefault();
-
-                    target.scrollIntoView({
-                        behavior:"smooth",
-                        block:"start"
-                    });
-
-                }
-
-            }
-        );
-
-    });
-
-
-/* =========================================================
-   ENQUIRY FORM EVENT
-   ========================================================= */
-
-const enquiryForm =
-    document.getElementById(
-        "enquiryForm"
-    );
-
-
-if(enquiryForm){
-
-    enquiryForm.addEventListener(
-        "submit",
-        submitEnquiry
-    );
+  },100);
 
 }
 
+if(document.readyState==="loading"){
 
-/* =========================================================
-   START
-   ========================================================= */
-
-if(
-    document.readyState ===
-    "loading"
-){
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        initializeV2
-    );
+  document.addEventListener(
+    "DOMContentLoaded",
+    startWhenRuntimeReady
+  );
 
 }else{
 
-    initializeV2();
+  startWhenRuntimeReady();
 
 }
-
-})();
-
 </script>
 
 </body>
