@@ -1,3 +1,4 @@
+```javascript
 /* ============================================================
    MDK CLIENT RUNTIME
    V1
@@ -71,6 +72,7 @@
        GET CLIENT ID
        URL FIRST
        ?client=UUID
+       ?client_id=UUID
        ======================================================== */
 
     function getClientId() {
@@ -82,12 +84,25 @@
                     window.location.search
                 );
 
+
             var urlId =
                 params.get("client");
+
 
             if (urlId) {
 
                 return urlId;
+
+            }
+
+
+            var urlClientId =
+                params.get("client_id");
+
+
+            if (urlClientId) {
+
+                return urlClientId;
 
             }
 
@@ -111,6 +126,7 @@
 
                 var contextId =
                     window.MDKClientContext.id();
+
 
                 if (contextId) {
 
@@ -137,10 +153,12 @@
                     "mdkaif_active_client"
                 );
 
+
             if (saved) {
 
                 var client =
                     JSON.parse(saved);
+
 
                 if (
                     client &&
@@ -317,6 +335,50 @@
 
 
     /* ========================================================
+       NORMALIZE WEBSITE URL
+       ======================================================== */
+
+    function normalizeUrl(
+        url
+    ) {
+
+        if (!url) {
+
+            return "";
+
+        }
+
+
+        url =
+            String(url).trim();
+
+
+        if (!url) {
+
+            return "";
+
+        }
+
+
+        if (
+            url.indexOf("http://") !== 0 &&
+            url.indexOf("https://") !== 0 &&
+            url.indexOf("//") !== 0
+        ) {
+
+            url =
+                "https://" +
+                url;
+
+        }
+
+
+        return url;
+
+    }
+
+
+    /* ========================================================
        LOAD CLIENT
        ======================================================== */
 
@@ -449,6 +511,7 @@
                     clientId
                 );
 
+
             renderProducts(
                 products
             );
@@ -463,6 +526,7 @@
                     "client_manufacturing_steps",
                     clientId
                 );
+
 
             renderManufacturing(
                 manufacturing
@@ -479,6 +543,7 @@
                     clientId
                 );
 
+
             renderQuality(
                 quality
             );
@@ -493,6 +558,7 @@
                     "client_industries",
                     clientId
                 );
+
 
             renderIndustries(
                 industries
@@ -509,6 +575,7 @@
                     clientId
                 );
 
+
             renderGallery(
                 gallery
             );
@@ -524,6 +591,7 @@
                     clientId
                 );
 
+
             renderTestimonials(
                 testimonials
             );
@@ -538,6 +606,7 @@
                     "client_faq",
                     clientId
                 );
+
 
             renderFAQ(
                 faq
@@ -590,7 +659,7 @@
         );
 
 
-        /* PAGE TITLE */
+        /* PAGE TITLE DEFAULT */
 
         document.title =
             companyName +
@@ -604,10 +673,12 @@
             client.id || ""
         );
 
+
         document.body.setAttribute(
             "data-client-name",
             companyName
         );
+
 
         document.body.setAttribute(
             "data-client-slug",
@@ -757,6 +828,68 @@
 
 
         /* ================================================
+           BUSINESS HOURS
+        ================================================= */
+
+        var businessHours =
+            getValue(
+                content,
+                "business_hours"
+            );
+
+
+        if (businessHours) {
+
+            setText(
+                '[data-content="business_hours"]',
+                businessHours
+            );
+
+        }
+
+
+        /* ================================================
+           WEBSITE
+        ================================================= */
+
+        var website =
+            normalizeUrl(
+                getValue(
+                    content,
+                    "website"
+                )
+            );
+
+
+        if (website) {
+
+            setAttribute(
+                '[data-content-link="website"]',
+                "href",
+                website
+            );
+
+
+            document
+                .querySelectorAll(
+                    '[data-content-link="website"]'
+                )
+                .forEach(
+                    function (element) {
+
+                        element.target =
+                            "_blank";
+
+                        element.rel =
+                            "noopener noreferrer";
+
+                    }
+                );
+
+        }
+
+
+        /* ================================================
            WHATSAPP
         ================================================= */
 
@@ -784,6 +917,58 @@
             );
 
         }
+
+
+        /* ================================================
+           CITY
+        ================================================= */
+
+        setText(
+            '[data-content="city"]',
+            getValue(
+                content,
+                "city"
+            )
+        );
+
+
+        /* ================================================
+           STATE
+        ================================================= */
+
+        setText(
+            '[data-content="state"]',
+            getValue(
+                content,
+                "state"
+            )
+        );
+
+
+        /* ================================================
+           COUNTRY
+        ================================================= */
+
+        setText(
+            '[data-content="country"]',
+            getValue(
+                content,
+                "country"
+            )
+        );
+
+
+        /* ================================================
+           POSTAL CODE
+        ================================================= */
+
+        setText(
+            '[data-content="postal_code"]',
+            getValue(
+                content,
+                "postal_code"
+            )
+        );
 
 
         /* ================================================
@@ -878,6 +1063,61 @@
         );
 
 
+        var aboutDescription2 =
+            getValue(
+                content,
+                "about_description_2"
+            );
+
+
+        if (aboutDescription2) {
+
+            setText(
+                '[data-content="about_description_2"]',
+                aboutDescription2
+            );
+
+        }
+
+
+        /* ABOUT POINTS */
+
+        setText(
+            '[data-content="about_point_1"]',
+            getValue(
+                content,
+                "about_point_1"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_point_2"]',
+            getValue(
+                content,
+                "about_point_2"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_point_3"]',
+            getValue(
+                content,
+                "about_point_3"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_point_4"]',
+            getValue(
+                content,
+                "about_point_4"
+            )
+        );
+
+
         var aboutImage =
             getValue(
                 content,
@@ -903,12 +1143,39 @@
                     ) +
                     "')";
 
+
                 visual.textContent =
                     "";
 
             }
 
         }
+
+
+        /* ================================================
+           MISSION
+        ================================================= */
+
+        setText(
+            '[data-content="mission"]',
+            getValue(
+                content,
+                "mission"
+            )
+        );
+
+
+        /* ================================================
+           VISION
+        ================================================= */
+
+        setText(
+            '[data-content="vision"]',
+            getValue(
+                content,
+                "vision"
+            )
+        );
 
 
         /* ================================================
@@ -922,6 +1189,7 @@
                 "stat_1_value"
             )
         );
+
 
         setText(
             '[data-stat="1-label"]',
@@ -940,6 +1208,7 @@
             )
         );
 
+
         setText(
             '[data-stat="2-label"]',
             getValue(
@@ -957,6 +1226,7 @@
             )
         );
 
+
         setText(
             '[data-stat="3-label"]',
             getValue(
@@ -973,6 +1243,7 @@
                 "stat_4_value"
             )
         );
+
 
         setText(
             '[data-stat="4-label"]',
@@ -1247,6 +1518,96 @@
             )
         );
 
+
+        /* ================================================
+           SOCIAL LINKS
+        ================================================= */
+
+        setLink(
+            '[data-content-link="facebook"]',
+            getValue(
+                content,
+                "facebook_url"
+            )
+        );
+
+
+        setLink(
+            '[data-content-link="instagram"]',
+            getValue(
+                content,
+                "instagram_url"
+            )
+        );
+
+
+        setLink(
+            '[data-content-link="youtube"]',
+            getValue(
+                content,
+                "youtube_url"
+            )
+        );
+
+
+        /* ================================================
+           META / SEO
+        ================================================= */
+
+        var websiteTitle =
+            getValue(
+                content,
+                "website_title"
+            );
+
+
+        if (websiteTitle) {
+
+            document.title =
+                websiteTitle;
+
+        }
+
+
+        var metaDescription =
+            getValue(
+                content,
+                "meta_description"
+            );
+
+
+        if (metaDescription) {
+
+            var meta =
+                document.querySelector(
+                    'meta[name="description"]'
+                );
+
+
+            if (!meta) {
+
+                meta =
+                    document.createElement(
+                        "meta"
+                    );
+
+                meta.name =
+                    "description";
+
+                document.head.appendChild(
+                    meta
+                );
+
+            }
+
+
+            meta.setAttribute(
+                "content",
+                metaDescription
+            );
+
+        }
+
     }
 
 
@@ -1266,6 +1627,19 @@
         }
 
 
+        var normalized =
+            normalizeUrl(
+                url
+            );
+
+
+        if (!normalized) {
+
+            return;
+
+        }
+
+
         var elements =
             document.querySelectorAll(
                 selector
@@ -1276,16 +1650,18 @@
             function (element) {
 
                 element.href =
-                    url;
+                    normalized;
+
 
                 if (
-                    url.indexOf(
+                    normalized.indexOf(
                         "http"
                     ) === 0
                 ) {
 
                     element.target =
                         "_blank";
+
 
                     element.rel =
                         "noopener noreferrer";
@@ -1300,7 +1676,7 @@
 
     /* ========================================================
        LOAD TABLE
-       ======================================================== */
+    ======================================================== */
 
     async function loadTable(
         table,
@@ -1391,7 +1767,7 @@
 
     /* ========================================================
        PRODUCTS
-       ======================================================== */
+    ======================================================== */
 
     function renderProducts(
         items
@@ -1521,7 +1897,7 @@
 
     /* ========================================================
        MANUFACTURING
-       ======================================================== */
+    ======================================================== */
 
     function renderManufacturing(
         items
@@ -1619,7 +1995,7 @@
 
     /* ========================================================
        QUALITY
-       ======================================================== */
+    ======================================================== */
 
     function renderQuality(
         items
@@ -1713,7 +2089,7 @@
 
     /* ========================================================
        INDUSTRIES
-       ======================================================== */
+    ======================================================== */
 
     function renderIndustries(
         items
@@ -1777,7 +2153,7 @@
 
     /* ========================================================
        GALLERY
-       ======================================================== */
+    ======================================================== */
 
     function renderGallery(
         items
@@ -1872,7 +2248,7 @@
 
     /* ========================================================
        TESTIMONIALS
-       ======================================================== */
+    ======================================================== */
 
     function renderTestimonials(
         items
@@ -1974,7 +2350,7 @@
 
     /* ========================================================
        FAQ
-       ======================================================== */
+    ======================================================== */
 
     function renderFAQ(
         items
@@ -2104,7 +2480,7 @@
 
     /* ========================================================
        INITIALIZE
-       ======================================================== */
+    ======================================================== */
 
     if (
         document.readyState ===
@@ -2124,3 +2500,4 @@
 
 
 })();
+```
