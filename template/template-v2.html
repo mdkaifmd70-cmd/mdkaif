@@ -5,17 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Professional corporate company website template">
+<meta name="description"
+      content="Professional corporate company website template">
+
 <meta name="theme-color" content="#0f172a">
+
+<link id="favicon" rel="icon" href="">
 
 <title>VERTEX | Corporate Excellence</title>
 
 <style>
-
-/* =========================================================
-   V2 CORPORATE TEMPLATE
-   MD Kaif Web Platform
-   ========================================================= */
 
 :root{
     --primary:#0f172a;
@@ -184,9 +183,7 @@ select{
     transform:translateY(-2px);
 }
 
-/* =========================================================
-   TOP BAR
-   ========================================================= */
+/* TOPBAR */
 
 .topbar{
     background:var(--primary);
@@ -213,9 +210,7 @@ select{
     color:#fff;
 }
 
-/* =========================================================
-   NAVBAR
-   ========================================================= */
+/* NAVBAR */
 
 .navbar{
     position:sticky;
@@ -254,6 +249,14 @@ select{
     color:#fff;
     font-size:17px;
     font-weight:900;
+    overflow:hidden;
+}
+
+.logo-mark img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    background:#fff;
 }
 
 .logo small{
@@ -298,19 +301,19 @@ select{
     font-size:22px;
 }
 
-/* =========================================================
-   HERO
-   ========================================================= */
+/* HERO */
 
 .hero{
     position:relative;
     min-height:680px;
     overflow:hidden;
     background:
-        linear-gradient(90deg,
+        linear-gradient(
+            90deg,
             rgba(2,6,23,.94) 0%,
             rgba(2,6,23,.84) 45%,
-            rgba(2,6,23,.35) 100%),
+            rgba(2,6,23,.35) 100%
+        ),
         url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2000&q=85")
         center/cover;
 }
@@ -432,9 +435,7 @@ select{
     font-size:11px;
 }
 
-/* =========================================================
-   STATS
-   ========================================================= */
+/* STATS */
 
 .stats{
     margin-top:-55px;
@@ -475,9 +476,7 @@ select{
     font-weight:700;
 }
 
-/* =========================================================
-   ABOUT
-   ========================================================= */
+/* ABOUT */
 
 .about-grid{
     display:grid;
@@ -494,9 +493,24 @@ select{
     min-height:510px;
     border-radius:25px;
     background:
-        linear-gradient(0deg,rgba(15,23,42,.12),rgba(15,23,42,.12)),
+        linear-gradient(
+            0deg,
+            rgba(15,23,42,.12),
+            rgba(15,23,42,.12)
+        ),
         url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85")
         center/cover;
+}
+
+.about-main-image.has-image{
+    background-image:
+        linear-gradient(
+            0deg,
+            rgba(15,23,42,.12),
+            rgba(15,23,42,.12)
+        );
+    background-size:cover;
+    background-position:center;
 }
 
 .about-badge{
@@ -520,10 +534,6 @@ select{
 
 .about-badge span{
     font-size:12px;
-}
-
-.about-content .section-tag{
-    margin-bottom:13px;
 }
 
 .about-content .section-title{
@@ -564,9 +574,7 @@ select{
     font-weight:900;
 }
 
-/* =========================================================
-   BUSINESS VERTICALS
-   ========================================================= */
+/* BUSINESS */
 
 .verticals{
     background:var(--light);
@@ -589,7 +597,6 @@ select{
 .vertical-card:hover{
     transform:translateY(-6px);
     box-shadow:var(--shadow);
-    border-color:#cbd5e1;
 }
 
 .icon{
@@ -615,9 +622,7 @@ select{
     font-size:14px;
 }
 
-/* =========================================================
-   SERVICES
-   ========================================================= */
+/* SERVICES */
 
 .service-grid{
     display:grid;
@@ -658,9 +663,7 @@ select{
     font-weight:800;
 }
 
-/* =========================================================
-   PRODUCTS
-   ========================================================= */
+/* PRODUCTS */
 
 .products{
     background:var(--light);
@@ -683,18 +686,7 @@ select{
     height:230px;
     background-position:center;
     background-size:cover;
-}
-
-.product-card:nth-child(1) .product-image{
-    background-image:url("https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=85");
-}
-
-.product-card:nth-child(2) .product-image{
-    background-image:url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=85");
-}
-
-.product-card:nth-child(3) .product-image{
-    background-image:url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=85");
+    background-color:#e2e8f0;
 }
 
 .product-body{
@@ -712,9 +704,17 @@ select{
     font-size:14px;
 }
 
-/* =========================================================
-   WHY US
-   ========================================================= */
+.product-empty,
+.gallery-empty,
+.testimonial-empty,
+.faq-empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:35px;
+    color:var(--muted);
+}
+
+/* WHY */
 
 .why{
     background:var(--primary);
@@ -777,14 +777,15 @@ select{
     min-height:500px;
     border-radius:25px;
     background:
-        linear-gradient(rgba(15,23,42,.15),rgba(15,23,42,.3)),
+        linear-gradient(
+            rgba(15,23,42,.15),
+            rgba(15,23,42,.3)
+        ),
         url("https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=85")
         center/cover;
 }
 
-/* =========================================================
-   LEADERSHIP
-   ========================================================= */
+/* LEADERSHIP */
 
 .leader-grid{
     display:grid;
@@ -832,9 +833,7 @@ select{
     font-weight:800;
 }
 
-/* =========================================================
-   PROJECTS
-   ========================================================= */
+/* PROJECTS */
 
 .projects{
     background:var(--light);
@@ -882,7 +881,10 @@ select{
     display:flex;
     align-items:flex-end;
     padding:22px;
-    background:linear-gradient(transparent 35%,rgba(2,6,23,.85));
+    background:linear-gradient(
+        transparent 35%,
+        rgba(2,6,23,.85)
+    );
     color:#fff;
 }
 
@@ -896,9 +898,7 @@ select{
     font-size:11px;
 }
 
-/* =========================================================
-   ACHIEVEMENTS
-   ========================================================= */
+/* ACHIEVEMENTS */
 
 .achievement-grid{
     display:grid;
@@ -926,9 +926,7 @@ select{
     font-weight:700;
 }
 
-/* =========================================================
-   CLIENTS
-   ========================================================= */
+/* CLIENTS */
 
 .clients{
     background:var(--light);
@@ -953,9 +951,7 @@ select{
     letter-spacing:1px;
 }
 
-/* =========================================================
-   GALLERY
-   ========================================================= */
+/* GALLERY */
 
 .gallery-grid{
     display:grid;
@@ -969,43 +965,10 @@ select{
     overflow:hidden;
     background-position:center;
     background-size:cover;
+    background-color:#e2e8f0;
 }
 
-.gallery-item:nth-child(1){
-    background-image:url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=700&q=85");
-}
-
-.gallery-item:nth-child(2){
-    background-image:url("https://images.unsplash.com/photo-1497366811360-6870744d04b2?auto=format&fit=crop&w=700&q=85");
-}
-
-.gallery-item:nth-child(3){
-    background-image:url("https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=700&q=85");
-}
-
-.gallery-item:nth-child(4){
-    background-image:url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&q=85");
-}
-
-.gallery-item:nth-child(5){
-    background-image:url("https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=700&q=85");
-}
-
-.gallery-item:nth-child(6){
-    background-image:url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=700&q=85");
-}
-
-.gallery-item:nth-child(7){
-    background-image:url("https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=700&q=85");
-}
-
-.gallery-item:nth-child(8){
-    background-image:url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=700&q=85");
-}
-
-/* =========================================================
-   TESTIMONIALS
-   ========================================================= */
+/* TESTIMONIALS */
 
 .testimonial-grid{
     display:grid;
@@ -1061,9 +1024,7 @@ select{
     font-size:11px;
 }
 
-/* =========================================================
-   FAQ
-   ========================================================= */
+/* FAQ */
 
 .faq{
     background:var(--light);
@@ -1119,7 +1080,7 @@ select{
 }
 
 .faq-item.active .faq-answer{
-    max-height:200px;
+    max-height:400px;
 }
 
 .faq-item.active .faq-icon{
@@ -1128,9 +1089,7 @@ select{
     color:var(--accent-dark);
 }
 
-/* =========================================================
-   CTA
-   ========================================================= */
+/* CTA */
 
 .cta{
     padding:85px 0;
@@ -1142,7 +1101,11 @@ select{
     border-radius:25px;
     padding:65px;
     background:
-        linear-gradient(120deg,rgba(15,23,42,.97),rgba(15,23,42,.87)),
+        linear-gradient(
+            120deg,
+            rgba(15,23,42,.97),
+            rgba(15,23,42,.87)
+        ),
         url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=80")
         center/cover;
     color:#fff;
@@ -1176,9 +1139,7 @@ select{
     margin-bottom:28px;
 }
 
-/* =========================================================
-   CONTACT
-   ========================================================= */
+/* CONTACT */
 
 .contact{
     background:var(--light);
@@ -1306,9 +1267,11 @@ select{
     box-shadow:0 0 0 3px rgba(14,165,164,.1);
 }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
+.submit-btn{
+    width:100%;
+}
+
+/* FOOTER */
 
 .footer{
     background:#020617;
@@ -1365,9 +1328,7 @@ select{
     color:#5eead4;
 }
 
-/* =========================================================
-   TOAST
-   ========================================================= */
+/* TOAST */
 
 .toast{
     position:fixed;
@@ -1392,9 +1353,7 @@ select{
     opacity:1;
 }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+/* RESPONSIVE */
 
 @media(max-width:1050px){
 
@@ -1414,11 +1373,6 @@ select{
     .why-grid{
         grid-template-columns:1fr;
         gap:45px;
-    }
-
-    .about-content .section-title,
-    .why .section-title{
-        text-align:left;
     }
 
     .service-grid,
@@ -1626,22 +1580,36 @@ select{
 
 <body>
 
-<!-- =========================================================
-     TOP BAR
-     ========================================================= -->
+<!-- TOP BAR -->
 
 <div class="topbar">
 
     <div class="container topbar-inner">
 
         <div class="topbar-left">
-            <span>Building Businesses. Creating Impact.</span>
-            <a href="mailto:info@company.com">info@company.com</a>
+
+            <span id="topTagline">
+                Building Businesses. Creating Impact.
+            </span>
+
+            <a id="topEmail"
+               href="mailto:info@company.com">
+                info@company.com
+            </a>
+
         </div>
 
         <div class="topbar-right">
-            <a href="tel:+911234567890">+91 12345 67890</a>
-            <span>Mon - Sat: 9:00 AM - 6:00 PM</span>
+
+            <a id="topPhone"
+               href="tel:+911234567890">
+                +91 12345 67890
+            </a>
+
+            <span id="businessHours">
+                Mon - Sat: 9:00 AM - 6:00 PM
+            </span>
+
         </div>
 
     </div>
@@ -1649,9 +1617,7 @@ select{
 </div>
 
 
-<!-- =========================================================
-     NAVIGATION
-     ========================================================= -->
+<!-- NAVIGATION -->
 
 <header class="navbar">
 
@@ -1659,16 +1625,35 @@ select{
 
         <a href="#home" class="logo">
 
-            <div class="logo-mark">V</div>
+            <div class="logo-mark"
+                 id="logoMark">
+
+                <span id="logoLetter">V</span>
+
+                <img id="companyLogo"
+                     src=""
+                     alt="Company Logo"
+                     style="display:none;">
+
+            </div>
 
             <div>
-                VERTEX
-                <small>GROUP</small>
+
+                <span id="brandName">
+                    VERTEX
+                </span>
+
+                <small id="brandTagline">
+                    GROUP
+                </small>
+
             </div>
 
         </a>
 
-        <nav class="nav-links" id="navLinks">
+
+        <nav class="nav-links"
+             id="navLinks">
 
             <a href="#home">Home</a>
             <a href="#about">About</a>
@@ -1680,13 +1665,17 @@ select{
 
         </nav>
 
+
         <div class="nav-actions">
 
-            <a href="#contact" class="btn btn-dark">
+            <a href="#contact"
+               class="btn btn-dark">
                 Let's Talk →
             </a>
 
-            <button class="menu-btn" id="menuBtn">
+            <button class="menu-btn"
+                    id="menuBtn"
+                    type="button">
                 ☰
             </button>
 
@@ -1697,39 +1686,59 @@ select{
 </header>
 
 
-<!-- =========================================================
-     HERO
-     ========================================================= -->
+<!-- HERO -->
 
-<section class="hero" id="home">
+<section class="hero"
+         id="home">
 
     <div class="container hero-inner">
 
         <div class="hero-content">
 
             <div class="hero-label">
+
                 <span></span>
-                CORPORATE EXCELLENCE
+
+                <span id="heroLabelText">
+                    CORPORATE EXCELLENCE
+                </span>
+
             </div>
 
+
             <h1>
-                Growing Ideas Into
-                <strong>Real Business.</strong>
+
+                <span id="heroTitleLine">
+                    Growing Ideas Into
+                </span>
+
+                <br>
+
+                <strong id="heroTitleStrong">
+                    Real Business.
+                </strong>
+
             </h1>
 
-            <p>
+
+            <p id="heroDescription">
+
                 We build sustainable businesses through strategic thinking,
                 innovation, technology and a strong commitment to our customers
                 and partners.
+
             </p>
+
 
             <div class="hero-buttons">
 
-                <a href="#about" class="btn btn-primary">
+                <a href="#about"
+                   class="btn btn-primary">
                     Discover Our Company →
                 </a>
 
-                <a href="#contact" class="btn btn-outline">
+                <a href="#contact"
+                   class="btn btn-outline">
                     Talk To Us
                 </a>
 
@@ -1744,31 +1753,63 @@ select{
                 Our Performance
             </div>
 
-            <h3>
+            <h3 id="heroPerformanceText">
                 Experience that creates
                 measurable business value.
             </h3>
 
+
             <div class="hero-card-row">
 
                 <div class="hero-mini">
-                    <strong>20+</strong>
-                    <span>Years Experience</span>
+
+                    <strong id="heroStat1">
+                        20+
+                    </strong>
+
+                    <span id="heroStatLabel1">
+                        Years Experience
+                    </span>
+
                 </div>
 
-                <div class="hero-mini">
-                    <strong>25+</strong>
-                    <span>Markets Served</span>
-                </div>
 
                 <div class="hero-mini">
-                    <strong>500+</strong>
-                    <span>Projects Delivered</span>
+
+                    <strong id="heroStat2">
+                        25+
+                    </strong>
+
+                    <span id="heroStatLabel2">
+                        Markets Served
+                    </span>
+
                 </div>
 
+
                 <div class="hero-mini">
-                    <strong>98%</strong>
-                    <span>Client Retention</span>
+
+                    <strong id="heroStat3">
+                        500+
+                    </strong>
+
+                    <span id="heroStatLabel3">
+                        Projects Delivered
+                    </span>
+
+                </div>
+
+
+                <div class="hero-mini">
+
+                    <strong id="heroStat4">
+                        98%
+                    </strong>
+
+                    <span id="heroStatLabel4">
+                        Client Retention
+                    </span>
+
                 </div>
 
             </div>
@@ -1780,32 +1821,30 @@ select{
 </section>
 
 
-<!-- =========================================================
-     STATS
-     ========================================================= -->
+<!-- STATS -->
 
 <section class="stats">
 
     <div class="container stats-grid">
 
         <div class="stat">
-            <strong>20+</strong>
-            <span>Years of Excellence</span>
+            <strong id="stat1Value">20+</strong>
+            <span id="stat1Label">Years of Excellence</span>
         </div>
 
         <div class="stat">
-            <strong>500+</strong>
-            <span>Projects Delivered</span>
+            <strong id="stat2Value">500+</strong>
+            <span id="stat2Label">Projects Delivered</span>
         </div>
 
         <div class="stat">
-            <strong>25+</strong>
-            <span>Markets & Locations</span>
+            <strong id="stat3Value">25+</strong>
+            <span id="stat3Label">Markets & Locations</span>
         </div>
 
         <div class="stat">
-            <strong>98%</strong>
-            <span>Client Satisfaction</span>
+            <strong id="stat4Value">98%</strong>
+            <span id="stat4Label">Client Satisfaction</span>
         </div>
 
     </div>
@@ -1813,21 +1852,30 @@ select{
 </section>
 
 
-<!-- =========================================================
-     ABOUT
-     ========================================================= -->
+<!-- ABOUT -->
 
-<section class="section" id="about">
+<section class="section"
+         id="about">
 
     <div class="container about-grid">
 
         <div class="about-visual">
 
-            <div class="about-main-image"></div>
+            <div class="about-main-image"
+                 id="aboutImage">
+            </div>
+
 
             <div class="about-badge">
-                <strong>20+</strong>
-                <span>Years of trust, innovation and business growth.</span>
+
+                <strong id="aboutYears">
+                    20+
+                </strong>
+
+                <span id="aboutBadgeText">
+                    Years of trust, innovation and business growth.
+                </span>
+
             </div>
 
         </div>
@@ -1839,22 +1887,33 @@ select{
                 ABOUT OUR COMPANY
             </div>
 
-            <h2 class="section-title">
+
+            <h2 class="section-title"
+                id="aboutTitle">
+
                 A company built around
                 trust, people and progress.
+
             </h2>
 
-            <p>
+
+            <p id="aboutText">
+
                 We are a diversified organization focused on creating
                 meaningful value for customers, employees, partners and
                 communities.
+
             </p>
 
-            <p>
+
+            <p id="aboutText2">
+
                 Our approach combines strategic thinking, operational
                 excellence and continuous innovation to help businesses
                 perform better in a rapidly changing world.
+
             </p>
+
 
             <ul class="about-list">
 
@@ -1880,7 +1939,9 @@ select{
 
             </ul>
 
-            <a href="#business" class="btn btn-dark">
+
+            <a href="#business"
+               class="btn btn-dark">
                 Explore Our Business →
             </a>
 
@@ -1891,11 +1952,10 @@ select{
 </section>
 
 
-<!-- =========================================================
-     BUSINESS VERTICALS
-     ========================================================= -->
+<!-- BUSINESS -->
 
-<section class="section verticals" id="business">
+<section class="section verticals"
+         id="business">
 
     <div class="container">
 
@@ -1922,86 +1982,62 @@ select{
         <div class="vertical-grid">
 
             <article class="vertical-card">
-
                 <div class="icon">◈</div>
-
                 <h3>Technology</h3>
-
                 <p>
                     Digital solutions, technology services and modern
                     platforms designed for business growth.
                 </p>
-
             </article>
 
 
             <article class="vertical-card">
-
                 <div class="icon">◆</div>
-
                 <h3>Consulting</h3>
-
                 <p>
                     Strategic advisory and business consulting focused on
                     measurable outcomes.
                 </p>
-
             </article>
 
 
             <article class="vertical-card">
-
                 <div class="icon">▣</div>
-
                 <h3>Trading & Distribution</h3>
-
                 <p>
                     Reliable sourcing, distribution and supply solutions
                     connecting businesses with markets.
                 </p>
-
             </article>
 
 
             <article class="vertical-card">
-
                 <div class="icon">⌂</div>
-
                 <h3>Infrastructure</h3>
-
                 <p>
                     End-to-end infrastructure solutions for commercial and
                     enterprise requirements.
                 </p>
-
             </article>
 
 
             <article class="vertical-card">
-
                 <div class="icon">◎</div>
-
                 <h3>Professional Services</h3>
-
                 <p>
                     Specialized services helping organizations improve
                     operations and customer experience.
                 </p>
-
             </article>
 
 
             <article class="vertical-card">
-
                 <div class="icon">↗</div>
-
                 <h3>New Ventures</h3>
-
                 <p>
                     Exploring emerging opportunities, new markets and
                     innovative business models.
                 </p>
-
             </article>
 
         </div>
@@ -2011,11 +2047,10 @@ select{
 </section>
 
 
-<!-- =========================================================
-     SERVICES
-     ========================================================= -->
+<!-- SERVICES -->
 
-<section class="section" id="services">
+<section class="section"
+         id="services">
 
     <div class="container">
 
@@ -2042,7 +2077,9 @@ select{
 
             <article class="service-card">
 
-                <div class="service-number">01 / STRATEGY</div>
+                <div class="service-number">
+                    01 / STRATEGY
+                </div>
 
                 <h3>Business Strategy</h3>
 
@@ -2051,14 +2088,18 @@ select{
                     practical strategies for sustainable growth.
                 </p>
 
-                <a href="#contact">Learn More →</a>
+                <a href="#contact">
+                    Learn More →
+                </a>
 
             </article>
 
 
             <article class="service-card">
 
-                <div class="service-number">02 / DIGITAL</div>
+                <div class="service-number">
+                    02 / DIGITAL
+                </div>
 
                 <h3>Digital Transformation</h3>
 
@@ -2067,14 +2108,18 @@ select{
                     automation and data-driven decision making.
                 </p>
 
-                <a href="#contact">Learn More →</a>
+                <a href="#contact">
+                    Learn More →
+                </a>
 
             </article>
 
 
             <article class="service-card">
 
-                <div class="service-number">03 / OPERATIONS</div>
+                <div class="service-number">
+                    03 / OPERATIONS
+                </div>
 
                 <h3>Operational Excellence</h3>
 
@@ -2083,14 +2128,18 @@ select{
                     structured operational systems.
                 </p>
 
-                <a href="#contact">Learn More →</a>
+                <a href="#contact">
+                    Learn More →
+                </a>
 
             </article>
 
 
             <article class="service-card">
 
-                <div class="service-number">04 / MARKETS</div>
+                <div class="service-number">
+                    04 / MARKETS
+                </div>
 
                 <h3>Market Expansion</h3>
 
@@ -2099,14 +2148,18 @@ select{
                     entering and growing in new markets.
                 </p>
 
-                <a href="#contact">Learn More →</a>
+                <a href="#contact">
+                    Learn More →
+                </a>
 
             </article>
 
 
             <article class="service-card">
 
-                <div class="service-number">05 / ADVISORY</div>
+                <div class="service-number">
+                    05 / ADVISORY
+                </div>
 
                 <h3>Business Advisory</h3>
 
@@ -2115,14 +2168,18 @@ select{
                     transformation and organizational development.
                 </p>
 
-                <a href="#contact">Learn More →</a>
+                <a href="#contact">
+                    Learn More →
+                </a>
 
             </article>
 
 
             <article class="service-card">
 
-                <div class="service-number">06 / PARTNERSHIPS</div>
+                <div class="service-number">
+                    06 / PARTNERSHIPS
+                </div>
 
                 <h3>Strategic Partnerships</h3>
 
@@ -2131,7 +2188,9 @@ select{
                     customers and business opportunities.
                 </p>
 
-                <a href="#contact">Learn More →</a>
+                <a href="#contact">
+                    Learn More →
+                </a>
 
             </article>
 
@@ -2142,11 +2201,10 @@ select{
 </section>
 
 
-<!-- =========================================================
-     PRODUCTS
-     ========================================================= -->
+<!-- PRODUCTS -->
 
-<section class="section products" id="products">
+<section class="section products"
+         id="products">
 
     <div class="container">
 
@@ -2169,60 +2227,13 @@ select{
         </div>
 
 
-        <div class="product-grid">
+        <div class="product-grid"
+             id="productGrid"
+             data-products>
 
-            <article class="product-card">
-
-                <div class="product-image"></div>
-
-                <div class="product-body">
-
-                    <h3>Business Solution A</h3>
-
-                    <p>
-                        Professional solution designed to simplify operations
-                        and improve business performance.
-                    </p>
-
-                </div>
-
-            </article>
-
-
-            <article class="product-card">
-
-                <div class="product-image"></div>
-
-                <div class="product-body">
-
-                    <h3>Enterprise Solution B</h3>
-
-                    <p>
-                        Scalable solution for growing organizations and
-                        enterprise requirements.
-                    </p>
-
-                </div>
-
-            </article>
-
-
-            <article class="product-card">
-
-                <div class="product-image"></div>
-
-                <div class="product-body">
-
-                    <h3>Professional Solution C</h3>
-
-                    <p>
-                        Reliable tools and services created to deliver
-                        measurable business value.
-                    </p>
-
-                </div>
-
-            </article>
+            <div class="product-empty">
+                Loading products...
+            </div>
 
         </div>
 
@@ -2231,9 +2242,7 @@ select{
 </section>
 
 
-<!-- =========================================================
-     WHY CHOOSE US
-     ========================================================= -->
+<!-- WHY -->
 
 <section class="section why">
 
@@ -2329,11 +2338,10 @@ select{
 </section>
 
 
-<!-- =========================================================
-     LEADERSHIP
-     ========================================================= -->
+<!-- LEADERSHIP -->
 
-<section class="section" id="leadership">
+<section class="section"
+         id="leadership">
 
     <div class="container">
 
@@ -2409,11 +2417,10 @@ select{
 </section>
 
 
-<!-- =========================================================
-     PROJECTS
-     ========================================================= -->
+<!-- PROJECTS -->
 
-<section class="section projects" id="projects">
+<section class="section projects"
+         id="projects">
 
     <div class="container">
 
@@ -2514,9 +2521,7 @@ select{
 </section>
 
 
-<!-- =========================================================
-     ACHIEVEMENTS
-     ========================================================= -->
+<!-- ACHIEVEMENTS -->
 
 <section class="section">
 
@@ -2539,23 +2544,31 @@ select{
         <div class="achievement-grid">
 
             <div class="achievement">
-                <strong>20+</strong>
-                <span>Years Experience</span>
+                <strong id="achievement1Value">20+</strong>
+                <span id="achievement1Label">
+                    Years Experience
+                </span>
             </div>
 
             <div class="achievement">
-                <strong>500+</strong>
-                <span>Projects Completed</span>
+                <strong id="achievement2Value">500+</strong>
+                <span id="achievement2Label">
+                    Projects Completed
+                </span>
             </div>
 
             <div class="achievement">
-                <strong>25+</strong>
-                <span>Markets Served</span>
+                <strong id="achievement3Value">25+</strong>
+                <span id="achievement3Label">
+                    Markets Served
+                </span>
             </div>
 
             <div class="achievement">
-                <strong>98%</strong>
-                <span>Client Satisfaction</span>
+                <strong id="achievement4Value">98%</strong>
+                <span id="achievement4Label">
+                    Client Satisfaction
+                </span>
             </div>
 
         </div>
@@ -2565,9 +2578,7 @@ select{
 </section>
 
 
-<!-- =========================================================
-     CLIENTS
-     ========================================================= -->
+<!-- CLIENTS -->
 
 <section class="section-sm clients">
 
@@ -2601,11 +2612,10 @@ select{
 </section>
 
 
-<!-- =========================================================
-     GALLERY
-     ========================================================= -->
+<!-- GALLERY -->
 
-<section class="section" id="gallery">
+<section class="section"
+         id="gallery">
 
     <div class="container">
 
@@ -2627,16 +2637,13 @@ select{
         </div>
 
 
-        <div class="gallery-grid">
+        <div class="gallery-grid"
+             id="galleryGrid"
+             data-gallery>
 
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
-            <div class="gallery-item"></div>
+            <div class="gallery-empty">
+                Loading gallery...
+            </div>
 
         </div>
 
@@ -2645,11 +2652,10 @@ select{
 </section>
 
 
-<!-- =========================================================
-     TESTIMONIALS
-     ========================================================= -->
+<!-- TESTIMONIALS -->
 
-<section class="section" id="testimonials">
+<section class="section"
+         id="testimonials">
 
     <div class="container">
 
@@ -2666,75 +2672,13 @@ select{
         </div>
 
 
-        <div class="testimonial-grid">
+        <div class="testimonial-grid"
+             id="testimonialGrid"
+             data-testimonials>
 
-            <article class="testimonial">
-
-                <div class="quote">“</div>
-
-                <p>
-                    The team demonstrated exceptional professionalism,
-                    communication and commitment throughout the project.
-                </p>
-
-                <div class="testimonial-person">
-
-                    <div class="person-avatar">AM</div>
-
-                    <div class="person-info">
-                        <strong>Arun Mehta</strong>
-                        <span>Managing Director</span>
-                    </div>
-
-                </div>
-
-            </article>
-
-
-            <article class="testimonial">
-
-                <div class="quote">“</div>
-
-                <p>
-                    Their strategic approach helped us simplify our operations
-                    and achieve better business visibility.
-                </p>
-
-                <div class="testimonial-person">
-
-                    <div class="person-avatar">SK</div>
-
-                    <div class="person-info">
-                        <strong>Sarah Khan</strong>
-                        <span>Business Head</span>
-                    </div>
-
-                </div>
-
-            </article>
-
-
-            <article class="testimonial">
-
-                <div class="quote">“</div>
-
-                <p>
-                    A dependable partner with strong execution capabilities
-                    and a genuine focus on long-term relationships.
-                </p>
-
-                <div class="testimonial-person">
-
-                    <div class="person-avatar">RK</div>
-
-                    <div class="person-info">
-                        <strong>Rahul Kapoor</strong>
-                        <span>Founder & Director</span>
-                    </div>
-
-                </div>
-
-            </article>
+            <div class="testimonial-empty">
+                Loading testimonials...
+            </div>
 
         </div>
 
@@ -2743,11 +2687,10 @@ select{
 </section>
 
 
-<!-- =========================================================
-     FAQ
-     ========================================================= -->
+<!-- FAQ -->
 
-<section class="section faq" id="faq">
+<section class="section faq"
+         id="faq">
 
     <div class="container">
 
@@ -2764,104 +2707,12 @@ select{
         </div>
 
 
-        <div class="faq-wrap">
+        <div class="faq-wrap"
+             id="faqList"
+             data-faq>
 
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-
-                    <span>
-                        What industries do you serve?
-                    </span>
-
-                    <span class="faq-icon">+</span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <div class="faq-answer-inner">
-                        We work with businesses across technology,
-                        professional services, trading, infrastructure,
-                        consulting and other sectors.
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-
-                    <span>
-                        How can we start a business discussion?
-                    </span>
-
-                    <span class="faq-icon">+</span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <div class="faq-answer-inner">
-                        You can contact our team using the enquiry form,
-                        telephone or email. Our team will review your
-                        requirement and get in touch.
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-
-                    <span>
-                        Do you work with businesses outside your city?
-                    </span>
-
-                    <span class="faq-icon">+</span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <div class="faq-answer-inner">
-                        Yes. Our business model can support customers and
-                        partners across multiple cities, regions and markets.
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-
-                    <span>
-                        Can I request a customized solution?
-                    </span>
-
-                    <span class="faq-icon">+</span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <div class="faq-answer-inner">
-                        Yes. Share your requirements with our team and we can
-                        discuss an appropriate solution based on your needs.
-                    </div>
-
-                </div>
-
+            <div class="faq-empty">
+                Loading FAQs...
             </div>
 
         </div>
@@ -2871,9 +2722,7 @@ select{
 </section>
 
 
-<!-- =========================================================
-     CTA
-     ========================================================= -->
+<!-- CTA -->
 
 <section class="cta">
 
@@ -2883,17 +2732,18 @@ select{
 
             <div class="cta-content">
 
-                <h2>
+                <h2 id="ctaTitle">
                     Let's build something
                     valuable together.
                 </h2>
 
-                <p>
+                <p id="ctaText">
                     Tell us about your business requirement, project or
                     opportunity and our team will get back to you.
                 </p>
 
-                <a href="#contact" class="btn btn-primary">
+                <a href="#contact"
+                   class="btn btn-primary">
                     Start a Conversation →
                 </a>
 
@@ -2906,11 +2756,10 @@ select{
 </section>
 
 
-<!-- =========================================================
-     CONTACT
-     ========================================================= -->
+<!-- CONTACT -->
 
-<section class="section contact" id="contact">
+<section class="section contact"
+         id="contact">
 
     <div class="container contact-grid">
 
@@ -2926,7 +2775,7 @@ select{
                 next opportunity.
             </h3>
 
-            <p>
+            <p id="contactDescription">
                 Whether you are looking for a business partner, service
                 provider, product or strategic solution, we would be happy
                 to hear from you.
@@ -2941,7 +2790,8 @@ select{
 
                     <div>
                         <strong>Corporate Office</strong>
-                        <span>
+
+                        <span id="contactAddress">
                             123 Business Avenue, New Delhi, India
                         </span>
                     </div>
@@ -2955,7 +2805,10 @@ select{
 
                     <div>
                         <strong>Phone</strong>
-                        <span>+91 12345 67890</span>
+
+                        <span id="contactPhone">
+                            +91 12345 67890
+                        </span>
                     </div>
 
                 </div>
@@ -2967,7 +2820,10 @@ select{
 
                     <div>
                         <strong>Email</strong>
-                        <span>info@company.com</span>
+
+                        <span id="contactEmail">
+                            info@company.com
+                        </span>
                     </div>
 
                 </div>
@@ -2979,7 +2835,10 @@ select{
 
                     <div>
                         <strong>Business Hours</strong>
-                        <span>Monday - Saturday, 9:00 AM - 6:00 PM</span>
+
+                        <span id="contactHours">
+                            Monday - Saturday, 9:00 AM - 6:00 PM
+                        </span>
                     </div>
 
                 </div>
@@ -2991,7 +2850,9 @@ select{
 
         <div class="form-card">
 
-            <h3>Send an Enquiry</h3>
+            <h3>
+                Send an Enquiry
+            </h3>
 
             <p>
                 Fill in your details and our team will contact you.
@@ -3004,7 +2865,9 @@ select{
 
                     <div class="field">
 
-                        <label>Full Name *</label>
+                        <label>
+                            Full Name *
+                        </label>
 
                         <input
                             type="text"
@@ -3018,7 +2881,9 @@ select{
 
                     <div class="field">
 
-                        <label>Company Name</label>
+                        <label>
+                            Company Name
+                        </label>
 
                         <input
                             type="text"
@@ -3031,7 +2896,9 @@ select{
 
                     <div class="field">
 
-                        <label>Email *</label>
+                        <label>
+                            Email *
+                        </label>
 
                         <input
                             type="email"
@@ -3045,7 +2912,9 @@ select{
 
                     <div class="field">
 
-                        <label>Phone *</label>
+                        <label>
+                            Phone *
+                        </label>
 
                         <input
                             type="tel"
@@ -3059,7 +2928,9 @@ select{
 
                     <div class="field full">
 
-                        <label>Requirement</label>
+                        <label>
+                            Requirement
+                        </label>
 
                         <select name="requirement">
 
@@ -3067,23 +2938,23 @@ select{
                                 Select requirement
                             </option>
 
-                            <option>
+                            <option value="Business Enquiry">
                                 Business Enquiry
                             </option>
 
-                            <option>
+                            <option value="Product Enquiry">
                                 Product Enquiry
                             </option>
 
-                            <option>
+                            <option value="Service Enquiry">
                                 Service Enquiry
                             </option>
 
-                            <option>
+                            <option value="Partnership">
                                 Partnership
                             </option>
 
-                            <option>
+                            <option value="Other">
                                 Other
                             </option>
 
@@ -3094,7 +2965,9 @@ select{
 
                     <div class="field full">
 
-                        <label>Message *</label>
+                        <label>
+                            Message *
+                        </label>
 
                         <textarea
                             name="message"
@@ -3109,8 +2982,8 @@ select{
 
                         <button
                             type="submit"
-                            class="btn btn-dark"
-                        >
+                            class="btn btn-dark submit-btn"
+                            id="submitEnquiryBtn">
                             Submit Enquiry →
                         </button>
 
@@ -3127,9 +3000,7 @@ select{
 </section>
 
 
-<!-- =========================================================
-     FOOTER
-     ========================================================= -->
+<!-- FOOTER -->
 
 <footer class="footer">
 
@@ -3140,18 +3011,38 @@ select{
 
             <div class="footer-brand">
 
-                <a href="#home" class="logo">
+                <a href="#home"
+                   class="logo">
 
-                    <div class="logo-mark">V</div>
+                    <div class="logo-mark">
+
+                        <span id="footerLogoLetter">
+                            V
+                        </span>
+
+                        <img id="footerCompanyLogo"
+                             src=""
+                             alt="Company Logo"
+                             style="display:none;">
+
+                    </div>
 
                     <div>
-                        VERTEX
-                        <small>GROUP</small>
+
+                        <span id="footerCompanyName">
+                            VERTEX
+                        </span>
+
+                        <small>
+                            GROUP
+                        </small>
+
                     </div>
 
                 </a>
 
-                <p>
+
+                <p id="footerAbout">
                     Building businesses through innovation, trust,
                     professional excellence and long-term partnerships.
                 </p>
@@ -3161,14 +3052,27 @@ select{
 
             <div>
 
-                <h4>Company</h4>
+                <h4>
+                    Company
+                </h4>
 
                 <div class="footer-links">
 
-                    <a href="#about">About Us</a>
-                    <a href="#business">Our Business</a>
-                    <a href="#leadership">Leadership</a>
-                    <a href="#projects">Projects</a>
+                    <a href="#about">
+                        About Us
+                    </a>
+
+                    <a href="#business">
+                        Our Business
+                    </a>
+
+                    <a href="#leadership">
+                        Leadership
+                    </a>
+
+                    <a href="#projects">
+                        Projects
+                    </a>
 
                 </div>
 
@@ -3177,14 +3081,27 @@ select{
 
             <div>
 
-                <h4>Solutions</h4>
+                <h4>
+                    Solutions
+                </h4>
 
                 <div class="footer-links">
 
-                    <a href="#services">Services</a>
-                    <a href="#products">Products</a>
-                    <a href="#gallery">Gallery</a>
-                    <a href="#faq">FAQ</a>
+                    <a href="#services">
+                        Services
+                    </a>
+
+                    <a href="#products">
+                        Products
+                    </a>
+
+                    <a href="#gallery">
+                        Gallery
+                    </a>
+
+                    <a href="#faq">
+                        FAQ
+                    </a>
 
                 </div>
 
@@ -3193,15 +3110,19 @@ select{
 
             <div>
 
-                <h4>Contact</h4>
+                <h4>
+                    Contact
+                </h4>
 
                 <div class="footer-links">
 
-                    <a href="tel:+911234567890">
+                    <a id="footerPhoneLink"
+                       href="tel:+911234567890">
                         +91 12345 67890
                     </a>
 
-                    <a href="mailto:info@company.com">
+                    <a id="footerEmailLink"
+                       href="mailto:info@company.com">
                         info@company.com
                     </a>
 
@@ -3219,12 +3140,24 @@ select{
         <div class="footer-bottom">
 
             <span>
-                © <span id="year"></span> VERTEX GROUP.
+
+                ©
+                <span id="year"></span>
+
+                <span id="copyrightName">
+                    VERTEX GROUP
+                </span>.
+
                 All Rights Reserved.
+
             </span>
 
+
             <span>
-                Designed by <a href="#">MD Kaif Web Platform</a>
+                Designed by
+                <a href="#">
+                    MD Kaif Web Platform
+                </a>
             </span>
 
         </div>
@@ -3234,128 +3167,1884 @@ select{
 </footer>
 
 
-<!-- =========================================================
-     TOAST
-     ========================================================= -->
+<!-- TOAST -->
 
-<div class="toast" id="toast">
+<div class="toast"
+     id="toast">
     Thank you! Your enquiry has been received.
 </div>
 
 
-<!-- =========================================================
-     JAVASCRIPT
-     ========================================================= -->
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- PLATFORM CONTEXT -->
+
+<script src="../client-context.js"></script>
+
+<script src="../client-runtime.js"></script>
+
+
+<!-- V2 ADAPTER -->
 
 <script>
 
-/* Mobile Menu */
+(function(){
 
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.getElementById("navLinks");
+"use strict";
 
-menuBtn.addEventListener("click", function(){
 
-    navLinks.classList.toggle("active");
+/* =========================================================
+   SUPABASE
+   ========================================================= */
 
-    if(navLinks.classList.contains("active")){
-        menuBtn.innerHTML = "✕";
-    }else{
-        menuBtn.innerHTML = "☰";
+const SUPABASE_URL =
+    "https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================================
+   DATA
+   ========================================================= */
+
+let CLIENT_ID = null;
+
+let companySettings = {};
+
+let products = [];
+
+let gallery = [];
+
+let testimonials = [];
+
+let faqs = [];
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function setText(id,value){
+
+    const element =
+        document.getElementById(id);
+
+    if(element){
+
+        element.textContent =
+            value !== null &&
+            value !== undefined &&
+            String(value).trim() !== ""
+                ? value
+                : "";
+
     }
 
-});
+}
 
 
-/* Close mobile menu after clicking */
+function value(value,fallback=""){
 
-document.querySelectorAll(".nav-links a").forEach(function(link){
+    if(
+        value === null ||
+        value === undefined ||
+        String(value).trim() === ""
+    ){
 
-    link.addEventListener("click", function(){
+        return fallback;
 
-        navLinks.classList.remove("active");
-        menuBtn.innerHTML = "☰";
+    }
 
-    });
+    return value;
 
-});
+}
 
 
-/* FAQ */
+function escapeHTML(value){
 
-document.querySelectorAll(".faq-question").forEach(function(button){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
-    button.addEventListener("click", function(){
+}
 
-        const currentItem = button.parentElement;
 
-        document.querySelectorAll(".faq-item").forEach(function(item){
+function initials(name){
 
-            if(item !== currentItem){
-                item.classList.remove("active");
+    const words =
+        String(name || "Client")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    if(!words.length){
+        return "CL";
+    }
+
+    return words
+        .slice(0,2)
+        .map(word => word.charAt(0).toUpperCase())
+        .join("");
+
+}
+
+
+function getImage(row){
+
+    return value(
+        row.main_image_url,
+        value(
+            row.image_url,
+            value(
+                row.photo_url,
+                value(
+                    row.url,
+                    ""
+                )
+            )
+        )
+    );
+
+}
+
+
+function getProductDescription(row){
+
+    return value(
+        row.short_description,
+        value(
+            row.description,
+            value(
+                row.specifications,
+                "Professional solution designed for real-world business requirements."
+            )
+        )
+    );
+
+}
+
+
+/* =========================================================
+   CLIENT CONTEXT
+   ========================================================= */
+
+function getClientId(){
+
+    try{
+
+        if(
+            typeof MDKClientContext !== "undefined" &&
+            MDKClientContext.get
+        ){
+
+            const client =
+                MDKClientContext.get();
+
+            if(client){
+
+                return client.id ||
+                       client.client_id ||
+                       null;
+
             }
-
-        });
-
-        currentItem.classList.toggle("active");
-
-    });
-
-});
-
-
-/* Demo Enquiry */
-
-const enquiryForm = document.getElementById("enquiryForm");
-const toast = document.getElementById("toast");
-
-enquiryForm.addEventListener("submit", function(e){
-
-    e.preventDefault();
-
-    toast.classList.add("show");
-
-    enquiryForm.reset();
-
-    setTimeout(function(){
-
-        toast.classList.remove("show");
-
-    },3500);
-
-});
-
-
-/* Current Year */
-
-document.getElementById("year").textContent =
-    new Date().getFullYear();
-
-
-/* Smooth section loading */
-
-document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
-
-    anchor.addEventListener("click",function(e){
-
-        const target = document.querySelector(
-            this.getAttribute("href")
-        );
-
-        if(target){
-
-            e.preventDefault();
-
-            target.scrollIntoView({
-                behavior:"smooth",
-                block:"start"
-            });
 
         }
 
+    }catch(error){
+
+        console.warn(
+            "MDKClientContext error:",
+            error
+        );
+
+    }
+
+
+    /*
+       Fallback only for direct testing.
+       Replace with a real client UUID if required.
+    */
+
+    return null;
+
+}
+
+
+/* =========================================================
+   COMPANY SETTINGS
+   ========================================================= */
+
+async function loadCompanySettings(){
+
+    if(!CLIENT_ID){
+        return;
+    }
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("company_settings")
+            .select("*")
+            .eq("client_id",CLIENT_ID)
+            .limit(1)
+            .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Company Settings:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    companySettings =
+        data || {};
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+   ========================================================= */
+
+async function loadProducts(){
+
+    if(!CLIENT_ID){
+        return;
+    }
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("products")
+            .select("*")
+            .eq("client_id",CLIENT_ID)
+            .order("sort_order",{
+                ascending:true,
+                nullsFirst:false
+            });
+
+
+    if(error){
+
+        console.error(
+            "Products:",
+            error
+        );
+
+        products = [];
+
+        return;
+
+    }
+
+
+    products =
+        data || [];
+
+}
+
+
+/* =========================================================
+   GALLERY
+   ========================================================= */
+
+async function loadGallery(){
+
+    if(!CLIENT_ID){
+        return;
+    }
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("gallery")
+                .select("*")
+                .eq("client_id",CLIENT_ID);
+
+
+        if(error){
+
+            console.warn(
+                "Gallery:",
+                error.message
+            );
+
+            gallery = [];
+
+            return;
+
+        }
+
+
+        gallery =
+            data || [];
+
+    }catch(error){
+
+        console.warn(
+            "Gallery:",
+            error
+        );
+
+        gallery = [];
+
+    }
+
+}
+
+
+/* =========================================================
+   TESTIMONIALS
+   ========================================================= */
+
+async function loadTestimonials(){
+
+    if(!CLIENT_ID){
+        return;
+    }
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("testimonials")
+                .select("*")
+                .eq("client_id",CLIENT_ID);
+
+
+        if(error){
+
+            console.warn(
+                "Testimonials:",
+                error.message
+            );
+
+            testimonials = [];
+
+            return;
+
+        }
+
+
+        testimonials =
+            data || [];
+
+    }catch(error){
+
+        console.warn(
+            "Testimonials:",
+            error
+        );
+
+        testimonials = [];
+
+    }
+
+}
+
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+
+async function loadFAQs(){
+
+    if(!CLIENT_ID){
+        return;
+    }
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("faqs")
+            .select("*")
+            .eq("client_id",CLIENT_ID)
+            .eq("status","active")
+            .order("sort_order",{
+                ascending:true
+            });
+
+
+    if(error){
+
+        console.error(
+            "FAQs:",
+            error
+        );
+
+        faqs = [];
+
+        return;
+
+    }
+
+
+    faqs =
+        data || [];
+
+}
+
+
+/* =========================================================
+   COMPANY RENDER
+   ========================================================= */
+
+function renderCompany(){
+
+    const c =
+        companySettings || {};
+
+
+    const companyName =
+        value(
+            c.website_title,
+            value(
+                c.company_name,
+                "VERTEX"
+            )
+        );
+
+
+    const tagline =
+        value(
+            c.tagline,
+            "GROUP"
+        );
+
+
+    document.title =
+        value(
+            c.website_title,
+            companyName + " | Corporate Excellence"
+        );
+
+
+    const meta =
+        document.querySelector(
+            'meta[name="description"]'
+        );
+
+
+    if(meta){
+
+        meta.setAttribute(
+            "content",
+            value(
+                c.meta_description,
+                "Professional corporate company website"
+            )
+        );
+
+    }
+
+
+    /* FAVICON */
+
+    if(c.favicon_url){
+
+        const favicon =
+            document.getElementById(
+                "favicon"
+            );
+
+        if(favicon){
+
+            favicon.href =
+                c.favicon_url;
+
+        }
+
+    }
+
+
+    /* BRAND */
+
+    setText(
+        "brandName",
+        companyName
+    );
+
+    setText(
+        "brandTagline",
+        tagline
+    );
+
+    setText(
+        "footerCompanyName",
+        companyName
+    );
+
+    setText(
+        "copyrightName",
+        companyName
+    );
+
+
+    /* LOGO */
+
+    if(c.logo_url){
+
+        const logo =
+            document.getElementById(
+                "companyLogo"
+            );
+
+        const footerLogo =
+            document.getElementById(
+                "footerCompanyLogo"
+            );
+
+        const letter =
+            document.getElementById(
+                "logoLetter"
+            );
+
+        const footerLetter =
+            document.getElementById(
+                "footerLogoLetter"
+            );
+
+
+        if(logo){
+
+            logo.src =
+                c.logo_url;
+
+            logo.style.display =
+                "block";
+
+        }
+
+
+        if(footerLogo){
+
+            footerLogo.src =
+                c.logo_url;
+
+            footerLogo.style.display =
+                "block";
+
+        }
+
+
+        if(letter){
+            letter.style.display =
+                "none";
+        }
+
+
+        if(footerLetter){
+            footerLetter.style.display =
+                "none";
+        }
+
+    }else{
+
+        const firstLetter =
+            companyName
+                .charAt(0)
+                .toUpperCase();
+
+        setText(
+            "logoLetter",
+            firstLetter
+        );
+
+        setText(
+            "footerLogoLetter",
+            firstLetter
+        );
+
+    }
+
+
+    /* TOPBAR */
+
+    setText(
+        "topTagline",
+        value(
+            c.tagline,
+            "Building Businesses. Creating Impact."
+        )
+    );
+
+
+    const email =
+        value(
+            c.email,
+            "info@company.com"
+        );
+
+
+    const phone =
+        value(
+            c.phone,
+            "+91 12345 67890"
+        );
+
+
+    setText(
+        "topEmail",
+        email
+    );
+
+    setText(
+        "topPhone",
+        phone
+    );
+
+
+    const topEmail =
+        document.getElementById(
+            "topEmail"
+        );
+
+    if(topEmail){
+
+        topEmail.href =
+            "mailto:" + email;
+
+    }
+
+
+    const topPhone =
+        document.getElementById(
+            "topPhone"
+        );
+
+    if(topPhone){
+
+        topPhone.href =
+            "tel:" +
+            phone.replace(
+                /[^0-9+]/g,
+                ""
+            );
+
+    }
+
+
+    /* ADDRESS */
+
+    const address =
+        [
+            c.address,
+            c.city,
+            c.state,
+            c.country,
+            c.postal_code
+        ]
+        .filter(Boolean)
+        .join(", ");
+
+
+    setText(
+        "contactAddress",
+        value(
+            address,
+            "Corporate Office"
+        )
+    );
+
+
+    setText(
+        "contactPhone",
+        phone
+    );
+
+    setText(
+        "contactEmail",
+        email
+    );
+
+
+    const footerPhone =
+        document.getElementById(
+            "footerPhoneLink"
+        );
+
+    if(footerPhone){
+
+        footerPhone.textContent =
+            phone;
+
+        footerPhone.href =
+            "tel:" +
+            phone.replace(
+                /[^0-9+]/g,
+                ""
+            );
+
+    }
+
+
+    const footerEmail =
+        document.getElementById(
+            "footerEmailLink"
+        );
+
+    if(footerEmail){
+
+        footerEmail.textContent =
+            email;
+
+        footerEmail.href =
+            "mailto:" + email;
+
+    }
+
+
+    /* BUSINESS HOURS */
+
+    const hours =
+        value(
+            c.business_hours,
+            "Monday - Saturday, 9:00 AM - 6:00 PM"
+        );
+
+
+    setText(
+        "businessHours",
+        hours
+            .replace(
+                /^Monday/i,
+                "Mon"
+            )
+    );
+
+
+    setText(
+        "contactHours",
+        hours
+    );
+
+
+    /* ABOUT */
+
+    const about =
+        value(
+            c.about,
+            "We are a diversified organization focused on creating meaningful value for customers, employees, partners and communities."
+        );
+
+
+    setText(
+        "aboutText",
+        about
+    );
+
+
+    setText(
+        "aboutText2",
+        value(
+            c.vision,
+            "Our approach combines strategic thinking, operational excellence and continuous innovation to help businesses perform better in a rapidly changing world."
+        )
+    );
+
+
+    /* HERO */
+
+    const heroDescription =
+        value(
+            c.about,
+            "We build sustainable businesses through strategic thinking, innovation, technology and a strong commitment to our customers and partners."
+        );
+
+
+    setText(
+        "heroDescription",
+        heroDescription
+    );
+
+
+    setText(
+        "heroLabelText",
+        value(
+            c.tagline,
+            "CORPORATE EXCELLENCE"
+        )
+    );
+
+
+    /* HERO TITLE */
+
+    /*
+       If company_settings has a custom hero_title,
+       use it. Otherwise keep the V2 design title.
+    */
+
+    const heroTitle =
+        value(
+            c.hero_title,
+            ""
+        );
+
+
+    if(heroTitle){
+
+        const parts =
+            heroTitle.trim().split(/\s+/);
+
+
+        if(parts.length >= 3){
+
+            const splitPoint =
+                Math.ceil(
+                    parts.length / 2
+                );
+
+            setText(
+                "heroTitleLine",
+                parts
+                    .slice(
+                        0,
+                        splitPoint
+                    )
+                    .join(" ")
+            );
+
+            setText(
+                "heroTitleStrong",
+                parts
+                    .slice(
+                        splitPoint
+                    )
+                    .join(" ")
+            );
+
+        }else{
+
+            setText(
+                "heroTitleLine",
+                heroTitle
+            );
+
+            setText(
+                "heroTitleStrong",
+                ""
+            );
+
+        }
+
+    }
+
+
+    /* ABOUT IMAGE */
+
+    if(c.about_image_url){
+
+        const aboutImage =
+            document.getElementById(
+                "aboutImage"
+            );
+
+        if(aboutImage){
+
+            aboutImage.style.backgroundImage =
+                "linear-gradient(0deg,rgba(15,23,42,.12),rgba(15,23,42,.12)),url('" +
+                c.about_image_url +
+                "')";
+
+        }
+
+    }
+
+
+    /* FOOTER */
+
+    setText(
+        "footerAbout",
+        about
+    );
+
+}
+
+
+/* =========================================================
+   PRODUCTS RENDER
+   ========================================================= */
+
+function renderProducts(){
+
+    const grid =
+        document.getElementById(
+            "productGrid"
+        );
+
+    if(!grid){
+        return;
+    }
+
+
+    if(!products.length){
+
+        grid.innerHTML = `
+            <div class="product-empty">
+                No products available at the moment.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML =
+        products
+            .slice(0,12)
+            .map(function(product){
+
+                const image =
+                    getImage(product);
+
+                const imageStyle =
+                    image
+                        ? `style="background-image:url('${escapeHTML(image)}')"`
+                        : "";
+
+
+                return `
+                    <article class="product-card">
+
+                        <div
+                            class="product-image"
+                            ${imageStyle}>
+                        </div>
+
+                        <div class="product-body">
+
+                            <h3>
+                                ${escapeHTML(
+                                    value(
+                                        product.name,
+                                        "Product"
+                                    )
+                                )}
+                            </h3>
+
+                            <p>
+                                ${escapeHTML(
+                                    getProductDescription(
+                                        product
+                                    )
+                                )}
+                            </p>
+
+                        </div>
+
+                    </article>
+                `;
+
+            })
+            .join("");
+
+}
+
+
+/* =========================================================
+   GALLERY RENDER
+   ========================================================= */
+
+function renderGallery(){
+
+    const grid =
+        document.getElementById(
+            "galleryGrid"
+        );
+
+    if(!grid){
+        return;
+    }
+
+
+    if(!gallery.length){
+
+        grid.innerHTML = `
+            <div class="gallery-empty">
+                No gallery images available at the moment.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML =
+        gallery
+            .slice(0,16)
+            .map(function(item){
+
+                const image =
+                    getImage(item);
+
+
+                if(!image){
+                    return "";
+                }
+
+
+                return `
+                    <div
+                        class="gallery-item"
+                        style="
+                            background-image:
+                            url('${escapeHTML(image)}');
+                        "
+                        title="${escapeHTML(
+                            value(
+                                item.title,
+                                "Company Gallery"
+                            )
+                        )}">
+                    </div>
+                `;
+
+            })
+            .join("");
+
+}
+
+
+/* =========================================================
+   TESTIMONIALS RENDER
+   ========================================================= */
+
+function renderTestimonials(){
+
+    const grid =
+        document.getElementById(
+            "testimonialGrid"
+        );
+
+    if(!grid){
+        return;
+    }
+
+
+    if(!testimonials.length){
+
+        grid.innerHTML = `
+            <div class="testimonial-empty">
+                No testimonials available at the moment.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML =
+        testimonials
+            .slice(0,9)
+            .map(function(item){
+
+                const name =
+                    value(
+                        item.customer_name,
+                        value(
+                            item.name,
+                            value(
+                                item.client_name,
+                                "Client"
+                            )
+                        )
+                    );
+
+
+                const role =
+                    value(
+                        item.designation,
+                        value(
+                            item.role,
+                            value(
+                                item.company_name,
+                                "Valued Client"
+                            )
+                        )
+                    );
+
+
+                const message =
+                    value(
+                        item.testimonial,
+                        value(
+                            item.message,
+                            value(
+                                item.review,
+                                "Excellent service and professional support."
+                            )
+                        )
+                    );
+
+
+                return `
+                    <article class="testimonial">
+
+                        <div class="quote">
+                            “
+                        </div>
+
+                        <p>
+                            ${escapeHTML(message)}
+                        </p>
+
+                        <div class="testimonial-person">
+
+                            <div class="person-avatar">
+                                ${escapeHTML(
+                                    initials(name)
+                                )}
+                            </div>
+
+                            <div class="person-info">
+
+                                <strong>
+                                    ${escapeHTML(name)}
+                                </strong>
+
+                                <span>
+                                    ${escapeHTML(role)}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+                `;
+
+            })
+            .join("");
+
+}
+
+
+/* =========================================================
+   FAQ RENDER
+   ========================================================= */
+
+function renderFAQs(){
+
+    const wrap =
+        document.getElementById(
+            "faqList"
+        );
+
+    if(!wrap){
+        return;
+    }
+
+
+    if(!faqs.length){
+
+        wrap.innerHTML = `
+            <div class="faq-empty">
+                No FAQs available at the moment.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    wrap.innerHTML =
+        faqs
+            .slice(0,20)
+            .map(function(item){
+
+                const question =
+                    value(
+                        item.question,
+                        value(
+                            item.title,
+                            "Frequently Asked Question"
+                        )
+                    );
+
+
+                const answer =
+                    value(
+                        item.answer,
+                        value(
+                            item.description,
+                            "Please contact our team for more information."
+                        )
+                    );
+
+
+                return `
+                    <div class="faq-item">
+
+                        <button
+                            class="faq-question"
+                            type="button">
+
+                            <span>
+                                ${escapeHTML(question)}
+                            </span>
+
+                            <span class="faq-icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            <div class="faq-answer-inner">
+                                ${escapeHTML(answer)}
+                            </div>
+
+                        </div>
+
+                    </div>
+                `;
+
+            })
+            .join("");
+
+
+    bindFAQs();
+
+}
+
+
+/* =========================================================
+   FAQ EVENTS
+   ========================================================= */
+
+function bindFAQs(){
+
+    document
+        .querySelectorAll(
+            ".faq-question"
+        )
+        .forEach(function(button){
+
+            button.addEventListener(
+                "click",
+                function(){
+
+                    const currentItem =
+                        button.parentElement;
+
+
+                    document
+                        .querySelectorAll(
+                            ".faq-item"
+                        )
+                        .forEach(function(item){
+
+                            if(
+                                item !==
+                                currentItem
+                            ){
+
+                                item.classList
+                                    .remove(
+                                        "active"
+                                    );
+
+                            }
+
+                        });
+
+
+                    currentItem
+                        .classList
+                        .toggle(
+                            "active"
+                        );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+async function submitEnquiry(event){
+
+    event.preventDefault();
+
+
+    if(!CLIENT_ID){
+
+        showToast(
+            "Website client is not configured."
+        );
+
+        return;
+
+    }
+
+
+    const form =
+        event.target;
+
+
+    const formData =
+        new FormData(form);
+
+
+    const customerName =
+        String(
+            formData.get("name") || ""
+        ).trim();
+
+
+    const companyName =
+        String(
+            formData.get("company") || ""
+        ).trim();
+
+
+    const email =
+        String(
+            formData.get("email") || ""
+        ).trim();
+
+
+    const phone =
+        String(
+            formData.get("phone") || ""
+        ).trim();
+
+
+    const requirement =
+        String(
+            formData.get("requirement") || ""
+        ).trim();
+
+
+    const message =
+        String(
+            formData.get("message") || ""
+        ).trim();
+
+
+    const button =
+        document.getElementById(
+            "submitEnquiryBtn"
+        );
+
+
+    if(button){
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "Submitting...";
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("enquiries")
+                .insert({
+
+                    client_id:
+                        CLIENT_ID,
+
+                    customer_name:
+                        customerName,
+
+                    company_name:
+                        companyName,
+
+                    phone:
+                        phone,
+
+                    email:
+                        email,
+
+                    requirement:
+                        requirement,
+
+                    notes:
+                        message,
+
+                    source:
+                        "website",
+
+                    status:
+                        "new"
+
+                });
+
+
+        if(error){
+
+            console.error(
+                "Enquiry Insert:",
+                error
+            );
+
+            throw error;
+
+        }
+
+
+        form.reset();
+
+        showToast(
+            "Thank you! Your enquiry has been received."
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+        showToast(
+            "Unable to submit enquiry. Please try again."
+        );
+
+    }finally{
+
+        if(button){
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Submit Enquiry →";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimer = null;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    if(!toast){
+        return;
+    }
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(function(){
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },3500);
+
+}
+
+
+/* =========================================================
+   DEFAULT STATS
+   ========================================================= */
+
+function renderDefaultStats(){
+
+    /*
+       These remain design defaults because
+       current company_settings does not have
+       dedicated statistic fields.
+    */
+
+    const stats = [
+
+        [
+            "stat1Value",
+            "stat1Label",
+            "20+",
+            "Years of Excellence"
+        ],
+
+        [
+            "stat2Value",
+            "stat2Label",
+            "500+",
+            "Projects Delivered"
+        ],
+
+        [
+            "stat3Value",
+            "stat3Label",
+            "25+",
+            "Markets & Locations"
+        ],
+
+        [
+            "stat4Value",
+            "stat4Label",
+            "98%",
+            "Client Satisfaction"
+        ]
+
+    ];
+
+
+    stats.forEach(function(item){
+
+        setText(
+            item[0],
+            item[2]
+        );
+
+        setText(
+            item[1],
+            item[3]
+        );
+
     });
 
-});
+
+    setText(
+        "heroStat1",
+        "20+"
+    );
+
+    setText(
+        "heroStat2",
+        "25+"
+    );
+
+    setText(
+        "heroStat3",
+        "500+"
+    );
+
+    setText(
+        "heroStat4",
+        "98%"
+    );
+
+
+    setText(
+        "achievement1Value",
+        "20+"
+    );
+
+    setText(
+        "achievement2Value",
+        "500+"
+    );
+
+    setText(
+        "achievement3Value",
+        "25+"
+    );
+
+    setText(
+        "achievement4Value",
+        "98%"
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+async function initializeV2(){
+
+    document.getElementById(
+        "year"
+    ).textContent =
+        new Date().getFullYear();
+
+
+    renderDefaultStats();
+
+
+    CLIENT_ID =
+        getClientId();
+
+
+    if(!CLIENT_ID){
+
+        console.warn(
+            "V2: No active CLIENT_ID found."
+        );
+
+        /*
+           Do not break the design if context
+           is not yet available.
+        */
+
+        renderCompany();
+
+        return;
+
+    }
+
+
+    try{
+
+        await Promise.all([
+
+            loadCompanySettings(),
+
+            loadProducts(),
+
+            loadGallery(),
+
+            loadTestimonials(),
+
+            loadFAQs()
+
+        ]);
+
+
+        renderCompany();
+
+        renderProducts();
+
+        renderGallery();
+
+        renderTestimonials();
+
+        renderFAQs();
+
+
+    }catch(error){
+
+        console.error(
+            "V2 initialization error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+const menuBtn =
+    document.getElementById(
+        "menuBtn"
+    );
+
+const navLinks =
+    document.getElementById(
+        "navLinks"
+    );
+
+
+if(menuBtn){
+
+    menuBtn.addEventListener(
+        "click",
+        function(){
+
+            navLinks.classList
+                .toggle("active");
+
+
+            menuBtn.innerHTML =
+                navLinks.classList
+                    .contains("active")
+                    ? "✕"
+                    : "☰";
+
+        }
+    );
+
+}
+
+
+document
+    .querySelectorAll(
+        ".nav-links a"
+    )
+    .forEach(function(link){
+
+        link.addEventListener(
+            "click",
+            function(){
+
+                navLinks.classList
+                    .remove("active");
+
+                menuBtn.innerHTML =
+                    "☰";
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   SMOOTH SCROLL
+   ========================================================= */
+
+document
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach(function(anchor){
+
+        anchor.addEventListener(
+            "click",
+            function(event){
+
+                const selector =
+                    this.getAttribute(
+                        "href"
+                    );
+
+
+                if(
+                    !selector ||
+                    selector === "#"
+                ){
+
+                    return;
+
+                }
+
+
+                const target =
+                    document.querySelector(
+                        selector
+                    );
+
+
+                if(target){
+
+                    event.preventDefault();
+
+                    target.scrollIntoView({
+                        behavior:"smooth",
+                        block:"start"
+                    });
+
+                }
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   ENQUIRY FORM EVENT
+   ========================================================= */
+
+const enquiryForm =
+    document.getElementById(
+        "enquiryForm"
+    );
+
+
+if(enquiryForm){
+
+    enquiryForm.addEventListener(
+        "submit",
+        submitEnquiry
+    );
+
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+if(
+    document.readyState ===
+    "loading"
+){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeV2
+    );
+
+}else{
+
+    initializeV2();
+
+}
+
+})();
 
 </script>
 
