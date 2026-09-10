@@ -480,6 +480,10 @@ input:focus{
 </div>
 
 
+<!-- IMPORTANT: Central Client Context -->
+<script src="../client-context.js"></script>
+
+
 <script>
 
 const SUPABASE_URL =
@@ -499,11 +503,15 @@ const supabaseClient =
     );
 
 
+/* ================================
+   GLOBAL STATE
+================================ */
+
 let currentUser = null;
+let currentRole = null;
 let currentClientId = null;
 
 let products = [];
-
 let editingImageId = null;
 let editingImageUrl = null;
 
@@ -562,6 +570,109 @@ const logoutBtn =
 
 
 /* ================================
+   GET ACTIVE CLIENT CONTEXT
+================================ */
+
+function getContextClient(){
+
+    try{
+
+        if(
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.get === "function"
+        ){
+
+            return window.MDKClientContext.get();
+
+        }
+
+    }
+    catch(error){
+
+        console.warn(
+            "Client context read failed:",
+            error
+        );
+
+    }
+
+    return null;
+
+}
+
+
+/* ================================
+   CLEAR PRODUCT / IMAGE UI
+================================ */
+
+function clearClientUI(){
+
+    closeForm();
+
+    products = [];
+
+    productSelect.innerHTML =
+        `<option value="">
+            Please select a client first
+        </option>`;
+
+    imagesContainer.innerHTML =
+        `<div class="empty">
+            Please select a client first.
+        </div>`;
+
+    imageCount.textContent =
+        "0 Images";
+
+}
+
+
+/* ================================
+   SET CLIENT
+================================ */
+
+async function setActiveClient(clientId){
+
+    if(!clientId){
+
+        currentClientId = null;
+
+        clearClientUI();
+
+        return;
+
+    }
+
+
+    currentClientId =
+        clientId;
+
+
+    closeForm();
+
+
+    productSelect.innerHTML =
+        `<option value="">
+            Loading products...
+        </option>`;
+
+
+    imagesContainer.innerHTML =
+        `<div class="empty">
+            Select a product to view images.
+        </div>`;
+
+
+    imageCount.textContent =
+        "0 Images";
+
+
+    await loadProducts();
+
+}
+
+
+/* ================================
    INITIALIZE
 ================================ */
 
@@ -577,7 +688,9 @@ async function initialize(){
 
 
         if(error){
+
             throw error;
+
         }
 
 
@@ -587,13 +700,17 @@ async function initialize(){
                 "admin.html";
 
             return;
+
         }
 
 
-        currentUser = user;
+        currentUser =
+            user;
 
 
-        /* GET PROFILE */
+        /* ============================
+           GET PROFILE
+        ============================ */
 
         const {
             data: profile,
@@ -602,7 +719,7 @@ async function initialize(){
         await supabaseClient
         .from("profiles")
         .select("id,role,client_id")
-        .eq("id", user.id)
+        .eq("id",user.id)
         .single();
 
 
@@ -616,26 +733,79 @@ async function initialize(){
             );
 
             return;
+
         }
 
 
-        currentClientId =
-            profile.client_id;
+        currentRole =
+            profile.role;
 
+
+        /* ============================
+           CENTRAL CLIENT CONTEXT FIRST
+        ============================ */
+
+        const contextClient =
+            getContextClient();
+
+
+        if(
+            contextClient &&
+            contextClient.id
+        ){
+
+            /*
+              Client Manager / Dashboard
+              selected client wins.
+            */
+
+            currentClientId =
+                contextClient.id;
+
+        }
+
+        else if(profile.client_id){
+
+            /*
+              Normal client user:
+              use assigned profile client.
+            */
+
+            currentClientId =
+                profile.client_id;
+
+        }
+
+        else{
+
+            /*
+              Super admin without
+              selected client.
+            */
+
+            currentClientId =
+                null;
+
+        }
+
+
+        /* ============================
+           NO CLIENT
+        ============================ */
 
         if(!currentClientId){
 
+            clearClientUI();
+
             showStatus(
-                "Your user is not assigned to a client yet.",
-                "error"
+                currentRole === "super_admin"
+                    ? "Please select a client from Client Manager or Dashboard first."
+                    : "Your user is not assigned to a client yet.",
+                "info"
             );
 
-            productSelect.innerHTML =
-                `<option value="">
-                    No client assigned
-                </option>`;
-
             return;
+
         }
 
 
@@ -647,7 +817,8 @@ async function initialize(){
         console.error(error);
 
         showStatus(
-            error.message || "Initialization failed.",
+            error.message ||
+            "Initialization failed.",
             "error"
         );
 
@@ -657,10 +828,84 @@ async function initialize(){
 
 
 /* ================================
+   CLIENT CONTEXT CHANGE
+================================ */
+
+window.addEventListener(
+    "mdk-client-changed",
+    async function(event){
+
+        try{
+
+            const client =
+                event.detail;
+
+
+            if(
+                !client ||
+                !client.id
+            ){
+
+                currentClientId =
+                    null;
+
+                clearClientUI();
+
+                showStatus(
+                    "No client selected.",
+                    "info"
+                );
+
+                return;
+
+            }
+
+
+            /*
+              IMPORTANT:
+              Whenever Client Manager changes
+              active client, this module follows it.
+            */
+
+            await setActiveClient(
+                client.id
+            );
+
+
+        }
+        catch(error){
+
+            console.error(
+                "Client change error:",
+                error
+            );
+
+            showStatus(
+                error.message ||
+                "Unable to change client.",
+                "error"
+            );
+
+        }
+
+    }
+);
+
+
+/* ================================
    LOAD PRODUCTS
 ================================ */
 
 async function loadProducts(){
+
+    if(!currentClientId){
+
+        clearClientUI();
+
+        return;
+
+    }
+
 
     productSelect.innerHTML =
         `<option value="">
@@ -675,7 +920,7 @@ async function loadProducts(){
     await supabaseClient
     .from("products")
     .select("id,name,product_code")
-    .eq("client_id", currentClientId)
+    .eq("client_id",currentClientId)
     .order("name",{ascending:true});
 
 
@@ -689,15 +934,18 @@ async function loadProducts(){
             </option>`;
 
         showStatus(
-            "Unable to load products: " + error.message,
+            "Unable to load products: " +
+            error.message,
             "error"
         );
 
         return;
+
     }
 
 
-    products = data || [];
+    products =
+        data || [];
 
 
     productSelect.innerHTML =
@@ -711,17 +959,32 @@ async function loadProducts(){
         const option =
             document.createElement("option");
 
+
         option.value =
             product.id;
+
 
         option.textContent =
             product.product_code
             ? `${product.name} (${product.product_code})`
             : product.name;
 
-        productSelect.appendChild(option);
+
+        productSelect.appendChild(
+            option
+        );
 
     });
+
+
+    if(products.length === 0){
+
+        productSelect.innerHTML =
+            `<option value="">
+                No products found for this client
+            </option>`;
+
+    }
 
 }
 
@@ -736,6 +999,7 @@ productSelect.addEventListener(
 
         closeForm();
 
+
         if(!this.value){
 
             imagesContainer.innerHTML =
@@ -747,10 +1011,13 @@ productSelect.addEventListener(
                 "0 Images";
 
             return;
+
         }
 
 
-        await loadImages(this.value);
+        await loadImages(
+            this.value
+        );
 
     }
 );
@@ -761,6 +1028,30 @@ productSelect.addEventListener(
 ================================ */
 
 async function loadImages(productId){
+
+    if(!currentClientId){
+
+        clearClientUI();
+
+        return;
+
+    }
+
+
+    if(!productId){
+
+        imagesContainer.innerHTML =
+            `<div class="empty">
+                Select a product to view images.
+            </div>`;
+
+        imageCount.textContent =
+            "0 Images";
+
+        return;
+
+    }
+
 
     imagesContainer.innerHTML =
         `<div class="loading">
@@ -775,8 +1066,8 @@ async function loadImages(productId){
     await supabaseClient
     .from("product_images")
     .select("*")
-    .eq("client_id", currentClientId)
-    .eq("product_id", productId)
+    .eq("client_id",currentClientId)
+    .eq("product_id",productId)
     .order("sort_order",{ascending:true})
     .order("created_at",{ascending:false});
 
@@ -791,7 +1082,11 @@ async function loadImages(productId){
                 ${escapeHtml(error.message)}
             </div>`;
 
+        imageCount.textContent =
+            "0 Images";
+
         return;
+
     }
 
 
@@ -812,11 +1107,13 @@ async function loadImages(productId){
             </div>`;
 
         return;
+
     }
 
 
     const grid =
         document.createElement("div");
+
 
     grid.className =
         "image-grid";
@@ -826,6 +1123,7 @@ async function loadImages(productId){
 
         const card =
             document.createElement("div");
+
 
         card.className =
             "image-card";
@@ -846,7 +1144,10 @@ async function loadImages(productId){
             <div class="image-info">
 
                 <h3>
-                    ${escapeHtml(image.alt_text || "Product Image")}
+                    ${escapeHtml(
+                        image.alt_text ||
+                        "Product Image"
+                    )}
                 </h3>
 
                 <p>
@@ -855,7 +1156,9 @@ async function loadImages(productId){
                 </p>
 
                 <p>
-                    ${escapeHtml(image.image_url)}
+                    ${escapeHtml(
+                        image.image_url
+                    )}
                 </p>
 
                 <div class="card-actions">
@@ -883,14 +1186,20 @@ async function loadImages(productId){
         `;
 
 
-        grid.appendChild(card);
+        grid.appendChild(
+            card
+        );
 
     });
 
 
-    imagesContainer.innerHTML = "";
+    imagesContainer.innerHTML =
+        "";
 
-    imagesContainer.appendChild(grid);
+
+    imagesContainer.appendChild(
+        grid
+    );
 
 }
 
@@ -903,32 +1212,61 @@ addImageBtn.addEventListener(
     "click",
     function(){
 
-        if(!productSelect.value){
+        if(!currentClientId){
 
-            alert("Please select a product first.");
+            alert(
+                "Please select a client first."
+            );
 
             return;
+
         }
 
 
-        editingImageId = null;
-        editingImageUrl = null;
+        if(!productSelect.value){
+
+            alert(
+                "Please select a product first."
+            );
+
+            return;
+
+        }
+
+
+        editingImageId =
+            null;
+
+        editingImageUrl =
+            null;
+
 
         formTitle.textContent =
             "Add Product Image";
 
+
         saveImageBtn.textContent =
             "Upload & Save";
 
-        imageFile.value = "";
 
-        altText.value = "";
+        imageFile.value =
+            "";
+
+
+        altText.value =
+            "";
+
 
         resetPreview();
 
+
         clearStatus();
 
-        imageFormCard.classList.remove("hidden");
+
+        imageFormCard.classList.remove(
+            "hidden"
+        );
+
 
         imageFormCard.scrollIntoView({
             behavior:"smooth",
@@ -956,18 +1294,23 @@ imageFile.addEventListener(
             resetPreview();
 
             return;
+
         }
 
 
         if(!file.type.startsWith("image/")){
 
-            alert("Please select a valid image file.");
+            alert(
+                "Please select a valid image file."
+            );
 
-            this.value = "";
+            this.value =
+                "";
 
             resetPreview();
 
             return;
+
         }
 
 
@@ -977,13 +1320,17 @@ imageFile.addEventListener(
 
         if(file.size > maxSize){
 
-            alert("Image size must be less than 10 MB.");
+            alert(
+                "Image size must be less than 10 MB."
+            );
 
-            this.value = "";
+            this.value =
+                "";
 
             resetPreview();
 
             return;
+
         }
 
 
@@ -997,9 +1344,11 @@ imageFile.addEventListener(
                 imagePreview.src =
                     e.target.result;
 
+
                 imagePreview.classList.remove(
                     "hidden"
                 );
+
 
                 previewPlaceholder.classList.add(
                     "hidden"
@@ -1008,7 +1357,9 @@ imageFile.addEventListener(
             };
 
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(
+            file
+        );
 
     }
 );
@@ -1022,11 +1373,25 @@ saveImageBtn.addEventListener(
     "click",
     async function(){
 
-        if(!productSelect.value){
+        if(!currentClientId){
 
-            alert("Please select a product first.");
+            alert(
+                "Please select a client first."
+            );
 
             return;
+
+        }
+
+
+        if(!productSelect.value){
+
+            alert(
+                "Please select a product first."
+            );
+
+            return;
+
         }
 
 
@@ -1038,21 +1403,31 @@ saveImageBtn.addEventListener(
             ADD MODE
         */
 
-        if(!editingImageId && !file){
+        if(
+            !editingImageId &&
+            !file
+        ){
 
-            alert("Please choose an image.");
+            alert(
+                "Please choose an image."
+            );
 
             return;
+
         }
 
 
-        saveImageBtn.disabled = true;
+        saveImageBtn.disabled =
+            true;
+
 
         clearStatus();
+
 
         progressWrap.classList.remove(
             "hidden"
         );
+
 
         progressBar.style.width =
             "10%";
@@ -1091,6 +1466,10 @@ saveImageBtn.addEventListener(
                     `${crypto.randomUUID()}.${safeExtension}`;
 
 
+                /*
+                  CLIENT-WISE STORAGE PATH
+                */
+
                 const storagePath =
                     `${currentClientId}/${productSelect.value}/${uniqueName}`;
 
@@ -1119,6 +1498,7 @@ saveImageBtn.addEventListener(
                 if(uploadError){
 
                     throw uploadError;
+
                 }
 
 
@@ -1132,7 +1512,9 @@ saveImageBtn.addEventListener(
                 supabaseClient
                 .storage
                 .from(STORAGE_BUCKET)
-                .getPublicUrl(storagePath);
+                .getPublicUrl(
+                    storagePath
+                );
 
 
                 imageUrl =
@@ -1144,6 +1526,7 @@ saveImageBtn.addEventListener(
                     throw new Error(
                         "Unable to generate public image URL."
                     );
+
                 }
 
             }
@@ -1168,20 +1551,32 @@ saveImageBtn.addEventListener(
                 .from("product_images")
                 .update({
 
-                    image_url: imageUrl,
+                    image_url:
+                        imageUrl,
 
                     alt_text:
-                        altText.value.trim() || null
+                        altText.value.trim() ||
+                        null
 
                 })
-                .eq("id", editingImageId)
-                .eq("client_id", currentClientId)
-                .eq("product_id", productSelect.value);
+                .eq(
+                    "id",
+                    editingImageId
+                )
+                .eq(
+                    "client_id",
+                    currentClientId
+                )
+                .eq(
+                    "product_id",
+                    productSelect.value
+                );
 
 
                 if(error){
 
                     throw error;
+
                 }
 
 
@@ -1195,6 +1590,7 @@ saveImageBtn.addEventListener(
                 );
 
             }
+
 
             /*
                 INSERT
@@ -1215,25 +1611,40 @@ saveImageBtn.addEventListener(
                 await supabaseClient
                 .from("product_images")
                 .select("sort_order")
-                .eq("client_id", currentClientId)
-                .eq("product_id", productSelect.value);
+                .eq(
+                    "client_id",
+                    currentClientId
+                )
+                .eq(
+                    "product_id",
+                    productSelect.value
+                );
 
 
                 if(countError){
 
                     throw countError;
+
                 }
 
 
-                let nextSortOrder = 0;
+                let nextSortOrder =
+                    0;
 
 
-                if(existingImages && existingImages.length){
+                if(
+                    existingImages &&
+                    existingImages.length
+                ){
 
                     nextSortOrder =
                         Math.max(
                             ...existingImages.map(
-                                x => Number(x.sort_order || 0)
+                                x =>
+                                    Number(
+                                        x.sort_order ||
+                                        0
+                                    )
                             )
                         ) + 1;
 
@@ -1257,7 +1668,8 @@ saveImageBtn.addEventListener(
                         imageUrl,
 
                     alt_text:
-                        altText.value.trim() || null,
+                        altText.value.trim() ||
+                        null,
 
                     sort_order:
                         nextSortOrder
@@ -1268,6 +1680,7 @@ saveImageBtn.addEventListener(
                 if(error){
 
                     throw error;
+
                 }
 
 
@@ -1292,7 +1705,7 @@ saveImageBtn.addEventListener(
 
                 closeForm();
 
-            }, 900);
+            },900);
 
 
         }
@@ -1325,11 +1738,25 @@ saveImageBtn.addEventListener(
 window.editImage =
 async function(imageId){
 
-    if(!productSelect.value){
+    if(!currentClientId){
 
-        alert("Please select a product.");
+        alert(
+            "Please select a client first."
+        );
 
         return;
+
+    }
+
+
+    if(!productSelect.value){
+
+        alert(
+            "Please select a product."
+        );
+
+        return;
+
     }
 
 
@@ -1340,9 +1767,18 @@ async function(imageId){
     await supabaseClient
     .from("product_images")
     .select("*")
-    .eq("id", imageId)
-    .eq("client_id", currentClientId)
-    .eq("product_id", productSelect.value)
+    .eq(
+        "id",
+        imageId
+    )
+    .eq(
+        "client_id",
+        currentClientId
+    )
+    .eq(
+        "product_id",
+        productSelect.value
+    )
     .single();
 
 
@@ -1354,11 +1790,13 @@ async function(imageId){
         );
 
         return;
+
     }
 
 
     editingImageId =
         image.id;
+
 
     editingImageUrl =
         image.image_url;
@@ -1367,21 +1805,27 @@ async function(imageId){
     formTitle.textContent =
         "Edit Product Image";
 
+
     saveImageBtn.textContent =
         "Update Image";
+
 
     altText.value =
         image.alt_text || "";
 
-    imageFile.value = "";
+
+    imageFile.value =
+        "";
 
 
     imagePreview.src =
         image.image_url;
 
+
     imagePreview.classList.remove(
         "hidden"
     );
+
 
     previewPlaceholder.classList.add(
         "hidden"
@@ -1390,9 +1834,11 @@ async function(imageId){
 
     clearStatus();
 
+
     imageFormCard.classList.remove(
         "hidden"
     );
+
 
     imageFormCard.scrollIntoView({
         behavior:"smooth",
@@ -1407,17 +1853,48 @@ async function(imageId){
 ================================ */
 
 window.deleteImage =
-async function(imageId,imageUrl){
+async function(
+    imageId,
+    imageUrl
+){
+
+    if(!currentClientId){
+
+        alert(
+            "Please select a client first."
+        );
+
+        return;
+
+    }
+
+
+    if(!productSelect.value){
+
+        alert(
+            "Please select a product first."
+        );
+
+        return;
+
+    }
+
 
     if(!confirm(
         "Are you sure you want to delete this image?"
     )){
 
         return;
+
     }
 
 
     try{
+
+        /*
+          Delete DB record only
+          for active client + product.
+        */
 
         const {
             error
@@ -1425,14 +1902,24 @@ async function(imageId,imageUrl){
         await supabaseClient
         .from("product_images")
         .delete()
-        .eq("id",imageId)
-        .eq("client_id",currentClientId)
-        .eq("product_id",productSelect.value);
+        .eq(
+            "id",
+            imageId
+        )
+        .eq(
+            "client_id",
+            currentClientId
+        )
+        .eq(
+            "product_id",
+            productSelect.value
+        );
 
 
         if(error){
 
             throw error;
+
         }
 
 
@@ -1444,7 +1931,9 @@ async function(imageId,imageUrl){
         try{
 
             const storagePath =
-                getStoragePathFromUrl(imageUrl);
+                getStoragePathFromUrl(
+                    imageUrl
+                );
 
 
             if(storagePath){
@@ -1500,7 +1989,9 @@ async function(imageId,imageUrl){
 function getStoragePathFromUrl(url){
 
     if(!url){
+
         return null;
+
     }
 
 
@@ -1517,6 +2008,7 @@ function getStoragePathFromUrl(url){
         if(index === -1){
 
             return null;
+
         }
 
 
@@ -1530,6 +2022,7 @@ function getStoragePathFromUrl(url){
     catch(error){
 
         return null;
+
     }
 
 }
@@ -1551,15 +2044,25 @@ function closeForm(){
         "hidden"
     );
 
-    editingImageId = null;
 
-    editingImageUrl = null;
+    editingImageId =
+        null;
 
-    imageFile.value = "";
 
-    altText.value = "";
+    editingImageUrl =
+        null;
+
+
+    imageFile.value =
+        "";
+
+
+    altText.value =
+        "";
+
 
     resetPreview();
+
 
     clearStatus();
 
@@ -1572,11 +2075,14 @@ function closeForm(){
 
 function resetPreview(){
 
-    imagePreview.src = "";
+    imagePreview.src =
+        "";
+
 
     imagePreview.classList.add(
         "hidden"
     );
+
 
     previewPlaceholder.classList.remove(
         "hidden"
@@ -1597,6 +2103,7 @@ function showStatus(
     uploadStatus.textContent =
         message;
 
+
     uploadStatus.className =
         "status " + type;
 
@@ -1608,12 +2115,15 @@ function clearStatus(){
     uploadStatus.textContent =
         "";
 
+
     uploadStatus.className =
         "status";
+
 
     progressWrap.classList.add(
         "hidden"
     );
+
 
     progressBar.style.width =
         "0%";
@@ -1630,6 +2140,17 @@ logoutBtn.addEventListener(
     async function(){
 
         await supabaseClient.auth.signOut();
+
+
+        if(
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.clear === "function"
+        ){
+
+            window.MDKClientContext.clear();
+
+        }
+
 
         window.location.href =
             "admin.html";
