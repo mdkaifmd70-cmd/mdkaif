@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +7,9 @@
 <title>Testimonials Manager - MD Kaif Web Platform</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- GLOBAL CLIENT CONTEXT -->
+<script src="../client-context.js"></script>
 
 <style>
 
@@ -21,6 +23,10 @@ body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f5f7fb;
     color:#1f2937;
+}
+
+.hidden{
+    display:none !important;
 }
 
 /* =========================
@@ -790,7 +796,7 @@ textarea{
 
 
 <!-- =========================
-     CONTAINER
+     TESTIMONIAL CONTAINER
 ========================= -->
 
 <div id="testimonialContainer">
@@ -1054,7 +1060,6 @@ textarea{
             <div
                 class="progress-bar"
                 id="progressBar">
-
             </div>
 
         </div>
@@ -1063,7 +1068,6 @@ textarea{
         <div
             class="upload-status"
             id="uploadStatus">
-
         </div>
 
 
@@ -1160,6 +1164,83 @@ document.getElementById(
 
 
 /* =====================================================
+   CLIENT CONTEXT
+===================================================== */
+
+function getContextClient(){
+
+    try{
+
+        if(
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.get === "function"
+        ){
+
+            return MDKClientContext.get();
+
+        }
+
+    }
+    catch(error){
+
+        console.warn(
+            "Client context read failed:",
+            error
+        );
+
+    }
+
+    return null;
+
+}
+
+
+/* =====================================================
+   CLEAR CLIENT UI
+===================================================== */
+
+function clearClientUI(){
+
+    currentClientId = null;
+
+    testimonials = [];
+
+    if(clientSelect){
+
+        clientSelect.value = "";
+
+    }
+
+    resetTestimonials();
+
+}
+
+
+/* =====================================================
+   SET ACTIVE CLIENT
+===================================================== */
+
+async function setActiveClient(clientId){
+
+    currentClientId =
+        clientId || null;
+
+    testimonials = [];
+
+    resetTestimonials();
+
+    if(!currentClientId){
+
+        return;
+
+    }
+
+    await loadTestimonials();
+
+}
+
+
+/* =====================================================
    INITIALIZE
 ===================================================== */
 
@@ -1186,6 +1267,7 @@ async function initialize(){
                 "admin.html";
 
             return;
+
         }
 
 
@@ -1217,7 +1299,14 @@ async function initialize(){
             profile.role;
 
 
-        if(currentRole === "super_admin"){
+        /* ==========================================
+           SUPER ADMIN / ADMIN
+        ========================================== */
+
+        if(
+            currentRole === "super_admin" ||
+            currentRole === "admin"
+        ){
 
             document.getElementById(
                 "clientBox"
@@ -1227,7 +1316,73 @@ async function initialize(){
 
             await loadClients();
 
+
+            /*
+               First priority:
+               Global active client context
+            */
+
+            const contextClient =
+                getContextClient();
+
+
+            if(
+                contextClient &&
+                contextClient.id
+            ){
+
+                currentClientId =
+                    contextClient.id;
+
+
+                clientSelect.value =
+                    contextClient.id;
+
+
+                await loadTestimonials();
+
+            }
+
+            /*
+               Second priority:
+               Profile assigned client
+            */
+
+            else if(profile.client_id){
+
+                currentClientId =
+                    profile.client_id;
+
+
+                clientSelect.value =
+                    profile.client_id;
+
+
+                await loadTestimonials();
+
+            }
+
+            /*
+               No client selected
+            */
+
+            else{
+
+                clearClientUI();
+
+                showMessage(
+                    "Please select a client first.",
+                    "error"
+                );
+
+            }
+
         }
+
+        /* ==========================================
+           NORMAL CLIENT USER
+        ========================================== */
+
         else{
 
             currentClientId =
@@ -1236,12 +1391,15 @@ async function initialize(){
 
             if(!currentClientId){
 
+                clearClientUI();
+
                 showMessage(
                     "No client assigned to this user.",
                     "error"
                 );
 
                 return;
+
             }
 
 
@@ -1252,7 +1410,11 @@ async function initialize(){
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Initialization error:",
+            error
+        );
+
 
         showMessage(
             error.message ||
@@ -1330,26 +1492,101 @@ async function loadClients(){
     clientSelect.onchange =
     async function(){
 
-        currentClientId =
+        const clientId =
             this.value || null;
 
 
-        testimonials = [];
+        /*
+           Update GLOBAL client context
+        */
+
+        if(
+            clientId &&
+            window.MDKClientContext
+        ){
+
+            const selectedClient =
+                clients.find(
+                    client =>
+                        client.id === clientId
+                );
 
 
-        if(!currentClientId){
+            if(selectedClient){
 
-            resetTestimonials();
+                MDKClientContext.set(
+                    selectedClient
+                );
 
-            return;
+            }
+
         }
 
 
-        await loadTestimonials();
+        await setActiveClient(
+            clientId
+        );
 
     };
 
 }
+
+
+/* =====================================================
+   GLOBAL CLIENT CHANGE LISTENER
+===================================================== */
+
+window.addEventListener(
+    "mdk-client-changed",
+    async function(event){
+
+        /*
+           Only Super Admin / Admin
+           should follow global client changes.
+        */
+
+        if(
+            currentRole !== "super_admin" &&
+            currentRole !== "admin"
+        ){
+
+            return;
+
+        }
+
+
+        const client =
+            event.detail;
+
+
+        if(
+            client &&
+            client.id
+        ){
+
+            currentClientId =
+                client.id;
+
+
+            if(clientSelect){
+
+                clientSelect.value =
+                    client.id;
+
+            }
+
+
+            await loadTestimonials();
+
+        }
+        else{
+
+            clearClientUI();
+
+        }
+
+    }
+);
 
 
 /* =====================================================
@@ -1363,6 +1600,7 @@ async function loadTestimonials(){
         resetTestimonials();
 
         return;
+
     }
 
 
@@ -1403,7 +1641,10 @@ async function loadTestimonials(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "Load testimonials error:",
+            error
+        );
 
 
         document.getElementById(
@@ -1433,6 +1674,7 @@ async function loadTestimonials(){
 
 
         return;
+
     }
 
 
@@ -1550,7 +1792,8 @@ function renderTestimonials(){
 
             (
                 !rating ||
-                String(item.rating) === String(rating)
+                String(item.rating) ===
+                String(rating)
             )
 
         );
@@ -1572,6 +1815,7 @@ function renderTestimonials(){
         resetTestimonials();
 
         return;
+
     }
 
 
@@ -1593,6 +1837,7 @@ function renderTestimonials(){
         `;
 
         return;
+
     }
 
 
@@ -1843,6 +2088,7 @@ function openModal(
         );
 
         return;
+
     }
 
 
@@ -1865,8 +2111,13 @@ function openModal(
         );
 
 
-        if(!item)
+        if(!item){
+
+            closeModal();
+
             return;
+
+        }
 
 
         document.getElementById(
@@ -2165,6 +2416,7 @@ document
         if(!file){
 
             return;
+
         }
 
 
@@ -2187,6 +2439,7 @@ document
             resetPreview();
 
             return;
+
         }
 
 
@@ -2212,11 +2465,12 @@ document
             resetPreview();
 
             return;
+
         }
 
 
         const reader =
-            new FileReader();
+        new FileReader();
 
 
         reader.onload =
@@ -2266,6 +2520,7 @@ async function saveTestimonial(){
         );
 
         return;
+
     }
 
 
@@ -2295,6 +2550,7 @@ async function saveTestimonial(){
         );
 
         return;
+
     }
 
 
@@ -2306,18 +2562,6 @@ async function saveTestimonial(){
         );
 
         return;
-    }
-
-
-    if(
-        !editingId &&
-        !file
-    ){
-
-        /*
-           Image is optional.
-           So no error here.
-        */
 
     }
 
@@ -2332,8 +2576,12 @@ async function saveTestimonial(){
         true;
 
 
+    const wasEditing =
+        !!editingId;
+
+
     saveBtn.textContent =
-        editingId
+        wasEditing
         ? "Updating..."
         : "Saving...";
 
@@ -2376,6 +2624,10 @@ async function saveTestimonial(){
             const uniqueName =
                 `${crypto.randomUUID()}.${safeExtension}`;
 
+
+            /*
+               CLIENT-WISE STORAGE PATH
+            */
 
             const storagePath =
                 `testimonials/${currentClientId}/${uniqueName}`;
@@ -2450,6 +2702,11 @@ async function saveTestimonial(){
         ========================================== */
 
         const payload = {
+
+            /*
+               IMPORTANT:
+               Always use currently selected client.
+            */
 
             client_id:
                 currentClientId,
@@ -2595,7 +2852,10 @@ async function saveTestimonial(){
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Save testimonial error:",
+            error
+        );
 
 
         setUploadStatus(
@@ -2619,7 +2879,7 @@ async function saveTestimonial(){
 
 
         saveBtn.textContent =
-            editingId
+            wasEditing
             ? "Update Testimonial"
             : "Upload & Save";
 
@@ -2634,6 +2894,18 @@ async function saveTestimonial(){
 
 function editTestimonial(id){
 
+    if(!currentClientId){
+
+        showMessage(
+            "Please select a client first.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
     openModal(id);
 
 }
@@ -2644,6 +2916,18 @@ function editTestimonial(id){
 ===================================================== */
 
 async function deleteTestimonial(id){
+
+    if(!currentClientId){
+
+        showMessage(
+            "Please select a client first.",
+            "error"
+        );
+
+        return;
+
+    }
+
 
     const item =
         testimonials.find(
@@ -2667,6 +2951,11 @@ async function deleteTestimonial(id){
 
 
     try{
+
+        /*
+           Delete DB record ONLY
+           from current client.
+        */
 
         const {
             error
@@ -2736,7 +3025,10 @@ async function deleteTestimonial(id){
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Delete testimonial error:",
+            error
+        );
 
 
         showMessage(
@@ -2789,6 +3081,7 @@ function getStoragePathFromUrl(
     catch(error){
 
         return null;
+
     }
 
 }
@@ -3037,4 +3330,3 @@ initialize();
 
 </body>
 </html>
-```
