@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +8,7 @@
 <title>FAQ Manager - MD Kaif Web Platform</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../client-context.js"></script>
 
 <style>
 
@@ -22,6 +22,10 @@ body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f5f7fb;
     color:#1f2937;
+}
+
+.hidden{
+    display:none !important;
 }
 
 /* =========================
@@ -831,7 +835,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
-
 const supabaseClient =
 window.supabase.createClient(
     SUPABASE_URL,
@@ -867,6 +870,96 @@ document.getElementById(
 
 
 /* =====================================================
+   CLIENT CONTEXT
+===================================================== */
+
+function getContextClient(){
+
+    try{
+
+        if(
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.get === "function"
+        ){
+
+            return window.MDKClientContext.get();
+
+        }
+
+    }
+    catch(error){
+
+        console.warn(
+            "Client context read failed:",
+            error
+        );
+
+    }
+
+    return null;
+
+}
+
+
+/* =====================================================
+   CLEAR CLIENT UI
+===================================================== */
+
+function clearClientUI(){
+
+    currentClientId = null;
+
+    faqs = [];
+
+    editingId = null;
+
+    closeModal();
+
+    if(clientSelect){
+
+        clientSelect.value = "";
+
+    }
+
+    resetFAQs();
+
+}
+
+
+/* =====================================================
+   SET ACTIVE CLIENT
+===================================================== */
+
+async function setActiveClient(clientId){
+
+    currentClientId =
+        clientId || null;
+
+    faqs = [];
+
+    closeModal();
+
+    if(clientSelect){
+
+        clientSelect.value =
+            currentClientId || "";
+
+    }
+
+    if(!currentClientId){
+
+        resetFAQs();
+
+        return;
+
+    }
+
+    await loadFAQs();
+
+}
+
+
+/* =====================================================
    INITIALIZE
 ===================================================== */
 
@@ -895,6 +988,7 @@ async function initialize(){
                 "admin.html";
 
             return;
+
         }
 
 
@@ -930,25 +1024,18 @@ async function initialize(){
             profile.role;
 
 
-        /*
-           VERY IMPORTANT
-
-           Always take client_id from profile
-           when it exists.
-        */
-
-        currentClientId =
+        const profileClientId =
             profile.client_id ||
             null;
 
 
         /* =============================================
-           SUPER ADMIN
+           ADMIN / SUPER ADMIN
         ============================================= */
 
         if(
-            currentRole ===
-            "super_admin"
+            currentRole === "super_admin" ||
+            currentRole === "admin"
         ){
 
             document.getElementById(
@@ -961,22 +1048,59 @@ async function initialize(){
 
 
             /*
-               If Super Admin has an assigned client,
-               automatically select it.
+               First preference:
+               Global active client from
+               MDKClientContext.
             */
 
-            if(currentClientId){
+            const contextClient =
+                getContextClient();
+
+
+            if(
+                contextClient &&
+                contextClient.id
+            ){
+
+                currentClientId =
+                    contextClient.id;
+
 
                 clientSelect.value =
-                    currentClientId;
+                    contextClient.id;
 
 
                 await loadFAQs();
 
             }
+
+            /*
+               Fallback:
+               Profile assigned client.
+            */
+
+            else if(profileClientId){
+
+                currentClientId =
+                    profileClientId;
+
+
+                clientSelect.value =
+                    profileClientId;
+
+
+                await loadFAQs();
+
+            }
+
             else{
 
-                resetFAQs();
+                clearClientUI();
+
+                showMessage(
+                    "Please select a client first.",
+                    "error"
+                );
 
             }
 
@@ -989,6 +1113,10 @@ async function initialize(){
 
         else{
 
+            currentClientId =
+                profileClientId;
+
+
             if(!currentClientId){
 
                 showMessage(
@@ -1000,6 +1128,7 @@ async function initialize(){
                 resetFAQs();
 
                 return;
+
             }
 
 
@@ -1092,7 +1221,7 @@ async function loadClients(){
 
 
     /*
-       Re-select already assigned client
+       Keep current client selected
     */
 
     if(currentClientId){
@@ -1103,31 +1232,118 @@ async function loadClients(){
     }
 
 
+    /*
+       Client selection
+       updates global context.
+    */
+
     clientSelect.onchange =
     async function(){
 
-        currentClientId =
-            this.value ||
-            null;
+        const clientId =
+            this.value || null;
 
 
-        faqs = [];
+        if(
+            clientId &&
+            window.MDKClientContext &&
+            typeof MDKClientContext.set === "function"
+        ){
+
+            const selectedClient =
+                clients.find(
+                    client =>
+                        client.id === clientId
+                );
 
 
-        if(currentClientId){
+            if(selectedClient){
 
-            await loadFAQs();
+                /*
+                   Context event will reload FAQ.
+                */
+
+                MDKClientContext.set(
+                    selectedClient
+                );
+
+                return;
+
+            }
 
         }
-        else{
 
-            resetFAQs();
 
-        }
+        /*
+           Fallback if context is unavailable.
+        */
+
+        await setActiveClient(
+            clientId
+        );
 
     };
 
 }
+
+
+/* =====================================================
+   GLOBAL CLIENT CHANGE LISTENER
+===================================================== */
+
+window.addEventListener(
+    "mdk-client-changed",
+    async function(event){
+
+        /*
+           Only Admin / Super Admin
+           should follow global client.
+        */
+
+        if(
+            currentRole !== "super_admin" &&
+            currentRole !== "admin"
+        ){
+
+            return;
+
+        }
+
+
+        const client =
+            event.detail;
+
+
+        if(
+            client &&
+            client.id
+        ){
+
+            currentClientId =
+                client.id;
+
+
+            if(clientSelect){
+
+                clientSelect.value =
+                    client.id;
+
+            }
+
+
+            await setActiveClient(
+                client.id
+            );
+
+        }
+        else{
+
+            clearClientUI();
+
+        }
+
+    }
+);
 
 
 /* =====================================================
@@ -1141,6 +1357,7 @@ async function loadFAQs(){
         resetFAQs();
 
         return;
+
     }
 
 
@@ -1214,6 +1431,7 @@ async function loadFAQs(){
 
 
         return;
+
     }
 
 
@@ -1231,6 +1449,9 @@ async function loadFAQs(){
 ===================================================== */
 
 function resetFAQs(){
+
+    faqs = [];
+
 
     document.getElementById(
         "faqContainer"
@@ -1340,6 +1561,7 @@ function renderFAQs(){
         resetFAQs();
 
         return;
+
     }
 
 
@@ -1361,6 +1583,7 @@ function renderFAQs(){
         `;
 
         return;
+
     }
 
 
@@ -1526,6 +1749,7 @@ function openModal(
         );
 
         return;
+
     }
 
 
@@ -1553,6 +1777,7 @@ function openModal(
             closeModal();
 
             return;
+
         }
 
 
@@ -1684,6 +1909,7 @@ async function saveFAQ(){
         );
 
         return;
+
     }
 
 
@@ -1711,6 +1937,7 @@ async function saveFAQ(){
         );
 
         return;
+
     }
 
 
@@ -1722,6 +1949,7 @@ async function saveFAQ(){
         );
 
         return;
+
     }
 
 
@@ -1891,6 +2119,18 @@ function editFAQ(id){
 ===================================================== */
 
 async function deleteFAQ(id){
+
+    if(!currentClientId){
+
+        showMessage(
+            "Please select a client first.",
+            "error"
+        );
+
+        return;
+
+    }
+
 
     const item =
         faqs.find(
@@ -2093,4 +2333,3 @@ initialize();
 
 </body>
 </html>
-```
