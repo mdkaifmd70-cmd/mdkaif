@@ -8,6 +8,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<!-- CENTRAL CLIENT CONTEXT -->
+<script src="../client-context.js"></script>
+
 <style>
 *{
     box-sizing:border-box;
@@ -19,6 +22,10 @@ body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f5f7fb;
     color:#1f2937;
+}
+
+.hidden{
+    display:none !important;
 }
 
 .header{
@@ -518,6 +525,7 @@ tbody tr:hover{
 }
 
 @media(max-width:650px){
+
     .header{
         padding:0 15px;
     }
@@ -562,110 +570,260 @@ tbody tr:hover{
 <body>
 
 <header class="header">
-    <div class="logo">MD Kaif Web Platform</div>
+
+    <div class="logo">
+        MD Kaif Web Platform
+    </div>
 
     <div class="header-right">
-        <span class="user-name" id="userName">Loading...</span>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+
+        <span class="user-name" id="userName">
+            Loading...
+        </span>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
     </div>
+
 </header>
+
 
 <main class="container">
 
     <div class="topbar">
+
         <div class="page-title">
-            <h1>Policy Manager</h1>
-            <p>Manage client-wise website policies and legal pages.</p>
+
+            <h1>
+                Policy Manager
+            </h1>
+
+            <p>
+                Manage client-wise website policies and legal pages.
+            </p>
+
         </div>
 
-        <a href="dashboard.html" class="back-btn">
+        <a
+            href="dashboard.html"
+            class="back-btn"
+        >
             ← Back to Dashboard
         </a>
+
     </div>
 
-    <div id="alertBox" class="alert"></div>
 
-    <!-- CLIENT SELECT -->
-    <div class="client-panel" id="clientPanel">
+    <div
+        id="alertBox"
+        class="alert"
+    ></div>
+
+
+    <!-- CLIENT SELECTOR -->
+
+    <div
+        class="client-panel"
+        id="clientPanel"
+    >
 
         <label for="clientSelect">
-            Select Client <span class="required">*</span>
+
+            Select Client
+            <span class="required">*</span>
+
         </label>
 
-        <select id="clientSelect" onchange="clientChanged()">
-            <option value="">-- Select Client --</option>
+
+        <select
+            id="clientSelect"
+            onchange="clientChanged()"
+        >
+
+            <option value="">
+                -- Select Client --
+            </option>
+
         </select>
 
-        <div class="client-info" id="clientInfo">
+
+        <div
+            class="client-info"
+            id="clientInfo"
+        >
             Please select a client to manage policies.
         </div>
 
     </div>
 
+
     <!-- STATISTICS -->
+
     <div class="dashboard-grid">
 
         <div class="stat-card">
-            <h4>Total Policies</h4>
-            <div class="stat-number" id="totalCount">0</div>
+
+            <h4>
+                Total Policies
+            </h4>
+
+            <div
+                class="stat-number"
+                id="totalCount"
+            >
+                0
+            </div>
+
         </div>
 
-        <div class="stat-card">
-            <h4>Active</h4>
-            <div class="stat-number" id="activeCount">0</div>
-        </div>
 
         <div class="stat-card">
-            <h4>Inactive</h4>
-            <div class="stat-number" id="inactiveCount">0</div>
+
+            <h4>
+                Active
+            </h4>
+
+            <div
+                class="stat-number"
+                id="activeCount"
+            >
+                0
+            </div>
+
         </div>
 
+
         <div class="stat-card">
-            <h4>Selected Client</h4>
-            <div class="stat-number" id="clientCount">-</div>
+
+            <h4>
+                Inactive
+            </h4>
+
+            <div
+                class="stat-number"
+                id="inactiveCount"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h4>
+                Selected Client
+            </h4>
+
+            <div
+                class="stat-number"
+                id="clientCount"
+            >
+                -
+            </div>
+
         </div>
 
     </div>
 
+
     <!-- TOOLBAR -->
+
     <div class="toolbar">
 
         <div class="search-box">
+
             <input
                 type="text"
                 id="searchInput"
                 placeholder="Search policy title..."
                 oninput="renderPolicies()"
             >
+
         </div>
+
 
         <div class="filter-box">
-            <select id="typeFilter" onchange="renderPolicies()">
-                <option value="">All Policy Types</option>
-                <option value="privacy">Privacy Policy</option>
-                <option value="terms">Terms & Conditions</option>
-                <option value="disclaimer">Disclaimer</option>
-                <option value="refund">Refund / Cancellation</option>
-                <option value="shipping">Shipping / Delivery</option>
-                <option value="custom">Custom Policy</option>
+
+            <select
+                id="typeFilter"
+                onchange="renderPolicies()"
+            >
+
+                <option value="">
+                    All Policy Types
+                </option>
+
+                <option value="privacy">
+                    Privacy Policy
+                </option>
+
+                <option value="terms">
+                    Terms & Conditions
+                </option>
+
+                <option value="disclaimer">
+                    Disclaimer
+                </option>
+
+                <option value="refund">
+                    Refund / Cancellation
+                </option>
+
+                <option value="shipping">
+                    Shipping / Delivery
+                </option>
+
+                <option value="custom">
+                    Custom Policy
+                </option>
+
             </select>
+
         </div>
+
 
         <div class="filter-box">
-            <select id="statusFilter" onchange="renderPolicies()">
-                <option value="">All Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
+
+            <select
+                id="statusFilter"
+                onchange="renderPolicies()"
+            >
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option value="active">
+                    Active
+                </option>
+
+                <option value="inactive">
+                    Inactive
+                </option>
+
             </select>
+
         </div>
 
-        <button class="add-btn" onclick="openAddModal()">
+
+        <button
+            class="add-btn"
+            onclick="openAddModal()"
+        >
             + Add Policy
         </button>
 
     </div>
 
+
     <!-- TABLE -->
+
     <div class="table-card">
 
         <div class="table-wrapper">
@@ -673,7 +831,9 @@ tbody tr:hover{
             <table>
 
                 <thead>
+
                     <tr>
+
                         <th>#</th>
                         <th>Policy</th>
                         <th>Type</th>
@@ -682,17 +842,26 @@ tbody tr:hover{
                         <th>Status</th>
                         <th>Updated</th>
                         <th>Actions</th>
+
                     </tr>
+
                 </thead>
 
+
                 <tbody id="policyTableBody">
+
                     <tr>
+
                         <td colspan="8">
+
                             <div class="loading">
                                 Select a client first.
                             </div>
+
                         </td>
+
                     </tr>
+
                 </tbody>
 
             </table>
@@ -706,29 +875,51 @@ tbody tr:hover{
 
 <!-- POLICY MODAL -->
 
-<div class="modal" id="policyModal">
+<div
+    class="modal"
+    id="policyModal"
+>
 
     <div class="modal-content">
 
         <div class="modal-header">
-            <h2 id="modalTitle">Add Policy</h2>
 
-            <button class="close-btn" onclick="closeModal()">
+            <h2 id="modalTitle">
+                Add Policy
+            </h2>
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
                 ×
             </button>
+
         </div>
 
-        <form id="policyForm" onsubmit="savePolicy(event)">
+
+        <form
+            id="policyForm"
+            onsubmit="savePolicy(event)"
+        >
 
             <div class="form-grid">
+
 
                 <div class="form-group">
 
                     <label>
-                        Policy Type <span class="required">*</span>
+
+                        Policy Type
+                        <span class="required">*</span>
+
                     </label>
 
-                    <select id="policyType" required>
+
+                    <select
+                        id="policyType"
+                        required
+                    >
 
                         <option value="">
                             -- Select Policy Type --
@@ -766,10 +957,17 @@ tbody tr:hover{
                 <div class="form-group">
 
                     <label>
-                        Status <span class="required">*</span>
+
+                        Status
+                        <span class="required">*</span>
+
                     </label>
 
-                    <select id="policyStatus" required>
+
+                    <select
+                        id="policyStatus"
+                        required
+                    >
 
                         <option value="active">
                             Active
@@ -787,8 +985,12 @@ tbody tr:hover{
                 <div class="form-group full">
 
                     <label>
-                        Policy Title <span class="required">*</span>
+
+                        Policy Title
+                        <span class="required">*</span>
+
                     </label>
+
 
                     <input
                         type="text"
@@ -806,11 +1008,13 @@ tbody tr:hover{
                         Slug
                     </label>
 
+
                     <input
                         type="text"
                         id="policySlug"
                         placeholder="Example: privacy-policy"
                     >
+
 
                     <div class="form-help">
                         URL-friendly name. Example: privacy-policy
@@ -825,6 +1029,7 @@ tbody tr:hover{
                         Sort Order
                     </label>
 
+
                     <input
                         type="number"
                         id="sortOrder"
@@ -838,14 +1043,19 @@ tbody tr:hover{
                 <div class="form-group full">
 
                     <label>
-                        Policy Content <span class="required">*</span>
+
+                        Policy Content
+                        <span class="required">*</span>
+
                     </label>
+
 
                     <textarea
                         id="policyContent"
                         placeholder="Enter complete policy content here..."
                         required
                     ></textarea>
+
 
                     <div class="form-help">
                         You can enter plain text or HTML content.
@@ -866,6 +1076,7 @@ tbody tr:hover{
                     Cancel
                 </button>
 
+
                 <button
                     type="submit"
                     class="save-btn"
@@ -885,9 +1096,9 @@ tbody tr:hover{
 
 <script>
 
-// ============================================
-// SUPABASE CONFIG
-// ============================================
+/* =========================================================
+   SUPABASE CONFIG
+========================================================= */
 
 const SUPABASE_URL =
     "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -902,24 +1113,142 @@ const supabaseClient =
     );
 
 
-// ============================================
-// GLOBAL VARIABLES
-// ============================================
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
 
 let currentUser = null;
 let currentProfile = null;
 
+let currentRole = null;
+
 let currentClientId = null;
 
 let clients = [];
+
 let policies = [];
 
 let editingPolicyId = null;
 
 
-// ============================================
-// INIT
-// ============================================
+/* =========================================================
+   GET CENTRAL CLIENT CONTEXT
+========================================================= */
+
+function getContextClient(){
+
+    if(
+        window.MDKClientContext &&
+        typeof window.MDKClientContext.get === "function"
+    ){
+
+        return window.MDKClientContext.get();
+
+    }
+
+    return null;
+}
+
+
+/* =========================================================
+   CLEAR CLIENT UI
+========================================================= */
+
+function clearClientUI(){
+
+    currentClientId = null;
+
+    policies = [];
+
+    editingPolicyId = null;
+
+    closeModal();
+
+    const select =
+        document.getElementById("clientSelect");
+
+    if(select){
+        select.value = "";
+    }
+
+    const info =
+        document.getElementById("clientInfo");
+
+    if(info){
+
+        info.textContent =
+            "Please select a client to manage policies.";
+
+    }
+
+    updateStats();
+
+    renderPolicies();
+
+}
+
+
+/* =========================================================
+   SET ACTIVE CLIENT
+========================================================= */
+
+async function setActiveClient(clientId){
+
+    currentClientId =
+        clientId || null;
+
+    closeModal();
+
+    if(!currentClientId){
+
+        clearClientUI();
+
+        return;
+
+    }
+
+
+    const select =
+        document.getElementById("clientSelect");
+
+    if(select){
+
+        select.value =
+            currentClientId;
+
+    }
+
+
+    const client =
+        clients.find(
+            c => c.id === currentClientId
+        );
+
+
+    if(client){
+
+        document.getElementById("clientInfo").textContent =
+            "Managing policies for: " +
+            client.company_name;
+
+    }
+    else{
+
+        await loadClientName(
+            currentClientId
+        );
+
+    }
+
+
+    await loadPolicies();
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -932,36 +1261,52 @@ async function init(){
     try{
 
         const {
-            data: {
+            data:{
                 session
             }
-        } = await supabaseClient.auth.getSession();
+        } =
+            await supabaseClient.auth.getSession();
 
 
         if(!session){
 
-            window.location.href = "index.html";
+            window.location.href =
+                "index.html";
+
             return;
 
         }
 
 
-        currentUser = session.user;
+        currentUser =
+            session.user;
 
 
-        document.getElementById("userName").textContent =
-            currentUser.email || "User";
+        document.getElementById(
+            "userName"
+        ).textContent =
+            currentUser.email ||
+            "User";
 
 
-        // Load profile
+        /* =========================================
+           LOAD PROFILE
+        ========================================= */
+
         const {
-            data: profile,
-            error: profileError
-        } = await supabaseClient
-            .from("profiles")
-            .select("id,role,client_id,full_name")
-            .eq("id", currentUser.id)
-            .single();
+            data:profile,
+            error:profileError
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "id,role,client_id,full_name"
+                )
+                .eq(
+                    "id",
+                    currentUser.id
+                )
+                .single();
 
 
         if(profileError){
@@ -974,67 +1319,134 @@ async function init(){
             );
 
             return;
+
         }
 
 
-        currentProfile = profile;
+        currentProfile =
+            profile;
+
+        currentRole =
+            profile.role;
 
 
         if(profile.full_name){
 
-            document.getElementById("userName").textContent =
+            document.getElementById(
+                "userName"
+            ).textContent =
                 profile.full_name;
 
         }
 
 
-        // ========================================
-        // SUPER ADMIN
-        // ========================================
+        /* =========================================
+           SUPER ADMIN / ADMIN
+        ========================================= */
 
-        if(profile.role === "super_admin"){
+        if(
+            profile.role === "super_admin" ||
+            profile.role === "admin"
+        ){
 
             await loadClients();
 
-            document.getElementById("clientInfo").textContent =
-                "Super Admin: Please select a client before managing policies.";
 
-            // IMPORTANT:
-            // Do NOT auto-select first client.
+            document.getElementById(
+                "clientInfo"
+            ).textContent =
+                profile.role === "super_admin"
+                ? "Super Admin: Select a client before managing policies."
+                : "Admin: Select a client before managing policies.";
 
-            currentClientId = null;
+
+            /*
+             * FIRST PRIORITY:
+             * CENTRAL CLIENT CONTEXT
+             */
+
+            const contextClient =
+                getContextClient();
+
+
+            if(
+                contextClient &&
+                contextClient.id
+            ){
+
+                await setActiveClient(
+                    contextClient.id
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * NO AUTO SELECT
+             */
+
+            currentClientId =
+                null;
+
+
+            updateStats();
 
             renderPolicies();
 
             return;
+
         }
 
 
-        // ========================================
-        // NORMAL CLIENT USER
-        // ========================================
+        /* =========================================
+           NORMAL CLIENT USER
+        ========================================= */
 
         if(!profile.client_id){
 
-            document.getElementById("clientInfo").innerHTML =
+            document.getElementById(
+                "clientPanel"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "clientInfo"
+            ).innerHTML =
                 '<div class="no-client">No client is assigned to your account.</div>';
 
-            document.getElementById("policyTableBody").innerHTML =
+
+            document.getElementById(
+                "policyTableBody"
+            ).innerHTML =
                 '<tr><td colspan="8"><div class="empty-state">No client assigned.</div></td></tr>';
 
+
             return;
+
         }
 
 
-        currentClientId = profile.client_id;
+        currentClientId =
+            profile.client_id;
 
 
-        // Hide client selector for normal users
-        document.getElementById("clientPanel").style.display =
+        /*
+         * NORMAL USER DOES NOT SEE CLIENT SELECTOR
+         */
+
+        document.getElementById(
+            "clientPanel"
+        ).style.display =
             "none";
 
 
-        await loadClientName(profile.client_id);
+        await loadClientName(
+            profile.client_id
+        );
+
 
         await loadPolicies();
 
@@ -1053,21 +1465,27 @@ async function init(){
 }
 
 
-// ============================================
-// LOAD CLIENTS
-// ============================================
+/* =========================================================
+   LOAD CLIENTS
+========================================================= */
 
 async function loadClients(){
 
     const {
         data,
         error
-    } = await supabaseClient
-        .from("clients")
-        .select("id,company_name,slug,status")
-        .order("company_name", {
-            ascending:true
-        });
+    } =
+        await supabaseClient
+            .from("clients")
+            .select(
+                "id,company_name,slug,status"
+            )
+            .order(
+                "company_name",
+                {
+                    ascending:true
+                }
+            );
 
 
     if(error){
@@ -1075,110 +1493,230 @@ async function loadClients(){
         console.error(error);
 
         showAlert(
-            "Unable to load clients: " + error.message,
+            "Unable to load clients: " +
+            error.message,
             "error"
         );
 
         return;
+
     }
 
 
-    clients = data || [];
+    clients =
+        data || [];
 
 
     const select =
-        document.getElementById("clientSelect");
+        document.getElementById(
+            "clientSelect"
+        );
 
 
     select.innerHTML =
         '<option value="">-- Select Client --</option>';
 
 
-    clients.forEach(client => {
+    clients.forEach(
+        client => {
 
-        const option =
-            document.createElement("option");
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-        option.value = client.id;
 
-        option.textContent =
-            client.company_name +
-            (
-                client.status
-                ? " (" + client.status + ")"
-                : ""
+            option.value =
+                client.id;
+
+
+            option.textContent =
+                client.company_name +
+                (
+                    client.status
+                    ? " (" +
+                      client.status +
+                      ")"
+                    : ""
+                );
+
+
+            select.appendChild(
+                option
             );
 
-        select.appendChild(option);
-
-    });
+        }
+    );
 
 }
 
 
-// ============================================
-// CLIENT CHANGED
-// ============================================
+/* =========================================================
+   CLIENT CHANGED
+========================================================= */
 
 async function clientChanged(){
 
     const selected =
-        document.getElementById("clientSelect").value;
+        document.getElementById(
+            "clientSelect"
+        ).value;
 
 
-    currentClientId =
-        selected || null;
+    if(!selected){
 
+        if(
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.clear === "function"
+        ){
 
-    if(!currentClientId){
+            window.MDKClientContext.clear();
 
-        document.getElementById("clientInfo").textContent =
-            "Please select a client to manage policies.";
+        }
+        else{
 
-        policies = [];
+            clearClientUI();
 
-        updateStats();
-
-        renderPolicies();
+        }
 
         return;
+
     }
 
 
     const client =
         clients.find(
-            c => c.id === currentClientId
+            c => c.id === selected
         );
 
 
-    if(client){
+    /*
+     * CENTRAL CONTEXT IS THE SOURCE OF TRUTH
+     */
 
-        document.getElementById("clientInfo").textContent =
-            "Managing policies for: " +
-            client.company_name;
+    if(
+        window.MDKClientContext &&
+        typeof window.MDKClientContext.set === "function"
+    ){
+
+        if(client){
+
+            window.MDKClientContext.set(
+                client
+            );
+
+            /*
+             * context event will trigger
+             * setActiveClient()
+             */
+
+            return;
+
+        }
 
     }
 
 
-    await loadPolicies();
+    await setActiveClient(
+        selected
+    );
 
 }
 
 
-// ============================================
-// LOAD CLIENT NAME
-// ============================================
+/* =========================================================
+   CENTRAL CLIENT CONTEXT LISTENER
+========================================================= */
 
-async function loadClientName(clientId){
+window.addEventListener(
+    "mdk-client-changed",
+    async function(event){
+
+        /*
+         * Only Super Admin / Admin
+         * should follow global selector.
+         */
+
+        if(
+            currentRole !== "super_admin" &&
+            currentRole !== "admin"
+        ){
+
+            return;
+
+        }
+
+
+        const client =
+            event.detail;
+
+
+        if(
+            client &&
+            client.id
+        ){
+
+            /*
+             * Avoid unnecessary reload
+             * when same client is selected.
+             */
+
+            if(
+                currentClientId === client.id
+            ){
+
+                const select =
+                    document.getElementById(
+                        "clientSelect"
+                    );
+
+                if(select){
+                    select.value =
+                        client.id;
+                }
+
+                return;
+
+            }
+
+
+            await setActiveClient(
+                client.id
+            );
+
+        }
+        else{
+
+            clearClientUI();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOAD CLIENT NAME
+========================================================= */
+
+async function loadClientName(
+    clientId
+){
 
     const {
         data,
         error
-    } = await supabaseClient
-        .from("clients")
-        .select("company_name")
-        .eq("id",clientId)
-        .single();
+    } =
+        await supabaseClient
+            .from("clients")
+            .select(
+                "company_name"
+            )
+            .eq(
+                "id",
+                clientId
+            )
+            .single();
 
 
     if(error){
@@ -1186,12 +1724,15 @@ async function loadClientName(clientId){
         console.error(error);
 
         return;
+
     }
 
 
     if(data){
 
-        document.getElementById("clientInfo").textContent =
+        document.getElementById(
+            "clientInfo"
+        ).textContent =
             "Managing policies for: " +
             data.company_name;
 
@@ -1200,9 +1741,9 @@ async function loadClientName(clientId){
 }
 
 
-// ============================================
-// LOAD POLICIES
-// ============================================
+/* =========================================================
+   LOAD POLICIES
+========================================================= */
 
 async function loadPolicies(){
 
@@ -1215,37 +1756,50 @@ async function loadPolicies(){
         renderPolicies();
 
         return;
+
     }
 
 
-    document.getElementById("policyTableBody").innerHTML =
+    document.getElementById(
+        "policyTableBody"
+    ).innerHTML =
         '<tr><td colspan="8"><div class="loading">Loading policies...</div></td></tr>';
 
 
     const {
         data,
         error
-    } = await supabaseClient
-        .from("policies")
-        .select(`
-            id,
-            client_id,
-            policy_type,
-            title,
-            slug,
-            content,
-            sort_order,
-            status,
-            created_at,
-            updated_at
-        `)
-        .eq("client_id",currentClientId)
-        .order("sort_order",{
-            ascending:true
-        })
-        .order("created_at",{
-            ascending:true
-        });
+    } =
+        await supabaseClient
+            .from("policies")
+            .select(`
+                id,
+                client_id,
+                policy_type,
+                title,
+                slug,
+                content,
+                sort_order,
+                status,
+                created_at,
+                updated_at
+            `)
+            .eq(
+                "client_id",
+                currentClientId
+            )
+            .order(
+                "sort_order",
+                {
+                    ascending:true
+                }
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:true
+                }
+            );
 
 
     if(error){
@@ -1265,10 +1819,12 @@ async function loadPolicies(){
         renderPolicies();
 
         return;
+
     }
 
 
-    policies = data || [];
+    policies =
+        data || [];
 
 
     updateStats();
@@ -1278,9 +1834,9 @@ async function loadPolicies(){
 }
 
 
-// ============================================
-// POLICY TYPE LABEL
-// ============================================
+/* =========================================================
+   POLICY TYPE LABEL
+========================================================= */
 
 function getPolicyTypeLabel(type){
 
@@ -1307,14 +1863,18 @@ function getPolicyTypeLabel(type){
     };
 
 
-    return labels[type] || type || "-";
+    return (
+        labels[type] ||
+        type ||
+        "-"
+    );
 
 }
 
 
-// ============================================
-// STATUS LABEL
-// ============================================
+/* =========================================================
+   STATUS LABEL
+========================================================= */
 
 function getStatusLabel(status){
 
@@ -1325,9 +1885,9 @@ function getStatusLabel(status){
 }
 
 
-// ============================================
-// STATS
-// ============================================
+/* =========================================================
+   STATS
+========================================================= */
 
 function updateStats(){
 
@@ -1337,26 +1897,39 @@ function updateStats(){
 
     const active =
         policies.filter(
-            p => p.status === "active"
+            p =>
+                p.status === "active"
         ).length;
 
 
     const inactive =
         policies.filter(
-            p => p.status === "inactive"
+            p =>
+                p.status === "inactive"
         ).length;
 
 
-    document.getElementById("totalCount").textContent =
+    document.getElementById(
+        "totalCount"
+    ).textContent =
         total;
 
-    document.getElementById("activeCount").textContent =
+
+    document.getElementById(
+        "activeCount"
+    ).textContent =
         active;
 
-    document.getElementById("inactiveCount").textContent =
+
+    document.getElementById(
+        "inactiveCount"
+    ).textContent =
         inactive;
 
-    document.getElementById("clientCount").textContent =
+
+    document.getElementById(
+        "clientCount"
+    ).textContent =
         currentClientId
             ? "Selected"
             : "-";
@@ -1364,14 +1937,16 @@ function updateStats(){
 }
 
 
-// ============================================
-// RENDER POLICIES
-// ============================================
+/* =========================================================
+   RENDER POLICIES
+========================================================= */
 
 function renderPolicies(){
 
     const tbody =
-        document.getElementById("policyTableBody");
+        document.getElementById(
+            "policyTableBody"
+        );
 
 
     if(!currentClientId){
@@ -1379,59 +1954,69 @@ function renderPolicies(){
         tbody.innerHTML =
             '<tr><td colspan="8"><div class="empty-state">Please select a client first.</div></td></tr>';
 
+
         updateStats();
 
         return;
+
     }
 
 
     const search =
-        document.getElementById("searchInput")
-            .value
-            .trim()
-            .toLowerCase();
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
 
 
     const type =
-        document.getElementById("typeFilter")
-            .value;
+        document.getElementById(
+            "typeFilter"
+        )
+        .value;
 
 
     const status =
-        document.getElementById("statusFilter")
-            .value;
+        document.getElementById(
+            "statusFilter"
+        )
+        .value;
 
 
     const filtered =
-        policies.filter(policy => {
+        policies.filter(
+            policy => {
 
-            const matchesSearch =
-                !search ||
-                (policy.title || "")
-                    .toLowerCase()
-                    .includes(search) ||
-                (policy.slug || "")
-                    .toLowerCase()
-                    .includes(search);
-
-
-            const matchesType =
-                !type ||
-                policy.policy_type === type;
+                const matchesSearch =
+                    !search ||
+                    (policy.title || "")
+                        .toLowerCase()
+                        .includes(search) ||
+                    (policy.slug || "")
+                        .toLowerCase()
+                        .includes(search);
 
 
-            const matchesStatus =
-                !status ||
-                policy.status === status;
+                const matchesType =
+                    !type ||
+                    policy.policy_type === type;
 
 
-            return (
-                matchesSearch &&
-                matchesType &&
-                matchesStatus
-            );
+                const matchesStatus =
+                    !status ||
+                    policy.status === status;
 
-        });
+
+                return (
+                    matchesSearch &&
+                    matchesType &&
+                    matchesStatus
+                );
+
+            }
+        );
 
 
     if(filtered.length === 0){
@@ -1444,128 +2029,174 @@ function renderPolicies(){
     }
 
 
-    tbody.innerHTML = "";
+    tbody.innerHTML =
+        "";
 
 
-    filtered.forEach((policy,index) => {
+    filtered.forEach(
+        (policy,index) => {
 
-        const tr =
-            document.createElement("tr");
-
-
-        const contentPreview =
-            stripHtml(policy.content || "");
-
-
-        const updated =
-            policy.updated_at
-                ? formatDate(policy.updated_at)
-                : "-";
+            const tr =
+                document.createElement(
+                    "tr"
+                );
 
 
-        tr.innerHTML = `
+            const contentPreview =
+                stripHtml(
+                    policy.content || ""
+                );
 
-            <td>
-                ${index + 1}
-            </td>
 
-            <td>
-                <div class="policy-title">
-                    ${escapeHtml(policy.title || "-")}
-                </div>
+            const updated =
+                policy.updated_at
+                    ? formatDate(
+                        policy.updated_at
+                    )
+                    : "-";
 
-                ${
-                    policy.slug
-                    ? `<div style="font-size:11px;color:#9ca3af;margin-top:4px;">
-                        /${escapeHtml(policy.slug)}
-                       </div>`
-                    : ""
-                }
-            </td>
 
-            <td>
-                <span class="type-badge">
-                    ${escapeHtml(
-                        getPolicyTypeLabel(
-                            policy.policy_type
-                        )
+            tr.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+
+                    <div class="policy-title">
+                        ${escapeHtml(
+                            policy.title || "-"
+                        )}
+                    </div>
+
+                    ${
+                        policy.slug
+                        ? `
+                            <div style="
+                                font-size:11px;
+                                color:#9ca3af;
+                                margin-top:4px;
+                            ">
+                                /
+                                ${escapeHtml(
+                                    policy.slug
+                                )}
+                            </div>
+                        `
+                        : ""
+                    }
+
+                </td>
+
+                <td>
+
+                    <span class="type-badge">
+
+                        ${escapeHtml(
+                            getPolicyTypeLabel(
+                                policy.policy_type
+                            )
+                        )}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <div
+                        class="policy-preview"
+                        title="${escapeHtml(
+                            contentPreview
+                        )}"
+                    >
+
+                        ${escapeHtml(
+                            contentPreview || "-"
+                        )}
+
+                    </div>
+
+                </td>
+
+                <td>
+                    ${Number(
+                        policy.sort_order || 0
                     )}
-                </span>
-            </td>
+                </td>
 
-            <td>
-                <div class="policy-preview"
-                     title="${escapeHtml(contentPreview)}">
-                    ${escapeHtml(
-                        contentPreview || "-"
-                    )}
-                </div>
-            </td>
+                <td>
 
-            <td>
-                ${Number(policy.sort_order || 0)}
-            </td>
+                    <span class="status-badge ${
+                        policy.status === "active"
+                        ? "status-active"
+                        : "status-inactive"
+                    }">
 
-            <td>
-                <span class="status-badge ${
-                    policy.status === "active"
-                    ? "status-active"
-                    : "status-inactive"
-                }">
-                    ${getStatusLabel(policy.status)}
-                </span>
-            </td>
+                        ${getStatusLabel(
+                            policy.status
+                        )}
 
-            <td>
-                ${updated}
-            </td>
+                    </span>
 
-            <td>
+                </td>
 
-                <div class="action-buttons">
+                <td>
+                    ${updated}
+                </td>
 
-                    <button
-                        class="edit-btn"
-                        onclick="editPolicy('${policy.id}')"
-                    >
-                        Edit
-                    </button>
+                <td>
 
-                    <button
-                        class="toggle-btn"
-                        onclick="togglePolicy('${policy.id}')"
-                    >
-                        ${
-                            policy.status === "active"
-                            ? "Deactivate"
-                            : "Activate"
-                        }
-                    </button>
+                    <div class="action-buttons">
 
-                    <button
-                        class="delete-btn"
-                        onclick="deletePolicy('${policy.id}')"
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-            </td>
-
-        `;
+                        <button
+                            class="edit-btn"
+                            onclick="editPolicy('${policy.id}')"
+                        >
+                            Edit
+                        </button>
 
 
-        tbody.appendChild(tr);
+                        <button
+                            class="toggle-btn"
+                            onclick="togglePolicy('${policy.id}')"
+                        >
+                            ${
+                                policy.status === "active"
+                                ? "Deactivate"
+                                : "Activate"
+                            }
+                        </button>
 
-    });
+
+                        <button
+                            class="delete-btn"
+                            onclick="deletePolicy('${policy.id}')"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                tr
+            );
+
+        }
+    );
 
 }
 
 
-// ============================================
-// ADD POLICY
-// ============================================
+/* =========================================================
+   ADD POLICY
+========================================================= */
 
 function openAddModal(){
 
@@ -1577,36 +2208,48 @@ function openAddModal(){
         );
 
         return;
+
     }
 
 
-    editingPolicyId = null;
+    editingPolicyId =
+        null;
 
 
-    document.getElementById("modalTitle").textContent =
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
         "Add Policy";
 
 
-    document.getElementById("policyForm").reset();
+    document.getElementById(
+        "policyForm"
+    ).reset();
 
 
-    document.getElementById("policyStatus").value =
+    document.getElementById(
+        "policyStatus"
+    ).value =
         "active";
 
 
-    document.getElementById("sortOrder").value =
+    document.getElementById(
+        "sortOrder"
+    ).value =
         "0";
 
 
-    document.getElementById("policyModal").style.display =
+    document.getElementById(
+        "policyModal"
+    ).style.display =
         "flex";
 
 }
 
 
-// ============================================
-// EDIT POLICY
-// ============================================
+/* =========================================================
+   EDIT POLICY
+========================================================= */
 
 function editPolicy(id){
 
@@ -1618,6 +2261,7 @@ function editPolicy(id){
         );
 
         return;
+
     }
 
 
@@ -1635,6 +2279,26 @@ function editPolicy(id){
         );
 
         return;
+
+    }
+
+
+    /*
+     * Extra client ownership protection
+     */
+
+    if(
+        policy.client_id !==
+        currentClientId
+    ){
+
+        showAlert(
+            "This policy does not belong to the selected client.",
+            "error"
+        );
+
+        return;
+
     }
 
 
@@ -1642,43 +2306,59 @@ function editPolicy(id){
         policy.id;
 
 
-    document.getElementById("modalTitle").textContent =
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
         "Edit Policy";
 
 
-    document.getElementById("policyType").value =
+    document.getElementById(
+        "policyType"
+    ).value =
         policy.policy_type || "";
 
 
-    document.getElementById("policyStatus").value =
+    document.getElementById(
+        "policyStatus"
+    ).value =
         policy.status || "active";
 
 
-    document.getElementById("policyTitle").value =
+    document.getElementById(
+        "policyTitle"
+    ).value =
         policy.title || "";
 
 
-    document.getElementById("policySlug").value =
+    document.getElementById(
+        "policySlug"
+    ).value =
         policy.slug || "";
 
 
-    document.getElementById("sortOrder").value =
+    document.getElementById(
+        "sortOrder"
+    ).value =
         policy.sort_order ?? 0;
 
 
-    document.getElementById("policyContent").value =
+    document.getElementById(
+        "policyContent"
+    ).value =
         policy.content || "";
 
 
-    document.getElementById("policyModal").style.display =
+    document.getElementById(
+        "policyModal"
+    ).style.display =
         "flex";
 
 }
 
 
-// ============================================
-// SAVE POLICY
-// ============================================
+/* =========================================================
+   SAVE POLICY
+========================================================= */
 
 async function savePolicy(event){
 
@@ -1693,41 +2373,51 @@ async function savePolicy(event){
         );
 
         return;
+
     }
 
 
     const policyType =
-        document.getElementById("policyType")
-            .value;
+        document.getElementById(
+            "policyType"
+        ).value;
 
 
     const status =
-        document.getElementById("policyStatus")
-            .value;
+        document.getElementById(
+            "policyStatus"
+        ).value;
 
 
     const title =
-        document.getElementById("policyTitle")
-            .value
-            .trim();
+        document.getElementById(
+            "policyTitle"
+        )
+        .value
+        .trim();
 
 
     const slug =
-        document.getElementById("policySlug")
-            .value
-            .trim();
+        document.getElementById(
+            "policySlug"
+        )
+        .value
+        .trim();
 
 
     const content =
-        document.getElementById("policyContent")
-            .value
-            .trim();
+        document.getElementById(
+            "policyContent"
+        )
+        .value
+        .trim();
 
 
     const sortOrder =
         parseInt(
-            document.getElementById("sortOrder")
-                .value,
+            document.getElementById(
+                "sortOrder"
+            ).value,
             10
         ) || 0;
 
@@ -1740,6 +2430,7 @@ async function savePolicy(event){
         );
 
         return;
+
     }
 
 
@@ -1751,6 +2442,7 @@ async function savePolicy(event){
         );
 
         return;
+
     }
 
 
@@ -1762,14 +2454,19 @@ async function savePolicy(event){
         );
 
         return;
+
     }
 
 
     const saveBtn =
-        document.getElementById("saveBtn");
+        document.getElementById(
+            "saveBtn"
+        );
 
 
-    saveBtn.disabled = true;
+    saveBtn.disabled =
+        true;
+
 
     saveBtn.textContent =
         "Saving...";
@@ -1803,12 +2500,12 @@ async function savePolicy(event){
         };
 
 
-        let error;
+        let error = null;
 
 
-        // ====================================
-        // UPDATE
-        // ====================================
+        /* =========================================
+           UPDATE
+        ========================================= */
 
         if(editingPolicyId){
 
@@ -1816,8 +2513,14 @@ async function savePolicy(event){
                 await supabaseClient
                     .from("policies")
                     .update(payload)
-                    .eq("id",editingPolicyId)
-                    .eq("client_id",currentClientId);
+                    .eq(
+                        "id",
+                        editingPolicyId
+                    )
+                    .eq(
+                        "client_id",
+                        currentClientId
+                    );
 
 
             error =
@@ -1826,16 +2529,18 @@ async function savePolicy(event){
         }
 
 
-        // ====================================
-        // INSERT
-        // ====================================
+        /* =========================================
+           INSERT
+        ========================================= */
 
         else{
 
             const result =
                 await supabaseClient
                     .from("policies")
-                    .insert([payload]);
+                    .insert([
+                        payload
+                    ]);
 
 
             error =
@@ -1855,6 +2560,7 @@ async function savePolicy(event){
             );
 
             return;
+
         }
 
 
@@ -1885,7 +2591,8 @@ async function savePolicy(event){
     }
     finally{
 
-        saveBtn.disabled = false;
+        saveBtn.disabled =
+            false;
 
         saveBtn.textContent =
             "Save Policy";
@@ -1895,9 +2602,9 @@ async function savePolicy(event){
 }
 
 
-// ============================================
-// TOGGLE STATUS
-// ============================================
+/* =========================================================
+   TOGGLE STATUS
+========================================================= */
 
 async function togglePolicy(id){
 
@@ -1909,6 +2616,7 @@ async function togglePolicy(id){
         );
 
         return;
+
     }
 
 
@@ -1921,6 +2629,22 @@ async function togglePolicy(id){
     if(!policy){
 
         return;
+
+    }
+
+
+    if(
+        policy.client_id !==
+        currentClientId
+    ){
+
+        showAlert(
+            "This policy does not belong to the selected client.",
+            "error"
+        );
+
+        return;
+
     }
 
 
@@ -1947,18 +2671,27 @@ async function togglePolicy(id){
     if(!confirmed){
 
         return;
+
     }
 
 
     const {
         error
-    } = await supabaseClient
-        .from("policies")
-        .update({
-            status:newStatus
-        })
-        .eq("id",id)
-        .eq("client_id",currentClientId);
+    } =
+        await supabaseClient
+            .from("policies")
+            .update({
+                status:
+                    newStatus
+            })
+            .eq(
+                "id",
+                id
+            )
+            .eq(
+                "client_id",
+                currentClientId
+            );
 
 
     if(error){
@@ -1972,6 +2705,7 @@ async function togglePolicy(id){
         );
 
         return;
+
     }
 
 
@@ -1986,9 +2720,9 @@ async function togglePolicy(id){
 }
 
 
-// ============================================
-// DELETE POLICY
-// ============================================
+/* =========================================================
+   DELETE POLICY
+========================================================= */
 
 async function deletePolicy(id){
 
@@ -2000,6 +2734,7 @@ async function deletePolicy(id){
         );
 
         return;
+
     }
 
 
@@ -2012,6 +2747,22 @@ async function deletePolicy(id){
     if(!policy){
 
         return;
+
+    }
+
+
+    if(
+        policy.client_id !==
+        currentClientId
+    ){
+
+        showAlert(
+            "This policy does not belong to the selected client.",
+            "error"
+        );
+
+        return;
+
     }
 
 
@@ -2026,16 +2777,24 @@ async function deletePolicy(id){
     if(!confirmed){
 
         return;
+
     }
 
 
     const {
         error
-    } = await supabaseClient
-        .from("policies")
-        .delete()
-        .eq("id",id)
-        .eq("client_id",currentClientId);
+    } =
+        await supabaseClient
+            .from("policies")
+            .delete()
+            .eq(
+                "id",
+                id
+            )
+            .eq(
+                "client_id",
+                currentClientId
+            );
 
 
     if(error){
@@ -2049,6 +2808,7 @@ async function deletePolicy(id){
         );
 
         return;
+
     }
 
 
@@ -2063,52 +2823,58 @@ async function deletePolicy(id){
 }
 
 
-// ============================================
-// CLOSE MODAL
-// ============================================
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
 
 function closeModal(){
 
-    document.getElementById("policyModal").style.display =
-        "none";
+    const modal =
+        document.getElementById(
+            "policyModal"
+        );
 
 
-    document.getElementById("policyForm").reset();
+    if(modal){
+
+        modal.style.display =
+            "none";
+
+    }
 
 
-    editingPolicyId = null;
+    const form =
+        document.getElementById(
+            "policyForm"
+        );
+
+
+    if(form){
+
+        form.reset();
+
+    }
+
+
+    editingPolicyId =
+        null;
 
 }
 
 
-// ============================================
-// CLICK OUTSIDE MODAL
-// ============================================
+/* =========================================================
+   CLICK OUTSIDE MODAL
+========================================================= */
 
-document.getElementById("policyModal")
-    .addEventListener(
-        "click",
-        function(event){
-
-            if(event.target === this){
-
-                closeModal();
-
-            }
-
-        }
-    );
-
-
-// ============================================
-// ESC KEY
-// ============================================
-
-document.addEventListener(
-    "keydown",
+document.getElementById(
+    "policyModal"
+).addEventListener(
+    "click",
     function(event){
 
-        if(event.key === "Escape"){
+        if(
+            event.target === this
+        ){
 
             closeModal();
 
@@ -2118,13 +2884,48 @@ document.addEventListener(
 );
 
 
-// ============================================
-// LOGOUT
-// ============================================
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
 
 async function logout(){
 
+    /*
+     * Clear central client context
+     */
+
+    if(
+        window.MDKClientContext &&
+        typeof window.MDKClientContext.clear === "function"
+    ){
+
+        window.MDKClientContext.clear();
+
+    }
+
+
     await supabaseClient.auth.signOut();
+
 
     window.location.href =
         "index.html";
@@ -2132,19 +2933,27 @@ async function logout(){
 }
 
 
-// ============================================
-// ALERT
-// ============================================
+/* =========================================================
+   ALERT
+========================================================= */
 
-function showAlert(message,type){
+function showAlert(
+    message,
+    type
+){
 
     const box =
-        document.getElementById("alertBox");
+        document.getElementById(
+            "alertBox"
+        );
 
 
     box.className =
         "alert " +
-        (type || "success");
+        (
+            type ||
+            "success"
+        );
 
 
     box.textContent =
@@ -2168,23 +2977,27 @@ function showAlert(message,type){
 }
 
 
-// ============================================
-// DATE FORMAT
-// ============================================
+/* =========================================================
+   DATE FORMAT
+========================================================= */
 
-function formatDate(dateString){
+function formatDate(
+    dateString
+){
 
     try{
 
-        return new Date(dateString)
-            .toLocaleDateString(
-                "en-IN",
-                {
-                    day:"2-digit",
-                    month:"short",
-                    year:"numeric"
-                }
-            );
+        return new Date(
+            dateString
+        )
+        .toLocaleDateString(
+            "en-IN",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric"
+            }
+        );
 
     }
     catch(e){
@@ -2196,39 +3009,67 @@ function formatDate(dateString){
 }
 
 
-// ============================================
-// STRIP HTML
-// ============================================
+/* =========================================================
+   STRIP HTML
+========================================================= */
 
-function stripHtml(html){
+function stripHtml(
+    html
+){
 
     const temp =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     temp.innerHTML =
         html;
+
 
     return (
         temp.textContent ||
         temp.innerText ||
         ""
-    ).replace(/\s+/g," ").trim();
+    )
+    .replace(
+        /\s+/g,
+        " "
+    )
+    .trim();
 
 }
 
 
-// ============================================
-// ESCAPE HTML
-// ============================================
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
-function escapeHtml(value){
+function escapeHtml(
+    value
+){
 
     return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
