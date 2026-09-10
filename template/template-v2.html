@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>VERTEX | Corporate Excellence</title>
-<meta name="description" id="metaDescription"
-      content="Professional corporate business website.">
+
+<meta
+  name="description"
+  content="Professional corporate website template."
+>
 
 <link rel="icon" id="favicon" href="">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <style>
+
 :root{
   --primary:#0f172a;
   --primary-2:#1e293b;
@@ -29,14 +30,14 @@
   --success:#16a34a;
   --danger:#dc2626;
   --radius:18px;
-  --shadow:0 12px 35px rgba(15,23,42,.08);
-  --shadow-lg:0 25px 60px rgba(15,23,42,.12);
+  --shadow:0 15px 40px rgba(15,23,42,.08);
+  --shadow-lg:0 25px 70px rgba(15,23,42,.14);
 }
 
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box;
 }
 
 html{
@@ -44,9 +45,13 @@ html{
 }
 
 body{
-  font-family:Inter,Arial,sans-serif;
-  color:var(--text);
+  font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
   background:#fff;
+  color:var(--text);
   line-height:1.6;
 }
 
@@ -67,44 +72,18 @@ select{
   font:inherit;
 }
 
+button{
+  cursor:pointer;
+}
+
 .container{
   width:min(1180px,92%);
   margin:auto;
 }
 
-.section{
+section{
   padding:90px 0;
 }
-
-.section-head{
-  max-width:720px;
-  margin:0 auto 48px;
-  text-align:center;
-}
-
-.section-label{
-  display:inline-block;
-  color:var(--accent);
-  font-size:13px;
-  font-weight:800;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  margin-bottom:10px;
-}
-
-.section-title{
-  font-size:clamp(30px,4vw,46px);
-  line-height:1.12;
-  color:var(--primary);
-  margin-bottom:16px;
-}
-
-.section-text{
-  color:var(--muted);
-  font-size:16px;
-}
-
-/* TOPBAR */
 
 .topbar{
   background:var(--primary);
@@ -113,59 +92,68 @@ select{
 }
 
 .topbar-inner{
-  min-height:40px;
+  min-height:42px;
   display:flex;
+  align-items:center;
   justify-content:space-between;
+  gap:20px;
+}
+
+.topbar-left,
+.topbar-right{
+  display:flex;
   align-items:center;
   gap:20px;
 }
 
-.topbar-left{
-  display:flex;
-  gap:25px;
-  flex-wrap:wrap;
-}
-
-.topbar a:hover{
-  color:#fff;
-}
-
-/* NAVBAR */
-
-.navbar{
+header{
   position:sticky;
   top:0;
   z-index:1000;
   background:rgba(255,255,255,.96);
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(15px);
   border-bottom:1px solid var(--border);
 }
 
-.nav-inner{
-  min-height:78px;
+.nav{
+  min-height:76px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:30px;
+  gap:25px;
 }
 
 .logo{
   display:flex;
   align-items:center;
   gap:12px;
-  min-width:220px;
+  font-size:20px;
+  font-weight:900;
+  color:var(--primary);
+  min-width:200px;
 }
 
 .logo-mark{
-  width:44px;
-  height:44px;
+  width:42px;
+  height:42px;
   border-radius:12px;
-  background:var(--primary);
+  background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--accent)
+  );
   color:#fff;
   display:grid;
   place-items:center;
   font-weight:900;
-  font-size:22px;
+  overflow:hidden;
+}
+
+.logo-mark img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#fff;
 }
 
 .logo-text{
@@ -174,115 +162,51 @@ select{
   line-height:1.1;
 }
 
-.logo-text span{
-  font-weight:900;
-  color:var(--primary);
+.logo-text strong{
   font-size:17px;
 }
 
-.logo-text small{
-  color:var(--accent);
-  font-size:9px;
-  letter-spacing:1.3px;
+.logo-text span{
+  font-size:10px;
+  color:var(--muted);
   margin-top:4px;
+  letter-spacing:.7px;
 }
 
-.nav-links{
+.navlinks{
   display:flex;
   align-items:center;
-  gap:25px;
+  gap:24px;
 }
 
-.nav-links a{
-  color:#334155;
+.navlinks a{
   font-size:14px;
   font-weight:700;
+  color:#334155;
+  transition:.2s;
 }
 
-.nav-links a:hover{
+.navlinks a:hover{
   color:var(--accent);
 }
 
-.nav-cta{
-  background:var(--accent);
-  color:#fff !important;
-  padding:11px 17px;
-  border-radius:10px;
-}
-
-.menu-btn{
-  display:none;
-  border:0;
-  background:var(--primary);
-  color:#fff;
-  width:44px;
-  height:44px;
-  border-radius:10px;
-  cursor:pointer;
-  font-size:22px;
-}
-
-/* HERO */
-
-.hero{
-  min-height:700px;
+.nav-actions{
   display:flex;
   align-items:center;
-  background:
-    linear-gradient(90deg,rgba(15,23,42,.96),rgba(15,23,42,.78),rgba(15,23,42,.42)),
-    url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1800&q=85")
-    center/cover no-repeat;
-  color:#fff;
-}
-
-.hero-content{
-  max-width:800px;
-  padding:80px 0;
-}
-
-.hero-label{
-  color:#5eead4;
-  text-transform:uppercase;
-  letter-spacing:2px;
-  font-size:13px;
-  font-weight:800;
-  margin-bottom:18px;
-}
-
-.hero h1{
-  font-size:clamp(44px,6vw,76px);
-  line-height:1.04;
-  margin-bottom:25px;
-  letter-spacing:-2px;
-}
-
-.hero h1 strong{
-  color:#5eead4;
-}
-
-.hero-description{
-  max-width:680px;
-  color:#cbd5e1;
-  font-size:18px;
-  margin-bottom:35px;
-}
-
-.hero-actions{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
+  gap:10px;
 }
 
 .btn{
+  border:0;
   display:inline-flex;
   align-items:center;
   justify-content:center;
   gap:8px;
-  padding:14px 22px;
-  border-radius:11px;
+  min-height:46px;
+  padding:0 19px;
+  border-radius:10px;
+  font-size:14px;
   font-weight:800;
-  border:1px solid transparent;
-  cursor:pointer;
   transition:.2s;
 }
 
@@ -293,44 +217,179 @@ select{
 
 .btn-primary:hover{
   background:var(--accent-dark);
-  transform:translateY(-2px);
+  transform:translateY(-1px);
 }
 
 .btn-outline{
-  border-color:rgba(255,255,255,.35);
-  color:#fff;
-  background:rgba(255,255,255,.06);
+  background:#fff;
+  color:var(--primary);
+  border:1px solid var(--border);
 }
 
 .btn-outline:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
+.menu-btn{
+  display:none;
+  width:44px;
+  height:44px;
+  border:1px solid var(--border);
   background:#fff;
-  color:var(--primary);
+  border-radius:10px;
+  font-size:22px;
 }
 
-.hero-mini-stats{
-  margin-top:55px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  max-width:720px;
-  border-top:1px solid rgba(255,255,255,.2);
-  padding-top:25px;
+.mobile-nav{
+  display:none;
+  padding:15px 4%;
+  border-top:1px solid var(--border);
+  background:#fff;
 }
 
-.hero-mini-stat strong{
+.mobile-nav a{
   display:block;
-  font-size:25px;
+  padding:12px 0;
+  font-weight:700;
+  border-bottom:1px solid #f1f5f9;
 }
 
-.hero-mini-stat span{
-  color:#cbd5e1;
+/* HERO */
+
+.hero{
+  min-height:650px;
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(14,165,164,.17),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f8fafc 0%,
+      #eef6f7 100%
+    );
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  background:rgba(37,99,235,.06);
+  right:-150px;
+  bottom:-180px;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  align-items:center;
+  gap:70px;
+  position:relative;
+  z-index:2;
+}
+
+.hero-content{
+  max-width:720px;
+}
+
+.hero-label{
+  display:inline-flex;
+  padding:8px 13px;
+  border-radius:999px;
+  background:#dff7f5;
+  color:var(--accent-dark);
   font-size:12px;
+  font-weight:900;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:clamp(42px,5vw,70px);
+  line-height:1.03;
+  letter-spacing:-2.5px;
+  color:var(--primary);
+  margin-bottom:22px;
+}
+
+.hero h1 span{
+  color:var(--accent);
+}
+
+.hero p{
+  max-width:650px;
+  font-size:18px;
+  color:var(--muted);
+  margin-bottom:30px;
+}
+
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.hero-visual{
+  min-height:430px;
+  border-radius:28px;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--primary-2)
+    );
+  box-shadow:var(--shadow-lg);
+  position:relative;
+}
+
+.hero-visual img{
+  width:100%;
+  height:100%;
+  min-height:430px;
+  object-fit:cover;
+  opacity:.92;
+}
+
+.hero-placeholder{
+  min-height:430px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:35px;
+  color:#fff;
+}
+
+.hero-placeholder-icon{
+  font-size:70px;
+  margin-bottom:15px;
+}
+
+.hero-placeholder h3{
+  font-size:27px;
+  margin-bottom:8px;
+}
+
+.hero-placeholder p{
+  color:#cbd5e1;
+  font-size:14px;
 }
 
 /* STATS */
 
 .stats{
-  background:var(--light);
-  border-bottom:1px solid var(--border);
+  background:var(--primary);
+  color:#fff;
+  padding:35px 0;
 }
 
 .stats-grid{
@@ -339,120 +398,162 @@ select{
 }
 
 .stat{
-  padding:35px 20px;
   text-align:center;
-  border-right:1px solid var(--border);
+  padding:10px 20px;
+  border-right:1px solid rgba(255,255,255,.12);
 }
 
 .stat:last-child{
   border-right:0;
 }
 
-.stat strong{
-  display:block;
-  font-size:38px;
-  color:var(--primary);
+.stat-number{
+  font-size:32px;
+  font-weight:900;
+  line-height:1.1;
 }
 
-.stat span{
-  color:var(--muted);
+.stat-label{
+  margin-top:6px;
+  color:#94a3b8;
   font-size:13px;
-  font-weight:600;
+}
+
+/* COMMON */
+
+.section-head{
+  max-width:700px;
+  margin:0 auto 48px;
+  text-align:center;
+}
+
+.eyebrow{
+  display:inline-block;
+  color:var(--accent-dark);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1.3px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+.section-head h2{
+  font-size:clamp(30px,4vw,44px);
+  line-height:1.15;
+  color:var(--primary);
+  letter-spacing:-1px;
+  margin-bottom:13px;
+}
+
+.section-head p{
+  color:var(--muted);
 }
 
 /* ABOUT */
 
-.about-grid{
+.about{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:65px;
+  grid-template-columns:.9fr 1.1fr;
+  gap:70px;
   align-items:center;
 }
 
 .about-image{
-  min-height:520px;
+  min-height:420px;
   border-radius:25px;
-  background:
-    linear-gradient(135deg,rgba(14,165,164,.15),rgba(37,99,235,.08)),
-    url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85")
-    center/cover;
-  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+  background:#e2e8f0;
+  box-shadow:var(--shadow);
 }
 
-.about-text p{
-  color:var(--muted);
+.about-image img{
+  width:100%;
+  height:420px;
+  object-fit:cover;
+}
+
+.about-placeholder{
+  min-height:420px;
+  display:grid;
+  place-items:center;
+  color:#64748b;
+  font-weight:800;
+  text-align:center;
+  padding:30px;
+}
+
+.about-content h2{
+  font-size:42px;
+  line-height:1.15;
+  color:var(--primary);
   margin-bottom:20px;
 }
 
-.check-list{
-  list-style:none;
-  margin-top:25px;
+.about-content p{
+  color:var(--muted);
+  margin-bottom:25px;
+}
+
+.about-points{
   display:grid;
+  grid-template-columns:1fr 1fr;
   gap:12px;
 }
 
-.check-list li{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  font-weight:600;
+.about-point{
+  padding:13px;
+  background:var(--light);
+  border:1px solid var(--border);
+  border-radius:11px;
+  font-size:13px;
+  font-weight:700;
 }
 
-.check-list li::before{
-  content:"✓";
-  width:23px;
-  height:23px;
-  flex:none;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:#dcfce7;
-  color:var(--success);
-  font-size:13px;
-  font-weight:900;
+.about-point span{
+  color:var(--accent);
+  margin-right:7px;
 }
 
 /* BUSINESS */
 
-.business{
+.business-section{
   background:var(--light);
 }
 
 .business-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:22px;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
 }
 
 .business-card{
-  padding:30px;
   background:#fff;
   border:1px solid var(--border);
   border-radius:var(--radius);
+  padding:28px;
   transition:.25s;
 }
 
 .business-card:hover{
-  transform:translateY(-6px);
+  transform:translateY(-5px);
   box-shadow:var(--shadow);
-  border-color:#cbd5e1;
 }
 
 .business-icon{
   width:52px;
   height:52px;
-  border-radius:14px;
   display:grid;
   place-items:center;
-  background:#ecfeff;
-  color:var(--accent);
-  font-size:22px;
+  border-radius:14px;
+  background:#e7f8f7;
+  color:var(--accent-dark);
+  font-size:24px;
   margin-bottom:20px;
 }
 
 .business-card h3{
   color:var(--primary);
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .business-card p{
@@ -465,23 +566,26 @@ select{
 .services-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:22px;
+  gap:20px;
 }
 
 .service-card{
+  padding:30px;
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:30px;
+  background:#fff;
+  box-shadow:0 5px 20px rgba(15,23,42,.03);
 }
 
 .service-number{
-  color:var(--accent);
+  font-size:12px;
   font-weight:900;
-  font-size:14px;
-  margin-bottom:20px;
+  color:var(--accent);
+  margin-bottom:25px;
 }
 
 .service-card h3{
+  color:var(--primary);
   margin-bottom:10px;
 }
 
@@ -492,14 +596,14 @@ select{
 
 /* PRODUCTS */
 
-.products{
+.products-section{
   background:var(--light);
 }
 
 .product-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:25px;
+  gap:22px;
 }
 
 .product-card{
@@ -507,126 +611,139 @@ select{
   border:1px solid var(--border);
   border-radius:var(--radius);
   overflow:hidden;
-  box-shadow:0 5px 20px rgba(15,23,42,.04);
   transition:.25s;
 }
 
 .product-card:hover{
-  transform:translateY(-5px);
+  transform:translateY(-4px);
   box-shadow:var(--shadow);
 }
 
 .product-image{
   height:230px;
-  background:#e2e8f0 center/cover no-repeat;
+  background:#f1f5f9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.product-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.product-placeholder{
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:800;
 }
 
 .product-body{
-  padding:23px;
+  padding:22px;
 }
 
 .product-code{
-  color:var(--accent);
   font-size:11px;
-  font-weight:800;
-  letter-spacing:1px;
-  margin-bottom:5px;
+  font-weight:900;
+  color:var(--accent);
+  letter-spacing:.6px;
+  margin-bottom:7px;
 }
 
 .product-body h3{
+  color:var(--primary);
   margin-bottom:8px;
 }
 
 .product-body p{
   color:var(--muted);
-  font-size:14px;
-  margin-bottom:17px;
+  font-size:13px;
+  min-height:44px;
 }
 
 .product-meta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-bottom:18px;
-}
-
-.product-meta span{
-  background:#f1f5f9;
+  margin-top:15px;
+  padding-top:15px;
+  border-top:1px solid var(--border);
+  font-size:12px;
   color:#475569;
-  border-radius:7px;
-  padding:5px 8px;
-  font-size:11px;
-  font-weight:700;
 }
 
 .product-btn{
   width:100%;
+  margin-top:15px;
 }
 
 /* WHY */
 
 .why{
-  background:var(--primary);
-  color:#fff;
-}
-
-.why .section-title{
-  color:#fff;
-}
-
-.why .section-text{
-  color:#94a3b8;
-}
-
-.why-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
 }
 
 .why-card{
-  padding:27px;
-  border:1px solid rgba(255,255,255,.1);
+  border:1px solid var(--border);
   border-radius:var(--radius);
-  background:rgba(255,255,255,.04);
-}
-
-.why-card h3{
-  margin:15px 0 8px;
-  font-size:18px;
-}
-
-.why-card p{
-  color:#94a3b8;
-  font-size:13px;
+  padding:25px;
+  display:flex;
+  gap:17px;
+  background:#fff;
 }
 
 .why-icon{
-  font-size:28px;
-  color:#5eead4;
+  flex:0 0 48px;
+  height:48px;
+  border-radius:13px;
+  background:#e7f8f7;
+  display:grid;
+  place-items:center;
+  color:var(--accent-dark);
+  font-size:22px;
+}
+
+.why-card h3{
+  color:var(--primary);
+  margin-bottom:5px;
+}
+
+.why-card p{
+  color:var(--muted);
+  font-size:13px;
 }
 
 /* LEADERSHIP */
 
+.leadership{
+  background:var(--light);
+}
+
 .leadership-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:25px;
+  gap:20px;
 }
 
 .leader-card{
-  padding:30px;
+  background:#fff;
   border:1px solid var(--border);
   border-radius:var(--radius);
+  padding:30px;
   text-align:center;
 }
 
 .leader-avatar{
-  width:95px;
-  height:95px;
-  border-radius:50%;
+  width:85px;
+  height:85px;
   margin:0 auto 18px;
-  background:linear-gradient(135deg,#0f172a,#0ea5a4);
+  border-radius:50%;
+  background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--accent)
+  );
   color:#fff;
   display:grid;
   place-items:center;
@@ -634,132 +751,134 @@ select{
   font-weight:900;
 }
 
+.leader-card h3{
+  color:var(--primary);
+}
+
 .leader-card p{
-  color:var(--accent);
+  color:var(--muted);
   font-size:13px;
-  font-weight:700;
 }
 
 /* PROJECTS */
 
-.projects{
-  background:var(--light);
-}
-
-.project-grid{
+.projects-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:20px;
 }
 
 .project-card{
-  height:290px;
+  min-height:250px;
+  padding:28px;
   border-radius:var(--radius);
-  overflow:hidden;
-  position:relative;
-  background:center/cover no-repeat;
-}
-
-.project-overlay{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:flex-end;
-  padding:25px;
-  background:linear-gradient(transparent,rgba(15,23,42,.9));
   color:#fff;
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--primary-2)
+    );
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
 }
 
-.project-overlay h3{
-  margin-bottom:4px;
+.project-card .project-tag{
+  color:#5eead4;
+  font-size:11px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:8px;
 }
 
-.project-overlay p{
+.project-card h3{
+  margin-bottom:6px;
+}
+
+.project-card p{
   color:#cbd5e1;
-  font-size:12px;
+  font-size:13px;
 }
 
 /* ACHIEVEMENTS */
 
+.achievement-section{
+  background:var(--light);
+}
+
 .achievement-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:20px;
 }
 
 .achievement{
-  padding:35px;
-  text-align:center;
+  background:#fff;
   border:1px solid var(--border);
   border-radius:var(--radius);
+  padding:28px;
+  text-align:center;
 }
 
 .achievement strong{
   display:block;
-  color:var(--accent);
-  font-size:45px;
-  line-height:1;
-  margin-bottom:10px;
+  font-size:38px;
+  color:var(--accent-dark);
+  line-height:1.1;
 }
 
 .achievement span{
+  display:block;
   color:var(--muted);
-  font-weight:700;
+  margin-top:8px;
+  font-size:13px;
 }
 
 /* CLIENTS */
 
-.clients{
-  background:#fff;
+.clients-strip{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
 }
 
-.client-strip{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:15px;
-}
-
-.client-box{
-  min-height:90px;
+.client-badge{
+  padding:14px 24px;
   border:1px solid var(--border);
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-  color:#94a3b8;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:1px;
+  border-radius:10px;
+  background:#fff;
+  font-weight:800;
+  color:#475569;
 }
 
 /* GALLERY */
 
 .gallery{
-  background:var(--light);
-}
-
-.gallery-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:16px;
+  gap:15px;
 }
 
 .gallery-item{
-  height:230px;
+  height:220px;
   border-radius:15px;
   overflow:hidden;
+  background:#f1f5f9;
   position:relative;
-  background:#e2e8f0;
 }
 
 .gallery-item img{
   width:100%;
   height:100%;
   object-fit:cover;
-  transition:.35s;
+  transition:.3s;
 }
 
 .gallery-item:hover img{
-  transform:scale(1.06);
+  transform:scale(1.04);
 }
 
 .gallery-caption{
@@ -767,54 +886,59 @@ select{
   left:0;
   right:0;
   bottom:0;
-  padding:15px;
+  padding:14px;
   color:#fff;
-  background:linear-gradient(transparent,rgba(0,0,0,.8));
+  background:linear-gradient(
+    transparent,
+    rgba(0,0,0,.75)
+  );
   font-size:13px;
   font-weight:700;
 }
 
 /* TESTIMONIALS */
 
+.testimonials{
+  background:var(--light);
+}
+
 .testimonial-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:22px;
+  gap:20px;
 }
 
-.testimonial-card{
+.testimonial{
+  background:#fff;
   border:1px solid var(--border);
   border-radius:var(--radius);
   padding:28px;
-  background:#fff;
 }
 
 .stars{
   color:#f59e0b;
   letter-spacing:2px;
-  margin-bottom:15px;
+  margin-bottom:14px;
 }
 
-.testimonial-card blockquote{
+.testimonial-message{
   color:#475569;
-  font-size:15px;
-  margin-bottom:22px;
+  font-size:14px;
+  margin-bottom:20px;
 }
 
 .testimonial-name{
-  font-weight:800;
+  color:var(--primary);
+  font-weight:900;
 }
 
-.testimonial-company{
+.testimonial-role{
   color:var(--muted);
   font-size:12px;
+  margin-top:3px;
 }
 
 /* FAQ */
-
-.faq{
-  background:var(--light);
-}
 
 .faq-list{
   max-width:850px;
@@ -822,25 +946,29 @@ select{
 }
 
 .faq-item{
-  background:#fff;
   border:1px solid var(--border);
   border-radius:13px;
   margin-bottom:12px;
   overflow:hidden;
+  background:#fff;
 }
 
 .faq-question{
   width:100%;
-  border:0;
   background:#fff;
+  border:0;
   padding:20px;
   text-align:left;
-  font-weight:800;
-  color:var(--primary);
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
+  gap:20px;
+  font-weight:800;
+  color:var(--primary);
+}
+
+.faq-question span{
+  font-size:20px;
+  color:var(--accent);
 }
 
 .faq-answer{
@@ -854,74 +982,94 @@ select{
   display:block;
 }
 
-.faq-item.open .faq-plus{
-  transform:rotate(45deg);
-}
-
 /* CTA */
 
 .cta{
   padding:75px 0;
-  background:linear-gradient(135deg,var(--accent),#2563eb);
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      #164e63
+    );
   color:#fff;
 }
 
 .cta-inner{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   gap:30px;
 }
 
 .cta h2{
-  font-size:clamp(30px,4vw,46px);
-  line-height:1.1;
+  font-size:40px;
+  line-height:1.15;
   margin-bottom:10px;
 }
 
 .cta p{
-  color:#dffcfb;
+  color:#cbd5e1;
 }
 
 /* CONTACT */
 
-.contact-grid{
+.contact{
   display:grid;
-  grid-template-columns:.8fr 1.2fr;
-  gap:50px;
-}
-
-.contact-info{
-  display:grid;
-  gap:16px;
-  margin-top:25px;
+  grid-template-columns:.75fr 1.25fr;
+  gap:25px;
 }
 
 .contact-box{
-  padding:20px;
-  border:1px solid var(--border);
-  border-radius:13px;
+  background:var(--primary);
+  color:#fff;
+  border-radius:var(--radius);
+  padding:35px;
 }
 
-.contact-box small{
-  display:block;
-  color:var(--muted);
+.contact-box h2{
+  font-size:30px;
+  margin-bottom:12px;
+}
+
+.contact-box>p{
+  color:#cbd5e1;
+  font-size:14px;
+  margin-bottom:25px;
+}
+
+.contact-item{
+  display:flex;
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.contact-icon{
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  background:rgba(255,255,255,.1);
+  display:grid;
+  place-items:center;
+}
+
+.contact-label{
+  color:#94a3b8;
   font-size:11px;
   text-transform:uppercase;
-  letter-spacing:1px;
-  font-weight:800;
-  margin-bottom:5px;
+  letter-spacing:.8px;
 }
 
-.contact-box strong{
-  color:var(--primary);
+.contact-value{
+  font-weight:700;
+  margin-top:2px;
+  word-break:break-word;
 }
 
-.form{
-  padding:30px;
+.contact-form{
   border:1px solid var(--border);
   border-radius:var(--radius);
-  box-shadow:var(--shadow);
+  padding:30px;
 }
 
 .form-grid{
@@ -930,203 +1078,180 @@ select{
   gap:17px;
 }
 
-.form-group{
+.field{
   display:flex;
   flex-direction:column;
   gap:7px;
 }
 
-.form-group.full{
-  grid-column:1/-1;
+.field.full{
+  grid-column:1 / -1;
 }
 
-.form-group label{
+.field label{
   font-size:12px;
-  font-weight:800;
-  color:#334155;
+  font-weight:900;
+  color:var(--primary);
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select{
+.field input,
+.field textarea{
+  width:100%;
   border:1px solid var(--border);
-  border-radius:9px;
-  padding:12px 13px;
+  border-radius:10px;
+  padding:13px;
   outline:none;
-  background:#fff;
+  color:var(--text);
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus{
+.field input:focus,
+.field textarea:focus{
   border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(14,165,164,.1);
 }
 
-.form-group textarea{
+.field textarea{
   min-height:130px;
   resize:vertical;
 }
 
 .form-submit{
-  margin-top:20px;
-  width:100%;
+  margin-top:18px;
+}
+
+.empty{
+  border:1px dashed var(--border);
+  border-radius:15px;
+  padding:35px;
+  text-align:center;
+  color:var(--muted);
+  background:#fff;
+}
+
+.loading{
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
 }
 
 /* FOOTER */
 
-.footer{
-  background:var(--primary);
-  color:#cbd5e1;
-  padding:60px 0 25px;
-}
-
-.footer-grid{
-  display:grid;
-  grid-template-columns:1.3fr 1fr 1fr;
-  gap:50px;
-  padding-bottom:45px;
-  border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.footer h3{
-  color:#fff;
-  margin-bottom:15px;
-}
-
-.footer p{
-  font-size:13px;
+footer{
+  background:#020617;
   color:#94a3b8;
+  padding:35px 0;
 }
 
-.footer-contact{
-  display:grid;
-  gap:9px;
-  font-size:13px;
-}
-
-.footer-bottom{
-  padding-top:22px;
+.footer-row{
   display:flex;
   justify-content:space-between;
-  gap:20px;
-  font-size:12px;
-  color:#64748b;
+  gap:25px;
+  align-items:center;
+}
+
+.footer-company{
+  color:#fff;
+  font-weight:900;
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.footer-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  font-size:13px;
+}
+
+.footer-links a:hover{
+  color:#fff;
 }
 
 /* TOAST */
 
 .toast{
   position:fixed;
-  right:20px;
-  bottom:20px;
-  z-index:3000;
-  background:var(--primary);
+  right:25px;
+  bottom:25px;
+  z-index:5000;
+  background:#0f172a;
   color:#fff;
   padding:14px 18px;
   border-radius:10px;
   box-shadow:var(--shadow-lg);
-  transform:translateY(120px);
-  opacity:0;
-  pointer-events:none;
-  transition:.3s;
-  font-size:13px;
+  display:none;
   max-width:350px;
+  font-size:13px;
+  font-weight:700;
 }
 
-.toast.show{
-  transform:translateY(0);
-  opacity:1;
+.toast.success{
+  border-left:4px solid var(--success);
 }
 
-/* EMPTY */
-
-.empty-state{
-  grid-column:1/-1;
-  padding:50px 20px;
-  text-align:center;
-  border:1px dashed var(--border);
-  border-radius:var(--radius);
-  color:var(--muted);
-  background:#fff;
+.toast.error{
+  border-left:4px solid var(--danger);
 }
 
 /* RESPONSIVE */
 
-@media(max-width:1000px){
+@media(max-width:1050px){
 
-  .nav-links{
-    gap:14px;
-  }
-
-  .hero-mini-stats{
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
-  }
-
-  .business-grid,
-  .services-grid,
-  .product-grid,
-  .testimonial-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .why-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .gallery-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .about-grid{
-    gap:35px;
-  }
-}
-
-@media(max-width:760px){
-
-  .topbar-right{
+  .navlinks{
     display:none;
-  }
-
-  .nav-inner{
-    min-height:70px;
   }
 
   .menu-btn{
     display:block;
   }
 
-  .nav-links{
-    display:none;
-    position:absolute;
-    top:70px;
-    left:0;
-    right:0;
-    background:#fff;
-    border-bottom:1px solid var(--border);
-    padding:18px 4%;
-    flex-direction:column;
-    align-items:stretch;
-    gap:0;
-    box-shadow:var(--shadow);
-  }
-
-  .nav-links.open{
-    display:flex;
-  }
-
-  .nav-links a{
-    padding:13px 5px;
+  .hero-grid{
+    grid-template-columns:1fr;
+    gap:35px;
   }
 
   .hero{
-    min-height:650px;
+    padding:70px 0;
   }
 
-  .hero h1{
-    letter-spacing:-1px;
+  .hero-visual{
+    min-height:350px;
+  }
+
+  .hero-visual img,
+  .hero-placeholder{
+    min-height:350px;
+  }
+
+  .business-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .gallery{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+}
+
+@media(max-width:800px){
+
+  section{
+    padding:70px 0;
+  }
+
+  .topbar-left{
+    display:none;
+  }
+
+  .topbar-inner{
+    justify-content:center;
+  }
+
+  .logo{
+    min-width:auto;
+  }
+
+  .nav-actions .btn-outline{
+    display:none;
   }
 
   .stats-grid{
@@ -1134,38 +1259,34 @@ select{
   }
 
   .stat{
-    border-bottom:1px solid var(--border);
+    border-right:0;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    padding:18px 10px;
   }
 
-  .about-grid,
-  .contact-grid{
+  .about{
     grid-template-columns:1fr;
+    gap:35px;
   }
 
-  .about-image{
-    min-height:350px;
-  }
-
-  .business-grid,
   .services-grid,
   .product-grid,
   .leadership-grid,
-  .project-grid,
-  .testimonial-grid,
+  .projects-grid,
+  .testimonial-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
   .achievement-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .gallery{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .contact{
     grid-template-columns:1fr;
-  }
-
-  .why-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .client-strip{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .gallery-grid{
-    grid-template-columns:1fr 1fr;
   }
 
   .cta-inner{
@@ -1173,824 +1294,1523 @@ select{
     align-items:flex-start;
   }
 
-  .footer-grid{
-    grid-template-columns:1fr;
-    gap:30px;
+}
+
+@media(max-width:600px){
+
+  .container{
+    width:92%;
   }
 
-  .footer-bottom{
-    flex-direction:column;
+  .hero h1{
+    font-size:43px;
+    letter-spacing:-1.5px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .hero-visual,
+  .hero-visual img,
+  .hero-placeholder{
+    min-height:290px;
+  }
+
+  .business-grid,
+  .services-grid,
+  .product-grid,
+  .leadership-grid,
+  .projects-grid,
+  .testimonial-grid,
+  .achievement-grid,
+  .gallery,
+  .why{
+    grid-template-columns:1fr;
+  }
+
+  .about-points{
+    grid-template-columns:1fr;
   }
 
   .form-grid{
     grid-template-columns:1fr;
   }
 
-  .form-group.full{
+  .field.full{
     grid-column:auto;
   }
+
+  .footer-row{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .cta h2{
+    font-size:31px;
+  }
+
 }
 
-@media(max-width:480px){
-
-  .hero-mini-stats{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .why-grid,
-  .gallery-grid,
-  .client-strip{
-    grid-template-columns:1fr;
-  }
-
-  .section{
-    padding:70px 0;
-  }
-
-  .logo{
-    min-width:auto;
-  }
-
-  .logo-text span{
-    font-size:14px;
-  }
-
-  .logo-text small{
-    display:none;
-  }
-}
 </style>
 </head>
 
 <body>
 
-<!-- TOPBAR -->
+<!-- TOP BAR -->
+
 <div class="topbar">
+
   <div class="container topbar-inner">
+
     <div class="topbar-left">
-      <a id="topPhone" href="#">+91 XXXXX XXXXX</a>
-      <a id="topEmail" href="#">info@example.com</a>
+      <span id="topPhone">Contact us</span>
+      <span id="topEmail"></span>
     </div>
 
     <div class="topbar-right">
-      <span id="topAddress">Corporate Excellence</span>
+      <span id="topLocation">Corporate Excellence</span>
     </div>
+
   </div>
+
 </div>
 
+
 <!-- NAVBAR -->
-<header class="navbar">
-  <div class="container nav-inner">
+
+<header>
+
+  <div class="container nav">
 
     <a href="#home" class="logo">
-      <div class="logo-mark" id="logoMark">V</div>
+
+      <div class="logo-mark">
+
+        <img
+          id="companyLogo"
+          src=""
+          alt="Company Logo"
+          style="display:none;"
+        >
+
+        <span id="logoPlaceholder">V</span>
+
+      </div>
 
       <div class="logo-text">
-        <span id="brandName">VERTEX GROUP</span>
-        <small>BUSINESS • EXCELLENCE</small>
+
+        <strong id="brandName">
+          VERTEX
+        </strong>
+
+        <span id="brandTagline">
+          Corporate Excellence
+        </span>
+
       </div>
+
     </a>
 
-    <nav class="nav-links" id="navLinks">
+
+    <nav class="navlinks">
+
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#business">Business</a>
       <a href="#services">Services</a>
       <a href="#products">Products</a>
+      <a href="#projects">Projects</a>
       <a href="#gallery">Gallery</a>
-      <a href="#contact" class="nav-cta">Contact</a>
+      <a href="#contact">Contact</a>
+
     </nav>
 
-    <button class="menu-btn" id="menuBtn">☰</button>
+
+    <div class="nav-actions">
+
+      <a
+        id="navPhone"
+        class="btn btn-outline"
+        href="#contact">
+        Contact
+      </a>
+
+      <a
+        class="btn btn-primary"
+        href="#contact">
+        Get In Touch
+      </a>
+
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        type="button"
+        aria-label="Open menu">
+        ☰
+      </button>
+
+    </div>
 
   </div>
+
+
+  <div
+    id="mobileNav"
+    class="mobile-nav">
+
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#business">Business</a>
+    <a href="#services">Services</a>
+    <a href="#products">Products</a>
+    <a href="#projects">Projects</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+
+  </div>
+
 </header>
 
+
+<main>
+
+
 <!-- HERO -->
-<section class="hero" id="home">
-  <div class="container">
+
+<section
+  class="hero"
+  id="home">
+
+  <div class="container hero-grid">
+
     <div class="hero-content">
 
-      <div class="hero-label">
-        CORPORATE • PROFESSIONAL • TRUSTED
-      </div>
+      <span class="hero-label">
+        Corporate Excellence
+      </span>
 
       <h1 id="heroTitle">
-        Growing Ideas Into <strong>Real Business.</strong>
+        Building Better Businesses Through Excellence.
       </h1>
 
-      <p class="hero-description" id="heroDescription">
-        We build reliable products, services and business solutions
-        designed for long-term growth and measurable results.
+      <p id="heroDescription">
+        A modern corporate platform built around quality,
+        innovation, reliability and long-term business value.
       </p>
 
-      <div class="hero-actions">
-        <a href="#products" class="btn btn-primary">
+      <div class="hero-buttons">
+
+        <a
+          class="btn btn-primary"
+          href="#products">
           Explore Products
         </a>
 
-        <a href="#contact" class="btn btn-outline">
-          Talk To Us
+        <a
+          class="btn btn-outline"
+          href="#contact">
+          Request Information
         </a>
+
       </div>
 
-      <div class="hero-mini-stats">
+    </div>
 
-        <div class="hero-mini-stat">
-          <strong id="heroStat1">100+</strong>
-          <span>Products</span>
-        </div>
 
-        <div class="hero-mini-stat">
-          <strong id="heroStat2">10+</strong>
-          <span>Business Categories</span>
-        </div>
+    <div class="hero-visual">
 
-        <div class="hero-mini-stat">
-          <strong id="heroStat3">50+</strong>
-          <span>Projects</span>
-        </div>
+      <img
+        id="heroImage"
+        src=""
+        alt="Company"
+        style="display:none;"
+      >
 
-        <div class="hero-mini-stat">
-          <strong id="heroStat4">100%</strong>
-          <span>Commitment</span>
+      <div
+        id="heroPlaceholder"
+        class="hero-placeholder">
+
+        <div>
+
+          <div class="hero-placeholder-icon">
+            ◈
+          </div>
+
+          <h3>
+            Corporate Excellence
+          </h3>
+
+          <p>
+            Add your company image from Company Settings.
+          </p>
+
         </div>
 
       </div>
 
     </div>
+
   </div>
+
 </section>
+
 
 <!-- STATS -->
+
 <section class="stats">
-  <div class="container stats-grid">
 
-    <div class="stat">
-      <strong id="statProducts">0</strong>
-      <span>Products</span>
-    </div>
+  <div class="container">
 
-    <div class="stat">
-      <strong id="statCategories">0</strong>
-      <span>Categories</span>
-    </div>
+    <div class="stats-grid">
 
-    <div class="stat">
-      <strong id="statGallery">0</strong>
-      <span>Gallery</span>
-    </div>
+      <div class="stat">
 
-    <div class="stat">
-      <strong id="statTestimonials">0</strong>
-      <span>Client Reviews</span>
+        <div
+          id="statProducts"
+          class="stat-number">
+          0
+        </div>
+
+        <div class="stat-label">
+          Products
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div
+          id="statCategories"
+          class="stat-number">
+          0
+        </div>
+
+        <div class="stat-label">
+          Business Categories
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-number">
+          100%
+        </div>
+
+        <div class="stat-label">
+          Quality Focus
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-number">
+          24/7
+        </div>
+
+        <div class="stat-label">
+          Business Support
+        </div>
+
+      </div>
+
     </div>
 
   </div>
+
 </section>
 
+
 <!-- ABOUT -->
-<section class="section" id="about">
-  <div class="container about-grid">
 
-    <div class="about-image" id="aboutImage"></div>
+<section id="about">
 
-    <div class="about-text">
+  <div class="container about">
 
-      <span class="section-label">About Us</span>
+    <div class="about-image">
 
-      <h2 class="section-title">
-        Building Businesses With Purpose.
+      <img
+        id="aboutImage"
+        src=""
+        alt="About Company"
+        style="display:none;"
+      >
+
+      <div
+        id="aboutPlaceholder"
+        class="about-placeholder">
+
+        Company / Facility Image
+
+      </div>
+
+    </div>
+
+
+    <div class="about-content">
+
+      <span class="eyebrow">
+        About Company
+      </span>
+
+      <h2>
+        Built on quality, capability and trust.
       </h2>
 
       <p id="aboutText">
-        We are a professionally managed organization focused on
-        delivering dependable products, practical solutions and
-        long-term value to our customers.
+        We are committed to delivering dependable
+        products and services through quality,
+        innovation and professional execution.
       </p>
 
-      <p>
-        Our approach combines quality, technology, customer support
-        and operational excellence to create sustainable business growth.
-      </p>
+      <div class="about-points">
 
-      <ul class="check-list">
-        <li>Quality-focused products and services</li>
-        <li>Professional customer support</li>
-        <li>Reliable delivery and execution</li>
-        <li>Long-term business relationships</li>
-      </ul>
+        <div class="about-point">
+          <span>✓</span>
+          Quality-driven processes
+        </div>
+
+        <div class="about-point">
+          <span>✓</span>
+          Reliable delivery
+        </div>
+
+        <div class="about-point">
+          <span>✓</span>
+          Customer-focused approach
+        </div>
+
+        <div class="about-point">
+          <span>✓</span>
+          Long-term partnerships
+        </div>
+
+      </div>
 
     </div>
 
   </div>
+
 </section>
 
+
 <!-- BUSINESS VERTICALS -->
-<section class="section business" id="business">
+
+<section
+  id="business"
+  class="business-section">
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">Our Business</span>
-      <h2 class="section-title">Multiple Capabilities. One Trusted Partner.</h2>
-      <p class="section-text">
-        Our business verticals are designed to serve different
-        customer requirements with focused expertise.
+
+      <span class="eyebrow">
+        Business Verticals
+      </span>
+
+      <h2>
+        Diverse capabilities. One trusted partner.
+      </h2>
+
+      <p>
+        A flexible corporate structure suitable for
+        multiple industries and business segments.
       </p>
+
     </div>
+
 
     <div class="business-grid">
 
       <div class="business-card">
-        <div class="business-icon">🏭</div>
-        <h3>Manufacturing</h3>
+
+        <div class="business-icon">⚙</div>
+
+        <h3>
+          Manufacturing
+        </h3>
+
         <p>
-          Reliable manufacturing capabilities with strong focus
-          on quality and consistency.
+          Engineering, production and manufacturing
+          solutions for demanding business requirements.
         </p>
+
       </div>
 
-      <div class="business-card">
-        <div class="business-icon">⚙️</div>
-        <h3>Industrial Solutions</h3>
-        <p>
-          Practical industrial products and solutions for
-          modern business requirements.
-        </p>
-      </div>
 
       <div class="business-card">
-        <div class="business-icon">💼</div>
-        <h3>Business Services</h3>
+
+        <div class="business-icon">▣</div>
+
+        <h3>
+          Industrial Solutions
+        </h3>
+
         <p>
-          Professional services helping businesses operate,
-          improve and grow efficiently.
+          Reliable industrial products and solutions
+          designed for operational performance.
         </p>
+
+      </div>
+
+
+      <div class="business-card">
+
+        <div class="business-icon">◫</div>
+
+        <h3>
+          Technology
+        </h3>
+
+        <p>
+          Modern technology-led solutions that improve
+          efficiency, visibility and business growth.
+        </p>
+
+      </div>
+
+
+      <div class="business-card">
+
+        <div class="business-icon">↗</div>
+
+        <h3>
+          Infrastructure
+        </h3>
+
+        <p>
+          Scalable infrastructure capabilities supporting
+          long-term commercial and operational needs.
+        </p>
+
       </div>
 
     </div>
 
   </div>
+
 </section>
 
+
 <!-- SERVICES -->
-<section class="section" id="services">
+
+<section id="services">
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">What We Do</span>
-      <h2 class="section-title">Professional Services</h2>
-      <p class="section-text">
-        From planning to execution, we focus on dependable results.
+
+      <span class="eyebrow">
+        Our Services
+      </span>
+
+      <h2>
+        Complete business solutions.
+      </h2>
+
+      <p>
+        Professional capabilities designed to support
+        customers from requirement to delivery.
       </p>
+
     </div>
+
 
     <div class="services-grid">
 
       <div class="service-card">
-        <div class="service-number">01</div>
-        <h3>Product Development</h3>
+
+        <div class="service-number">
+          01
+        </div>
+
+        <h3>
+          Consulting
+        </h3>
+
         <p>
-          Product development and improvement based on real
-          customer and market requirements.
+          Requirement understanding, technical guidance
+          and practical business recommendations.
         </p>
+
       </div>
 
-      <div class="service-card">
-        <div class="service-number">02</div>
-        <h3>Project Execution</h3>
-        <p>
-          Structured project execution with professional
-          coordination and timely delivery.
-        </p>
-      </div>
 
       <div class="service-card">
-        <div class="service-number">03</div>
-        <h3>Technical Support</h3>
+
+        <div class="service-number">
+          02
+        </div>
+
+        <h3>
+          Project Execution
+        </h3>
+
         <p>
-          Responsive technical and customer support to help
-          customers get maximum value.
+          Structured execution with attention to quality,
+          timelines and customer expectations.
         </p>
+
       </div>
 
-      <div class="service-card">
-        <div class="service-number">04</div>
-        <h3>Consulting</h3>
-        <p>
-          Practical business and technical guidance for
-          better decision-making.
-        </p>
-      </div>
 
       <div class="service-card">
-        <div class="service-number">05</div>
-        <h3>Quality Management</h3>
+
+        <div class="service-number">
+          03
+        </div>
+
+        <h3>
+          Supply & Delivery
+        </h3>
+
         <p>
-          Quality-driven processes focused on consistency,
-          reliability and customer satisfaction.
+          Dependable supply coordination and professional
+          delivery for business requirements.
         </p>
+
       </div>
 
+
       <div class="service-card">
-        <div class="service-number">06</div>
-        <h3>After-Sales Support</h3>
+
+        <div class="service-number">
+          04
+        </div>
+
+        <h3>
+          Technical Support
+        </h3>
+
         <p>
-          Long-term customer support after product delivery
-          and project completion.
+          Responsive technical assistance before and
+          after implementation.
         </p>
+
+      </div>
+
+
+      <div class="service-card">
+
+        <div class="service-number">
+          05
+        </div>
+
+        <h3>
+          Custom Solutions
+        </h3>
+
+        <p>
+          Flexible solutions adapted to specific
+          customer applications and requirements.
+        </p>
+
+      </div>
+
+
+      <div class="service-card">
+
+        <div class="service-number">
+          06
+        </div>
+
+        <h3>
+          Long-Term Partnership
+        </h3>
+
+        <p>
+          A relationship-driven approach focused on
+          sustainable customer value.
+        </p>
+
       </div>
 
     </div>
 
   </div>
+
 </section>
 
+
 <!-- PRODUCTS -->
-<section class="section products" id="products">
+
+<section
+  id="products"
+  class="products-section">
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">Our Products</span>
-      <h2 class="section-title">Featured Products</h2>
-      <p class="section-text">
-        Explore our products and contact us for specifications,
-        pricing and business enquiries.
+
+      <span class="eyebrow">
+        Products
+      </span>
+
+      <h2>
+        Featured products & solutions.
+      </h2>
+
+      <p>
+        Product information is loaded automatically
+        from the client dashboard.
       </p>
+
     </div>
 
-    <div class="product-grid" id="productGrid">
 
-      <div class="empty-state">
+    <div
+      id="productGrid"
+      class="product-grid">
+
+      <div class="loading">
         Loading products...
       </div>
 
     </div>
 
   </div>
+
 </section>
 
+
 <!-- WHY CHOOSE US -->
-<section class="section why">
+
+<section>
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">Why Choose Us</span>
-      <h2 class="section-title">Built Around Trust.</h2>
-      <p class="section-text">
-        Our focus is simple — deliver quality and create long-term value.
-      </p>
+
+      <span class="eyebrow">
+        Why Choose Us
+      </span>
+
+      <h2>
+        A partner built around performance.
+      </h2>
+
     </div>
 
-    <div class="why-grid">
+
+    <div class="why">
 
       <div class="why-card">
-        <div class="why-icon">✓</div>
-        <h3>Quality First</h3>
-        <p>
-          Strong focus on product and service quality.
-        </p>
+
+        <div class="why-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <h3>
+            Quality First
+          </h3>
+
+          <p>
+            Every requirement is handled with
+            attention to quality and consistency.
+          </p>
+
+        </div>
+
       </div>
 
-      <div class="why-card">
-        <div class="why-icon">◆</div>
-        <h3>Professional Team</h3>
-        <p>
-          Experienced people committed to customer success.
-        </p>
-      </div>
 
       <div class="why-card">
-        <div class="why-icon">⚡</div>
-        <h3>Fast Response</h3>
-        <p>
-          Quick communication and practical support.
-        </p>
+
+        <div class="why-icon">
+          ⚡
+        </div>
+
+        <div>
+
+          <h3>
+            Fast Response
+          </h3>
+
+          <p>
+            Professional communication and timely
+            response to customer requirements.
+          </p>
+
+        </div>
+
       </div>
 
+
       <div class="why-card">
-        <div class="why-icon">∞</div>
-        <h3>Long-Term Value</h3>
-        <p>
-          Relationships designed beyond a single transaction.
-        </p>
+
+        <div class="why-icon">
+          ◈
+        </div>
+
+        <div>
+
+          <h3>
+            Technical Capability
+          </h3>
+
+          <p>
+            Strong technical understanding across
+            products, services and applications.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="why-card">
+
+        <div class="why-icon">
+          ♢
+        </div>
+
+        <div>
+
+          <h3>
+            Long-Term Value
+          </h3>
+
+          <p>
+            We focus on dependable partnerships rather
+            than one-time transactions.
+          </p>
+
+        </div>
+
       </div>
 
     </div>
 
   </div>
+
 </section>
 
+
 <!-- LEADERSHIP -->
-<section class="section" id="leadership">
+
+<section
+  id="leadership"
+  class="leadership">
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">Leadership</span>
-      <h2 class="section-title">People Behind The Vision.</h2>
-      <p class="section-text">
-        A leadership approach built around responsibility,
-        innovation and customer trust.
+
+      <span class="eyebrow">
+        Leadership
+      </span>
+
+      <h2>
+        Experienced leadership.
+      </h2>
+
+      <p>
+        Replace these profiles with the client's
+        actual leadership information later.
       </p>
+
     </div>
+
 
     <div class="leadership-grid">
 
       <div class="leader-card">
-        <div class="leader-avatar">MD</div>
-        <h3>Managing Director</h3>
-        <p>Vision & Strategy</p>
+
+        <div class="leader-avatar">
+          MD
+        </div>
+
+        <h3>
+          Managing Director
+        </h3>
+
+        <p>
+          Strategic leadership and business growth.
+        </p>
+
       </div>
 
-      <div class="leader-card">
-        <div class="leader-avatar">CO</div>
-        <h3>Operations Head</h3>
-        <p>Operations & Execution</p>
-      </div>
 
       <div class="leader-card">
-        <div class="leader-avatar">BT</div>
-        <h3>Business Team</h3>
-        <p>Sales & Customer Success</p>
+
+        <div class="leader-avatar">
+          OP
+        </div>
+
+        <h3>
+          Operations Head
+        </h3>
+
+        <p>
+          Operations, execution and delivery.
+        </p>
+
+      </div>
+
+
+      <div class="leader-card">
+
+        <div class="leader-avatar">
+          TD
+        </div>
+
+        <h3>
+          Technical Director
+        </h3>
+
+        <p>
+          Technical capability and innovation.
+        </p>
+
       </div>
 
     </div>
 
   </div>
+
 </section>
+
 
 <!-- PROJECTS -->
-<section class="section projects" id="projects">
+
+<section id="projects">
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">Projects</span>
-      <h2 class="section-title">Selected Work</h2>
-      <p class="section-text">
-        Examples of projects and business initiatives.
-      </p>
+
+      <span class="eyebrow">
+        Projects
+      </span>
+
+      <h2>
+        Selected project capabilities.
+      </h2>
+
     </div>
 
-    <div class="project-grid">
 
-      <div class="project-card"
-           style="background-image:url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=900&q=80')">
-        <div class="project-overlay">
-          <div>
-            <h3>Industrial Project</h3>
-            <p>Execution & Delivery</p>
-          </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+
+        <div class="project-tag">
+          Industrial
         </div>
+
+        <h3>
+          Industrial Expansion
+        </h3>
+
+        <p>
+          End-to-end supply and execution support.
+        </p>
+
       </div>
 
-      <div class="project-card"
-           style="background-image:url('https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=900&q=80')">
-        <div class="project-overlay">
-          <div>
-            <h3>Manufacturing Setup</h3>
-            <p>Production & Quality</p>
-          </div>
+
+      <div class="project-card">
+
+        <div class="project-tag">
+          Infrastructure
         </div>
+
+        <h3>
+          Infrastructure Program
+        </h3>
+
+        <p>
+          Scalable solutions for growing operations.
+        </p>
+
       </div>
 
-      <div class="project-card"
-           style="background-image:url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80')">
-        <div class="project-overlay">
-          <div>
-            <h3>Technology Project</h3>
-            <p>Innovation & Systems</p>
-          </div>
-        </div>
-      </div>
 
-      <div class="project-card"
-           style="background-image:url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=80')">
-        <div class="project-overlay">
-          <div>
-            <h3>Infrastructure</h3>
-            <p>Planning & Execution</p>
-          </div>
-        </div>
-      </div>
+      <div class="project-card">
 
-      <div class="project-card"
-           style="background-image:url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80')">
-        <div class="project-overlay">
-          <div>
-            <h3>Business Transformation</h3>
-            <p>Strategy & Growth</p>
-          </div>
+        <div class="project-tag">
+          Technology
         </div>
+
+        <h3>
+          Technology Deployment
+        </h3>
+
+        <p>
+          Modern technology implementation and support.
+        </p>
+
       </div>
 
     </div>
 
   </div>
+
 </section>
 
+
 <!-- ACHIEVEMENTS -->
-<section class="section">
+
+<section class="achievement-section">
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">Achievements</span>
-      <h2 class="section-title">Numbers That Matter.</h2>
+
+      <span class="eyebrow">
+        Achievements
+      </span>
+
+      <h2>
+        Performance that creates confidence.
+      </h2>
+
     </div>
+
 
     <div class="achievement-grid">
 
       <div class="achievement">
-        <strong id="achievementProducts">0</strong>
-        <span>Products</span>
+
+        <strong>
+          10+
+        </strong>
+
+        <span>
+          Years Experience
+        </span>
+
       </div>
 
-      <div class="achievement">
-        <strong id="achievementCategories">0</strong>
-        <span>Business Categories</span>
-      </div>
 
       <div class="achievement">
-        <strong id="achievementProjects">50+</strong>
-        <span>Projects Delivered</span>
+
+        <strong>
+          50+
+        </strong>
+
+        <span>
+          Major Projects
+        </span>
+
+      </div>
+
+
+      <div class="achievement">
+
+        <strong>
+          25+
+        </strong>
+
+        <span>
+          Markets Served
+        </span>
+
+      </div>
+
+
+      <div class="achievement">
+
+        <strong>
+          99%
+        </strong>
+
+        <span>
+          Quality Focus
+        </span>
+
       </div>
 
     </div>
 
   </div>
+
 </section>
+
 
 <!-- CLIENTS -->
-<section class="section clients">
+
+<section>
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">Our Clients</span>
-      <h2 class="section-title">Trusted By Businesses.</h2>
+
+      <span class="eyebrow">
+        Our Clients
+      </span>
+
+      <h2>
+        Trusted by businesses.
+      </h2>
+
     </div>
 
-    <div class="client-strip">
 
-      <div class="client-box">CLIENT 01</div>
-      <div class="client-box">CLIENT 02</div>
-      <div class="client-box">CLIENT 03</div>
-      <div class="client-box">CLIENT 04</div>
-      <div class="client-box">CLIENT 05</div>
+    <div class="clients-strip">
+
+      <div class="client-badge">
+        CLIENT ONE
+      </div>
+
+      <div class="client-badge">
+        CLIENT TWO
+      </div>
+
+      <div class="client-badge">
+        CLIENT THREE
+      </div>
+
+      <div class="client-badge">
+        CLIENT FOUR
+      </div>
+
+      <div class="client-badge">
+        CLIENT FIVE
+      </div>
 
     </div>
 
   </div>
+
 </section>
 
+
 <!-- GALLERY -->
-<section class="section gallery" id="gallery">
+
+<section id="gallery">
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">Gallery</span>
-      <h2 class="section-title">Inside Our Work.</h2>
-      <p class="section-text">
-        A glimpse of our products, projects and activities.
+
+      <span class="eyebrow">
+        Gallery
+      </span>
+
+      <h2>
+        Company, facility & products.
+      </h2>
+
+      <p>
+        Gallery images can be managed from the
+        admin panel.
       </p>
+
     </div>
 
-    <div class="gallery-grid" id="galleryGrid">
 
-      <div class="empty-state">
+    <div
+      id="galleryGrid"
+      class="gallery">
+
+      <div class="loading">
         Loading gallery...
       </div>
 
     </div>
 
   </div>
+
 </section>
 
+
 <!-- TESTIMONIALS -->
-<section class="section" id="testimonials">
+
+<section
+  id="testimonials"
+  class="testimonials">
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">Testimonials</span>
-      <h2 class="section-title">What Our Clients Say</h2>
-      <p class="section-text">
-        Real feedback from customers and business partners.
+
+      <span class="eyebrow">
+        Client Feedback
+      </span>
+
+      <h2>
+        What our clients say.
+      </h2>
+
+      <p>
+        Testimonials are loaded dynamically from
+        the client dashboard.
       </p>
+
     </div>
 
-    <div class="testimonial-grid" id="testimonialGrid">
 
-      <div class="empty-state">
+    <div
+      id="testimonialGrid"
+      class="testimonial-grid">
+
+      <div class="loading">
         Loading testimonials...
       </div>
 
     </div>
 
   </div>
+
 </section>
 
+
 <!-- FAQ -->
-<section class="section faq" id="faq">
+
+<section id="faq">
 
   <div class="container">
 
     <div class="section-head">
-      <span class="section-label">FAQ</span>
-      <h2 class="section-title">Frequently Asked Questions</h2>
+
+      <span class="eyebrow">
+        FAQ
+      </span>
+
+      <h2>
+        Frequently asked questions.
+      </h2>
+
     </div>
 
-    <div class="faq-list" id="faqList">
 
-      <div class="empty-state">
+    <div
+      id="faqList"
+      class="faq-list">
+
+      <div class="loading">
         Loading FAQs...
       </div>
 
     </div>
 
   </div>
+
 </section>
+
 
 <!-- CTA -->
+
 <section class="cta">
-
-  <div class="container cta-inner">
-
-    <div>
-      <h2>Let's Build Something Great.</h2>
-      <p>
-        Tell us what you need and our team will get back to you.
-      </p>
-    </div>
-
-    <a href="#contact" class="btn btn-outline">
-      Start A Conversation
-    </a>
-
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="section" id="contact">
-
-  <div class="container contact-grid">
-
-    <div>
-
-      <span class="section-label">Contact Us</span>
-
-      <h2 class="section-title">
-        Let's Talk About Your Requirement.
-      </h2>
-
-      <p class="section-text">
-        Send us your requirement and our team will contact you.
-      </p>
-
-      <div class="contact-info">
-
-        <div class="contact-box">
-          <small>Phone</small>
-          <strong id="contactPhone">+91 XXXXX XXXXX</strong>
-        </div>
-
-        <div class="contact-box">
-          <small>Email</small>
-          <strong id="contactEmail">info@example.com</strong>
-        </div>
-
-        <div class="contact-box">
-          <small>Address</small>
-          <strong id="contactAddress">
-            Corporate Office
-          </strong>
-        </div>
-
-      </div>
-
-    </div>
-
-    <form class="form" id="enquiryForm">
-
-      <div class="form-grid">
-
-        <div class="form-group">
-          <label for="name">Name *</label>
-          <input id="name" name="name" required>
-        </div>
-
-        <div class="form-group">
-          <label for="company">Company</label>
-          <input id="company" name="company">
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email *</label>
-          <input id="email" name="email" type="email" required>
-        </div>
-
-        <div class="form-group">
-          <label for="phone">Phone *</label>
-          <input id="phone" name="phone" required>
-        </div>
-
-        <div class="form-group full">
-          <label for="requirement">Requirement *</label>
-
-          <input
-            id="requirement"
-            name="requirement"
-            placeholder="Product / Service required"
-            required
-          >
-        </div>
-
-        <div class="form-group full">
-          <label for="message">Message</label>
-
-          <textarea
-            id="message"
-            name="message"
-            placeholder="Tell us about your requirement..."
-          ></textarea>
-        </div>
-
-      </div>
-
-      <button
-        type="submit"
-        class="btn btn-primary form-submit"
-        id="submitBtn"
-      >
-        Send Enquiry
-      </button>
-
-    </form>
-
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
 
   <div class="container">
 
-    <div class="footer-grid">
+    <div class="cta-inner">
 
       <div>
-        <h3 id="footerCompany">VERTEX GROUP</h3>
 
-        <p id="footerTagline">
-          Business solutions built around quality,
-          reliability and long-term value.
+        <h2>
+          Let's build something better together.
+        </h2>
+
+        <p>
+          Talk to our team about your requirement,
+          project or product enquiry.
         </p>
+
       </div>
 
-      <div>
+      <a
+        class="btn btn-primary"
+        style="background:#fff;color:#0f172a;"
+        href="#contact">
+        Contact Us
+      </a>
 
-        <h3>Contact</h3>
+    </div>
 
-        <div class="footer-contact">
-          <span id="footerPhone">+91 XXXXX XXXXX</span>
-          <span id="footerEmail">info@example.com</span>
-          <span id="footerAddress">Corporate Office</span>
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <span class="eyebrow">
+        Contact
+      </span>
+
+      <h2>
+        Let's discuss your requirement.
+      </h2>
+
+      <p>
+        Send an enquiry and our team will get
+        back to you.
+      </p>
+
+    </div>
+
+
+    <div class="contact">
+
+      <div class="contact-box">
+
+        <h2>
+          Get In Touch
+        </h2>
+
+        <p>
+          Contact our team for product enquiries,
+          quotations, partnerships and business
+          requirements.
+        </p>
+
+
+        <div class="contact-item">
+
+          <div class="contact-icon">
+            ☎
+          </div>
+
+          <div>
+
+            <div class="contact-label">
+              Phone
+            </div>
+
+            <div
+              id="contactPhone"
+              class="contact-value">
+              -
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="contact-item">
+
+          <div class="contact-icon">
+            ✉
+          </div>
+
+          <div>
+
+            <div class="contact-label">
+              Email
+            </div>
+
+            <div
+              id="contactEmail"
+              class="contact-value">
+              -
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="contact-item">
+
+          <div class="contact-icon">
+            📍
+          </div>
+
+          <div>
+
+            <div class="contact-label">
+              Address
+            </div>
+
+            <div
+              id="contactAddress"
+              class="contact-value">
+              -
+            </div>
+
+          </div>
+
         </div>
 
       </div>
 
-      <div>
 
-        <h3>Quick Links</h3>
+      <div class="contact-form">
 
-        <div class="footer-contact">
-          <a href="#about">About</a>
-          <a href="#products">Products</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#contact">Contact</a>
-        </div>
+        <form id="enquiryForm">
+
+          <div class="form-grid">
+
+            <div class="field">
+
+              <label>
+                Name *
+              </label>
+
+              <input
+                id="enquiryName"
+                required
+                placeholder="Your name">
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                Company
+              </label>
+
+              <input
+                id="enquiryCompany"
+                placeholder="Company name">
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                Phone *
+              </label>
+
+              <input
+                id="enquiryPhone"
+                required
+                placeholder="+91">
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                Email
+              </label>
+
+              <input
+                id="enquiryEmail"
+                type="email"
+                placeholder="you@example.com">
+
+            </div>
+
+
+            <div class="field full">
+
+              <label>
+                Requirement *
+              </label>
+
+              <textarea
+                id="enquiryRequirement"
+                required
+                placeholder="Tell us about your requirement..."></textarea>
+
+            </div>
+
+
+            <div class="field full">
+
+              <label>
+                Additional Message
+              </label>
+
+              <textarea
+                id="enquiryMessage"
+                placeholder="Additional details..."></textarea>
+
+            </div>
+
+          </div>
+
+
+          <button
+            id="enquirySubmit"
+            class="btn btn-primary form-submit"
+            type="submit">
+
+            Send Enquiry
+
+          </button>
+
+        </form>
 
       </div>
 
     </div>
 
-    <div class="footer-bottom">
+  </div>
 
-      <span>
-        © <span id="year"></span>
-        <span id="footerCompanyBottom">VERTEX GROUP</span>.
-        All Rights Reserved.
-      </span>
+</section>
 
-      <span>
-        Designed for Business Excellence
-      </span>
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="container footer-row">
+
+    <div>
+
+      <div
+        id="footerCompanyName"
+        class="footer-company">
+        VERTEX
+      </div>
+
+      <div>
+        Professional corporate website
+        • © <span id="year"></span>
+      </div>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <a href="#about">
+        About
+      </a>
+
+      <a href="#products">
+        Products
+      </a>
+
+      <a href="#gallery">
+        Gallery
+      </a>
+
+      <a href="#faq">
+        FAQ
+      </a>
+
+      <a href="#contact">
+        Contact
+      </a>
+
+      <a
+        id="footerPhone"
+        href="#">
+        Phone
+      </a>
+
+      <a
+        id="footerEmail"
+        href="#">
+        Email
+      </a>
 
     </div>
 
@@ -1998,1477 +2818,1831 @@ select{
 
 </footer>
 
-<div class="toast" id="toast"></div>
 
-<!-- =========================================================
-     MDK SUPABASE / RUNTIME
-     IMPORTANT:
-     Supabase client is created ONLY ONCE here.
-========================================================= -->
+<div
+  id="toast"
+  class="toast">
+</div>
+
+
+<!-- ============================================================
+     SUPABASE
+     ============================================================ -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-(function(){
-
-  const SUPABASE_URL =
-    "https://ywvdozdoanmcxscfofcf.supabase.co";
-
-  const SUPABASE_KEY =
-    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
-
-  /*
-    IMPORTANT:
-    Use window.supabaseClient.
-    Do NOT create another local const supabaseClient.
-  */
-
-  if(!window.supabaseClient){
-
-    window.supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
-
-  }
-
-})();
-</script>
-
-<!-- MDK COMMON RUNTIME -->
+<!-- ONLY CLIENT CONTEXT -->
 <script src="../client-context.js"></script>
-<script src="../client-runtime.js"></script>
 
-
-<!-- =========================================================
-     VERTEX V2 ENGINE
-========================================================= -->
 
 <script>
 
-(function(){
+/* ============================================================
+   MD KAIF WEB PLATFORM
+   V2 - VERTEX
+   IMPORTANT:
+   - NO client-runtime.js here
+   - NO second runtime client
+   - CLIENT ID comes from MDKClientContext
+   ============================================================ */
 
-"use strict";
 
-let V2_STARTED = false;
-let V2_INITIALIZED = false;
+/* ============================================================
+   SUPABASE CONFIG
+   ============================================================ */
+
+const SUPABASE_URL =
+  "https://ywvdozdoanmcxscfofc.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
 
-/* ---------------------------------------------------------
-   BASIC HELPERS
---------------------------------------------------------- */
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* ============================================================
+   GLOBAL DATA
+   ============================================================ */
+
+let CLIENT_ID = null;
+
+let companySettings = {};
+
+let categories = [];
+
+let products = [];
+
+let gallery = [];
+
+let testimonials = [];
+
+let faqs = [];
+
+let currentProductId = null;
+
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
 
 function $(id){
   return document.getElementById(id);
 }
 
-function safeText(value, fallback=""){
-  if(
-    value === null ||
-    value === undefined ||
-    String(value).trim() === ""
+
+function setText(id,value){
+
+  const el = $(id);
+
+  if(el){
+    el.textContent =
+      value === null ||
+      value === undefined ||
+      value === ""
+      ? "—"
+      : value;
+  }
+
+}
+
+
+function safe(value){
+
+  return String(
+    value ?? ""
+  )
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+function getValue(){
+
+  for(
+    const value of arguments
   ){
-    return fallback;
+
+    if(
+      value !== null &&
+      value !== undefined &&
+      String(value).trim() !== ""
+    ){
+      return String(value);
+    }
+
   }
 
-  return String(value);
-}
-
-function escapeHTML(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return "";
 
 }
 
-function showToast(message){
 
-  const toast = $("toast");
+function firstImage(row){
 
-  if(!toast) return;
-
-  toast.textContent = message;
-  toast.classList.add("show");
-
-  clearTimeout(window.__v2ToastTimer);
-
-  window.__v2ToastTimer =
-    setTimeout(function(){
-      toast.classList.remove("show");
-    },3500);
-
-}
-
-function getSupabase(){
-
-  if(window.supabaseClient){
-    return window.supabaseClient;
+  if(!row){
+    return "";
   }
 
-  console.error(
-    "V2: Supabase client is not available."
+  return getValue(
+
+    row.main_image_url,
+
+    row.image_url,
+
+    row.image,
+
+    row.product_image_url,
+
+    row.photo_url,
+
+    row.media_url,
+
+    row.thumbnail_url,
+
+    row.url
+
   );
+
+}
+
+
+function showToast(
+  message,
+  type="success"
+){
+
+  const toast =
+    $("toast");
+
+  if(!toast){
+    return;
+  }
+
+  toast.textContent =
+    message;
+
+  toast.className =
+    "toast " + type;
+
+  toast.style.display =
+    "block";
+
+  clearTimeout(
+    window.__mdkToastTimer
+  );
+
+  window.__mdkToastTimer =
+    setTimeout(
+      ()=>{
+        toast.style.display =
+          "none";
+      },
+      3500
+    );
+
+}
+
+
+/* ============================================================
+   GET CLIENT ID
+   ============================================================ */
+
+function getClientId(){
+
+  /*
+   * First priority:
+   * ?client=UUID
+   */
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const queryClient =
+    params.get("client");
+
+  if(queryClient){
+    return queryClient;
+  }
+
+
+  /*
+   * Second priority:
+   * MDKClientContext
+   */
+
+  if(
+    window.MDKClientContext &&
+    typeof
+      window.MDKClientContext.id
+      === "function"
+  ){
+
+    const id =
+      window.MDKClientContext.id();
+
+    if(id){
+      return id;
+    }
+
+  }
+
 
   return null;
+
 }
 
 
-/* ---------------------------------------------------------
-   IMAGE HELPERS
---------------------------------------------------------- */
+/* ============================================================
+   LOAD CLIENT FROM SUPABASE
+   ============================================================ */
 
-function getImage(row){
+async function loadClientById(id){
 
-  if(!row) return "";
+  if(!id){
+    return null;
+  }
 
-  return (
-    row.main_image_url ||
-    row.image_url ||
-    row.image ||
-    row.product_image_url ||
-    row.photo_url ||
-    row.media_url ||
-    row.thumbnail_url ||
-    row.url ||
-    ""
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("clients")
+    .select(
+      "id,company_name,slug,domain,template,status"
+    )
+    .eq(
+      "id",
+      id
+    )
+    .maybeSingle();
+
+
+  if(error){
+
+    console.error(
+      "Client Error:",
+      error
+    );
+
+    return null;
+
+  }
+
+
+  return data || null;
+
+}
+
+
+/* ============================================================
+   INITIALIZE CLIENT
+   ============================================================ */
+
+async function initializeClient(){
+
+  CLIENT_ID =
+    getClientId();
+
+
+  /*
+   * If URL has client ID,
+   * make it active.
+   */
+
+  if(
+    CLIENT_ID &&
+    window.MDKClientContext
+  ){
+
+    const client =
+      await loadClientById(
+        CLIENT_ID
+      );
+
+    if(client){
+
+      MDKClientContext.set(
+        client
+      );
+
+    }
+
+  }
+
+
+  /*
+   * Try context again.
+   */
+
+  if(
+    !CLIENT_ID &&
+    window.MDKClientContext
+  ){
+
+    CLIENT_ID =
+      MDKClientContext.id();
+
+  }
+
+
+  if(!CLIENT_ID){
+
+    console.error(
+      "V2: No active client found."
+    );
+
+    showToast(
+      "No active client selected.",
+      "error"
+    );
+
+    return false;
+
+  }
+
+
+  console.log(
+    "V2: Active Client:",
+    CLIENT_ID
   );
 
+
+  return true;
+
 }
 
 
-/* ---------------------------------------------------------
+/* ============================================================
    COMPANY SETTINGS
---------------------------------------------------------- */
+   ============================================================ */
 
 async function loadCompanySettings(){
 
-  const supabase = getSupabase();
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("company_settings")
+    .select("*")
+    .eq(
+      "client_id",
+      CLIENT_ID
+    )
+    .limit(1)
+    .maybeSingle();
 
-  if(!supabase) return;
+
+  if(error){
+
+    console.warn(
+      "Company Settings:",
+      error.message
+    );
+
+    companySettings =
+      {};
+
+    return;
+
+  }
+
+
+  companySettings =
+    data || {};
+
+}
+
+
+/* ============================================================
+   CATEGORIES
+   ============================================================ */
+
+async function loadCategories(){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("categories")
+    .select("*")
+    .eq(
+      "client_id",
+      CLIENT_ID
+    )
+    .order(
+      "name",
+      {
+        ascending:true
+      }
+    );
+
+
+  if(error){
+
+    console.warn(
+      "Categories:",
+      error.message
+    );
+
+    categories =
+      [];
+
+    return;
+
+  }
+
+
+  categories =
+    data || [];
+
+}
+
+
+/* ============================================================
+   PRODUCTS
+   ============================================================ */
+
+async function loadProducts(){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("products")
+    .select("*")
+    .eq(
+      "client_id",
+      CLIENT_ID
+    )
+    .order(
+      "sort_order",
+      {
+        ascending:true,
+        nullsFirst:false
+      }
+    );
+
+
+  if(error){
+
+    console.warn(
+      "Products:",
+      error.message
+    );
+
+    products =
+      [];
+
+    return;
+
+  }
+
+
+  products =
+    data || [];
+
+}
+
+
+/* ============================================================
+   GALLERY
+   ============================================================ */
+
+async function loadGallery(){
 
   try{
 
-    const { data, error } =
-      await supabase
-        .from("company_settings")
-        .select("*")
-        .eq("client_id", CLIENT_ID)
-        .limit(1)
-        .maybeSingle();
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .from("gallery")
+      .select("*")
+      .eq(
+        "client_id",
+        CLIENT_ID
+      );
+
 
     if(error){
 
       console.warn(
-        "V2: company_settings:",
+        "Gallery:",
         error.message
       );
 
+      gallery =
+        [];
+
       return;
-    }
-
-    if(!data) return;
-
-
-    const companyName =
-      safeText(
-        data.company_name ||
-        data.website_title ||
-        data.site_name,
-        "VERTEX GROUP"
-      );
-
-    const tagline =
-      safeText(
-        data.tagline ||
-        data.website_tagline ||
-        data.short_description,
-        "Business Excellence"
-      );
-
-    const about =
-      safeText(
-        data.about ||
-        data.about_us ||
-        data.description,
-        ""
-      );
-
-    const phone =
-      safeText(
-        data.phone ||
-        data.mobile ||
-        data.contact_phone,
-        ""
-      );
-
-    const email =
-      safeText(
-        data.email ||
-        data.contact_email,
-        ""
-      );
-
-    let address =
-      safeText(data.address,"");
-
-    const addressParts = [
-      data.city,
-      data.state,
-      data.country,
-      data.postal_code
-    ].filter(Boolean);
-
-    if(!address && addressParts.length){
-      address = addressParts.join(", ");
-    }
-
-
-    /* TITLE */
-
-    document.title =
-      companyName +
-      " | Corporate Excellence";
-
-
-    /* META */
-
-    const metaDescription =
-      data.meta_description ||
-      data.description;
-
-    if(metaDescription){
-
-      $("metaDescription").setAttribute(
-        "content",
-        metaDescription
-      );
 
     }
 
 
-    /* FAVICON */
+    gallery =
+      data || [];
 
-    const favicon =
-      data.favicon_url ||
-      data.favicon;
+  }
+  catch(error){
 
-    if(favicon){
-
-      $("favicon").href = favicon;
-
-    }
-
-
-    /* BRAND */
-
-    if($("brandName"))
-      $("brandName").textContent =
-        companyName.toUpperCase();
-
-    if($("logoMark")){
-
-      $("logoMark").textContent =
-        companyName
-          .trim()
-          .charAt(0)
-          .toUpperCase() || "V";
-
-    }
-
-
-    /* TOPBAR */
-
-    if($("topPhone")){
-
-      $("topPhone").textContent =
-        phone || "+91 XXXXX XXXXX";
-
-      $("topPhone").href =
-        phone
-          ? "tel:" + phone.replace(/\s+/g,"")
-          : "#";
-
-    }
-
-    if($("topEmail")){
-
-      $("topEmail").textContent =
-        email || "info@example.com";
-
-      $("topEmail").href =
-        email
-          ? "mailto:" + email
-          : "#";
-
-    }
-
-    if($("topAddress")){
-
-      $("topAddress").textContent =
-        address || tagline;
-
-    }
-
-
-    /* HERO */
-
-    if($("heroDescription") && tagline){
-
-      $("heroDescription").textContent =
-        tagline;
-
-    }
-
-
-    /* ABOUT */
-
-    if($("aboutText") && about){
-
-      $("aboutText").textContent =
-        about;
-
-    }
-
-
-    /* CONTACT */
-
-    if($("contactPhone")){
-
-      $("contactPhone").textContent =
-        phone || "+91 XXXXX XXXXX";
-
-    }
-
-    if($("contactEmail")){
-
-      $("contactEmail").textContent =
-        email || "info@example.com";
-
-    }
-
-    if($("contactAddress")){
-
-      $("contactAddress").textContent =
-        address || "Corporate Office";
-
-    }
-
-
-    /* FOOTER */
-
-    if($("footerCompany"))
-      $("footerCompany").textContent =
-        companyName;
-
-    if($("footerCompanyBottom"))
-      $("footerCompanyBottom").textContent =
-        companyName;
-
-    if($("footerTagline"))
-      $("footerTagline").textContent =
-        tagline;
-
-    if($("footerPhone"))
-      $("footerPhone").textContent =
-        phone || "+91 XXXXX XXXXX";
-
-    if($("footerEmail"))
-      $("footerEmail").textContent =
-        email || "info@example.com";
-
-    if($("footerAddress"))
-      $("footerAddress").textContent =
-        address || "Corporate Office";
-
-
-  }catch(err){
-
-    console.error(
-      "V2: Company settings error:",
-      err
+    console.warn(
+      "Gallery:",
+      error
     );
+
+    gallery =
+      [];
 
   }
 
 }
 
 
-/* ---------------------------------------------------------
-   PRODUCTS
---------------------------------------------------------- */
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
 
-async function loadProducts(){
-
-  const supabase = getSupabase();
-  const grid = $("productGrid");
-
-  if(!supabase || !grid) return;
+async function loadTestimonials(){
 
   try{
 
-    const { data, error } =
-      await supabase
-        .from("products")
-        .select("*")
-        .eq("client_id", CLIENT_ID)
-        .order("sort_order", {
-          ascending:true
-        })
-        .order("created_at", {
-          ascending:false
-        });
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .from("testimonials")
+      .select("*")
+      .eq(
+        "client_id",
+        CLIENT_ID
+      );
+
 
     if(error){
 
-      console.error(
-        "V2: products:",
+      console.warn(
+        "Testimonials:",
         error.message
       );
 
-      grid.innerHTML =
-        '<div class="empty-state">Unable to load products.</div>';
+      testimonials =
+        [];
 
       return;
-    }
 
-    if(!data || data.length === 0){
-
-      grid.innerHTML =
-        '<div class="empty-state">No products available yet.</div>';
-
-      setCount("statProducts",0);
-      setCount("achievementProducts",0);
-
-      return;
     }
 
 
-    setCount(
-      "statProducts",
-      data.length
+    testimonials =
+      data || [];
+
+  }
+  catch(error){
+
+    testimonials =
+      [];
+
+  }
+
+}
+
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+
+async function loadFAQs(){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("faqs")
+    .select("*")
+    .eq(
+      "client_id",
+      CLIENT_ID
+    )
+    .eq(
+      "status",
+      "active"
+    )
+    .order(
+      "sort_order",
+      {
+        ascending:true
+      }
     );
 
-    setCount(
-      "achievementProducts",
-      data.length
+
+  if(error){
+
+    console.warn(
+      "FAQs:",
+      error.message
     );
 
+    faqs =
+      [];
+
+    return;
+
+  }
+
+
+  faqs =
+    data || [];
+
+}
+
+
+/* ============================================================
+   RENDER COMPANY
+   ============================================================ */
+
+function renderCompany(){
+
+  const c =
+    companySettings || {};
+
+
+  const displayName =
+    getValue(
+
+      c.company_name,
+
+      c.website_title,
+
+      c.site_name,
+
+      "VERTEX"
+
+    );
+
+
+  const tagline =
+    getValue(
+
+      c.tagline,
+
+      c.website_tagline,
+
+      c.short_description,
+
+      "Corporate Excellence"
+
+    );
+
+
+  const about =
+    getValue(
+
+      c.about,
+
+      c.about_us,
+
+      c.description,
+
+      "We are committed to delivering dependable products and services through quality, innovation and professional execution."
+
+    );
+
+
+  document.title =
+    displayName +
+    " | " +
+    tagline;
+
+
+  const meta =
+    document.querySelector(
+      'meta[name="description"]'
+    );
+
+  if(meta){
+
+    meta.content =
+      getValue(
+
+        c.meta_description,
+
+        about,
+
+        "Professional corporate website."
+
+      );
+
+  }
+
+
+  setText(
+    "brandName",
+    displayName
+  );
+
+
+  setText(
+    "brandTagline",
+    tagline
+  );
+
+
+  setText(
+    "footerCompanyName",
+    displayName
+  );
+
+
+  setText(
+    "aboutText",
+    about
+  );
+
+
+  /*
+   * HERO
+   */
+
+  setText(
+    "heroTitle",
+
+    getValue(
+
+      c.hero_title,
+
+      c.tagline,
+
+      tagline,
+
+      "Building Better Businesses Through Excellence."
+
+    )
+
+  );
+
+
+  setText(
+    "heroDescription",
+
+    getValue(
+
+      c.hero_description,
+
+      c.about,
+
+      about,
+
+      "A modern corporate platform built around quality, innovation, reliability and long-term business value."
+
+    )
+
+  );
+
+
+  /*
+   * CONTACT
+   */
+
+  const phone =
+    getValue(
+
+      c.phone,
+
+      c.mobile,
+
+      c.contact_phone,
+
+      ""
+
+    );
+
+
+  const email =
+    getValue(
+
+      c.email,
+
+      c.contact_email,
+
+      ""
+
+    );
+
+
+  const address =
+    [
+
+      c.address,
+
+      c.city,
+
+      c.state,
+
+      c.country,
+
+      c.postal_code
+
+    ]
+    .filter(Boolean)
+    .join(", ");
+
+
+  setText(
+    "topPhone",
+    phone || "Contact us"
+  );
+
+
+  setText(
+    "topEmail",
+    email
+  );
+
+
+  setText(
+    "topLocation",
+    address || "India"
+  );
+
+
+  setText(
+    "contactPhone",
+    phone || "-"
+  );
+
+
+  setText(
+    "contactEmail",
+    email || "-"
+  );
+
+
+  setText(
+    "contactAddress",
+    address || "-"
+  );
+
+
+  /*
+   * PHONE
+   */
+
+  const phoneClean =
+    phone.replace(
+      /[^0-9+]/g,
+      ""
+    );
+
+
+  const phoneLink =
+    $("footerPhone");
+
+  if(phoneLink){
+
+    phoneLink.href =
+      phone
+      ? "tel:" + phoneClean
+      : "#";
+
+    phoneLink.textContent =
+      phone || "Phone";
+
+  }
+
+
+  const navPhone =
+    $("navPhone");
+
+  if(navPhone){
+
+    navPhone.href =
+      phone
+      ? "tel:" + phoneClean
+      : "#";
+
+  }
+
+
+  /*
+   * EMAIL
+   */
+
+  const footerEmail =
+    $("footerEmail");
+
+  if(footerEmail){
+
+    footerEmail.href =
+      email
+      ? "mailto:" + email
+      : "#";
+
+    footerEmail.textContent =
+      email || "Email";
+
+  }
+
+
+  /*
+   * LOGO
+   */
+
+  const logoUrl =
+    getValue(
+
+      c.logo_url,
+
+      c.logo,
+
+      c.company_logo
+
+    );
+
+
+  const logo =
+    $("companyLogo");
+
+  const placeholder =
+    $("logoPlaceholder");
+
+
+  if(
+    logo &&
+    logoUrl
+  ){
+
+    logo.src =
+      logoUrl;
+
+    logo.style.display =
+      "block";
+
+    if(placeholder){
+
+      placeholder.style.display =
+        "none";
+
+    }
+
+  }
+
+
+  /*
+   * FAVICON
+   */
+
+  const faviconUrl =
+    getValue(
+
+      c.favicon_url,
+
+      c.favicon
+
+    );
+
+
+  if(faviconUrl){
+
+    const favicon =
+      $("favicon");
+
+    if(favicon){
+
+      favicon.href =
+        faviconUrl;
+
+    }
+
+  }
+
+
+  /*
+   * ABOUT IMAGE
+   */
+
+  const aboutImageUrl =
+    getValue(
+
+      c.about_image_url,
+
+      c.about_image,
+
+      c.company_image_url,
+
+      c.cover_image_url,
+
+      c.banner_image_url
+
+    );
+
+
+  if(aboutImageUrl){
+
+    const img =
+      $("aboutImage");
+
+    const empty =
+      $("aboutPlaceholder");
+
+    if(img){
+
+      img.src =
+        aboutImageUrl;
+
+      img.style.display =
+        "block";
+
+    }
+
+    if(empty){
+
+      empty.style.display =
+        "none";
+
+    }
+
+  }
+
+
+  /*
+   * HERO IMAGE
+   */
+
+  const heroImageUrl =
+    getValue(
+
+      c.hero_image_url,
+
+      c.hero_image,
+
+      c.banner_image_url,
+
+      c.cover_image_url
+
+    );
+
+
+  if(heroImageUrl){
+
+    const img =
+      $("heroImage");
+
+    const empty =
+      $("heroPlaceholder");
+
+    if(img){
+
+      img.src =
+        heroImageUrl;
+
+      img.style.display =
+        "block";
+
+    }
+
+    if(empty){
+
+      empty.style.display =
+        "none";
+
+    }
+
+  }
+
+}
+
+
+/* ============================================================
+   RENDER STATS
+   ============================================================ */
+
+function renderStats(){
+
+  setText(
+    "statProducts",
+    products.length
+  );
+
+
+  setText(
+    "statCategories",
+    categories.length
+  );
+
+}
+
+
+/* ============================================================
+   RENDER PRODUCTS
+   ============================================================ */
+
+function renderProducts(){
+
+  const grid =
+    $("productGrid");
+
+  if(!grid){
+    return;
+  }
+
+
+  if(
+    !products ||
+    products.length === 0
+  ){
 
     grid.innerHTML =
-      data.map(function(product){
+      `
+      <div
+        class="empty"
+        style="grid-column:1/-1;">
 
-        const name =
-          safeText(
-            product.name ||
-            product.product_name,
-            "Product"
-          );
+        Products will appear here
+        when added from Product Manager.
 
-        const code =
-          safeText(
-            product.product_code ||
-            product.code,
-            ""
-          );
+      </div>
+      `;
 
-        const description =
-          safeText(
-            product.short_description ||
-            product.description,
-            "Quality product designed for professional requirements."
-          );
+    return;
 
-        const image =
-          getImage(product);
+  }
 
-        const pack =
-          safeText(
-            product.pack_size ||
-            product.units_per_pack,
-            ""
-          );
 
-        const specifications =
-          safeText(
-            product.specifications ||
-            product.specification,
-            ""
-          );
+  grid.innerHTML =
+    products
+      .map(
+        product => {
 
-        return `
+          const image =
+            firstImage(
+              product
+            );
+
+
+          const name =
+            getValue(
+
+              product.name,
+
+              product.product_name,
+
+              "Product"
+
+            );
+
+
+          const code =
+            getValue(
+
+              product.product_code,
+
+              product.code
+
+            );
+
+
+          const description =
+            getValue(
+
+              product.short_description,
+
+              product.description,
+
+              "Product information available on request."
+
+            );
+
+
+          const pack =
+            getValue(
+
+              product.pack_size,
+
+              product.units_per_pack
+
+            );
+
+
+          return `
 
           <article class="product-card">
 
-            <div
-              class="product-image"
-              style="
-                background-image:url('${escapeAttribute(image)}');
-              "
-            ></div>
+            <div class="product-image">
+
+              ${
+                image
+
+                ?
+
+                `
+                <img
+                  src="${safe(image)}"
+                  alt="${safe(name)}"
+                  loading="lazy"
+                  onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'product-placeholder\\'>Product Image</div>';"
+                >
+                `
+
+                :
+
+                `
+                <div class="product-placeholder">
+                  Product Image
+                </div>
+                `
+              }
+
+            </div>
+
 
             <div class="product-body">
 
               ${
                 code
-                ? `<div class="product-code">
-                     ${escapeHTML(code)}
-                   </div>`
-                : ""
+
+                ?
+
+                `
+                <div class="product-code">
+                  ${safe(code)}
+                </div>
+                `
+
+                :
+
+                ""
               }
 
+
               <h3>
-                ${escapeHTML(name)}
+                ${safe(name)}
               </h3>
 
+
               <p>
-                ${escapeHTML(description)}
+                ${safe(description)}
               </p>
 
-              <div class="product-meta">
 
-                ${
-                  pack
-                  ? `<span>
-                       Pack: ${escapeHTML(pack)}
-                     </span>`
-                  : ""
-                }
+              ${
+                pack
 
-                ${
-                  specifications
-                  ? `<span>
-                       Specifications
-                     </span>`
-                  : ""
-                }
+                ?
 
-              </div>
+                `
+                <div class="product-meta">
+                  Pack Size:
+                  <strong>
+                    ${safe(pack)}
+                  </strong>
+                </div>
+                `
+
+                :
+
+                ""
+              }
+
 
               <button
-                type="button"
                 class="btn btn-primary product-btn"
-                data-product-name="${escapeAttribute(name)}"
-              >
+                type="button"
+                onclick="enquireProduct('${safe(String(product.id))}')">
+
                 Enquire Now
+
               </button>
 
             </div>
 
           </article>
 
-        `;
-
-      }).join("");
-
-
-    grid
-      .querySelectorAll("[data-product-name]")
-      .forEach(function(button){
-
-        button.addEventListener(
-          "click",
-          function(){
-
-            const productName =
-              button.dataset.productName || "";
-
-            const requirement =
-              $("requirement");
-
-            if(requirement){
-
-              requirement.value =
-                productName;
-
-            }
-
-            document
-              .getElementById("contact")
-              ?.scrollIntoView({
-                behavior:"smooth"
-              });
-
-          }
-        );
-
-      });
-
-
-  }catch(err){
-
-    console.error(
-      "V2: Product load error:",
-      err
-    );
-
-    grid.innerHTML =
-      '<div class="empty-state">Unable to load products.</div>';
-
-  }
-
-}
-
-
-/* ---------------------------------------------------------
-   CATEGORIES
---------------------------------------------------------- */
-
-async function loadCategories(){
-
-  const supabase = getSupabase();
-
-  if(!supabase) return;
-
-  try{
-
-    const { data, error } =
-      await supabase
-        .from("categories")
-        .select("*")
-        .eq("client_id", CLIENT_ID);
-
-    if(error){
-
-      console.warn(
-        "V2: categories:",
-        error.message
-      );
-
-      return;
-
-    }
-
-    const count =
-      data?.length || 0;
-
-    setCount(
-      "statCategories",
-      count
-    );
-
-    setCount(
-      "achievementCategories",
-      count
-    );
-
-  }catch(err){
-
-    console.warn(
-      "V2: category error:",
-      err
-    );
-
-  }
-
-}
-
-
-/* ---------------------------------------------------------
-   GALLERY
---------------------------------------------------------- */
-
-async function loadGallery(){
-
-  const supabase = getSupabase();
-  const grid = $("galleryGrid");
-
-  if(!supabase || !grid) return;
-
-  try{
-
-    const { data, error } =
-      await supabase
-        .from("gallery")
-        .select("*")
-        .eq("client_id", CLIENT_ID)
-        .order("created_at", {
-          ascending:false
-        });
-
-    if(error){
-
-      console.warn(
-        "V2: gallery:",
-        error.message
-      );
-
-      grid.innerHTML =
-        '<div class="empty-state">Unable to load gallery.</div>';
-
-      return;
-
-    }
-
-    if(!data || data.length === 0){
-
-      grid.innerHTML =
-        '<div class="empty-state">No gallery images available yet.</div>';
-
-      setCount("statGallery",0);
-
-      return;
-
-    }
-
-
-    setCount(
-      "statGallery",
-      data.length
-    );
-
-
-    grid.innerHTML =
-      data.map(function(item){
-
-        const image =
-          getImage(item);
-
-        const title =
-          safeText(
-            item.title ||
-            item.name ||
-            item.caption,
-            "Gallery"
-          );
-
-        if(!image){
-
-          return `
-            <div class="gallery-item">
-              <div class="empty-state">
-                Image unavailable
-              </div>
-            </div>
           `;
 
         }
-
-        return `
-
-          <div class="gallery-item">
-
-            <img
-              src="${escapeAttribute(image)}"
-              alt="${escapeAttribute(title)}"
-              loading="lazy"
-            >
-
-            <div class="gallery-caption">
-              ${escapeHTML(title)}
-            </div>
-
-          </div>
-
-        `;
-
-      }).join("");
-
-
-  }catch(err){
-
-    console.error(
-      "V2: Gallery error:",
-      err
-    );
-
-    grid.innerHTML =
-      '<div class="empty-state">Unable to load gallery.</div>';
-
-  }
+      )
+      .join("");
 
 }
 
 
-/* ---------------------------------------------------------
-   TESTIMONIALS
---------------------------------------------------------- */
+/* ============================================================
+   ENQUIRE PRODUCT
+   ============================================================ */
 
-async function loadTestimonials(){
+function enquireProduct(id){
 
-  const supabase = getSupabase();
-  const grid = $("testimonialGrid");
-
-  if(!supabase || !grid) return;
-
-  try{
-
-    const { data, error } =
-      await supabase
-        .from("testimonials")
-        .select("*")
-        .eq("client_id", CLIENT_ID)
-        .order("created_at", {
-          ascending:false
-        });
-
-    if(error){
-
-      console.warn(
-        "V2: testimonials:",
-        error.message
-      );
-
-      grid.innerHTML =
-        '<div class="empty-state">Unable to load testimonials.</div>';
-
-      return;
-
-    }
-
-    if(!data || data.length === 0){
-
-      grid.innerHTML =
-        '<div class="empty-state">No testimonials available yet.</div>';
-
-      setCount("statTestimonials",0);
-
-      return;
-
-    }
-
-
-    setCount(
-      "statTestimonials",
-      data.length
+  const product =
+    products.find(
+      p =>
+        String(p.id)
+        ===
+        String(id)
     );
 
 
-    grid.innerHTML =
-      data.map(function(item){
-
-        const message =
-          safeText(
-            item.message ||
-            item.testimonial ||
-            item.content ||
-            item.review ||
-            item.text,
-            "Excellent service and professional support."
-          );
-
-        const name =
-          safeText(
-            item.name ||
-            item.customer_name ||
-            item.author_name ||
-            item.client_name,
-            "Client"
-          );
-
-        const company =
-          safeText(
-            item.company_name ||
-            item.company ||
-            item.organization,
-            ""
-          );
-
-        const role =
-          safeText(
-            item.role ||
-            item.designation ||
-            item.position,
-            ""
-          );
-
-        let rating =
-          Number(
-            item.rating ||
-            item.stars ||
-            5
-          );
-
-        if(!Number.isFinite(rating))
-          rating = 5;
-
-        rating =
-          Math.max(
-            0,
-            Math.min(5,Math.round(rating))
-          );
-
-        const stars =
-          "★".repeat(rating) +
-          "☆".repeat(5-rating);
-
-
-        return `
-
-          <article class="testimonial-card">
-
-            <div class="stars">
-              ${stars}
-            </div>
-
-            <blockquote>
-              “${escapeHTML(message)}”
-            </blockquote>
-
-            <div class="testimonial-name">
-              ${escapeHTML(name)}
-            </div>
-
-            ${
-              company || role
-              ? `
-                <div class="testimonial-company">
-                  ${escapeHTML(
-                    [role,company]
-                      .filter(Boolean)
-                      .join(" • ")
-                  )}
-                </div>
-              `
-              : ""
-            }
-
-          </article>
-
-        `;
-
-      }).join("");
-
-
-  }catch(err){
-
-    console.error(
-      "V2: Testimonial error:",
-      err
-    );
-
-    grid.innerHTML =
-      '<div class="empty-state">Unable to load testimonials.</div>';
-
-  }
-
-}
-
-
-/* ---------------------------------------------------------
-   FAQ
---------------------------------------------------------- */
-
-async function loadFAQs(){
-
-  const supabase = getSupabase();
-  const list = $("faqList");
-
-  if(!supabase || !list) return;
-
-  try{
-
-    const { data, error } =
-      await supabase
-        .from("faqs")
-        .select("*")
-        .eq("client_id", CLIENT_ID)
-        .eq("status","active")
-        .order("sort_order", {
-          ascending:true
-        });
-
-    if(error){
-
-      console.warn(
-        "V2: FAQs:",
-        error.message
-      );
-
-      list.innerHTML =
-        '<div class="empty-state">Unable to load FAQs.</div>';
-
-      return;
-
-    }
-
-    if(!data || data.length === 0){
-
-      list.innerHTML =
-        '<div class="empty-state">No FAQs available yet.</div>';
-
-      return;
-
-    }
-
-
-    list.innerHTML =
-      data.map(function(item,index){
-
-        const question =
-          safeText(
-            item.question ||
-            item.faq_question ||
-            item.title,
-            "Frequently asked question"
-          );
-
-        const answer =
-          safeText(
-            item.answer ||
-            item.faq_answer ||
-            item.content ||
-            item.description,
-            "Please contact us for more information."
-          );
-
-        return `
-
-          <div class="faq-item">
-
-            <button
-              type="button"
-              class="faq-question"
-              data-faq-index="${index}"
-            >
-
-              <span>
-                ${escapeHTML(question)}
-              </span>
-
-              <span class="faq-plus">
-                +
-              </span>
-
-            </button>
-
-            <div class="faq-answer">
-              ${escapeHTML(answer)}
-            </div>
-
-          </div>
-
-        `;
-
-      }).join("");
-
-
-    list
-      .querySelectorAll(".faq-question")
-      .forEach(function(button){
-
-        button.addEventListener(
-          "click",
-          function(){
-
-            const item =
-              button.closest(".faq-item");
-
-            if(!item) return;
-
-            item.classList.toggle("open");
-
-          }
-        );
-
-      });
-
-
-  }catch(err){
-
-    console.error(
-      "V2: FAQ error:",
-      err
-    );
-
-    list.innerHTML =
-      '<div class="empty-state">Unable to load FAQs.</div>';
-
-  }
-
-}
-
-
-/* ---------------------------------------------------------
-   ENQUIRY
---------------------------------------------------------- */
-
-function initEnquiryForm(){
-
-  const form =
-    $("enquiryForm");
-
-  if(!form) return;
-
-  form.addEventListener(
-    "submit",
-    async function(event){
-
-      event.preventDefault();
-
-
-      if(
-        typeof CLIENT_ID === "undefined" ||
-        !CLIENT_ID
-      ){
-
-        showToast(
-          "Website is still loading. Please try again."
-        );
-
-        return;
-
-      }
-
-
-      const supabase =
-        getSupabase();
-
-      if(!supabase){
-
-        showToast(
-          "Connection error. Please try again."
-        );
-
-        return;
-
-      }
-
-
-      const submitBtn =
-        $("submitBtn");
-
-
-      const name =
-        $("name")?.value.trim() || "";
-
-      const company =
-        $("company")?.value.trim() || "";
-
-      const email =
-        $("email")?.value.trim() || "";
-
-      const phone =
-        $("phone")?.value.trim() || "";
-
-      const requirement =
-        $("requirement")?.value.trim() || "";
-
-      const message =
-        $("message")?.value.trim() || "";
-
-
-      if(
-        !name ||
-        !email ||
-        !phone ||
-        !requirement
-      ){
-
-        showToast(
-          "Please fill all required fields."
-        );
-
-        return;
-
-      }
-
-
-      if(submitBtn){
-
-        submitBtn.disabled = true;
-
-        submitBtn.textContent =
-          "Sending...";
-
-      }
-
-
-      try{
-
-        const payload = {
-
-          client_id: CLIENT_ID,
-
-          customer_name: name,
-
-          company_name:
-            company || null,
-
-          phone: phone,
-
-          email: email,
-
-          requirement: requirement,
-
-          source: "website",
-
-          status: "new",
-
-          notes:
-            message || null
-
-        };
-
-
-        const { error } =
-          await supabase
-            .from("enquiries")
-            .insert([payload]);
-
-
-        if(error){
-
-          console.error(
-            "V2 enquiry:",
-            error
-          );
-
-          showToast(
-            "Unable to send enquiry. Please try again."
-          );
-
-          return;
-
-        }
-
-
-        form.reset();
-
-        showToast(
-          "Thank you! Your enquiry has been sent successfully."
-        );
-
-
-      }catch(err){
-
-        console.error(
-          "V2 enquiry error:",
-          err
-        );
-
-        showToast(
-          "Something went wrong. Please try again."
-        );
-
-      }finally{
-
-        if(submitBtn){
-
-          submitBtn.disabled = false;
-
-          submitBtn.textContent =
-            "Send Enquiry";
-
-        }
-
-      }
-
-    }
-  );
-
-}
-
-
-/* ---------------------------------------------------------
-   MOBILE MENU
---------------------------------------------------------- */
-
-function initMobileMenu(){
-
-  const menuBtn =
-    $("menuBtn");
-
-  const navLinks =
-    $("navLinks");
-
-  if(!menuBtn || !navLinks)
+  if(!product){
     return;
+  }
 
 
-  menuBtn.addEventListener(
-    "click",
-    function(){
-
-      navLinks.classList.toggle(
-        "open"
-      );
-
-    }
-  );
+  currentProductId =
+    product.id;
 
 
-  navLinks
-    .querySelectorAll("a")
-    .forEach(function(link){
+  const name =
+    getValue(
 
-      link.addEventListener(
-        "click",
-        function(){
+      product.name,
 
-          navLinks.classList.remove(
-            "open"
-          );
+      product.product_name,
 
-        }
-      );
+      "Product"
 
+    );
+
+
+  const code =
+    getValue(
+
+      product.product_code,
+
+      product.code,
+
+      ""
+
+    );
+
+
+  const requirement =
+    $("enquiryRequirement");
+
+
+  if(requirement){
+
+    requirement.value =
+      "Product: " +
+      name +
+      (
+        code
+        ? " (" + code + ")"
+        : ""
+      ) +
+      "\n\nQuantity / Requirement: ";
+
+  }
+
+
+  document
+    .getElementById("contact")
+    ?.scrollIntoView({
+      behavior:"smooth"
     });
 
-}
 
+  setTimeout(
+    ()=>{
 
-/* ---------------------------------------------------------
-   COUNTER
---------------------------------------------------------- */
+      requirement?.focus();
 
-function setCount(id,value){
-
-  const element =
-    $(id);
-
-  if(!element) return;
-
-  element.textContent =
-    value ?? 0;
-
-}
-
-
-/* ---------------------------------------------------------
-   ESCAPE ATTRIBUTE
---------------------------------------------------------- */
-
-function escapeAttribute(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;");
-
-}
-
-
-/* ---------------------------------------------------------
-   YEAR
---------------------------------------------------------- */
-
-function setYear(){
-
-  if($("year")){
-
-    $("year").textContent =
-      new Date().getFullYear();
-
-  }
-
-}
-
-
-/* ---------------------------------------------------------
-   INITIALIZE
---------------------------------------------------------- */
-
-async function initV2(){
-
-  if(V2_INITIALIZED)
-    return;
-
-  V2_INITIALIZED = true;
-
-
-  console.log(
-    "V2: Runtime ready. Initializing..."
-  );
-
-
-  setYear();
-
-  initMobileMenu();
-
-  initEnquiryForm();
-
-
-  /*
-    Load all independent data together.
-    One failing module will not stop others.
-  */
-
-  await Promise.allSettled([
-
-    loadCompanySettings(),
-
-    loadProducts(),
-
-    loadCategories(),
-
-    loadGallery(),
-
-    loadTestimonials(),
-
-    loadFAQs()
-
-  ]);
-
-
-  console.log(
-    "V2: WEBSITE LOADED SUCCESSFULLY"
+    },
+    500
   );
 
 }
 
 
-/* ---------------------------------------------------------
-   WAIT FOR MDK RUNTIME
-   No recursive console spam.
-   Maximum wait = 10 seconds.
---------------------------------------------------------- */
+/* ============================================================
+   RENDER GALLERY
+   ============================================================ */
 
-async function startV2(){
+function renderGallery(){
 
-  if(V2_STARTED)
+  const grid =
+    $("galleryGrid");
+
+  if(!grid){
     return;
-
-  V2_STARTED = true;
-
-
-  const maxWait =
-    10000;
-
-  const interval =
-    100;
-
-  const start =
-    Date.now();
-
-
-  while(
-    (
-      typeof CLIENT_ID === "undefined" ||
-      !CLIENT_ID
-    ) &&
-    Date.now() - start < maxWait
-  ){
-
-    await new Promise(
-      function(resolve){
-        setTimeout(
-          resolve,
-          interval
-        );
-      }
-    );
-
   }
 
 
   if(
-    typeof CLIENT_ID === "undefined" ||
-    !CLIENT_ID
+    !gallery ||
+    gallery.length === 0
   ){
 
-    console.error(
-      "V2: MDK Runtime did not provide CLIENT_ID within 10 seconds."
+    grid.innerHTML =
+      `
+      <div
+        class="empty"
+        style="grid-column:1/-1;">
+
+        Gallery images will appear here
+        when added from Gallery Manager.
+
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    gallery
+      .map(
+        item => {
+
+          const image =
+            firstImage(
+              item
+            );
+
+
+          const title =
+            getValue(
+
+              item.title,
+
+              item.name,
+
+              item.caption,
+
+              "Company Gallery"
+
+            );
+
+
+          if(!image){
+
+            return `
+              <div class="gallery-item">
+                <div class="about-placeholder">
+                  ${safe(title)}
+                </div>
+              </div>
+            `;
+
+          }
+
+
+          return `
+
+            <div class="gallery-item">
+
+              <img
+                src="${safe(image)}"
+                alt="${safe(title)}"
+                loading="lazy"
+              >
+
+              <div class="gallery-caption">
+                ${safe(title)}
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* ============================================================
+   RENDER TESTIMONIALS
+   ============================================================ */
+
+function renderTestimonials(){
+
+  const grid =
+    $("testimonialGrid");
+
+  if(!grid){
+    return;
+  }
+
+
+  if(
+    !testimonials ||
+    testimonials.length === 0
+  ){
+
+    grid.innerHTML =
+      `
+      <div
+        class="empty"
+        style="grid-column:1/-1;">
+
+        Client testimonials will appear here
+        when added from Testimonials Manager.
+
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    testimonials
+      .map(
+        item => {
+
+          const message =
+            getValue(
+
+              item.message,
+
+              item.testimonial,
+
+              item.content,
+
+              item.review,
+
+              item.text,
+
+              "Excellent service and professional support."
+
+            );
+
+
+          const name =
+            getValue(
+
+              item.name,
+
+              item.customer_name,
+
+              item.author_name,
+
+              item.client_name,
+
+              "Client"
+
+            );
+
+
+          const company =
+            getValue(
+
+              item.company_name,
+
+              item.company,
+
+              item.organization,
+
+              item.role,
+
+              item.designation,
+
+              ""
+
+            );
+
+
+          let rating =
+            Number(
+              item.rating ??
+              item.stars ??
+              5
+            );
+
+
+          if(
+            !Number.isFinite(rating) ||
+            rating < 0
+          ){
+
+            rating =
+              5;
+
+          }
+
+
+          rating =
+            Math.min(
+              5,
+              Math.round(rating)
+            );
+
+
+          return `
+
+            <article class="testimonial">
+
+              <div class="stars">
+                ${"★".repeat(rating)}
+                ${"☆".repeat(5-rating)}
+              </div>
+
+              <div class="testimonial-message">
+                “${safe(message)}”
+              </div>
+
+              <div class="testimonial-name">
+                ${safe(name)}
+              </div>
+
+              ${
+                company
+
+                ?
+
+                `
+                <div class="testimonial-role">
+                  ${safe(company)}
+                </div>
+                `
+
+                :
+
+                ""
+              }
+
+            </article>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* ============================================================
+   RENDER FAQ
+   ============================================================ */
+
+function renderFAQs(){
+
+  const list =
+    $("faqList");
+
+  if(!list){
+    return;
+  }
+
+
+  if(
+    !faqs ||
+    faqs.length === 0
+  ){
+
+    list.innerHTML =
+      `
+      <div class="empty">
+        Frequently asked questions will appear
+        here when added from FAQ Manager.
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    faqs
+      .map(
+        (item,index) => {
+
+          const question =
+            getValue(
+
+              item.question,
+
+              item.faq_question,
+
+              item.title,
+
+              "Frequently Asked Question"
+
+            );
+
+
+          const answer =
+            getValue(
+
+              item.answer,
+
+              item.faq_answer,
+
+              item.content,
+
+              item.description,
+
+              "Information will be provided by our team."
+
+            );
+
+
+          return `
+
+            <div class="faq-item">
+
+              <button
+                class="faq-question"
+                type="button"
+                onclick="toggleFAQ(this)">
+
+                <span>
+                  ${safe(question)}
+                </span>
+
+                <span>
+                  +
+                </span>
+
+              </button>
+
+
+              <div class="faq-answer">
+
+                ${safe(answer)}
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* ============================================================
+   FAQ TOGGLE
+   ============================================================ */
+
+function toggleFAQ(button){
+
+  const item =
+    button.parentElement;
+
+  const open =
+    item.classList.toggle(
+      "open"
     );
 
+
+  const icon =
+    button.querySelectorAll(
+      "span"
+    )[1];
+
+
+  if(icon){
+
+    icon.textContent =
+      open
+      ? "−"
+      : "+";
+
+  }
+
+}
+
+
+/* ============================================================
+   ENQUIRY SUBMIT
+   ============================================================ */
+
+async function submitEnquiry(event){
+
+  event.preventDefault();
+
+
+  if(!CLIENT_ID){
+
     showToast(
-      "Website configuration is still loading. Please refresh."
+      "Client not identified.",
+      "error"
     );
 
     return;
@@ -3476,40 +4650,328 @@ async function startV2(){
   }
 
 
-  console.log(
-    "V2: Client ID:",
-    CLIENT_ID
+  const submit =
+    $("enquirySubmit");
+
+
+  const payload = {
+
+    client_id:
+      CLIENT_ID,
+
+    product_id:
+      currentProductId || null,
+
+    customer_name:
+      $("enquiryName")?.value.trim(),
+
+    company_name:
+      $("enquiryCompany")?.value.trim() || null,
+
+    phone:
+      $("enquiryPhone")?.value.trim(),
+
+    email:
+      $("enquiryEmail")?.value.trim() || null,
+
+    requirement:
+      $("enquiryRequirement")?.value.trim(),
+
+    source:
+      "website",
+
+    status:
+      "new",
+
+    notes:
+      $("enquiryMessage")?.value.trim() || null
+
+  };
+
+
+  if(
+    !payload.customer_name ||
+    !payload.phone ||
+    !payload.requirement
+  ){
+
+    showToast(
+      "Please fill all required fields.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(submit){
+
+    submit.disabled =
+      true;
+
+    submit.textContent =
+      "Sending...";
+
+  }
+
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("enquiries")
+    .insert(
+      payload
+    );
+
+
+  if(error){
+
+    console.error(
+      "Enquiry Error:",
+      error
+    );
+
+
+    showToast(
+      "Unable to send enquiry: " +
+      error.message,
+      "error"
+    );
+
+
+    if(submit){
+
+      submit.disabled =
+        false;
+
+      submit.textContent =
+        "Send Enquiry";
+
+    }
+
+    return;
+
+  }
+
+
+  showToast(
+    "Thank you. Your enquiry has been sent.",
+    "success"
   );
 
 
-  await initV2();
+  $("enquiryForm")?.reset();
+
+
+  currentProductId =
+    null;
+
+
+  if(submit){
+
+    submit.disabled =
+      false;
+
+    submit.textContent =
+      "Send Enquiry";
+
+  }
 
 }
 
 
-/* ---------------------------------------------------------
-   DOM READY
---------------------------------------------------------- */
+/* ============================================================
+   MOBILE MENU
+   ============================================================ */
 
-if(
-  document.readyState === "loading"
-){
+function setupMobileMenu(){
 
-  document.addEventListener(
-    "DOMContentLoaded",
-    startV2,
-    {
-      once:true
+  const btn =
+    $("menuBtn");
+
+  const nav =
+    $("mobileNav");
+
+
+  if(!btn || !nav){
+    return;
+  }
+
+
+  btn.addEventListener(
+    "click",
+    ()=>{
+
+      const visible =
+        nav.style.display
+        ===
+        "block";
+
+
+      nav.style.display =
+        visible
+        ? "none"
+        : "block";
+
     }
   );
 
-}else{
 
-  startV2();
+  nav
+    .querySelectorAll("a")
+    .forEach(
+      link => {
+
+        link.addEventListener(
+          "click",
+          ()=>{
+
+            nav.style.display =
+              "none";
+
+          }
+        );
+
+      }
+    );
 
 }
 
-})();
+
+/* ============================================================
+   MAIN LOAD
+   ============================================================ */
+
+async function loadWebsite(){
+
+  try{
+
+    /*
+     * Load all client-specific data
+     */
+
+    await Promise.all([
+
+      loadCompanySettings(),
+
+      loadCategories(),
+
+      loadProducts(),
+
+      loadGallery(),
+
+      loadTestimonials(),
+
+      loadFAQs()
+
+    ]);
+
+
+    /*
+     * Render
+     */
+
+    renderCompany();
+
+    renderStats();
+
+    renderProducts();
+
+    renderGallery();
+
+    renderTestimonials();
+
+    renderFAQs();
+
+
+    console.log(
+      "V2: WEBSITE LOADED SUCCESSFULLY"
+    );
+
+
+  }
+  catch(error){
+
+    console.error(
+      "V2 Website Error:",
+      error
+    );
+
+
+    showToast(
+      "Some website data could not be loaded.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   START
+   ============================================================ */
+
+async function startV2(){
+
+  console.log(
+    "V2: Starting..."
+  );
+
+
+  const ready =
+    await initializeClient();
+
+
+  if(!ready){
+
+    return;
+
+  }
+
+
+  await loadWebsite();
+
+}
+
+
+/* ============================================================
+   DOM READY
+   ============================================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  ()=>{
+
+    setText(
+      "year",
+      new Date().getFullYear()
+    );
+
+
+    setupMobileMenu();
+
+
+    const form =
+      $("enquiryForm");
+
+
+    if(form){
+
+      form.addEventListener(
+        "submit",
+        submitEnquiry
+      );
+
+    }
+
+
+    startV2();
+
+  }
+);
 
 </script>
 
