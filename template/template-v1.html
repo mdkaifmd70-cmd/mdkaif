@@ -21,7 +21,8 @@
    V1 MANUFACTURING TEMPLATE
    MD Kaif Web Platform
 
-   V2 ALIGNMENT / STRUCTURE
+   DYNAMIC CLIENT WEBSITE
+   REAL CLIENT-WISE ENQUIRY
    NO SLIDER
    ========================================================= */
 
@@ -105,6 +106,12 @@ input,
 textarea,
 select{
     font:inherit;
+}
+
+
+button:disabled{
+    opacity:.65;
+    cursor:not-allowed;
 }
 
 
@@ -645,11 +652,6 @@ select{
 }
 
 
-/*
-   STATIC HERO INFORMATION CARD
-   NOT A SLIDER
-*/
-
 .hero-card{
 
     justify-self:end;
@@ -1085,7 +1087,7 @@ select{
 
 
 /* =========================================================
-   MANUFACTURING PROCESS
+   MANUFACTURING
    ========================================================= */
 
 .manufacturing{
@@ -1424,8 +1426,6 @@ select{
 }
 
 
-/* Small accent line on top */
-
 .testimonial::before{
 
     content:"";
@@ -1445,8 +1445,6 @@ select{
 }
 
 
-/* Hover */
-
 .testimonial:hover{
 
     transform:translateY(-5px);
@@ -1457,8 +1455,6 @@ select{
 
 }
 
-
-/* Quote */
 
 .quote{
 
@@ -1475,8 +1471,6 @@ select{
 }
 
 
-/* Testimonial text */
-
 .testimonial p{
 
     color:#475569;
@@ -1492,8 +1486,6 @@ select{
 }
 
 
-/* Person area */
-
 .testimonial-person{
 
     display:flex;
@@ -1508,8 +1500,6 @@ select{
 
 }
 
-
-/* Avatar */
 
 .person-avatar{
 
@@ -1536,8 +1526,6 @@ select{
 }
 
 
-/* Name + designation */
-
 .person-info{
 
     min-width:0;
@@ -1563,96 +1551,6 @@ select{
 .person-info span{
 
     display:block;
-
-    color:var(--muted);
-
-    font-size:11px;
-
-}
-
-
-/* Mobile */
-
-@media(max-width:600px){
-
-    .testimonial{
-
-        min-height:0;
-
-        padding:26px;
-
-    }
-
-}
-
-.quote{
-
-    color:var(--accent);
-
-    font-size:34px;
-
-    line-height:1;
-
-    margin-bottom:18px;
-
-}
-
-
-.testimonial p{
-
-    color:#475569;
-
-    font-size:14px;
-
-    margin-bottom:25px;
-
-}
-
-
-.testimonial-person{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-
-.person-avatar{
-
-    width:42px;
-
-    height:42px;
-
-    border-radius:50%;
-
-    background:var(--primary);
-
-    color:#fff;
-
-    display:grid;
-
-    place-items:center;
-
-    font-weight:800;
-
-}
-
-
-.person-info strong{
-
-    display:block;
-
-    color:var(--primary);
-
-    font-size:13px;
-
-}
-
-
-.person-info span{
 
     color:var(--muted);
 
@@ -1766,7 +1664,7 @@ select{
 
 .faq-item.active .faq-answer{
 
-    max-height:200px;
+    max-height:500px;
 
 }
 
@@ -1981,6 +1879,8 @@ select{
 
     font-size:12px;
 
+    white-space:pre-line;
+
 }
 
 
@@ -2104,6 +2004,46 @@ select{
 }
 
 
+.enquiry-status{
+
+    display:none;
+
+    margin-top:14px;
+
+    padding:11px 13px;
+
+    border-radius:10px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+
+.enquiry-status.show{
+    display:block;
+}
+
+
+.enquiry-status.success{
+
+    background:#dcfce7;
+
+    color:#166534;
+
+}
+
+
+.enquiry-status.error{
+
+    background:#fee2e2;
+
+    color:#991b1b;
+
+}
+
+
 /* =========================================================
    FOOTER
    ========================================================= */
@@ -2221,6 +2161,8 @@ select{
     bottom:22px;
 
     z-index:5000;
+
+    max-width:380px;
 
     background:var(--primary);
 
@@ -2516,6 +2458,19 @@ select{
         align-items:flex-start;
     }
 
+
+    .toast{
+
+        left:15px;
+
+        right:15px;
+
+        bottom:15px;
+
+        max-width:none;
+
+    }
+
 }
 
 </style>
@@ -2651,6 +2606,7 @@ select{
                 class="menu-btn"
                 id="menuBtn"
                 type="button"
+                aria-label="Open menu"
             >
                 ☰
             </button>
@@ -2730,8 +2686,6 @@ select{
 
         </div>
 
-
-        <!-- STATIC CARD - NO SLIDER -->
 
         <div class="hero-card">
 
@@ -2939,7 +2893,7 @@ select{
             </p>
 
 
-            <p>
+            <p data-content="about_description_2">
 
                 Our approach combines modern manufacturing practices,
                 experienced people, quality systems and continuous improvement
@@ -2957,7 +2911,9 @@ select{
                         ✓
                     </span>
 
-                    Customer-focused manufacturing approach
+                    <span data-content="about_point_1">
+                        Customer-focused manufacturing approach
+                    </span>
 
                 </li>
 
@@ -2968,7 +2924,9 @@ select{
                         ✓
                     </span>
 
-                    Consistent quality and reliable production
+                    <span data-content="about_point_2">
+                        Consistent quality and reliable production
+                    </span>
 
                 </li>
 
@@ -2979,7 +2937,9 @@ select{
                         ✓
                     </span>
 
-                    Modern processes and continuous improvement
+                    <span data-content="about_point_3">
+                        Modern processes and continuous improvement
+                    </span>
 
                 </li>
 
@@ -2990,7 +2950,9 @@ select{
                         ✓
                     </span>
 
-                    Long-term customer and business partnerships
+                    <span data-content="about_point_4">
+                        Long-term customer and business partnerships
+                    </span>
 
                 </li>
 
@@ -3003,6 +2965,7 @@ select{
                 class="btn btn-dark"
             >
                 Explore Manufacturing →
+
             </a>
 
 
@@ -3062,7 +3025,7 @@ select{
             data-products
         >
 
-            <!-- Dynamic products loaded here -->
+            <!-- Dynamic products loaded by client-runtime.js -->
 
         </div>
 
@@ -3221,6 +3184,7 @@ select{
 
             <p
                 class="section-description"
+                data-content="industries_description"
             >
                 Our products and capabilities can support a wide range of
                 industrial and commercial applications.
@@ -3412,16 +3376,20 @@ select{
             <div class="cta-content">
 
 
-                <h2>
+                <h2 data-content="cta_title">
+
                     Let's build something
                     valuable together.
+
                 </h2>
 
 
-                <p>
+                <p data-content="cta_description">
+
                     Tell us about your product requirement, manufacturing
                     requirement or business opportunity and our team will
                     get back to you.
+
                 </p>
 
 
@@ -3430,6 +3398,7 @@ select{
                     class="btn btn-primary"
                 >
                     Start a Conversation →
+
                 </a>
 
 
@@ -3560,9 +3529,8 @@ select{
                             Business Hours
                         </strong>
 
-                        <span>
-                            Monday - Saturday,
-                            9:00 AM - 6:00 PM
+                        <span data-content="business_hours">
+                            Monday - Saturday, 9:00 AM - 6:00 PM
                         </span>
 
                     </div>
@@ -3588,7 +3556,10 @@ select{
             </p>
 
 
-            <form id="enquiryForm">
+            <form
+                id="enquiryForm"
+                novalidate
+            >
 
 
                 <div class="form-grid">
@@ -3596,14 +3567,16 @@ select{
 
                     <div class="field">
 
-                        <label>
+                        <label for="enquiryName">
                             Full Name *
                         </label>
 
                         <input
+                            id="enquiryName"
                             type="text"
                             name="name"
                             placeholder="Your name"
+                            autocomplete="name"
                             required
                         >
 
@@ -3612,14 +3585,16 @@ select{
 
                     <div class="field">
 
-                        <label>
+                        <label for="enquiryCompany">
                             Company Name
                         </label>
 
                         <input
+                            id="enquiryCompany"
                             type="text"
                             name="company"
                             placeholder="Company name"
+                            autocomplete="organization"
                         >
 
                     </div>
@@ -3627,14 +3602,16 @@ select{
 
                     <div class="field">
 
-                        <label>
+                        <label for="enquiryEmail">
                             Email *
                         </label>
 
                         <input
+                            id="enquiryEmail"
                             type="email"
                             name="email"
                             placeholder="you@example.com"
+                            autocomplete="email"
                             required
                         >
 
@@ -3643,14 +3620,16 @@ select{
 
                     <div class="field">
 
-                        <label>
+                        <label for="enquiryPhone">
                             Phone *
                         </label>
 
                         <input
+                            id="enquiryPhone"
                             type="tel"
                             name="phone"
                             placeholder="+91"
+                            autocomplete="tel"
                             required
                         >
 
@@ -3659,37 +3638,40 @@ select{
 
                     <div class="field full">
 
-                        <label>
+                        <label for="enquiryRequirement">
                             Requirement
                         </label>
 
-                        <select name="requirement">
+                        <select
+                            id="enquiryRequirement"
+                            name="requirement"
+                        >
 
                             <option value="">
                                 Select requirement
                             </option>
 
-                            <option>
+                            <option value="Product Enquiry">
                                 Product Enquiry
                             </option>
 
-                            <option>
+                            <option value="Manufacturing Enquiry">
                                 Manufacturing Enquiry
                             </option>
 
-                            <option>
+                            <option value="Bulk Order">
                                 Bulk Order
                             </option>
 
-                            <option>
+                            <option value="Quotation">
                                 Quotation
                             </option>
 
-                            <option>
+                            <option value="Partnership">
                                 Partnership
                             </option>
 
-                            <option>
+                            <option value="Other">
                                 Other
                             </option>
 
@@ -3700,11 +3682,12 @@ select{
 
                     <div class="field full">
 
-                        <label>
+                        <label for="enquiryMessage">
                             Message *
                         </label>
 
                         <textarea
+                            id="enquiryMessage"
                             name="message"
                             placeholder="Tell us about your requirement..."
                             required
@@ -3718,14 +3701,25 @@ select{
                         <button
                             type="submit"
                             class="btn btn-dark"
+                            id="enquirySubmit"
                         >
                             Submit Enquiry →
+
                         </button>
 
                     </div>
 
 
                 </div>
+
+
+                <div
+                    id="enquiryStatus"
+                    class="enquiry-status"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
 
             </form>
 
@@ -3863,9 +3857,11 @@ select{
                         data-content-link="phone"
                         href="tel:+911234567890"
                     >
+
                         <span data-content="phone">
                             +91 12345 67890
                         </span>
+
                     </a>
 
 
@@ -3873,9 +3869,11 @@ select{
                         data-content-link="email"
                         href="mailto:info@company.com"
                     >
+
                         <span data-content="email">
                             info@company.com
                         </span>
+
                     </a>
 
 
@@ -3940,7 +3938,18 @@ select{
 
 
 <!-- =========================================================
-     JAVASCRIPT
+     SUPABASE + CLIENT SYSTEM
+     ========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../client-context.js"></script>
+
+<script src="../client-runtime.js"></script>
+
+
+<!-- =========================================================
+     V1 JAVASCRIPT
      ========================================================= -->
 
 <script>
@@ -3958,37 +3967,64 @@ const navLinks =
 
 if(menuBtn && navLinks){
 
-    menuBtn.addEventListener("click",function(){
+    menuBtn.addEventListener(
+        "click",
+        function(){
 
-        navLinks.classList.toggle("active");
+            navLinks.classList.toggle("active");
 
 
-        if(navLinks.classList.contains("active")){
+            if(
+                navLinks.classList.contains("active")
+            ){
 
-            menuBtn.innerHTML="✕";
+                menuBtn.innerHTML="✕";
 
-        }else{
+                menuBtn.setAttribute(
+                    "aria-label",
+                    "Close menu"
+                );
 
-            menuBtn.innerHTML="☰";
+            }else{
+
+                menuBtn.innerHTML="☰";
+
+                menuBtn.setAttribute(
+                    "aria-label",
+                    "Open menu"
+                );
+
+            }
 
         }
-
-    });
+    );
 
 
     document
         .querySelectorAll(".nav-links a")
-        .forEach(function(link){
+        .forEach(
+            function(link){
 
-            link.addEventListener("click",function(){
+                link.addEventListener(
+                    "click",
+                    function(){
 
-                navLinks.classList.remove("active");
+                        navLinks.classList.remove(
+                            "active"
+                        );
 
-                menuBtn.innerHTML="☰";
+                        menuBtn.innerHTML="☰";
 
-            });
+                        menuBtn.setAttribute(
+                            "aria-label",
+                            "Open menu"
+                        );
 
-        });
+                    }
+                );
+
+            }
+        );
 
 }
 
@@ -4001,78 +4037,782 @@ function bindFAQ(){
 
     document
         .querySelectorAll(".faq-question")
-        .forEach(function(button){
+        .forEach(
+            function(button){
 
-            button.addEventListener("click",function(){
+                button.addEventListener(
+                    "click",
+                    function(){
 
-                const currentItem =
-                    button.parentElement;
-
-
-                document
-                    .querySelectorAll(".faq-item")
-                    .forEach(function(item){
-
-                        if(item !== currentItem){
-
-                            item.classList.remove("active");
-
-                        }
-
-                    });
+                        const currentItem =
+                            button.parentElement;
 
 
-                currentItem.classList.toggle("active");
+                        document
+                            .querySelectorAll(".faq-item")
+                            .forEach(
+                                function(item){
 
-            });
+                                    if(
+                                        item !== currentItem
+                                    ){
 
-        });
+                                        item.classList.remove(
+                                            "active"
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+
+                        currentItem.classList.toggle(
+                            "active"
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 }
 
 
+/*
+   client-runtime.js may dynamically create
+   FAQ elements. Run now and also after
+   dynamic content has had a chance to render.
+*/
+
 bindFAQ();
+
+setTimeout(
+    bindFAQ,
+    500
+);
 
 
 /* =========================================================
-   DEMO ENQUIRY
+   ENQUIRY SYSTEM
+   ========================================================= */
+
+const SUPABASE_URL =
+    "https://ywvdozdoanmcxscfofcf.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+
+let enquirySupabase = null;
+
+
+if(
+    window.supabase &&
+    typeof window.supabase.createClient === "function"
+){
+
+    enquirySupabase =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+}
+
+
+/* =========================================================
+   GET CLIENT ID
+   ========================================================= */
+
+function getWebsiteClientId(){
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    /*
+       Client Manager Preview:
+       ?client=UUID
+    */
+
+    const urlClient =
+        params.get("client");
+
+
+    /*
+       Public enquiry style:
+       ?client_id=UUID
+    */
+
+    const urlClientId =
+        params.get("client_id");
+
+
+    /*
+       URL client has highest priority.
+    */
+
+    if(urlClient){
+
+        return urlClient;
+
+    }
+
+
+    if(urlClientId){
+
+        return urlClientId;
+
+    }
+
+
+    /*
+       Fallback to central client context.
+    */
+
+    if(
+        window.MDKClientContext &&
+        typeof window.MDKClientContext.id === "function"
+    ){
+
+        const contextId =
+            window.MDKClientContext.id();
+
+
+        if(contextId){
+
+            return contextId;
+
+        }
+
+    }
+
+
+    if(
+        window.MDKClientContext &&
+        typeof window.MDKClientContext.get === "function"
+    ){
+
+        const contextClient =
+            window.MDKClientContext.get();
+
+
+        if(
+            contextClient &&
+            contextClient.id
+        ){
+
+            return contextClient.id;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function showEnquiryToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+
+    if(!toast){
+
+        return;
+
+    }
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add("show");
+
+
+    setTimeout(
+        function(){
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        3500
+    );
+
+}
+
+
+/* =========================================================
+   STATUS MESSAGE
+   ========================================================= */
+
+function showEnquiryStatus(
+    message,
+    type
+){
+
+    const status =
+        document.getElementById(
+            "enquiryStatus"
+        );
+
+
+    if(!status){
+
+        return;
+
+    }
+
+
+    status.textContent =
+        message;
+
+
+    status.className =
+        "enquiry-status show " +
+        (type || "");
+
+}
+
+
+/* =========================================================
+   FORM
    ========================================================= */
 
 const enquiryForm =
-    document.getElementById("enquiryForm");
-
-const toast =
-    document.getElementById("toast");
+    document.getElementById(
+        "enquiryForm"
+    );
 
 
 if(enquiryForm){
 
     enquiryForm.addEventListener(
         "submit",
-        function(e){
+        async function(e){
 
             e.preventDefault();
 
 
-            if(toast){
+            /* -------------------------------------------------
+               CLIENT ID
+               ------------------------------------------------- */
 
-                toast.classList.add("show");
+            const clientId =
+                getWebsiteClientId();
+
+
+            if(!clientId){
+
+                console.error(
+                    "V1 Enquiry Error: Client ID missing."
+                );
+
+
+                showEnquiryStatus(
+                    "This enquiry form is not configured for a client.",
+                    "error"
+                );
+
+
+                showEnquiryToast(
+                    "Client configuration is missing."
+                );
+
+
+                return;
 
             }
 
 
-            enquiryForm.reset();
+            /* -------------------------------------------------
+               SUPABASE CHECK
+               ------------------------------------------------- */
+
+            if(!enquirySupabase){
+
+                console.error(
+                    "Supabase client could not be created."
+                );
 
 
-            setTimeout(function(){
+                showEnquiryStatus(
+                    "Unable to connect to the enquiry service.",
+                    "error"
+                );
 
-                if(toast){
 
-                    toast.classList.remove("show");
+                showEnquiryToast(
+                    "Enquiry service is unavailable."
+                );
+
+
+                return;
+
+            }
+
+
+            /* -------------------------------------------------
+               FIELDS
+               ------------------------------------------------- */
+
+            const nameField =
+                enquiryForm.querySelector(
+                    '[name="name"]'
+                );
+
+
+            const companyField =
+                enquiryForm.querySelector(
+                    '[name="company"]'
+                );
+
+
+            const emailField =
+                enquiryForm.querySelector(
+                    '[name="email"]'
+                );
+
+
+            const phoneField =
+                enquiryForm.querySelector(
+                    '[name="phone"]'
+                );
+
+
+            const requirementField =
+                enquiryForm.querySelector(
+                    '[name="requirement"]'
+                );
+
+
+            const messageField =
+                enquiryForm.querySelector(
+                    '[name="message"]'
+                );
+
+
+            const submitButton =
+                document.getElementById(
+                    "enquirySubmit"
+                );
+
+
+            /* -------------------------------------------------
+               VALUES
+               ------------------------------------------------- */
+
+            const name =
+                nameField
+                    ? nameField.value.trim()
+                    : "";
+
+
+            const company =
+                companyField
+                    ? companyField.value.trim()
+                    : "";
+
+
+            const email =
+                emailField
+                    ? emailField.value.trim()
+                    : "";
+
+
+            const phone =
+                phoneField
+                    ? phoneField.value.trim()
+                    : "";
+
+
+            const requirementType =
+                requirementField
+                    ? requirementField.value.trim()
+                    : "";
+
+
+            const message =
+                messageField
+                    ? messageField.value.trim()
+                    : "";
+
+
+            /* -------------------------------------------------
+               VALIDATION
+               ------------------------------------------------- */
+
+            if(!name){
+
+                showEnquiryStatus(
+                    "Please enter your name.",
+                    "error"
+                );
+
+
+                showEnquiryToast(
+                    "Please enter your name."
+                );
+
+
+                if(nameField){
+
+                    nameField.focus();
 
                 }
 
-            },3500);
+
+                return;
+
+            }
+
+
+            if(!email){
+
+                showEnquiryStatus(
+                    "Please enter your email.",
+                    "error"
+                );
+
+
+                showEnquiryToast(
+                    "Please enter your email."
+                );
+
+
+                if(emailField){
+
+                    emailField.focus();
+
+                }
+
+
+                return;
+
+            }
+
+
+            if(!phone){
+
+                showEnquiryStatus(
+                    "Please enter your phone number.",
+                    "error"
+                );
+
+
+                showEnquiryToast(
+                    "Please enter your phone number."
+                );
+
+
+                if(phoneField){
+
+                    phoneField.focus();
+
+                }
+
+
+                return;
+
+            }
+
+
+            if(!message){
+
+                showEnquiryStatus(
+                    "Please enter your requirement.",
+                    "error"
+                );
+
+
+                showEnquiryToast(
+                    "Please enter your requirement."
+                );
+
+
+                if(messageField){
+
+                    messageField.focus();
+
+                }
+
+
+                return;
+
+            }
+
+
+            /* -------------------------------------------------
+               EMAIL VALIDATION
+               ------------------------------------------------- */
+
+            if(
+                emailField &&
+                !emailField.checkValidity()
+            ){
+
+                showEnquiryStatus(
+                    "Please enter a valid email address.",
+                    "error"
+                );
+
+
+                showEnquiryToast(
+                    "Please enter a valid email address."
+                );
+
+
+                emailField.focus();
+
+                return;
+
+            }
+
+
+            /* -------------------------------------------------
+               BUTTON STATE
+               ------------------------------------------------- */
+
+            const originalText =
+                submitButton
+                    ? submitButton.innerHTML
+                    : "Submit Enquiry →";
+
+
+            if(submitButton){
+
+                submitButton.disabled =
+                    true;
+
+
+                submitButton.innerHTML =
+                    "Submitting...";
+
+            }
+
+
+            showEnquiryStatus(
+                "Submitting your enquiry...",
+                ""
+            );
+
+
+            /* -------------------------------------------------
+               FINAL REQUIREMENT
+               ------------------------------------------------- */
+
+            let finalRequirement =
+                message;
+
+
+            if(requirementType){
+
+                finalRequirement =
+                    "Requirement Type: " +
+                    requirementType +
+                    "\n\n" +
+                    message;
+
+            }
+
+
+            /* -------------------------------------------------
+               RPC
+               ------------------------------------------------- */
+
+            try{
+
+                const {
+                    data,
+                    error
+                } =
+                    await enquirySupabase.rpc(
+                        "submit_enquiry",
+                        {
+
+                            p_client_id:
+                                clientId,
+
+                            /*
+                               General enquiry.
+                               Product-specific enquiry
+                               will be connected next.
+                            */
+
+                            p_product_id:
+                                null,
+
+                            p_customer_name:
+                                name,
+
+                            p_company_name:
+                                company || null,
+
+                            p_phone:
+                                phone,
+
+                            p_email:
+                                email || null,
+
+                            p_requirement:
+                                finalRequirement,
+
+                            p_source:
+                                "Website"
+
+                        }
+                    );
+
+
+                /* -------------------------------------------------
+                   RPC ERROR
+                   ------------------------------------------------- */
+
+                if(error){
+
+                    console.error(
+                        "V1 Enquiry Submission Error:",
+                        error
+                    );
+
+
+                    let errorMessage =
+                        error.message ||
+                        "Unable to submit enquiry.";
+
+
+                    const lowerMessage =
+                        errorMessage.toLowerCase();
+
+
+                    if(
+                        lowerMessage.includes(
+                            "invalid or inactive client"
+                        )
+                    ){
+
+                        errorMessage =
+                            "This website enquiry form is currently inactive.";
+
+                    }
+
+
+                    else if(
+                        lowerMessage.includes(
+                            "invalid product"
+                        )
+                    ){
+
+                        errorMessage =
+                            "The selected product is not available.";
+
+                    }
+
+
+                    else if(
+                        lowerMessage.includes(
+                            "function"
+                        ) &&
+                        lowerMessage.includes(
+                            "submit_enquiry"
+                        )
+                    ){
+
+                        errorMessage =
+                            "Enquiry system is not configured correctly.";
+
+                    }
+
+
+                    showEnquiryStatus(
+                        errorMessage,
+                        "error"
+                    );
+
+
+                    showEnquiryToast(
+                        errorMessage
+                    );
+
+
+                    return;
+
+                }
+
+
+                /* -------------------------------------------------
+                   SUCCESS
+                   ------------------------------------------------- */
+
+                console.log(
+                    "V1 enquiry submitted successfully:",
+                    data
+                );
+
+
+                enquiryForm.reset();
+
+
+                showEnquiryStatus(
+                    "Thank you! Your enquiry has been submitted successfully.",
+                    "success"
+                );
+
+
+                showEnquiryToast(
+                    "Thank you! Your enquiry has been submitted successfully."
+                );
+
+
+            }
+            catch(error){
+
+                console.error(
+                    "Unexpected V1 Enquiry Error:",
+                    error
+                );
+
+
+                showEnquiryStatus(
+                    "Something went wrong. Please try again.",
+                    "error"
+                );
+
+
+                showEnquiryToast(
+                    "Something went wrong. Please try again."
+                );
+
+
+            }
+            finally{
+
+                if(submitButton){
+
+                    submitButton.disabled =
+                        false;
+
+
+                    submitButton.innerHTML =
+                        originalText;
+
+                }
+
+            }
 
         }
     );
@@ -4085,7 +4825,9 @@ if(enquiryForm){
    ========================================================= */
 
 const year =
-    document.getElementById("year");
+    document.getElementById(
+        "year"
+    );
 
 
 if(year){
@@ -4101,63 +4843,60 @@ if(year){
    ========================================================= */
 
 document
-    .querySelectorAll('a[href^="#"]')
-    .forEach(function(anchor){
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach(
+        function(anchor){
 
-        anchor.addEventListener(
-            "click",
-            function(e){
+            anchor.addEventListener(
+                "click",
+                function(e){
 
-                const selector =
-                    this.getAttribute("href");
+                    const selector =
+                        this.getAttribute(
+                            "href"
+                        );
 
 
-                if(
-                    !selector ||
-                    selector === "#"
-                ){
+                    if(
+                        !selector ||
+                        selector === "#"
+                    ){
 
-                    return;
+                        return;
+
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            selector
+                        );
+
+
+                    if(target){
+
+                        e.preventDefault();
+
+
+                        target.scrollIntoView({
+
+                            behavior:"smooth",
+
+                            block:"start"
+
+                        });
+
+                    }
 
                 }
+            );
 
-
-                const target =
-                    document.querySelector(selector);
-
-
-                if(target){
-
-                    e.preventDefault();
-
-
-                    target.scrollIntoView({
-
-                        behavior:"smooth",
-
-                        block:"start"
-
-                    });
-
-                }
-
-            }
-        );
-
-    });
+        }
+    );
 
 </script>
-
-
-<!-- =========================================================
-     SUPABASE + CLIENT SYSTEM
-     ========================================================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="../client-context.js"></script>
-
-<script src="../client-runtime.js"></script>
 
 
 </body>
