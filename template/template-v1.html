@@ -1396,16 +1396,194 @@ select{
 
 .testimonial{
 
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-height:250px;
+
     padding:30px;
-
-    border:1px solid var(--border);
-
-    border-radius:18px;
 
     background:#fff;
 
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    box-shadow:0 10px 30px rgba(15,23,42,.06);
+
+    overflow:hidden;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
 }
 
+
+/* Small accent line on top */
+
+.testimonial::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:4px;
+
+    background:var(--accent);
+
+}
+
+
+/* Hover */
+
+.testimonial:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 18px 45px rgba(15,23,42,.11);
+
+    border-color:#cbd5e1;
+
+}
+
+
+/* Quote */
+
+.quote{
+
+    color:var(--accent);
+
+    font-size:38px;
+
+    line-height:.9;
+
+    font-weight:900;
+
+    margin-bottom:18px;
+
+}
+
+
+/* Testimonial text */
+
+.testimonial p{
+
+    color:#475569;
+
+    font-size:14px;
+
+    line-height:1.75;
+
+    margin-bottom:25px;
+
+    flex:1;
+
+}
+
+
+/* Person area */
+
+.testimonial-person{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding-top:18px;
+
+    border-top:1px solid var(--border);
+
+}
+
+
+/* Avatar */
+
+.person-avatar{
+
+    width:44px;
+
+    height:44px;
+
+    flex:0 0 44px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:14px;
+
+    font-weight:800;
+
+}
+
+
+/* Name + designation */
+
+.person-info{
+
+    min-width:0;
+
+}
+
+
+.person-info strong{
+
+    display:block;
+
+    color:var(--primary);
+
+    font-size:13px;
+
+    font-weight:850;
+
+    margin-bottom:2px;
+
+}
+
+
+.person-info span{
+
+    display:block;
+
+    color:var(--muted);
+
+    font-size:11px;
+
+}
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+    .testimonial{
+
+        min-height:0;
+
+        padding:26px;
+
+    }
+
+}
 
 .quote{
 
