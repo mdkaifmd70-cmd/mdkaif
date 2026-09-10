@@ -14,6 +14,10 @@
 
 <style>
 
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 *{
     box-sizing:border-box;
 }
@@ -28,6 +32,7 @@ body{
     background:#f5f7fb;
     color:#172033;
     line-height:1.6;
+    overflow-x:hidden;
 }
 
 img{
@@ -43,6 +48,10 @@ button,
 input,
 textarea{
     font:inherit;
+}
+
+section{
+    scroll-margin-top:90px;
 }
 
 
@@ -74,6 +83,11 @@ textarea{
 
 .topbar a{
     color:#fff;
+    transition:.2s;
+}
+
+.topbar a:hover{
+    color:#60a5fa;
 }
 
 
@@ -85,7 +99,8 @@ header{
     position:sticky;
     top:0;
     z-index:1000;
-    background:#fff;
+    background:rgba(255,255,255,.97);
+    backdrop-filter:blur(10px);
     border-bottom:1px solid #e5e7eb;
 }
 
@@ -128,14 +143,30 @@ header{
 }
 
 .nav a{
+    position:relative;
     color:#374151;
     font-size:14px;
     font-weight:600;
     transition:.2s;
 }
 
+.nav a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-8px;
+    width:0;
+    height:2px;
+    background:#2563eb;
+    transition:.2s;
+}
+
 .nav a:hover{
     color:#2563eb;
+}
+
+.nav a:hover::after{
+    width:100%;
 }
 
 .menu{
@@ -144,6 +175,7 @@ header{
     background:transparent;
     font-size:28px;
     cursor:pointer;
+    color:#172033;
 }
 
 
@@ -153,6 +185,7 @@ header{
 
 .hero{
     min-height:650px;
+
     background:
         linear-gradient(
             90deg,
@@ -178,7 +211,7 @@ header{
 }
 
 .hero-content{
-    max-width:760px;
+    max-width:780px;
 }
 
 .eyebrow{
@@ -203,6 +236,7 @@ header{
     margin:0 0 30px;
     color:#dbe4f0;
     font-size:18px;
+    line-height:1.75;
 }
 
 .hero-actions{
@@ -227,6 +261,7 @@ header{
     font-weight:700;
     transition:.2s;
     border:1px solid transparent;
+    cursor:pointer;
 }
 
 .btn-primary{
@@ -236,6 +271,7 @@ header{
 
 .btn-primary:hover{
     background:#1d4ed8;
+    transform:translateY(-1px);
 }
 
 .btn-secondary{
@@ -245,16 +281,13 @@ header{
 
 .btn-secondary:hover{
     background:#eef2f7;
+    transform:translateY(-1px);
 }
 
 
 /* =========================================================
-   GENERAL SECTION
+   GENERAL SECTIONS
 ========================================================= */
-
-section{
-    scroll-margin-top:90px;
-}
 
 .section{
     max-width:1200px;
@@ -263,7 +296,7 @@ section{
 }
 
 .section-head{
-    max-width:720px;
+    max-width:760px;
     margin-bottom:45px;
 }
 
@@ -277,6 +310,8 @@ section{
 .section-head p{
     margin:0;
     color:#64748b;
+    max-width:720px;
+    line-height:1.75;
 }
 
 
@@ -358,21 +393,31 @@ section{
     color:#64748b;
     font-size:14px;
     font-weight:700;
+
+    box-shadow:0 18px 45px rgba(15,23,42,.08);
+}
+
+.about-content{
+    max-width:580px;
 }
 
 .about-content h2{
     margin:0 0 18px;
     font-size:clamp(32px,4vw,48px);
     line-height:1.1;
+    letter-spacing:-1px;
 }
 
 .about-content p{
     color:#64748b;
+    margin:0 0 18px;
+    line-height:1.8;
+    text-align:justify;
 }
 
 
 /* =========================================================
-   CARDS / GRID
+   CARDS
 ========================================================= */
 
 .grid-3{
@@ -403,6 +448,10 @@ section{
     background:#fff;
 }
 
+.products .grid-3{
+    align-items:stretch;
+}
+
 .products .product-image{
     height:230px;
     background:#e2e8f0;
@@ -424,6 +473,9 @@ section{
 
 .product-body{
     padding:22px;
+    display:flex;
+    flex-direction:column;
+    min-height:170px;
 }
 
 .product-code{
@@ -438,12 +490,14 @@ section{
 .product-body h3{
     margin:0 0 9px;
     font-size:21px;
+    line-height:1.3;
 }
 
 .product-body p{
     margin:0;
     color:#64748b;
     font-size:14px;
+    line-height:1.7;
 }
 
 
@@ -459,6 +513,7 @@ section{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:22px;
+    align-items:stretch;
 }
 
 .step{
@@ -466,6 +521,13 @@ section{
     border:1px solid #e5e7eb;
     border-radius:14px;
     padding:26px;
+    min-height:210px;
+    transition:.25s;
+}
+
+.step:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 28px rgba(15,23,42,.07);
 }
 
 .step .number{
@@ -486,12 +548,21 @@ section{
 .step h3{
     margin:0 0 8px;
     font-size:19px;
+    line-height:1.35;
 }
 
 .step p{
     margin:0;
     color:#64748b;
     font-size:14px;
+    line-height:1.7;
+}
+
+
+/* Center last manufacturing card when 5 items */
+
+.process-grid .step:last-child:nth-child(5){
+    grid-column:2 / 3;
 }
 
 
@@ -503,9 +574,14 @@ section{
     background:#fff;
 }
 
+.quality .grid-3{
+    align-items:stretch;
+}
+
 .quality .card{
     padding:28px;
     overflow:visible;
+    min-height:210px;
 }
 
 .quality .icon{
@@ -527,11 +603,13 @@ section{
 
 .quality h3{
     margin:0 0 8px;
+    line-height:1.35;
 }
 
 .quality p{
     margin:0;
     color:#64748b;
+    line-height:1.7;
 }
 
 
@@ -546,6 +624,7 @@ section{
 .industries{
     display:flex;
     flex-wrap:wrap;
+    justify-content:center;
     gap:14px;
 }
 
@@ -557,6 +636,13 @@ section{
     color:#334155;
     font-weight:700;
     font-size:14px;
+    transition:.2s;
+}
+
+.pill:hover{
+    border-color:#93c5fd;
+    color:#2563eb;
+    transform:translateY(-2px);
 }
 
 
@@ -575,12 +661,18 @@ section{
 }
 
 .gallery-item{
-    min-height:260px;
+    height:280px;
     border-radius:14px;
     background:#e2e8f0;
     background-size:cover;
     background-position:center;
     overflow:hidden;
+    transition:.25s;
+}
+
+.gallery-item:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(15,23,42,.10);
 }
 
 
@@ -592,17 +684,42 @@ section{
     background:#f8fafc;
 }
 
+.testimonial-viewport{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+}
+
+.testimonial-track{
+    display:flex;
+    gap:24px;
+    will-change:transform;
+    transition:transform .7s ease;
+}
+
+.testimonial-slide{
+    flex:0 0 calc((100% - 48px) / 3);
+    min-width:0;
+}
+
 .quote{
     background:#fff;
     border:1px solid #e5e7eb;
     border-radius:14px;
     padding:28px;
+    height:100%;
+    min-height:210px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    box-shadow:0 5px 20px rgba(15,23,42,.03);
 }
 
 .quote p{
     margin:0 0 20px;
     color:#475569;
     font-size:16px;
+    line-height:1.75;
 }
 
 .quote strong{
@@ -626,18 +743,24 @@ section{
 }
 
 .faq{
-    max-width:850px;
+    width:100%;
+    max-width:900px;
+    margin:0 auto;
 }
 
 .faq-item{
-    border-bottom:1px solid #e5e7eb;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    margin-bottom:14px;
+    overflow:hidden;
+    background:#fff;
 }
 
 .faq-question{
     width:100%;
     border:0;
-    background:transparent;
-    padding:22px 0;
+    background:#fff;
+    padding:22px 24px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -646,21 +769,48 @@ section{
     text-align:left;
     color:#172033;
     font-weight:700;
+    font-size:16px;
+    transition:.2s;
+}
+
+.faq-question:hover{
+    background:#f8fafc;
+}
+
+.faq-question span:first-child{
+    flex:1;
+    text-align:left;
 }
 
 .faq-question span:last-child{
-    font-size:22px;
+    width:30px;
+    height:30px;
+    flex:0 0 30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#eff6ff;
     color:#2563eb;
+    font-size:20px;
+    line-height:1;
+    transition:.25s;
+}
+
+.faq-item.open .faq-question span:last-child{
+    transform:rotate(45deg);
 }
 
 .faq-answer{
     display:none;
-    padding:0 0 20px;
+    padding:0 24px 23px;
     color:#64748b;
 }
 
 .faq-answer p{
     margin:0;
+    line-height:1.8;
+    text-align:justify;
 }
 
 .faq-item.open .faq-answer{
@@ -685,6 +835,7 @@ section{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:55px;
+    align-items:start;
 }
 
 .contact-info{
@@ -715,6 +866,7 @@ section{
     color:#172033;
     padding:28px;
     border-radius:14px;
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
 }
 
 .form-group{
@@ -735,6 +887,7 @@ section{
     border-radius:8px;
     padding:12px 13px;
     outline:none;
+    transition:.2s;
 }
 
 .form-group textarea{
@@ -745,6 +898,7 @@ section{
 .form-group input:focus,
 .form-group textarea:focus{
     border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.08);
 }
 
 .toast{
@@ -793,6 +947,7 @@ footer{
 .footer-brand div{
     margin-top:10px;
     font-size:14px;
+    line-height:1.7;
 }
 
 .footer-links{
@@ -804,6 +959,11 @@ footer{
 .footer-links a{
     color:#cbd5e1;
     font-size:13px;
+    transition:.2s;
+}
+
+.footer-links a:hover{
+    color:#60a5fa;
 }
 
 .footer-bottom{
@@ -813,7 +973,7 @@ footer{
 
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE TABLET
 ========================================================= */
 
 @media(max-width:900px){
@@ -839,6 +999,10 @@ footer{
         display:flex;
     }
 
+    .nav a::after{
+        display:none;
+    }
+
     .menu{
         display:block;
     }
@@ -848,8 +1012,16 @@ footer{
         grid-template-columns:1fr;
     }
 
+    .about-content{
+        max-width:100%;
+    }
+
     .process-grid{
         grid-template-columns:repeat(2,1fr);
+    }
+
+    .process-grid .step:last-child:nth-child(5){
+        grid-column:auto;
     }
 
     .stats-grid{
@@ -872,8 +1044,16 @@ footer{
         grid-template-columns:repeat(2,1fr);
     }
 
+    .testimonial-slide{
+        flex:0 0 calc((100% - 24px) / 2);
+    }
+
 }
 
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media(max-width:600px){
 
@@ -889,10 +1069,20 @@ footer{
 
     .navbar{
         padding:0 18px;
+        min-height:68px;
+    }
+
+    .nav{
+        top:68px;
+        padding:18px;
     }
 
     .section{
         padding:65px 18px;
+    }
+
+    .section-head{
+        margin-bottom:32px;
     }
 
     .hero-inner{
@@ -905,6 +1095,21 @@ footer{
 
     .hero h1{
         letter-spacing:-1px;
+        font-size:clamp(38px,11vw,58px);
+    }
+
+    .hero p{
+        font-size:16px;
+        line-height:1.65;
+    }
+
+    .hero-actions{
+        width:100%;
+    }
+
+    .hero-actions .btn{
+        flex:1;
+        min-width:140px;
     }
 
     .stats-grid{
@@ -919,6 +1124,10 @@ footer{
         font-size:29px;
     }
 
+    .stat span{
+        font-size:12px;
+    }
+
     .grid-3,
     .process-grid,
     .gallery{
@@ -929,8 +1138,65 @@ footer{
         min-height:330px;
     }
 
+    .about-content p{
+        text-align:left;
+    }
+
+    .products .product-image{
+        height:220px;
+    }
+
+    .step{
+        min-height:auto;
+    }
+
+    .industries{
+        justify-content:flex-start;
+    }
+
+    .gallery-item{
+        height:230px;
+    }
+
+    .testimonial-slide{
+        flex:0 0 100%;
+    }
+
+    .quote{
+        min-height:230px;
+    }
+
+    .faq{
+        max-width:100%;
+    }
+
+    .faq-question{
+        padding:19px 18px;
+        font-size:15px;
+    }
+
+    .faq-answer{
+        padding:0 18px 20px;
+    }
+
+    .faq-answer p{
+        text-align:left;
+    }
+
+    .contact-grid{
+        gap:30px;
+    }
+
+    .contact-form{
+        padding:22px;
+    }
+
     .footer-top{
         flex-direction:column;
+    }
+
+    .footer-links{
+        gap:15px;
     }
 
 }
@@ -1022,37 +1288,14 @@ body[data-client-loaded="true"]{
             class="nav"
             id="nav">
 
-            <a href="#home">
-                Home
-            </a>
-
-            <a href="#about">
-                About
-            </a>
-
-            <a href="#products">
-                Products
-            </a>
-
-            <a href="#manufacturing">
-                Manufacturing
-            </a>
-
-            <a href="#quality">
-                Quality
-            </a>
-
-            <a href="#industries">
-                Industries
-            </a>
-
-            <a href="#gallery">
-                Gallery
-            </a>
-
-            <a href="#contact">
-                Contact
-            </a>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#products">Products</a>
+            <a href="#manufacturing">Manufacturing</a>
+            <a href="#quality">Quality</a>
+            <a href="#industries">Industries</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
 
         </nav>
 
@@ -1123,54 +1366,23 @@ body[data-client-loaded="true"]{
     <div class="stats-grid">
 
         <div class="stat">
-
-            <strong data-stat="1-value">
-                20+
-            </strong>
-
-            <span data-stat="1-label">
-                Years Experience
-            </span>
-
+            <strong data-stat="1-value">20+</strong>
+            <span data-stat="1-label">Years Experience</span>
         </div>
 
-
         <div class="stat">
-
-            <strong data-stat="2-value">
-                500+
-            </strong>
-
-            <span data-stat="2-label">
-                Projects Delivered
-            </span>
-
+            <strong data-stat="2-value">500+</strong>
+            <span data-stat="2-label">Projects Delivered</span>
         </div>
 
-
         <div class="stat">
-
-            <strong data-stat="3-value">
-                30+
-            </strong>
-
-            <span data-stat="3-label">
-                Countries Served
-            </span>
-
+            <strong data-stat="3-value">30+</strong>
+            <span data-stat="3-label">Countries Served</span>
         </div>
 
-
         <div class="stat">
-
-            <strong data-stat="4-value">
-                99%
-            </strong>
-
-            <span data-stat="4-label">
-                Quality Focus
-            </span>
-
+            <strong data-stat="4-value">99%</strong>
+            <span data-stat="4-label">Quality Focus</span>
         </div>
 
     </div>
@@ -1189,7 +1401,6 @@ body[data-client-loaded="true"]{
     <div class="section">
 
         <div class="about-grid">
-
 
             <div
                 class="visual"
@@ -1267,9 +1478,8 @@ body[data-client-loaded="true"]{
 
 
         <div
-            class="grid-3 products"
+            class="grid-3"
             data-products>
-
 
             <article class="card">
 
@@ -1348,7 +1558,6 @@ body[data-client-loaded="true"]{
 
             </article>
 
-
         </div>
 
     </div>
@@ -1392,16 +1601,11 @@ body[data-client-loaded="true"]{
             class="process-grid"
             data-manufacturing>
 
-
             <div class="step">
 
-                <div class="number">
-                    01
-                </div>
+                <div class="number">01</div>
 
-                <h3>
-                    Engineering
-                </h3>
+                <h3>Engineering</h3>
 
                 <p>
                     Product planning and engineering
@@ -1413,13 +1617,9 @@ body[data-client-loaded="true"]{
 
             <div class="step">
 
-                <div class="number">
-                    02
-                </div>
+                <div class="number">02</div>
 
-                <h3>
-                    Production
-                </h3>
+                <h3>Production</h3>
 
                 <p>
                     Controlled manufacturing using
@@ -1431,13 +1631,9 @@ body[data-client-loaded="true"]{
 
             <div class="step">
 
-                <div class="number">
-                    03
-                </div>
+                <div class="number">03</div>
 
-                <h3>
-                    Inspection
-                </h3>
+                <h3>Inspection</h3>
 
                 <p>
                     Detailed inspection and testing
@@ -1449,13 +1645,9 @@ body[data-client-loaded="true"]{
 
             <div class="step">
 
-                <div class="number">
-                    04
-                </div>
+                <div class="number">04</div>
 
-                <h3>
-                    Delivery
-                </h3>
+                <h3>Delivery</h3>
 
                 <p>
                     Secure packaging and dependable
@@ -1463,7 +1655,6 @@ body[data-client-loaded="true"]{
                 </p>
 
             </div>
-
 
         </div>
 
@@ -1508,12 +1699,9 @@ body[data-client-loaded="true"]{
             class="grid-3"
             data-quality>
 
-
             <div class="card">
 
-                <div class="icon">
-                    ✓
-                </div>
+                <div class="icon">✓</div>
 
                 <h3>
                     Quality Inspection
@@ -1529,9 +1717,7 @@ body[data-client-loaded="true"]{
 
             <div class="card">
 
-                <div class="icon">
-                    ✓
-                </div>
+                <div class="icon">✓</div>
 
                 <h3>
                     Process Control
@@ -1547,9 +1733,7 @@ body[data-client-loaded="true"]{
 
             <div class="card">
 
-                <div class="icon">
-                    ✓
-                </div>
+                <div class="icon">✓</div>
 
                 <h3>
                     Traceability
@@ -1561,7 +1745,6 @@ body[data-client-loaded="true"]{
                 </p>
 
             </div>
-
 
         </div>
 
@@ -1600,31 +1783,12 @@ body[data-client-loaded="true"]{
             class="industries"
             data-industries>
 
-
-            <div class="pill">
-                Automotive
-            </div>
-
-            <div class="pill">
-                Engineering
-            </div>
-
-            <div class="pill">
-                Construction
-            </div>
-
-            <div class="pill">
-                Energy
-            </div>
-
-            <div class="pill">
-                Infrastructure
-            </div>
-
-            <div class="pill">
-                Industrial Equipment
-            </div>
-
+            <div class="pill">Automotive</div>
+            <div class="pill">Engineering</div>
+            <div class="pill">Construction</div>
+            <div class="pill">Energy</div>
+            <div class="pill">Infrastructure</div>
+            <div class="pill">Industrial Equipment</div>
 
         </div>
 
@@ -1669,21 +1833,20 @@ body[data-client-loaded="true"]{
             class="gallery"
             data-gallery>
 
-
-            <div class="gallery-item"
-                 style="background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=80');">
+            <div
+                class="gallery-item"
+                style="background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=80');">
             </div>
 
-
-            <div class="gallery-item"
-                 style="background-image:url('https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1000&q=80');">
+            <div
+                class="gallery-item"
+                style="background-image:url('https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1000&q=80');">
             </div>
 
-
-            <div class="gallery-item"
-                 style="background-image:url('https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1000&q=80');">
+            <div
+                class="gallery-item"
+                style="background-image:url('https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1000&q=80');">
             </div>
-
 
         </div>
 
@@ -1717,64 +1880,69 @@ body[data-client-loaded="true"]{
         </div>
 
 
-        <div
-            class="grid-3"
-            data-testimonials>
+        <div class="testimonial-viewport">
+
+            <div
+                class="testimonial-track"
+                data-testimonials>
+
+                <div class="testimonial-slide">
+
+                    <div class="quote">
+
+                        <p>
+                            Excellent product quality and
+                            dependable delivery performance.
+                        </p>
+
+                        <div>
+                            <strong>Industrial Customer</strong>
+                            <small>Manufacturing Sector</small>
+                        </div>
+
+                    </div>
+
+                </div>
 
 
-            <div class="quote">
+                <div class="testimonial-slide">
 
-                <p>
-                    Excellent product quality and
-                    dependable delivery performance.
-                </p>
+                    <div class="quote">
 
-                <strong>
-                    Industrial Customer
-                </strong>
+                        <p>
+                            Professional communication,
+                            consistent quality and strong support.
+                        </p>
 
-                <small>
-                    Manufacturing Sector
-                </small>
+                        <div>
+                            <strong>Procurement Partner</strong>
+                            <small>Engineering Industry</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="testimonial-slide">
+
+                    <div class="quote">
+
+                        <p>
+                            A reliable manufacturing partner
+                            for our long-term requirements.
+                        </p>
+
+                        <div>
+                            <strong>Business Client</strong>
+                            <small>Industrial Sector</small>
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
-
-
-            <div class="quote">
-
-                <p>
-                    Professional communication,
-                    consistent quality and strong support.
-                </p>
-
-                <strong>
-                    Procurement Partner
-                </strong>
-
-                <small>
-                    Engineering Industry
-                </small>
-
-            </div>
-
-
-            <div class="quote">
-
-                <p>
-                    A reliable manufacturing partner
-                    for our long-term requirements.
-                </p>
-
-                <strong>
-                    Business Client
-                </strong>
-
-                <small>
-                    Industrial Sector
-                </small>
-
-            </div>
-
 
         </div>
 
@@ -1812,7 +1980,6 @@ body[data-client-loaded="true"]{
             class="faq"
             data-faq>
 
-
             <div class="faq-item">
 
                 <button
@@ -1823,9 +1990,7 @@ body[data-client-loaded="true"]{
                         What products do you manufacture?
                     </span>
 
-                    <span>
-                        +
-                    </span>
+                    <span>+</span>
 
                 </button>
 
@@ -1852,9 +2017,7 @@ body[data-client-loaded="true"]{
                         Do you provide customized solutions?
                     </span>
 
-                    <span>
-                        +
-                    </span>
+                    <span>+</span>
 
                 </button>
 
@@ -1881,9 +2044,7 @@ body[data-client-loaded="true"]{
                         How can we request a quotation?
                     </span>
 
-                    <span>
-                        +
-                    </span>
+                    <span>+</span>
 
                 </button>
 
@@ -1897,7 +2058,6 @@ body[data-client-loaded="true"]{
                 </div>
 
             </div>
-
 
         </div>
 
@@ -1943,20 +2103,15 @@ body[data-client-loaded="true"]{
 
             <div class="contact-info">
 
-
                 <div class="contact-item">
 
-                    <small>
-                        Phone
-                    </small>
+                    <small>Phone</small>
 
                     <a
                         data-content-link="phone"
                         data-content="phone"
                         href="tel:+910000000000">
-
                         +91 00000 00000
-
                     </a>
 
                 </div>
@@ -1964,17 +2119,13 @@ body[data-client-loaded="true"]{
 
                 <div class="contact-item">
 
-                    <small>
-                        Email
-                    </small>
+                    <small>Email</small>
 
                     <a
                         data-content-link="email"
                         data-content="email"
                         href="mailto:sales@yourcompany.com">
-
                         sales@yourcompany.com
-
                     </a>
 
                 </div>
@@ -1982,15 +2133,10 @@ body[data-client-loaded="true"]{
 
                 <div class="contact-item">
 
-                    <small>
-                        Address
-                    </small>
+                    <small>Address</small>
 
                     <span data-content="address">
-
-                        Industrial Area,
-                        India
-
+                        Industrial Area, India
                     </span>
 
                 </div>
@@ -2011,20 +2157,16 @@ body[data-client-loaded="true"]{
 
                 </div>
 
-
             </div>
 
 
             <div class="contact-form">
 
-                <form
-                    id="contactForm">
+                <form id="contactForm">
 
                     <div class="form-group">
 
-                        <label>
-                            Name
-                        </label>
+                        <label>Name</label>
 
                         <input
                             type="text"
@@ -2037,9 +2179,7 @@ body[data-client-loaded="true"]{
 
                     <div class="form-group">
 
-                        <label>
-                            Email
-                        </label>
+                        <label>Email</label>
 
                         <input
                             type="email"
@@ -2052,9 +2192,7 @@ body[data-client-loaded="true"]{
 
                     <div class="form-group">
 
-                        <label>
-                            Message
-                        </label>
+                        <label>Message</label>
 
                         <textarea
                             name="message"
@@ -2085,7 +2223,6 @@ body[data-client-loaded="true"]{
 
             </div>
 
-
         </div>
 
     </div>
@@ -2103,19 +2240,14 @@ body[data-client-loaded="true"]{
 
         <div class="footer-top">
 
-
             <div class="footer-brand">
 
-                <strong
-                    data-client="company_name">
+                <strong data-client="company_name">
                     INDUSTRIA
                 </strong>
 
-                <div
-                    data-content="footer_description">
-
+                <div data-content="footer_description">
                     Professional manufacturing website
-
                 </div>
 
             </div>
@@ -2143,7 +2275,6 @@ body[data-client-loaded="true"]{
 
             </div>
 
-
         </div>
 
 
@@ -2151,9 +2282,11 @@ body[data-client-loaded="true"]{
 
             ©
             <span id="year"></span>
+
             <span data-client="company_name">
                 INDUSTRIA
             </span>
+
             . All rights reserved.
 
         </div>
@@ -2168,6 +2301,10 @@ body[data-client-loaded="true"]{
 ========================================================= -->
 
 <script>
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
 
 const menu =
     document.getElementById("menu");
@@ -2205,9 +2342,7 @@ document
         function(){
 
             if(nav){
-
                 nav.classList.remove("show");
-
             }
 
             if(menu){
@@ -2224,6 +2359,10 @@ document
 
 });
 
+
+/* =========================================================
+   CONTACT FORM DEMO
+========================================================= */
 
 const form =
     document.getElementById("contactForm");
@@ -2265,6 +2404,10 @@ if(form){
 }
 
 
+/* =========================================================
+   YEAR
+========================================================= */
+
 const year =
     document.getElementById("year");
 
@@ -2273,6 +2416,307 @@ if(year){
 
     year.textContent =
         new Date().getFullYear();
+
+}
+
+
+/* =========================================================
+   FAQ ACCORDION
+========================================================= */
+
+function setupFAQ(){
+
+    const faq =
+        document.querySelector("[data-faq]");
+
+    if(!faq) return;
+
+    faq
+    .querySelectorAll(".faq-question")
+    .forEach(function(button){
+
+        if(button.dataset.faqReady === "true"){
+            return;
+        }
+
+        button.dataset.faqReady = "true";
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                const item =
+                    button.closest(".faq-item");
+
+                if(!item) return;
+
+                const wasOpen =
+                    item.classList.contains("open");
+
+
+                faq
+                .querySelectorAll(".faq-item.open")
+                .forEach(function(other){
+
+                    if(other !== item){
+
+                        other.classList.remove("open");
+
+                    }
+
+                });
+
+
+                if(wasOpen){
+
+                    item.classList.remove("open");
+
+                }else{
+
+                    item.classList.add("open");
+
+                }
+
+            }
+        );
+
+    });
+
+}
+
+
+setupFAQ();
+
+
+/* =========================================================
+   TESTIMONIAL AUTO SLIDER
+   Works with runtime-generated testimonials
+========================================================= */
+
+let testimonialTimer = null;
+let testimonialObserver = null;
+let testimonialIndex = 0;
+
+
+function setupTestimonials(){
+
+    const track =
+        document.querySelector("[data-testimonials]");
+
+    if(!track) return;
+
+    const slides =
+        Array.from(
+            track.children
+        );
+
+
+    if(slides.length === 0){
+        return;
+    }
+
+
+    /* If runtime already created our slider structure */
+
+    slides.forEach(function(slide){
+
+        slide.classList.add(
+            "testimonial-slide"
+        );
+
+    });
+
+
+    if(track.dataset.sliderReady === "true"){
+
+        updateTestimonialPosition();
+
+        return;
+
+    }
+
+
+    track.dataset.sliderReady =
+        "true";
+
+
+    testimonialIndex = 0;
+
+
+    function startSlider(){
+
+        if(testimonialTimer){
+
+            clearInterval(
+                testimonialTimer
+            );
+
+        }
+
+
+        if(track.children.length <= 1){
+
+            return;
+
+        }
+
+
+        testimonialTimer =
+            setInterval(
+                function(){
+
+                    testimonialIndex++;
+
+                    const total =
+                        track.children.length;
+
+                    /*
+                     * Move one card from right to left.
+                     * After reaching the last card,
+                     * smoothly return to the first.
+                     */
+
+                    if(testimonialIndex >= total){
+
+                        testimonialIndex = 0;
+
+                    }
+
+                    updateTestimonialPosition();
+
+                },
+                3500
+            );
+
+    }
+
+
+    function updateTestimonialPosition(){
+
+        const firstSlide =
+            track.querySelector(
+                ".testimonial-slide"
+            );
+
+        if(!firstSlide) return;
+
+
+        const gap =
+            parseFloat(
+                getComputedStyle(track).gap
+            ) || 0;
+
+
+        const slideWidth =
+            firstSlide.getBoundingClientRect().width;
+
+
+        track.style.transform =
+            "translateX(-" +
+            ((slideWidth + gap) * testimonialIndex) +
+            "px)";
+
+    }
+
+
+    window.addEventListener(
+        "resize",
+        updateTestimonialPosition
+    );
+
+
+    startSlider();
+
+}
+
+
+/*
+ * Runtime loads testimonials after this page
+ * has already loaded. MutationObserver catches
+ * that database-rendered content.
+ */
+
+function watchTestimonials(){
+
+    setupTestimonials();
+
+
+    const track =
+        document.querySelector(
+            "[data-testimonials]"
+        );
+
+
+    if(!track) return;
+
+
+    if(testimonialObserver){
+
+        testimonialObserver.disconnect();
+
+    }
+
+
+    testimonialObserver =
+        new MutationObserver(
+            function(){
+
+                /*
+                 * Give runtime a moment to finish
+                 * replacing the HTML.
+                 */
+
+                setTimeout(
+                    setupTestimonials,
+                    100
+                );
+
+            }
+        );
+
+
+    testimonialObserver.observe(
+        track,
+        {
+            childList:true
+        }
+    );
+
+}
+
+
+watchTestimonials();
+
+
+/* =========================================================
+   WATCH FAQ FOR RUNTIME-GENERATED QUESTIONS
+========================================================= */
+
+const faqContainer =
+    document.querySelector("[data-faq]");
+
+
+if(faqContainer){
+
+    const faqObserver =
+        new MutationObserver(
+            function(){
+
+                setTimeout(
+                    setupFAQ,
+                    50
+                );
+
+            }
+        );
+
+
+    faqObserver.observe(
+        faqContainer,
+        {
+            childList:true
+        }
+    );
 
 }
 
