@@ -30,9 +30,7 @@
 
 *{box-sizing:border-box;margin:0;padding:0}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   font-family:Inter,Segoe UI,Arial,sans-serif;
@@ -963,6 +961,7 @@ section{
 
 .contact-row strong{
   color:var(--primary);
+  word-break:break-word;
 }
 
 .form-card h3{
@@ -1012,6 +1011,11 @@ section{
 .field textarea{
   min-height:130px;
   resize:vertical;
+}
+
+#submitBtn:disabled{
+  opacity:.65;
+  cursor:not-allowed;
 }
 
 /* FOOTER */
@@ -1270,6 +1274,7 @@ section{
 
     <a href="#home" class="logo">
       <div class="logo-mark" id="logoMark">V</div>
+
       <div class="logo-text">
         <span id="brandName">VERTEX GROUP</span>
         <small>BUSINESS • EXCELLENCE</small>
@@ -1287,7 +1292,7 @@ section{
       <a href="#contact" class="btn btn-primary">Contact</a>
     </div>
 
-    <button class="menu-btn" id="menuBtn">☰</button>
+    <button class="menu-btn" id="menuBtn" type="button">☰</button>
   </div>
 </nav>
 
@@ -1313,6 +1318,7 @@ section{
     </div>
 
     <div class="hero-card">
+
       <div class="hero-card-item">
         <strong id="heroStat1">0+</strong>
         <span>Products & Solutions</span>
@@ -1332,6 +1338,7 @@ section{
         <strong id="heroStat4">100%</strong>
         <span>Customer Focus</span>
       </div>
+
     </div>
 
   </div>
@@ -1378,7 +1385,9 @@ section{
     <div class="about-content">
       <span>ABOUT US</span>
 
-      <h2 id="aboutTitle">Built For Growth. Designed For Excellence.</h2>
+      <h2 id="aboutTitle">
+        Built For Growth. Designed For Excellence.
+      </h2>
 
       <p id="aboutText">
         We combine professional expertise, quality products and customer-focused service to create sustainable business value.
@@ -1412,7 +1421,9 @@ section{
     <div class="section-head">
       <span>BUSINESS VERTICALS</span>
       <h2>Multiple Capabilities. One Reliable Partner.</h2>
-      <p>Flexible business capabilities designed to support modern organizations.</p>
+      <p>
+        Flexible business capabilities designed to support modern organizations.
+      </p>
     </div>
 
     <div class="card-grid vertical-grid">
@@ -1420,37 +1431,49 @@ section{
       <div class="vertical-card">
         <div class="icon">⚙</div>
         <h3>Manufacturing</h3>
-        <p>Professional manufacturing capabilities focused on quality, efficiency and consistency.</p>
+        <p>
+          Professional manufacturing capabilities focused on quality, efficiency and consistency.
+        </p>
       </div>
 
       <div class="vertical-card">
         <div class="icon">▣</div>
         <h3>Engineering</h3>
-        <p>Engineering solutions built around practical requirements and dependable performance.</p>
+        <p>
+          Engineering solutions built around practical requirements and dependable performance.
+        </p>
       </div>
 
       <div class="vertical-card">
         <div class="icon">◈</div>
         <h3>Technology</h3>
-        <p>Technology-driven solutions helping businesses improve operations and productivity.</p>
+        <p>
+          Technology-driven solutions helping businesses improve operations and productivity.
+        </p>
       </div>
 
       <div class="vertical-card">
         <div class="icon">◆</div>
         <h3>Trading</h3>
-        <p>Reliable sourcing and supply capabilities for professional business requirements.</p>
+        <p>
+          Reliable sourcing and supply capabilities for professional business requirements.
+        </p>
       </div>
 
       <div class="vertical-card">
         <div class="icon">◎</div>
         <h3>Consulting</h3>
-        <p>Business guidance and technical support tailored to individual requirements.</p>
+        <p>
+          Business guidance and technical support tailored to individual requirements.
+        </p>
       </div>
 
       <div class="vertical-card">
         <div class="icon">↗</div>
         <h3>Projects</h3>
-        <p>End-to-end project support focused on delivery, quality and customer satisfaction.</p>
+        <p>
+          End-to-end project support focused on delivery, quality and customer satisfaction.
+        </p>
       </div>
 
     </div>
@@ -1464,7 +1487,9 @@ section{
     <div class="section-head">
       <span>OUR SERVICES</span>
       <h2>Professional Support From Idea To Execution.</h2>
-      <p>Services designed to make business operations simpler and more effective.</p>
+      <p>
+        Services designed to make business operations simpler and more effective.
+      </p>
     </div>
 
     <div class="card-grid service-grid">
@@ -1472,37 +1497,49 @@ section{
       <div class="service-card">
         <div class="icon">01</div>
         <h3>Product Development</h3>
-        <p>Development support focused on practical requirements, quality and performance.</p>
+        <p>
+          Development support focused on practical requirements, quality and performance.
+        </p>
       </div>
 
       <div class="service-card">
         <div class="icon">02</div>
         <h3>Technical Support</h3>
-        <p>Responsive technical assistance for products, projects and business operations.</p>
+        <p>
+          Responsive technical assistance for products, projects and business operations.
+        </p>
       </div>
 
       <div class="service-card">
         <div class="icon">03</div>
         <h3>Project Management</h3>
-        <p>Structured execution and coordination for successful project delivery.</p>
+        <p>
+          Structured execution and coordination for successful project delivery.
+        </p>
       </div>
 
       <div class="service-card">
         <div class="icon">04</div>
         <h3>Supply Solutions</h3>
-        <p>Dependable sourcing, procurement and supply support for business requirements.</p>
+        <p>
+          Dependable sourcing, procurement and supply support for business requirements.
+        </p>
       </div>
 
       <div class="service-card">
         <div class="icon">05</div>
         <h3>Quality Assurance</h3>
-        <p>Quality-focused processes designed to maintain consistency and customer confidence.</p>
+        <p>
+          Quality-focused processes designed to maintain consistency and customer confidence.
+        </p>
       </div>
 
       <div class="service-card">
         <div class="icon">06</div>
         <h3>Business Consulting</h3>
-        <p>Practical advice helping organizations identify opportunities and improve results.</p>
+        <p>
+          Practical advice helping organizations identify opportunities and improve results.
+        </p>
       </div>
 
     </div>
@@ -1516,10 +1553,12 @@ section{
     <div class="section-head">
       <span>OUR PRODUCTS</span>
       <h2>Solutions Built Around Your Requirements.</h2>
-      <p>Explore our products and connect with our team for detailed information.</p>
+      <p>
+        Explore our products and connect with our team for detailed information.
+      </p>
     </div>
 
-    <div class="product-grid" id="productGrid" data-products>
+    <div class="product-grid" id="productGrid">
       <div class="empty-state">Loading products...</div>
     </div>
 
@@ -1531,6 +1570,7 @@ section{
   <div class="container why-grid">
 
     <div>
+
       <span style="color:#5eead4;font-size:13px;font-weight:800;letter-spacing:2px">
         WHY CHOOSE US
       </span>
@@ -1548,7 +1588,9 @@ section{
           <div class="why-item-icon">✓</div>
           <div>
             <h4>Consistent Quality</h4>
-            <p>Focused processes and attention to detail at every stage.</p>
+            <p>
+              Focused processes and attention to detail at every stage.
+            </p>
           </div>
         </div>
 
@@ -1556,7 +1598,9 @@ section{
           <div class="why-item-icon">✓</div>
           <div>
             <h4>Technical Expertise</h4>
-            <p>Professional knowledge supporting real-world business requirements.</p>
+            <p>
+              Professional knowledge supporting real-world business requirements.
+            </p>
           </div>
         </div>
 
@@ -1564,7 +1608,9 @@ section{
           <div class="why-item-icon">✓</div>
           <div>
             <h4>Customer First</h4>
-            <p>Long-term relationships matter more than one-time transactions.</p>
+            <p>
+              Long-term relationships matter more than one-time transactions.
+            </p>
           </div>
         </div>
 
@@ -1572,7 +1618,9 @@ section{
           <div class="why-item-icon">✓</div>
           <div>
             <h4>Reliable Delivery</h4>
-            <p>Commitment to timelines, communication and dependable execution.</p>
+            <p>
+              Commitment to timelines, communication and dependable execution.
+            </p>
           </div>
         </div>
 
@@ -1591,7 +1639,9 @@ section{
     <div class="section-head">
       <span>LEADERSHIP</span>
       <h2>People Behind The Vision.</h2>
-      <p>Experienced professionals working together toward sustainable growth.</p>
+      <p>
+        Experienced professionals working together toward sustainable growth.
+      </p>
     </div>
 
     <div class="leader-grid">
@@ -1625,7 +1675,9 @@ section{
     <div class="section-head">
       <span>PROJECTS</span>
       <h2>Experience That Creates Confidence.</h2>
-      <p>A snapshot of professional project environments and capabilities.</p>
+      <p>
+        A snapshot of professional project environments and capabilities.
+      </p>
     </div>
 
     <div class="project-grid">
@@ -1711,7 +1763,9 @@ section{
     <div class="section-head">
       <span>OUR CLIENTS</span>
       <h2>Trusted Business Relationships.</h2>
-      <p>Building long-term partnerships through dependable products and service.</p>
+      <p>
+        Building long-term partnerships through dependable products and service.
+      </p>
     </div>
 
     <div class="client-strip">
@@ -1732,10 +1786,12 @@ section{
     <div class="section-head">
       <span>GALLERY</span>
       <h2>Inside Our Work.</h2>
-      <p>Explore our latest projects, products and business activities.</p>
+      <p>
+        Explore our latest projects, products and business activities.
+      </p>
     </div>
 
-    <div class="gallery-grid" id="galleryGrid" data-gallery>
+    <div class="gallery-grid" id="galleryGrid">
       <div class="empty-state">Loading gallery...</div>
     </div>
 
@@ -1749,10 +1805,12 @@ section{
     <div class="section-head">
       <span>TESTIMONIALS</span>
       <h2>What Our Clients Say.</h2>
-      <p>Real relationships create lasting business value.</p>
+      <p>
+        Real relationships create lasting business value.
+      </p>
     </div>
 
-    <div class="testimonial-grid" id="testimonialGrid" data-testimonials>
+    <div class="testimonial-grid" id="testimonialGrid">
       <div class="empty-state">Loading testimonials...</div>
     </div>
 
@@ -1766,10 +1824,12 @@ section{
     <div class="section-head">
       <span>FAQ</span>
       <h2>Frequently Asked Questions.</h2>
-      <p>Quick answers to common customer questions.</p>
+      <p>
+        Quick answers to common customer questions.
+      </p>
     </div>
 
-    <div class="faq-wrap" id="faqList" data-faq>
+    <div class="faq-wrap" id="faqList">
       <div class="empty-state">Loading FAQs...</div>
     </div>
 
@@ -1781,12 +1841,18 @@ section{
   <div class="container">
 
     <div class="cta-box">
+
       <div>
         <h2>Let's Build Something Valuable.</h2>
-        <p>Tell us what you need and our team will get back to you.</p>
+        <p>
+          Tell us what you need and our team will get back to you.
+        </p>
       </div>
 
-      <a href="#contact" class="btn btn-primary">Start A Conversation</a>
+      <a href="#contact" class="btn btn-primary">
+        Start A Conversation
+      </a>
+
     </div>
 
   </div>
@@ -1845,22 +1911,22 @@ section{
 
           <div class="field">
             <label>Your Name *</label>
-            <input type="text" id="name" required>
+            <input type="text" id="name" autocomplete="name" required>
           </div>
 
           <div class="field">
             <label>Company</label>
-            <input type="text" id="company">
+            <input type="text" id="company" autocomplete="organization">
           </div>
 
           <div class="field">
             <label>Email *</label>
-            <input type="email" id="email" required>
+            <input type="email" id="email" autocomplete="email" required>
           </div>
 
           <div class="field">
             <label>Phone *</label>
-            <input type="tel" id="phone" required>
+            <input type="tel" id="phone" autocomplete="tel" required>
           </div>
 
           <div class="field full">
@@ -1892,10 +1958,13 @@ section{
   <div class="container footer-grid">
 
     <div class="footer-brand">
+
       <h3 id="footerCompany">VERTEX GROUP</h3>
+
       <p id="footerTagline">
         Professional business solutions built around quality, reliability and long-term partnerships.
       </p>
+
     </div>
 
     <div>
@@ -1908,36 +1977,68 @@ section{
     </div>
 
     <div>
+
       <h4>Contact</h4>
+
       <a id="footerPhone" href="#">Phone</a>
+
       <a id="footerEmail" href="#">Email</a>
+
       <span id="footerAddress">Address</span>
+
     </div>
 
   </div>
 
   <div class="container footer-bottom">
+
     <span>
-      © <span id="year"></span> <span id="footerCompanyBottom">VERTEX GROUP</span>. All rights reserved.
+      © <span id="year"></span>
+      <span id="footerCompanyBottom">VERTEX GROUP</span>.
+      All rights reserved.
     </span>
 
-    <span>This website is powered by MD Kaif Web Platform</span>
+    <span>
+      This website is powered by MD Kaif Web Platform
+    </span>
+
   </div>
 
 </footer>
 
 <div id="toast"></div>
 
-<!-- COMMON PLATFORM FILES -->
+
+<!-- =========================================================
+     COMMON PLATFORM CONNECTION
+     
+     IMPORTANT:
+     Supabase client MUST be created BEFORE client-runtime.js.
+     Runtime will reuse this same client.
+========================================================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+/*
+  SAME SUPABASE PROJECT / PUBLIC PUBLISHABLE KEY
+  USED BY THE COMMON MDK PLATFORM.
+*/
+const supabaseClient = window.supabase.createClient(
+  "https://ywvdozdoanmcxscfofcf.supabase.co",
+  "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB"
+);
+</script>
+
+<!-- Common platform files -->
 <script src="../client-context.js"></script>
 <script src="../client-runtime.js"></script>
 
+
 <script>
 /* =========================================================
-   V2 DYNAMIC WEBSITE ENGINE
-   Uses the SAME CLIENT_ID and Supabase architecture
-   ========================================================= */
+   V2 — VERTEX DYNAMIC WEBSITE ENGINE
+========================================================= */
 
 let companyData = {};
 let productsData = [];
@@ -1947,12 +2048,16 @@ let testimonialsData = [];
 let faqsData = [];
 
 
-/* -------------------------
+/* =========================================================
    HELPERS
-------------------------- */
+========================================================= */
 
 function esc(value){
-  if(value === null || value === undefined) return "";
+
+  if(value === null || value === undefined){
+    return "";
+  }
+
   return String(value)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
@@ -1961,41 +2066,64 @@ function esc(value){
     .replace(/'/g,"&#039;");
 }
 
-function firstValue(obj, keys, fallback=""){
+
+function firstValue(obj,keys,fallback=""){
+
+  if(!obj){
+    return fallback;
+  }
+
   for(const key of keys){
+
     if(
-      obj &&
       obj[key] !== null &&
       obj[key] !== undefined &&
       String(obj[key]).trim() !== ""
     ){
       return obj[key];
     }
+
   }
+
   return fallback;
 }
 
+
 function imageValue(obj){
-  return firstValue(obj,[
-    "main_image_url",
-    "image_url",
-    "image",
-    "product_image_url",
-    "photo_url",
-    "media_url",
-    "thumbnail_url",
-    "url"
-  ],"");
+
+  return firstValue(
+    obj,
+    [
+      "main_image_url",
+      "image_url",
+      "image",
+      "product_image_url",
+      "photo_url",
+      "media_url",
+      "thumbnail_url",
+      "url"
+    ],
+    ""
+  );
+
 }
 
+
 function showToast(message,type=""){
+
   const toast=document.getElementById("toast");
 
-  toast.textContent=message;
-  toast.className="";
-  toast.id="toast";
+  if(!toast){
+    return;
+  }
 
-  if(type) toast.classList.add(type);
+  toast.textContent=message;
+
+  toast.className="";
+
+  if(type){
+    toast.classList.add(type);
+  }
 
   requestAnimationFrame(()=>{
     toast.classList.add("show");
@@ -2004,65 +2132,110 @@ function showToast(message,type=""){
   clearTimeout(window.__toastTimer);
 
   window.__toastTimer=setTimeout(()=>{
+
     toast.classList.remove("show");
+
   },3500);
+
 }
 
 
-/* -------------------------
+/* =========================================================
    COMPANY SETTINGS
-------------------------- */
+========================================================= */
 
 async function loadCompany(){
 
-  const {data,error}=await supabaseClient
-    .from("company_settings")
-    .select("*")
-    .eq("client_id",CLIENT_ID)
-    .limit(1)
-    .maybeSingle();
+  try{
 
-  if(error){
-    console.error("Company Settings Error:",error);
-    return;
+    const {data,error}=await supabaseClient
+      .from("company_settings")
+      .select("*")
+      .eq("client_id",CLIENT_ID)
+      .limit(1)
+      .maybeSingle();
+
+    if(error){
+
+      console.error(
+        "V2 Company Settings Error:",
+        error
+      );
+
+      return;
+    }
+
+    companyData=data || {};
+
+    renderCompany();
+
+  }catch(error){
+
+    console.error(
+      "V2 Company Exception:",
+      error
+    );
+
   }
 
-  companyData=data || {};
-
-  renderCompany();
 }
+
 
 function renderCompany(){
 
   const companyName=firstValue(
     companyData,
-    ["company_name","website_title","site_name"],
+    [
+      "company_name",
+      "website_title",
+      "site_name"
+    ],
     "VERTEX GROUP"
   );
 
+
   const tagline=firstValue(
     companyData,
-    ["tagline","website_tagline","short_description"],
+    [
+      "tagline",
+      "website_tagline",
+      "short_description"
+    ],
     "Professional business solutions built around quality, reliability and long-term partnerships."
   );
 
+
   const about=firstValue(
     companyData,
-    ["about","about_us","description"],
+    [
+      "about",
+      "about_us",
+      "description"
+    ],
     "We combine professional expertise, quality products and customer-focused service to create sustainable business value."
   );
 
+
   const phone=firstValue(
     companyData,
-    ["phone","mobile","contact_phone"],
+    [
+      "phone",
+      "mobile",
+      "contact_phone"
+    ],
     "+91 XXXXX XXXXX"
   );
 
+
   const email=firstValue(
     companyData,
-    ["email","contact_email"],
+    [
+      "email",
+      "contact_email"
+    ],
     "info@example.com"
   );
+
 
   const addressParts=[
     companyData.address,
@@ -2072,112 +2245,263 @@ function renderCompany(){
     companyData.postal_code
   ].filter(Boolean);
 
+
   const address=addressParts.length
     ? addressParts.join(", ")
     : "Corporate Office";
 
+
   const logo=firstValue(
     companyData,
-    ["logo_url","logo","company_logo"],
+    [
+      "logo_url",
+      "logo",
+      "company_logo"
+    ],
     ""
   );
+
 
   const favicon=firstValue(
     companyData,
-    ["favicon_url","favicon"],
+    [
+      "favicon_url",
+      "favicon"
+    ],
     ""
   );
 
+
   const meta=firstValue(
     companyData,
-    ["meta_description","description"],
+    [
+      "meta_description",
+      "description"
+    ],
     tagline
   );
 
-  document.title=companyName+" | Corporate Excellence";
 
-  const metaTag=document.querySelector('meta[name="description"]');
-  if(metaTag) metaTag.setAttribute("content",meta);
+  document.title=
+    companyName+
+    " | Corporate Excellence";
 
-  if(favicon){
-    document.getElementById("favicon").href=favicon;
+
+  const metaTag=
+    document.querySelector(
+      'meta[name="description"]'
+    );
+
+  if(metaTag){
+
+    metaTag.setAttribute(
+      "content",
+      meta
+    );
+
   }
 
-  document.getElementById("brandName").textContent=companyName;
-  document.getElementById("footerCompany").textContent=companyName;
-  document.getElementById("footerCompanyBottom").textContent=companyName;
 
-  document.getElementById("footerTagline").textContent=tagline;
+  if(favicon){
 
-  document.getElementById("topPhone").textContent=phone;
-  document.getElementById("topPhone").href="tel:"+phone.replace(/\s/g,"");
+    document.getElementById(
+      "favicon"
+    ).href=favicon;
 
-  document.getElementById("topEmail").textContent=email;
-  document.getElementById("topEmail").href="mailto:"+email;
+  }
 
-  document.getElementById("topAddress").textContent=address;
 
-  document.getElementById("contactPhone").textContent=phone;
-  document.getElementById("contactEmail").textContent=email;
-  document.getElementById("contactAddress").textContent=address;
+  document.getElementById(
+    "brandName"
+  ).textContent=companyName;
 
-  document.getElementById("footerPhone").textContent=phone;
-  document.getElementById("footerPhone").href="tel:"+phone.replace(/\s/g,"");
 
-  document.getElementById("footerEmail").textContent=email;
-  document.getElementById("footerEmail").href="mailto:"+email;
+  document.getElementById(
+    "footerCompany"
+  ).textContent=companyName;
 
-  document.getElementById("footerAddress").textContent=address;
 
-  document.getElementById("aboutText").textContent=about;
+  document.getElementById(
+    "footerCompanyBottom"
+  ).textContent=companyName;
 
-  /*
-    Keep V2's visual headline style but make company dynamic.
-  */
-  document.getElementById("heroTitle").innerHTML=
-    "Growing <strong>"+esc(companyName)+"</strong><br>With Real Business.";
 
-  document.getElementById("heroDescription").textContent=tagline;
+  document.getElementById(
+    "footerTagline"
+  ).textContent=tagline;
+
+
+  const topPhone=
+    document.getElementById("topPhone");
+
+  topPhone.textContent=phone;
+
+  topPhone.href=
+    "tel:"+
+    String(phone).replace(/\s/g,"");
+
+
+  const topEmail=
+    document.getElementById("topEmail");
+
+  topEmail.textContent=email;
+
+  topEmail.href=
+    "mailto:"+
+    email;
+
+
+  document.getElementById(
+    "topAddress"
+  ).textContent=address;
+
+
+  document.getElementById(
+    "contactPhone"
+  ).textContent=phone;
+
+
+  document.getElementById(
+    "contactEmail"
+  ).textContent=email;
+
+
+  document.getElementById(
+    "contactAddress"
+  ).textContent=address;
+
+
+  const footerPhone=
+    document.getElementById("footerPhone");
+
+  footerPhone.textContent=phone;
+
+  footerPhone.href=
+    "tel:"+
+    String(phone).replace(/\s/g,"");
+
+
+  const footerEmail=
+    document.getElementById("footerEmail");
+
+  footerEmail.textContent=email;
+
+  footerEmail.href=
+    "mailto:"+
+    email;
+
+
+  document.getElementById(
+    "footerAddress"
+  ).textContent=address;
+
+
+  document.getElementById(
+    "aboutText"
+  ).textContent=about;
+
+
+  document.getElementById(
+    "heroTitle"
+  ).innerHTML=
+    "Growing <strong>"+
+    esc(companyName)+
+    "</strong><br>With Real Business.";
+
+
+  document.getElementById(
+    "heroDescription"
+  ).textContent=tagline;
+
+
+  const logoMark=
+    document.getElementById("logoMark");
+
 
   if(logo){
 
-    document.getElementById("logoMark").innerHTML=
-      '<img src="'+esc(logo)+'" alt="'+esc(companyName)+'">';
+    logoMark.innerHTML=
+      '<img src="'+
+      esc(logo)+
+      '" alt="'+
+      esc(companyName)+
+      '">';
+
   }else{
 
-    document.getElementById("logoMark").textContent=
-      companyName.trim().charAt(0).toUpperCase();
+    logoMark.textContent=
+      companyName
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+
   }
+
 }
 
 
-/* -------------------------
+/* =========================================================
    PRODUCTS
-------------------------- */
+========================================================= */
 
 async function loadProducts(){
 
-  const {data,error}=await supabaseClient
-    .from("products")
-    .select("*")
-    .eq("client_id",CLIENT_ID)
-    .order("name",{ascending:true});
+  try{
 
-  if(error){
-    console.error("Products Error:",error);
-    productsData=[];
+    const {data,error}=await supabaseClient
+      .from("products")
+      .select("*")
+      .eq("client_id",CLIENT_ID)
+      .order("name",{ascending:true});
+
+
+    if(error){
+
+      console.error(
+        "V2 Products Error:",
+        error
+      );
+
+      productsData=[];
+
+      renderProducts();
+
+      return;
+    }
+
+
+    productsData=data || [];
+
     renderProducts();
-    return;
+
+  }catch(error){
+
+    console.error(
+      "V2 Products Exception:",
+      error
+    );
+
+    productsData=[];
+
+    renderProducts();
+
   }
 
-  productsData=data || [];
-
-  renderProducts();
 }
+
 
 function renderProducts(){
 
-  const grid=document.getElementById("productGrid");
+  const grid=
+    document.getElementById(
+      "productGrid"
+    );
+
+
+  if(!grid){
+    return;
+  }
+
 
   if(!productsData.length){
 
@@ -2190,155 +2514,327 @@ function renderProducts(){
     return;
   }
 
-  grid.innerHTML=productsData.map(product=>{
 
-    const name=firstValue(
-      product,
-      ["name","product_name"],
-      "Product"
-    );
+  grid.innerHTML=
+    productsData.map(product=>{
 
-    const code=firstValue(
-      product,
-      ["product_code","code"],
-      ""
-    );
+      const name=firstValue(
+        product,
+        [
+          "name",
+          "product_name"
+        ],
+        "Product"
+      );
 
-    const description=firstValue(
-      product,
-      ["short_description","description"],
-      "Professional product solution."
-    );
 
-    const pack=firstValue(
-      product,
-      ["pack_size","units_per_pack"],
-      ""
-    );
+      const code=firstValue(
+        product,
+        [
+          "product_code",
+          "code"
+        ],
+        ""
+      );
 
-    const specification=firstValue(
-      product,
-      ["specifications","specification"],
-      ""
-    );
 
-    const image=imageValue(product);
+      const description=firstValue(
+        product,
+        [
+          "short_description",
+          "description"
+        ],
+        "Professional product solution."
+      );
 
-    return `
-      <div class="product-card">
 
-        <div class="product-image">
-          ${
-            image
-            ? `<img src="${esc(image)}" alt="${esc(name)}" loading="lazy">`
-            : `<div class="gallery-placeholder">Product Image</div>`
-          }
-        </div>
+      const pack=firstValue(
+        product,
+        [
+          "pack_size",
+          "units_per_pack"
+        ],
+        ""
+      );
 
-        <div class="product-body">
 
-          ${
-            code
-            ? `<div class="product-code">${esc(code)}</div>`
-            : ""
-          }
+      const specification=firstValue(
+        product,
+        [
+          "specifications",
+          "specification"
+        ],
+        ""
+      );
 
-          <h3>${esc(name)}</h3>
 
-          <p>${esc(description)}</p>
+      const image=
+        imageValue(product);
 
-          <div class="product-meta">
+
+      return `
+
+        <div class="product-card">
+
+          <div class="product-image">
 
             ${
-              pack
-              ? `<span>Pack: ${esc(pack)}</span>`
-              : ""
-            }
-
-            ${
-              specification
-              ? `<span>${esc(String(specification).slice(0,45))}</span>`
-              : ""
+              image
+              ?
+              `
+                <img
+                  src="${esc(image)}"
+                  alt="${esc(name)}"
+                  loading="lazy"
+                  onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'gallery-placeholder\\'>Product Image</div>';"
+                >
+              `
+              :
+              `
+                <div class="gallery-placeholder">
+                  Product Image
+                </div>
+              `
             }
 
           </div>
 
-          <a
-            href="#contact"
-            class="btn btn-primary"
-            onclick="selectProduct('${esc(name).replace(/'/g,"&#39;")}')"
-          >
-            Enquire Now
-          </a>
+
+          <div class="product-body">
+
+            ${
+              code
+              ?
+              `
+                <div class="product-code">
+                  ${esc(code)}
+                </div>
+              `
+              :
+              ""
+            }
+
+
+            <h3>
+              ${esc(name)}
+            </h3>
+
+
+            <p>
+              ${esc(description)}
+            </p>
+
+
+            <div class="product-meta">
+
+              ${
+                pack
+                ?
+                `
+                  <span>
+                    Pack: ${esc(pack)}
+                  </span>
+                `
+                :
+                ""
+              }
+
+
+              ${
+                specification
+                ?
+                `
+                  <span>
+                    ${esc(
+                      String(specification)
+                        .slice(0,45)
+                    )}
+                  </span>
+                `
+                :
+                ""
+              }
+
+            </div>
+
+
+            <a
+              href="#contact"
+              class="btn btn-primary enquire-product"
+              data-product="${esc(name)}"
+            >
+              Enquire Now
+            </a>
+
+          </div>
 
         </div>
-      </div>
-    `;
 
-  }).join("");
+      `;
+
+    }).join("");
+
+
+  document
+    .querySelectorAll(".enquire-product")
+    .forEach(button=>{
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          selectProduct(
+            this.dataset.product || ""
+          );
+
+        }
+      );
+
+    });
+
 }
+
 
 function selectProduct(name){
 
-  const requirement=document.getElementById("requirement");
+  const requirement=
+    document.getElementById(
+      "requirement"
+    );
+
 
   if(requirement){
+
     requirement.value=name;
+
   }
 
-  location.hash="contact";
+
+  setTimeout(()=>{
+
+    const contact=
+      document.getElementById(
+        "contact"
+      );
+
+    if(contact){
+
+      contact.scrollIntoView({
+        behavior:"smooth"
+      });
+
+    }
+
+  },50);
+
 }
 
 
-/* -------------------------
+/* =========================================================
    CATEGORIES
-------------------------- */
+========================================================= */
 
 async function loadCategories(){
 
-  const {data,error}=await supabaseClient
-    .from("categories")
-    .select("*")
-    .eq("client_id",CLIENT_ID)
-    .order("name",{ascending:true});
+  try{
 
-  if(error){
-    console.error("Categories Error:",error);
+    const {data,error}=await supabaseClient
+      .from("categories")
+      .select("*")
+      .eq("client_id",CLIENT_ID)
+      .order("name",{ascending:true});
+
+
+    if(error){
+
+      console.error(
+        "V2 Categories Error:",
+        error
+      );
+
+      categoriesData=[];
+
+      return;
+    }
+
+
+    categoriesData=data || [];
+
+  }catch(error){
+
+    console.error(
+      "V2 Categories Exception:",
+      error
+    );
+
     categoriesData=[];
-    return;
+
   }
 
-  categoriesData=data || [];
 }
 
 
-/* -------------------------
+/* =========================================================
    GALLERY
-------------------------- */
+========================================================= */
 
 async function loadGallery(){
 
-  const {data,error}=await supabaseClient
-    .from("gallery")
-    .select("*")
-    .eq("client_id",CLIENT_ID);
+  try{
 
-  if(error){
+    const {data,error}=await supabaseClient
+      .from("gallery")
+      .select("*")
+      .eq("client_id",CLIENT_ID);
 
-    console.warn("Gallery Error:",error);
-    galleryData=[];
+
+    if(error){
+
+      console.warn(
+        "V2 Gallery Error:",
+        error.message
+      );
+
+      galleryData=[];
+
+      renderGallery();
+
+      return;
+    }
+
+
+    galleryData=data || [];
+
     renderGallery();
-    return;
+
+  }catch(error){
+
+    console.warn(
+      "V2 Gallery Exception:",
+      error
+    );
+
+    galleryData=[];
+
+    renderGallery();
+
   }
 
-  galleryData=data || [];
-
-  renderGallery();
 }
+
 
 function renderGallery(){
 
-  const grid=document.getElementById("galleryGrid");
+  const grid=
+    document.getElementById(
+      "galleryGrid"
+    );
+
+
+  if(!grid){
+    return;
+  }
+
 
   if(!galleryData.length){
 
@@ -2351,67 +2847,120 @@ function renderGallery(){
     return;
   }
 
-  grid.innerHTML=galleryData.map(item=>{
 
-    const image=imageValue(item);
+  grid.innerHTML=
+    galleryData.map(item=>{
 
-    const title=firstValue(
-      item,
-      ["title","name","caption"],
-      "Gallery"
-    );
+      const image=
+        imageValue(item);
 
-    if(!image){
-      return `
-        <div class="gallery-item">
-          <div class="gallery-placeholder">
-            ${esc(title)}
+
+      const title=
+        firstValue(
+          item,
+          [
+            "title",
+            "name",
+            "caption"
+          ],
+          "Gallery"
+        );
+
+
+      if(!image){
+
+        return `
+          <div class="gallery-item">
+            <div class="gallery-placeholder">
+              ${esc(title)}
+            </div>
           </div>
+        `;
+
+      }
+
+
+      return `
+
+        <div class="gallery-item">
+
+          <img
+            src="${esc(image)}"
+            alt="${esc(title)}"
+            loading="lazy"
+            onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'gallery-placeholder\\'>Image unavailable</div>';"
+          >
+
         </div>
+
       `;
-    }
 
-    return `
-      <div class="gallery-item">
-        <img
-          src="${esc(image)}"
-          alt="${esc(title)}"
-          loading="lazy"
-        >
-      </div>
-    `;
+    }).join("");
 
-  }).join("");
 }
 
 
-/* -------------------------
+/* =========================================================
    TESTIMONIALS
-------------------------- */
+========================================================= */
 
 async function loadTestimonials(){
 
-  const {data,error}=await supabaseClient
-    .from("testimonials")
-    .select("*")
-    .eq("client_id",CLIENT_ID);
+  try{
 
-  if(error){
+    const {data,error}=await supabaseClient
+      .from("testimonials")
+      .select("*")
+      .eq("client_id",CLIENT_ID);
 
-    console.warn("Testimonials Error:",error);
-    testimonialsData=[];
+
+    if(error){
+
+      console.warn(
+        "V2 Testimonials Error:",
+        error.message
+      );
+
+      testimonialsData=[];
+
+      renderTestimonials();
+
+      return;
+    }
+
+
+    testimonialsData=data || [];
+
     renderTestimonials();
-    return;
+
+  }catch(error){
+
+    console.warn(
+      "V2 Testimonials Exception:",
+      error
+    );
+
+    testimonialsData=[];
+
+    renderTestimonials();
+
   }
 
-  testimonialsData=data || [];
-
-  renderTestimonials();
 }
+
 
 function renderTestimonials(){
 
-  const grid=document.getElementById("testimonialGrid");
+  const grid=
+    document.getElementById(
+      "testimonialGrid"
+    );
+
+
+  if(!grid){
+    return;
+  }
+
 
   if(!testimonialsData.length){
 
@@ -2424,100 +2973,194 @@ function renderTestimonials(){
     return;
   }
 
-  grid.innerHTML=testimonialsData.map(item=>{
 
-    const message=firstValue(
-      item,
-      ["message","testimonial","content","review","text"],
-      "Excellent service and professional support."
-    );
+  grid.innerHTML=
+    testimonialsData.map(item=>{
 
-    const name=firstValue(
-      item,
-      ["name","customer_name","author_name","client_name"],
-      "Client"
-    );
+      const message=
+        firstValue(
+          item,
+          [
+            "message",
+            "testimonial",
+            "content",
+            "review",
+            "text"
+          ],
+          "Excellent service and professional support."
+        );
 
-    const company=firstValue(
-      item,
-      ["company_name","company","organization"],
-      ""
-    );
 
-    const role=firstValue(
-      item,
-      ["role","designation","position"],
-      ""
-    );
+      const name=
+        firstValue(
+          item,
+          [
+            "name",
+            "customer_name",
+            "author_name",
+            "client_name"
+          ],
+          "Client"
+        );
 
-    let rating=Number(
-      firstValue(item,["rating","stars"],5)
-    );
 
-    if(!rating || rating<1) rating=5;
-    if(rating>5) rating=5;
+      const company=
+        firstValue(
+          item,
+          [
+            "company_name",
+            "company",
+            "organization"
+          ],
+          ""
+        );
 
-    const stars="★".repeat(Math.round(rating));
 
-    return `
-      <div class="testimonial">
+      const role=
+        firstValue(
+          item,
+          [
+            "role",
+            "designation",
+            "position"
+          ],
+          ""
+        );
 
-        <div class="quote">“</div>
 
-        <div style="color:#f59e0b;font-size:14px;margin-top:5px">
-          ${stars}
+      let rating=
+        Number(
+          firstValue(
+            item,
+            [
+              "rating",
+              "stars"
+            ],
+            5
+          )
+        );
+
+
+      if(!rating || rating<1){
+        rating=5;
+      }
+
+      if(rating>5){
+        rating=5;
+      }
+
+
+      const stars=
+        "★".repeat(
+          Math.round(rating)
+        );
+
+
+      return `
+
+        <div class="testimonial">
+
+          <div class="quote">
+            “
+          </div>
+
+          <div
+            style="color:#f59e0b;font-size:14px;margin-top:5px"
+          >
+            ${stars}
+          </div>
+
+          <p class="testimonial-message">
+            ${esc(message)}
+          </p>
+
+          <div class="testimonial-author">
+            ${esc(name)}
+          </div>
+
+          <div class="testimonial-role">
+            ${esc(
+              [
+                role,
+                company
+              ]
+              .filter(Boolean)
+              .join(" • ")
+            )}
+          </div>
+
         </div>
 
-        <p class="testimonial-message">
-          ${esc(message)}
-        </p>
+      `;
 
-        <div class="testimonial-author">
-          ${esc(name)}
-        </div>
+    }).join("");
 
-        <div class="testimonial-role">
-          ${esc(
-            [role,company].filter(Boolean).join(" • ")
-          )}
-        </div>
-
-      </div>
-    `;
-
-  }).join("");
 }
 
 
-/* -------------------------
+/* =========================================================
    FAQ
-------------------------- */
+========================================================= */
 
 async function loadFAQs(){
 
-  const {data,error}=await supabaseClient
-    .from("faqs")
-    .select("*")
-    .eq("client_id",CLIENT_ID)
-    .eq("status","active")
-    .order("sort_order",{ascending:true});
+  try{
 
-  if(error){
+    const {data,error}=await supabaseClient
+      .from("faqs")
+      .select("*")
+      .eq("client_id",CLIENT_ID)
+      .eq("status","active")
+      .order("sort_order",{ascending:true});
 
-    console.warn("FAQ Error:",error);
-    faqsData=[];
+
+    if(error){
+
+      console.warn(
+        "V2 FAQ Error:",
+        error.message
+      );
+
+      faqsData=[];
+
+      renderFAQs();
+
+      return;
+    }
+
+
+    faqsData=data || [];
+
     renderFAQs();
-    return;
+
+  }catch(error){
+
+    console.warn(
+      "V2 FAQ Exception:",
+      error
+    );
+
+    faqsData=[];
+
+    renderFAQs();
+
   }
 
-  faqsData=data || [];
-
-  renderFAQs();
 }
+
 
 function renderFAQs(){
 
-  const wrap=document.getElementById("faqList");
+  const wrap=
+    document.getElementById(
+      "faqList"
+    );
+
+
+  if(!wrap){
+    return;
+  }
+
 
   if(!faqsData.length){
 
@@ -2530,286 +3173,535 @@ function renderFAQs(){
     return;
   }
 
-  wrap.innerHTML=faqsData.map((faq,index)=>{
 
-    const question=firstValue(
-      faq,
-      ["question","faq_question","title"],
-      "Frequently asked question"
-    );
+  wrap.innerHTML=
+    faqsData.map(faq=>{
 
-    const answer=firstValue(
-      faq,
-      ["answer","faq_answer","content","description"],
-      "Please contact us for more information."
-    );
+      const question=
+        firstValue(
+          faq,
+          [
+            "question",
+            "faq_question",
+            "title"
+          ],
+          "Frequently asked question"
+        );
 
-    return `
-      <div class="faq-item">
 
-        <button class="faq-question" type="button">
-          <span>${esc(question)}</span>
-          <span>+</span>
-        </button>
+      const answer=
+        firstValue(
+          faq,
+          [
+            "answer",
+            "faq_answer",
+            "content",
+            "description"
+          ],
+          "Please contact us for more information."
+        );
 
-        <div class="faq-answer">
-          ${esc(answer)}
+
+      return `
+
+        <div class="faq-item">
+
+          <button
+            class="faq-question"
+            type="button"
+          >
+
+            <span>
+              ${esc(question)}
+            </span>
+
+            <span>
+              +
+            </span>
+
+          </button>
+
+          <div class="faq-answer">
+            ${esc(answer)}
+          </div>
+
         </div>
 
-      </div>
-    `;
+      `;
 
-  }).join("");
+    }).join("");
 
-  document.querySelectorAll(".faq-question").forEach(button=>{
 
-    button.addEventListener("click",()=>{
+  document
+    .querySelectorAll(".faq-question")
+    .forEach(button=>{
 
-      const item=button.parentElement;
+      button.addEventListener(
+        "click",
+        ()=>{
 
-      document.querySelectorAll(".faq-item").forEach(other=>{
-        if(other!==item){
-          other.classList.remove("open");
+          const item=
+            button.parentElement;
 
-          const icon=other.querySelector(".faq-question span:last-child");
-          if(icon) icon.textContent="+";
+
+          document
+            .querySelectorAll(".faq-item")
+            .forEach(other=>{
+
+              if(other!==item){
+
+                other.classList.remove(
+                  "open"
+                );
+
+
+                const icon=
+                  other.querySelector(
+                    ".faq-question span:last-child"
+                  );
+
+
+                if(icon){
+                  icon.textContent="+";
+                }
+
+              }
+
+            });
+
+
+          item.classList.toggle(
+            "open"
+          );
+
+
+          const icon=
+            button.querySelector(
+              "span:last-child"
+            );
+
+
+          if(icon){
+
+            icon.textContent=
+              item.classList.contains("open")
+              ? "−"
+              : "+";
+
+          }
+
         }
-      });
-
-      item.classList.toggle("open");
-
-      const icon=button.querySelector("span:last-child");
-
-      if(icon){
-        icon.textContent=item.classList.contains("open") ? "−" : "+";
-      }
+      );
 
     });
 
-  });
 }
 
 
-/* -------------------------
+/* =========================================================
    STATS
-------------------------- */
+========================================================= */
 
 function renderStats(){
 
-  const p=productsData.length;
-  const c=categoriesData.length;
-  const g=galleryData.length;
-  const t=testimonialsData.length;
+  const p=
+    productsData.length;
 
-  document.getElementById("statProducts").textContent=p;
-  document.getElementById("statCategories").textContent=c;
-  document.getElementById("statGallery").textContent=g;
-  document.getElementById("statTestimonials").textContent=t;
+  const c=
+    categoriesData.length;
 
-  document.getElementById("heroStat1").textContent=p+"+";
-  document.getElementById("heroStat2").textContent=c+"+";
-  document.getElementById("heroStat3").textContent=g+"+";
-  document.getElementById("heroStat4").textContent="100%";
+  const g=
+    galleryData.length;
 
-  document.getElementById("achievementProducts").textContent=p+"+";
-  document.getElementById("achievementCategories").textContent=c+"+";
-  document.getElementById("achievementProjects").textContent=g+"+";
+  const t=
+    testimonialsData.length;
+
+
+  document.getElementById(
+    "statProducts"
+  ).textContent=p;
+
+
+  document.getElementById(
+    "statCategories"
+  ).textContent=c;
+
+
+  document.getElementById(
+    "statGallery"
+  ).textContent=g;
+
+
+  document.getElementById(
+    "statTestimonials"
+  ).textContent=t;
+
+
+  document.getElementById(
+    "heroStat1"
+  ).textContent=p+"+";
+
+
+  document.getElementById(
+    "heroStat2"
+  ).textContent=c+"+";
+
+
+  document.getElementById(
+    "heroStat3"
+  ).textContent=g+"+";
+
+
+  document.getElementById(
+    "heroStat4"
+  ).textContent="100%";
+
+
+  document.getElementById(
+    "achievementProducts"
+  ).textContent=p+"+";
+
+
+  document.getElementById(
+    "achievementCategories"
+  ).textContent=c+"+";
+
+
+  document.getElementById(
+    "achievementProjects"
+  ).textContent=g+"+";
+
 }
 
 
-/* -------------------------
-   ENQUIRY
-------------------------- */
+/* =========================================================
+   ENQUIRY FORM
+========================================================= */
 
-document.getElementById("enquiryForm").addEventListener("submit",async function(e){
+document
+  .getElementById("enquiryForm")
+  .addEventListener(
+    "submit",
+    async function(e){
 
-  e.preventDefault();
+      e.preventDefault();
 
-  if(!CLIENT_ID){
 
-    showToast("Client ID is not available.","error");
-    return;
-  }
+      if(
+        typeof CLIENT_ID==="undefined" ||
+        !CLIENT_ID
+      ){
 
-  const submitBtn=document.getElementById("submitBtn");
+        showToast(
+          "Client ID is not available.",
+          "error"
+        );
 
-  submitBtn.disabled=true;
-  submitBtn.textContent="Sending...";
+        return;
+      }
 
-  const payload={
-    client_id:CLIENT_ID,
-    customer_name:document.getElementById("name").value.trim(),
-    company_name:document.getElementById("company").value.trim(),
-    email:document.getElementById("email").value.trim(),
-    phone:document.getElementById("phone").value.trim(),
-    requirement:document.getElementById("requirement").value.trim(),
-    notes:document.getElementById("message").value.trim(),
-    source:"website",
-    status:"new"
-  };
 
-  try{
+      const submitBtn=
+        document.getElementById(
+          "submitBtn"
+        );
 
-    const {error}=await supabaseClient
-      .from("enquiries")
-      .insert([payload]);
 
-    if(error){
-      console.error("Enquiry Insert Error:",error);
-      throw error;
+      submitBtn.disabled=true;
+
+      submitBtn.textContent=
+        "Sending...";
+
+
+      const payload={
+
+        client_id:CLIENT_ID,
+
+        customer_name:
+          document
+            .getElementById("name")
+            .value
+            .trim(),
+
+        company_name:
+          document
+            .getElementById("company")
+            .value
+            .trim(),
+
+        email:
+          document
+            .getElementById("email")
+            .value
+            .trim(),
+
+        phone:
+          document
+            .getElementById("phone")
+            .value
+            .trim(),
+
+        requirement:
+          document
+            .getElementById("requirement")
+            .value
+            .trim(),
+
+        notes:
+          document
+            .getElementById("message")
+            .value
+            .trim(),
+
+        source:"website",
+
+        status:"new",
+
+        product_id:null
+
+      };
+
+
+      try{
+
+        const {error}=
+          await supabaseClient
+            .from("enquiries")
+            .insert([payload]);
+
+
+        if(error){
+
+          console.error(
+            "V2 Enquiry Insert Error:",
+            error
+          );
+
+          throw error;
+        }
+
+
+        showToast(
+          "Thank you. Your enquiry has been submitted successfully.",
+          "success"
+        );
+
+
+        this.reset();
+
+
+      }catch(error){
+
+        console.error(
+          "V2 Enquiry Error:",
+          error
+        );
+
+
+        showToast(
+          "Unable to submit enquiry. Please try again.",
+          "error"
+        );
+
+
+      }finally{
+
+        submitBtn.disabled=false;
+
+        submitBtn.textContent=
+          "Send Enquiry";
+
+      }
+
     }
-
-    showToast(
-      "Thank you. Your enquiry has been submitted successfully.",
-      "success"
-    );
-
-    this.reset();
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Unable to submit enquiry. Please try again.",
-      "error"
-    );
-
-  }finally{
-
-    submitBtn.disabled=false;
-    submitBtn.textContent="Send Enquiry";
-  }
-
-});
+  );
 
 
-/* -------------------------
+/* =========================================================
    MOBILE MENU
-------------------------- */
+========================================================= */
 
-document.getElementById("menuBtn").addEventListener("click",()=>{
+document
+  .getElementById("menuBtn")
+  .addEventListener(
+    "click",
+    ()=>{
 
-  document.getElementById("navLinks")
-    .classList.toggle("active");
+      document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
 
-});
+    }
+  );
 
-document.querySelectorAll("#navLinks a").forEach(link=>{
 
-  link.addEventListener("click",()=>{
-    document.getElementById("navLinks")
-      .classList.remove("active");
+document
+  .querySelectorAll("#navLinks a")
+  .forEach(link=>{
+
+    link.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .getElementById("navLinks")
+          .classList
+          .remove("active");
+
+      }
+    );
+
   });
 
-});
 
-
-/* -------------------------
+/* =========================================================
    INIT
-------------------------- */
+========================================================= */
 
 async function initV2(){
 
-  document.getElementById("year").textContent=
+  document.getElementById(
+    "year"
+  ).textContent=
     new Date().getFullYear();
 
-  if(typeof CLIENT_ID==="undefined" || !CLIENT_ID){
 
-    console.error("V2: CLIENT_ID unavailable.");
-    showToast("Client ID is not configured.","error");
+  if(
+    typeof CLIENT_ID==="undefined" ||
+    !CLIENT_ID
+  ){
+
+    console.error(
+      "V2: CLIENT_ID unavailable."
+    );
+
+    showToast(
+      "Client ID is not configured.",
+      "error"
+    );
+
     return;
   }
 
-  if(typeof supabaseClient==="undefined"){
 
-    console.error("V2: supabaseClient unavailable.");
-    showToast("Supabase client is not available.","error");
+  if(
+    typeof supabaseClient==="undefined"
+  ){
+
+    console.error(
+      "V2: Supabase client unavailable."
+    );
+
+    showToast(
+      "Supabase client is not available.",
+      "error"
+    );
+
     return;
   }
 
-  console.log("V2: Client ID:",CLIENT_ID);
+
+  console.log(
+    "V2: Client ID:",
+    CLIENT_ID
+  );
+
 
   try{
 
     await Promise.all([
+
       loadCompany(),
+
       loadProducts(),
+
       loadCategories(),
+
       loadGallery(),
+
       loadTestimonials(),
+
       loadFAQs()
+
     ]);
+
 
     renderStats();
 
-    console.log("V2: ALL DATA LOADED");
+
+    console.log(
+      "V2: ALL DATA LOADED SUCCESSFULLY"
+    );
+
 
   }catch(error){
 
-    console.error("V2 Load Error:",error);
+    console.error(
+      "V2 Load Error:",
+      error
+    );
+
 
     showToast(
       "Some website data could not be loaded.",
       "error"
     );
+
   }
-}
-
-
-/*
-  Wait until the existing MDK runtime has created
-  supabaseClient / CLIENT_ID.
-*/
-function startWhenRuntimeReady(){
-
-  let attempts=0;
-
-  const timer=setInterval(()=>{
-
-    attempts++;
-
-    if(
-      typeof CLIENT_ID!=="undefined" &&
-      CLIENT_ID &&
-      typeof supabaseClient!=="undefined"
-    ){
-
-      clearInterval(timer);
-      initV2();
-      return;
-    }
-
-    if(attempts>=100){
-
-      clearInterval(timer);
-
-      console.error(
-        "V2: Runtime was not ready after waiting."
-      );
-
-      showToast(
-        "Website runtime could not initialize.",
-        "error"
-      );
-    }
-
-  },100);
 
 }
 
-if(document.readyState==="loading"){
+
+/* =========================================================
+   START
+========================================================= */
+
+function startV2(){
+
+  if(
+    typeof CLIENT_ID==="undefined" ||
+    !CLIENT_ID
+  ){
+
+    console.warn(
+      "V2: Waiting for MDK runtime..."
+    );
+
+    setTimeout(
+      startV2,
+      150
+    );
+
+    return;
+  }
+
+
+  console.log(
+    "V2: Runtime ready."
+  );
+
+
+  initV2();
+
+}
+
+
+if(
+  document.readyState==="loading"
+){
 
   document.addEventListener(
     "DOMContentLoaded",
-    startWhenRuntimeReady
+    startV2
   );
 
 }else{
 
-  startWhenRuntimeReady();
+  startV2();
 
 }
+
 </script>
 
 </body>
