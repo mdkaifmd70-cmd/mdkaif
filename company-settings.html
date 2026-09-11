@@ -1,104 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>Company Settings | MD Kaif Web Platform</title>
+<title>Company Settings - MD Kaif Web Platform</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
+<!-- CENTRAL CLIENT CONTEXT -->
+<script src="../client-context.js"></script>
 
+<style>
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-    margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:#f4f6f9;
+    background:#f4f7fb;
     color:#1f2937;
 }
 
-.container{
-    max-width:1200px;
-    margin:30px auto;
-    padding:0 20px;
-}
-
-.header{
+.topbar{
+    height:65px;
     background:#111827;
-    color:white;
-    padding:22px 25px;
-    border-radius:14px;
-    margin-bottom:20px;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
-.header h1{
-    margin:0 0 6px;
+.logo{
+    font-size:20px;
+    font-weight:700;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    font-size:14px;
+}
+
+.logout-btn{
+    background:#ef4444;
+    border:none;
+    color:#fff;
+    padding:9px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.layout{
+    display:flex;
+    min-height:calc(100vh - 65px);
+}
+
+.sidebar{
+    width:245px;
+    background:#1f2937;
+    color:#fff;
+    padding:20px 12px;
+}
+
+.sidebar-title{
+    font-size:12px;
+    color:#9ca3af;
+    text-transform:uppercase;
+    margin:10px 12px;
+}
+
+.sidebar a{
+    display:block;
+    color:#d1d5db;
+    text-decoration:none;
+    padding:11px 13px;
+    margin:4px 0;
+    border-radius:7px;
+    font-size:14px;
+}
+
+.sidebar a:hover{
+    background:#374151;
+    color:#fff;
+}
+
+.sidebar a.active{
+    background:#2563eb;
+    color:#fff;
+}
+
+.main{
+    flex:1;
+    padding:25px;
+    overflow-x:auto;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+    gap:15px;
+}
+
+.page-header h1{
     font-size:25px;
 }
 
-.header p{
-    margin:0;
-    opacity:.8;
+.page-header p{
+    color:#6b7280;
+    margin-top:5px;
+    font-size:14px;
 }
 
 .client-box{
-    background:white;
-    padding:18px;
-    border-radius:14px;
+    display:none;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    padding:16px;
+    border-radius:10px;
     margin-bottom:20px;
-    box-shadow:0 4px 15px rgba(0,0,0,.05);
 }
 
 .client-box label{
     display:block;
-    font-weight:600;
-    margin-bottom:8px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
 }
 
 .client-box select{
     width:100%;
-    max-width:500px;
-    padding:12px;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    font-size:15px;
-}
-
-.current-client{
-    margin-top:10px;
-    font-size:14px;
-    color:#2563eb;
-    font-weight:600;
+    max-width:450px;
 }
 
 .card{
-    background:white;
-    padding:25px;
-    border-radius:14px;
+    background:#fff;
+    border-radius:12px;
+    border:1px solid #e5e7eb;
+    padding:22px;
     margin-bottom:20px;
-    box-shadow:0 4px 15px rgba(0,0,0,.05);
 }
 
 .card h2{
-    margin:0 0 20px;
-    font-size:19px;
-    border-bottom:1px solid #e5e7eb;
-    padding-bottom:12px;
+    font-size:18px;
+    margin-bottom:18px;
 }
 
 .grid{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:18px;
 }
 
@@ -112,99 +172,170 @@ body{
 }
 
 .field label{
-    font-size:14px;
-    font-weight:600;
+    font-size:13px;
+    font-weight:700;
     margin-bottom:7px;
+    color:#374151;
 }
 
-.field input,
-.field textarea,
-.field select{
+input,
+textarea,
+select{
     width:100%;
-    padding:11px 12px;
     border:1px solid #d1d5db;
-    border-radius:8px;
+    border-radius:7px;
+    padding:11px 12px;
     font-size:14px;
     outline:none;
+    background:#fff;
 }
 
-.field input:focus,
-.field textarea:focus,
-.field select:focus{
+input:focus,
+textarea:focus,
+select:focus{
     border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.08);
 }
 
-.field textarea{
+textarea{
     min-height:110px;
     resize:vertical;
 }
 
-.color-row{
+.color-wrap{
     display:flex;
     gap:10px;
     align-items:center;
 }
 
-.color-row input[type="color"]{
+.color-wrap input[type="color"]{
     width:55px;
     height:42px;
-    padding:2px;
+    padding:3px;
+    cursor:pointer;
+}
+
+.color-wrap input[type="text"]{
+    flex:1;
+}
+
+.preview{
+    margin-top:8px;
+    color:#6b7280;
+    font-size:12px;
+}
+
+.preview-box{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:15px;
+    border:1px dashed #d1d5db;
+    border-radius:8px;
+    margin-top:8px;
+}
+
+.logo-preview{
+    width:90px;
+    height:70px;
+    border:1px solid #e5e7eb;
+    border-radius:7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:#f9fafb;
+}
+
+.logo-preview img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+}
+
+.favicon-preview{
+    width:45px;
+    height:45px;
+    border:1px solid #e5e7eb;
+    border-radius:7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:#f9fafb;
+}
+
+.favicon-preview img{
+    max-width:32px;
+    max-height:32px;
 }
 
 .actions{
     display:flex;
     justify-content:flex-end;
-    margin-top:10px;
+    gap:10px;
+    margin-top:20px;
 }
 
-button{
+.btn{
     border:none;
-    padding:13px 22px;
-    border-radius:8px;
+    padding:11px 18px;
+    border-radius:7px;
     cursor:pointer;
+    font-weight:700;
     font-size:14px;
-    font-weight:600;
 }
 
-.save-btn{
+.btn-primary{
     background:#2563eb;
-    color:white;
+    color:#fff;
 }
 
-.save-btn:hover{
+.btn-primary:hover{
     background:#1d4ed8;
 }
 
-.save-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
+.btn-secondary{
+    background:#e5e7eb;
+    color:#374151;
 }
 
 .message{
-    display:none;
-    padding:13px 16px;
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    padding:13px 18px;
     border-radius:8px;
-    margin-bottom:20px;
+    color:#fff;
+    background:#16a34a;
+    display:none;
+    z-index:500;
     font-size:14px;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
 
-.message.success{
+.message.show{
     display:block;
-    background:#dcfce7;
-    color:#166534;
 }
 
 .message.error{
-    display:block;
-    background:#fee2e2;
-    color:#991b1b;
+    background:#dc2626;
+}
+
+.loading{
+    opacity:.6;
+    pointer-events:none;
 }
 
 .hidden{
-    display:none!important;
+    display:none !important;
 }
 
-@media(max-width:768px){
+@media(max-width:900px){
+
+    .sidebar{
+        width:210px;
+    }
 
     .grid{
         grid-template-columns:1fr;
@@ -214,551 +345,736 @@ button{
         grid-column:auto;
     }
 
-    .container{
-        padding:0 12px;
-        margin:15px auto;
+}
+
+@media(max-width:700px){
+
+    .layout{
+        display:block;
     }
 
-    .card{
-        padding:18px;
+    .sidebar{
+        width:100%;
+        padding:10px;
+    }
+
+    .sidebar a{
+        display:inline-block;
+        margin:2px;
+    }
+
+    .main{
+        padding:15px;
+    }
+
+    .page-header{
+        display:block;
+    }
+
+    .client-box{
+        margin-top:15px;
     }
 
 }
-
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
+<div class="topbar">
 
-    <div class="header">
-
-        <h1>Company Settings</h1>
-
-        <p>
-            Manage branding, contact details, company profile,
-            SEO, social links and website colors.
-        </p>
-
+    <div class="logo">
+        MD Kaif Web Platform
     </div>
 
+    <div class="top-right">
 
-    <!-- CLIENT SELECTOR -->
+        <span id="userName">
+            Loading...
+        </span>
 
-    <div
-        id="clientBox"
-        class="client-box hidden"
-    >
-
-        <label for="clientSelect">
-            Select Client
-        </label>
-
-        <select
-            id="clientSelect"
-            onchange="handleClientChange()"
+        <button
+            class="logout-btn"
+            onclick="logout()"
         >
-
-            <option value="">
-                -- Select Client --
-            </option>
-
-        </select>
-
-        <div
-            id="currentClient"
-            class="current-client"
-        ></div>
+            Logout
+        </button>
 
     </div>
-
-
-    <!-- MESSAGE -->
-
-    <div
-        id="message"
-        class="message"
-    ></div>
-
-
-    <form
-        id="settingsForm"
-        onsubmit="saveSettings(event)"
-    >
-
-
-        <!-- BRANDING -->
-
-        <div class="card">
-
-            <h2>Branding</h2>
-
-            <div class="grid">
-
-                <div class="field">
-
-                    <label>
-                        Logo URL
-                    </label>
-
-                    <input
-                        type="url"
-                        id="logoUrl"
-                        placeholder="https://..."
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        Favicon URL
-                    </label>
-
-                    <input
-                        type="url"
-                        id="faviconUrl"
-                        placeholder="https://..."
-                    >
-
-                </div>
-
-
-                <div class="field full">
-
-                    <label>
-                        Tagline
-                    </label>
-
-                    <input
-                        type="text"
-                        id="tagline"
-                        placeholder="Your company tagline"
-                    >
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- CONTACT -->
-
-        <div class="card">
-
-            <h2>Contact Information</h2>
-
-            <div class="grid">
-
-                <div class="field">
-
-                    <label>
-                        Phone
-                    </label>
-
-                    <input
-                        type="text"
-                        id="phone"
-                        placeholder="+91..."
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        WhatsApp
-                    </label>
-
-                    <input
-                        type="text"
-                        id="whatsapp"
-                        placeholder="+91..."
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="info@example.com"
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        Website
-                    </label>
-
-                    <input
-                        type="url"
-                        id="website"
-                        placeholder="https://example.com"
-                    >
-
-                </div>
-
-
-                <div class="field full">
-
-                    <label>
-                        Address
-                    </label>
-
-                    <textarea
-                        id="address"
-                        placeholder="Full business address"
-                    ></textarea>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        City
-                    </label>
-
-                    <input
-                        type="text"
-                        id="city"
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        State
-                    </label>
-
-                    <input
-                        type="text"
-                        id="state"
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        Country
-                    </label>
-
-                    <input
-                        type="text"
-                        id="country"
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        Postal Code
-                    </label>
-
-                    <input
-                        type="text"
-                        id="postalCode"
-                    >
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- COMPANY PROFILE -->
-
-        <div class="card">
-
-            <h2>Company Profile</h2>
-
-            <div class="grid">
-
-                <div class="field full">
-
-                    <label>
-                        About Company
-                    </label>
-
-                    <textarea
-                        id="about"
-                        placeholder="About your company..."
-                    ></textarea>
-
-                </div>
-
-
-                <div class="field full">
-
-                    <label>
-                        Mission
-                    </label>
-
-                    <textarea
-                        id="mission"
-                        placeholder="Company mission..."
-                    ></textarea>
-
-                </div>
-
-
-                <div class="field full">
-
-                    <label>
-                        Vision
-                    </label>
-
-                    <textarea
-                        id="vision"
-                        placeholder="Company vision..."
-                    ></textarea>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- SEO -->
-
-        <div class="card">
-
-            <h2>SEO Settings</h2>
-
-            <div class="grid">
-
-                <div class="field full">
-
-                    <label>
-                        Website Title
-                    </label>
-
-                    <input
-                        type="text"
-                        id="websiteTitle"
-                        placeholder="Company Name | Manufacturing"
-                    >
-
-                </div>
-
-
-                <div class="field full">
-
-                    <label>
-                        Meta Description
-                    </label>
-
-                    <textarea
-                        id="metaDescription"
-                        placeholder="Website meta description..."
-                    ></textarea>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- SOCIAL -->
-
-        <div class="card">
-
-            <h2>Social Media</h2>
-
-            <div class="grid">
-
-                <div class="field">
-
-                    <label>
-                        Facebook URL
-                    </label>
-
-                    <input
-                        type="url"
-                        id="facebookUrl"
-                        placeholder="https://facebook.com/..."
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        Instagram URL
-                    </label>
-
-                    <input
-                        type="url"
-                        id="instagramUrl"
-                        placeholder="https://instagram.com/..."
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        LinkedIn URL
-                    </label>
-
-                    <input
-                        type="url"
-                        id="linkedinUrl"
-                        placeholder="https://linkedin.com/..."
-                    >
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        YouTube URL
-                    </label>
-
-                    <input
-                        type="url"
-                        id="youtubeUrl"
-                        placeholder="https://youtube.com/..."
-                    >
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- COLORS -->
-
-        <div class="card">
-
-            <h2>Website Colors</h2>
-
-            <div class="grid">
-
-                <div class="field">
-
-                    <label>
-                        Primary Color
-                    </label>
-
-                    <div class="color-row">
-
-                        <input
-                            type="color"
-                            id="primaryColor"
-                            value="#2563eb"
-                        >
-
-                        <input
-                            type="text"
-                            id="primaryColorText"
-                            value="#2563eb"
-                            placeholder="#2563eb"
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        Secondary Color
-                    </label>
-
-                    <div class="color-row">
-
-                        <input
-                            type="color"
-                            id="secondaryColor"
-                            value="#111827"
-                        >
-
-                        <input
-                            type="text"
-                            id="secondaryColorText"
-                            value="#111827"
-                            placeholder="#111827"
-                        >
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- SAVE -->
-
-        <div class="actions">
-
-            <button
-                type="submit"
-                id="saveBtn"
-                class="save-btn"
-            >
-                Save Company Settings
-            </button>
-
-        </div>
-
-    </form>
 
 </div>
 
 
+<div class="layout">
 
-<script src="../client-context.js"></script>
+    <aside class="sidebar">
+
+        <div class="sidebar-title">
+            Management
+        </div>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="client-manager.html">
+            Clients
+        </a>
+
+        <a href="category-manager.html">
+            Categories
+        </a>
+
+        <a href="product-manager.html">
+            Products
+        </a>
+
+        <a href="product-image-manager.html">
+            Product Images
+        </a>
+
+        <a href="gallery-manager.html">
+            Gallery
+        </a>
+
+        <a href="testimonials-manager.html">
+            Testimonials
+        </a>
+
+        <a href="faqs-manager.html">
+            FAQs
+        </a>
+
+        <a href="enquiries-manager.html">
+            Enquiries
+        </a>
+
+        <a
+            href="company-settings.html"
+            class="active"
+        >
+            Company Settings
+        </a>
+
+        <a href="policy-manager.html">
+            Policies
+        </a>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Company Settings
+                </h1>
+
+                <p>
+                    Manage company information, branding, SEO and social media settings.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- CLIENT SELECT -->
+
+        <div
+            class="client-box"
+            id="clientBox"
+        >
+
+            <label for="clientSelect">
+                Select Client
+            </label>
+
+            <select
+                id="clientSelect"
+                onchange="clientChanged()"
+            >
+
+                <option value="">
+                    Select Client
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <form
+            id="settingsForm"
+            onsubmit="saveSettings(event)"
+        >
+
+
+            <!-- BRANDING -->
+
+            <div class="card">
+
+                <h2>
+                    Branding
+                </h2>
+
+                <div class="grid">
+
+
+                    <div class="field">
+
+                        <label for="logoUrl">
+                            Logo URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="logoUrl"
+                            placeholder="https://example.com/logo.png"
+                        >
+
+                        <div class="preview-box">
+
+                            <div class="logo-preview">
+
+                                <img
+                                    id="logoPreview"
+                                    src=""
+                                    alt="Logo"
+                                >
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Logo Preview
+                                </strong>
+
+                                <div class="preview">
+                                    Recommended: PNG / SVG with transparent background
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="faviconUrl">
+                            Favicon URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="faviconUrl"
+                            placeholder="https://example.com/favicon.png"
+                        >
+
+                        <div class="preview-box">
+
+                            <div class="favicon-preview">
+
+                                <img
+                                    id="faviconPreview"
+                                    src=""
+                                    alt="Favicon"
+                                >
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Favicon Preview
+                                </strong>
+
+                                <div class="preview">
+                                    Recommended: square PNG / ICO
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label for="tagline">
+                            Tagline
+                        </label>
+
+                        <input
+                            type="text"
+                            id="tagline"
+                            placeholder="Your company tagline"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTACT -->
+
+            <div class="card">
+
+                <h2>
+                    Contact Information
+                </h2>
+
+                <div class="grid">
+
+
+                    <div class="field">
+
+                        <label for="phone">
+                            Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            id="phone"
+                            placeholder="+91 XXXXX XXXXX"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="whatsapp">
+                            WhatsApp
+                        </label>
+
+                        <input
+                            type="text"
+                            id="whatsapp"
+                            placeholder="+91 XXXXX XXXXX"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="info@example.com"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="website">
+                            Website
+                        </label>
+
+                        <input
+                            type="url"
+                            id="website"
+                            placeholder="https://example.com"
+                        >
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label for="address">
+                            Address
+                        </label>
+
+                        <textarea
+                            id="address"
+                            placeholder="Complete company address"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="city">
+                            City
+                        </label>
+
+                        <input
+                            type="text"
+                            id="city"
+                            placeholder="City"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="state">
+                            State
+                        </label>
+
+                        <input
+                            type="text"
+                            id="state"
+                            placeholder="State"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="country">
+                            Country
+                        </label>
+
+                        <input
+                            type="text"
+                            id="country"
+                            placeholder="Country"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="postalCode">
+                            Postal Code
+                        </label>
+
+                        <input
+                            type="text"
+                            id="postalCode"
+                            placeholder="Postal / PIN Code"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ABOUT -->
+
+            <div class="card">
+
+                <h2>
+                    Company Profile
+                </h2>
+
+                <div class="grid">
+
+
+                    <div class="field full">
+
+                        <label for="about">
+                            About Company
+                        </label>
+
+                        <textarea
+                            id="about"
+                            placeholder="Write about your company..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="mission">
+                            Mission
+                        </label>
+
+                        <textarea
+                            id="mission"
+                            placeholder="Company mission..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="vision">
+                            Vision
+                        </label>
+
+                        <textarea
+                            id="vision"
+                            placeholder="Company vision..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEO -->
+
+            <div class="card">
+
+                <h2>
+                    Website & SEO
+                </h2>
+
+                <div class="grid">
+
+
+                    <div class="field full">
+
+                        <label for="websiteTitle">
+                            Website Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="websiteTitle"
+                            placeholder="Company Name - Official Website"
+                        >
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label for="metaDescription">
+                            Meta Description
+                        </label>
+
+                        <textarea
+                            id="metaDescription"
+                            placeholder="Short description for search engines..."
+                        ></textarea>
+
+                        <div class="preview">
+                            Recommended length: around 150–160 characters.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SOCIAL -->
+
+            <div class="card">
+
+                <h2>
+                    Social Media
+                </h2>
+
+                <div class="grid">
+
+
+                    <div class="field">
+
+                        <label for="facebookUrl">
+                            Facebook URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="facebookUrl"
+                            placeholder="https://facebook.com/..."
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="instagramUrl">
+                            Instagram URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="instagramUrl"
+                            placeholder="https://instagram.com/..."
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="linkedinUrl">
+                            LinkedIn URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="linkedinUrl"
+                            placeholder="https://linkedin.com/..."
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="youtubeUrl">
+                            YouTube URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="youtubeUrl"
+                            placeholder="https://youtube.com/..."
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- COLORS -->
+
+            <div class="card">
+
+                <h2>
+                    Website Colors
+                </h2>
+
+                <div class="grid">
+
+
+                    <div class="field">
+
+                        <label for="primaryColor">
+                            Primary Color
+                        </label>
+
+                        <div class="color-wrap">
+
+                            <input
+                                type="color"
+                                id="primaryColorPicker"
+                                value="#2563eb"
+                                onchange="syncColor('primary')"
+                            >
+
+                            <input
+                                type="text"
+                                id="primaryColor"
+                                value="#2563eb"
+                                placeholder="#2563eb"
+                                oninput="syncColorPicker('primary')"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="secondaryColor">
+                            Secondary Color
+                        </label>
+
+                        <div class="color-wrap">
+
+                            <input
+                                type="color"
+                                id="secondaryColorPicker"
+                                value="#111827"
+                                onchange="syncColor('secondary')"
+                            >
+
+                            <input
+                                type="text"
+                                id="secondaryColor"
+                                value="#111827"
+                                placeholder="#111827"
+                                oninput="syncColorPicker('secondary')"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTION -->
+
+            <div class="card">
+
+                <div class="actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="resetForm()"
+                    >
+                        Reset
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="saveBtn"
+                    >
+                        Save Company Settings
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </main>
+
+</div>
+
+
+<div
+    id="message"
+    class="message"
+></div>
 
 
 <script>
 
 /* =========================================================
-   SUPABASE CONFIG
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
-    "https://ywvdozdoanmcxscfofcf.supabase.co";
+    'https://ywvdozdoanmcxscfofcf.supabase.co';
 
 const SUPABASE_KEY =
-    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+    'sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB';
 
 
 const supabaseClient =
@@ -768,92 +1084,116 @@ const supabaseClient =
     );
 
 
-
 /* =========================================================
    GLOBAL VARIABLES
 ========================================================= */
 
+let profile = null;
+
+let currentRole = null;
+
 let currentClientId = null;
-
-let currentClient = null;
-
-let currentSettings = null;
 
 let clients = [];
 
+let currentSettings = null;
 
 
 /* =========================================================
-   DOM HELPERS
+   GET CENTRAL CLIENT CONTEXT
 ========================================================= */
 
-function $(id){
+function getContextClient(){
 
-    return document.getElementById(id);
+    try{
 
-}
+        if(
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.get === 'function'
+        ){
 
+            return window.MDKClientContext.get();
 
-function cleanValue(id){
+        }
 
-    const el = $(id);
+    }catch(error){
 
-    if(!el){
-        return null;
+        console.warn(
+            'Client context read failed:',
+            error
+        );
+
     }
 
-    const value =
-        String(el.value || '').trim();
-
-    return value || null;
+    return null;
 
 }
-
-
-
-function validColor(value){
-
-    return /^#[0-9A-Fa-f]{6}$/.test(
-        value || ''
-    );
-
-}
-
 
 
 /* =========================================================
-   MESSAGE
+   CLEAR CLIENT UI
 ========================================================= */
 
-function showMessage(
-    text,
-    type = 'success'
-){
+function clearClientUI(){
 
-    const message =
-        $('message');
+    currentClientId = null;
 
-    message.textContent =
-        text;
+    currentSettings = null;
 
-    message.className =
-        'message ' + type;
+    resetForm();
 
-    window.scrollTo({
-        top:0,
-        behavior:'smooth'
-    });
+    const select =
+        document.getElementById('clientSelect');
 
+    if(select){
 
-    setTimeout(function(){
+        select.value = '';
 
-        message.className =
-            'message';
-
-    },5000);
+    }
 
 }
 
+
+/* =========================================================
+   SET ACTIVE CLIENT
+========================================================= */
+
+async function setActiveClient(clientId){
+
+    currentClientId =
+        clientId || null;
+
+    currentSettings = null;
+
+    /*
+        Always clear old client's data
+        before loading new client.
+    */
+
+    resetForm();
+
+
+    const select =
+        document.getElementById('clientSelect');
+
+    if(select){
+
+        select.value =
+            currentClientId || '';
+
+    }
+
+
+    if(!currentClientId){
+
+        return;
+
+    }
+
+
+    await loadSettings();
+
+}
 
 
 /* =========================================================
@@ -865,39 +1205,137 @@ async function initialize(){
     try{
 
         const {
-            data: {
-                user
-            }
+            data:{session},
+            error:sessionError
         } =
-            await supabaseClient.auth.getUser();
+            await supabaseClient.auth.getSession();
 
 
-        if(!user){
+        if(sessionError){
 
-            showMessage(
-                'Please login first.',
-                'error'
-            );
+            throw sessionError;
+
+        }
+
+
+        if(!session){
+
+            location.href =
+                'login.html';
 
             return;
 
         }
 
 
+        const {
+            data:p,
+            error:profileError
+        } =
+            await supabaseClient
+                .from('profiles')
+                .select(
+                    'id,role,client_id,full_name'
+                )
+                .eq(
+                    'id',
+                    session.user.id
+                )
+                .single();
+
+
+        if(profileError){
+
+            throw profileError;
+
+        }
+
+
+        profile = p;
+
+        currentRole =
+            p.role;
+
+        currentClientId =
+            p.client_id || null;
+
+
+        document.getElementById(
+            'userName'
+        ).textContent =
+            p.full_name ||
+            session.user.email ||
+            'User';
+
+
         /*
-         * Load current central client
-         */
+            SUPER ADMIN / ADMIN
+        */
 
-        if(window.MDKClientContext){
+        if(
+            currentRole === 'super_admin' ||
+            currentRole === 'admin'
+        ){
 
-            const activeClient =
-                MDKClientContext.get();
+            document.getElementById(
+                'clientBox'
+            ).style.display =
+                'block';
 
-            if(activeClient){
 
-                await setActiveClient(
-                    activeClient.id
-                );
+            await loadClients();
+
+
+            /*
+                CENTRAL CLIENT CONTEXT HAS PRIORITY
+            */
+
+            const contextClient =
+                getContextClient();
+
+
+            if(
+                contextClient &&
+                contextClient.id
+            ){
+
+                currentClientId =
+                    contextClient.id;
+
+
+                document.getElementById(
+                    'clientSelect'
+                ).value =
+                    contextClient.id;
+
+
+                await loadSettings();
+
+            }
+
+            /*
+                Fallback to profile client
+            */
+
+            else if(currentClientId){
+
+                document.getElementById(
+                    'clientSelect'
+                ).value =
+                    currentClientId;
+
+
+                await loadSettings();
+
+            }
+
+            /*
+                No client selected
+            */
+
+            else{
+
+                clearClientUI();
 
             }
 
@@ -905,49 +1343,40 @@ async function initialize(){
 
 
         /*
-         * Check admin/super admin role
-         */
+            NORMAL CLIENT USER
+        */
 
-        await loadClientsForAdmin(user);
+        else{
 
+            if(!currentClientId){
 
-        /*
-         * Listen for central client changes
-         */
+                showMessage(
+                    'No client assigned to this user.',
+                    'error'
+                );
 
-        window.addEventListener(
-            'mdk-client-changed',
-            async function(event){
+                resetForm();
 
-                const client =
-                    event.detail;
-
-                if(client && client.id){
-
-                    await setActiveClient(
-                        client.id
-                    );
-
-                }else{
-
-                    clearClientUI();
-
-                }
+                return;
 
             }
-        );
+
+
+            await loadSettings();
+
+        }
 
 
     }catch(error){
 
         console.error(
-            'Initialization Error:',
             error
         );
 
+
         showMessage(
             error.message ||
-            'Failed to initialize page.',
+            'Initialization failed.',
             'error'
         );
 
@@ -956,123 +1385,11 @@ async function initialize(){
 }
 
 
-
 /* =========================================================
-   LOAD CLIENTS FOR ADMIN
+   LOAD CLIENTS
 ========================================================= */
 
-async function loadClientsForAdmin(user){
-
-    try{
-
-        /*
-         * Existing platform role logic.
-         * We first try inventory-style role table if present.
-         */
-
-        let role = null;
-
-
-        const {
-            data: roleData
-        } =
-            await supabaseClient
-                .from('user_roles')
-                .select('role')
-                .eq('user_id', user.id)
-                .maybeSingle();
-
-
-        if(roleData){
-
-            role =
-                roleData.role;
-
-        }
-
-
-        /*
-         * If role table is unavailable,
-         * central client context can still work.
-         */
-
-        if(
-            role === 'super_admin' ||
-            role === 'admin'
-        ){
-
-            await loadAllClients();
-
-            $('clientBox')
-                .classList
-                .remove('hidden');
-
-            return;
-
-        }
-
-
-        /*
-         * Normal client user
-         */
-
-        if(
-            window.MDKClientContext
-        ){
-
-            const active =
-                MDKClientContext.get();
-
-            if(active){
-
-                await setActiveClient(
-                    active.id
-                );
-
-            }
-
-        }
-
-    }catch(error){
-
-        console.warn(
-            'Role detection:',
-            error.message
-        );
-
-        /*
-         * Do not block normal
-         * central-client workflow.
-         */
-
-        if(
-            window.MDKClientContext
-        ){
-
-            const active =
-                MDKClientContext.get();
-
-            if(active){
-
-                await setActiveClient(
-                    active.id
-                );
-
-            }
-
-        }
-
-    }
-
-}
-
-
-
-/* =========================================================
-   LOAD ALL CLIENTS
-========================================================= */
-
-async function loadAllClients(){
+async function loadClients(){
 
     const {
         data,
@@ -1080,27 +1397,17 @@ async function loadAllClients(){
     } =
         await supabaseClient
             .from('clients')
-            .select(`
-                id,
-                company_name,
-                slug,
-                status
-            `)
+            .select(
+                'id,company_name,slug,status'
+            )
             .order(
-                'company_name',
-                {
-                    ascending:true
-                }
+                'company_name'
             );
 
 
     if(error){
 
-        console.error(
-            error
-        );
-
-        return;
+        throw error;
 
     }
 
@@ -1109,87 +1416,58 @@ async function loadAllClients(){
         data || [];
 
 
-    const select =
-        $('clientSelect');
+    document.getElementById(
+        'clientSelect'
+    ).innerHTML =
 
+        '<option value="">Select Client</option>' +
 
-    select.innerHTML =
-        '<option value="">-- Select Client --</option>';
+        clients.map(client => {
 
+            return `
+                <option value="${client.id}">
+                    ${escapeHtml(
+                        client.company_name ||
+                        client.slug ||
+                        client.id
+                    )}
+                </option>
+            `;
 
-    clients.forEach(
-        function(client){
-
-            const option =
-                document.createElement(
-                    'option'
-                );
-
-            option.value =
-                client.id;
-
-            option.textContent =
-                client.company_name ||
-                client.slug ||
-                client.id;
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
-
-    /*
-     * Select current context
-     */
-
-    if(currentClientId){
-
-        select.value =
-            currentClientId;
-
-    }else if(
-        window.MDKClientContext
-    ){
-
-        const active =
-            MDKClientContext.get();
-
-        if(active){
-
-            select.value =
-                active.id;
-
-        }
-
-    }
+        }).join('');
 
 }
 
 
-
 /* =========================================================
-   CLIENT SELECT CHANGE
+   CLIENT CHANGE
 ========================================================= */
 
-async function handleClientChange(){
+async function clientChanged(){
 
-    const clientId =
-        $('clientSelect').value;
+    const selected =
+        document.getElementById(
+            'clientSelect'
+        ).value;
 
 
-    if(!clientId){
+    /*
+        No client
+    */
 
-        clearClientUI();
+    if(!selected){
 
         if(
-            window.MDKClientContext
+            window.MDKClientContext &&
+            typeof window.MDKClientContext.clear === 'function'
         ){
 
             MDKClientContext.clear();
 
+        }else{
+
+            clearClientUI();
+
         }
 
         return;
@@ -1198,201 +1476,115 @@ async function handleClientChange(){
 
 
     /*
-     * Set central context.
-     * Other modules will follow this.
-     */
+        Find complete client object
+    */
 
-    const client =
+    const selectedClient =
         clients.find(
-            c => c.id === clientId
+            client =>
+                client.id === selected
         );
 
 
+    /*
+        Central context available
+    */
+
     if(
-        client &&
-        window.MDKClientContext
+        selectedClient &&
+        window.MDKClientContext &&
+        typeof window.MDKClientContext.set === 'function'
     ){
 
         MDKClientContext.set(
-            client
+            selectedClient
         );
+
+        /*
+            mdk-client-changed listener
+            will load settings.
+        */
+
+        return;
 
     }
 
 
+    /*
+        Fallback
+    */
+
     await setActiveClient(
-        clientId
+        selected
     );
 
 }
 
 
-
 /* =========================================================
-   SET ACTIVE CLIENT
+   CENTRAL CLIENT CHANGE LISTENER
 ========================================================= */
 
-async function setActiveClient(clientId){
-
-    if(!clientId){
-
-        clearClientUI();
-
-        return;
-
-    }
-
-
-    currentClientId =
-        clientId;
-
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from('clients')
-            .select(`
-                id,
-                company_name,
-                slug,
-                domain,
-                hosting_type,
-                hosting_url,
-                template,
-                status
-            `)
-            .eq(
-                'id',
-                clientId
-            )
-            .maybeSingle();
-
-
-    if(error){
-
-        console.error(
-            'Client Load Error:',
-            error
-        );
-
-        showMessage(
-            error.message ||
-            'Failed to load client.',
-            'error'
-        );
-
-        return;
-
-    }
-
-
-    currentClient =
-        data;
-
-
-    if(
-        window.MDKClientContext &&
-        data
-    ){
+window.addEventListener(
+    'mdk-client-changed',
+    async function(event){
 
         /*
-         * Keep central context
-         * synchronized.
-         */
+            Only admin/super admin
+            should follow global context.
+        */
 
-        MDKClientContext.set(
-            data
-        );
+        if(
+            currentRole !== 'super_admin' &&
+            currentRole !== 'admin'
+        ){
 
-    }
+            return;
 
-
-    updateActiveClientDisplay();
-
-    resetForm();
-
-    await loadSettings();
-
-}
+        }
 
 
-
-/* =========================================================
-   ACTIVE CLIENT DISPLAY
-========================================================= */
-
-function updateActiveClientDisplay(){
-
-    const box =
-        $('currentClient');
+        const client =
+            event.detail;
 
 
-    if(!currentClient){
+        if(
+            client &&
+            client.id
+        ){
 
-        box.textContent =
-            '';
-
-        return;
-
-    }
-
-
-    box.textContent =
-        'Active Client: ' +
-        (
-            currentClient.company_name ||
-            currentClient.slug ||
-            ''
-        );
+            currentClientId =
+                client.id;
 
 
+            const select =
+                document.getElementById(
+                    'clientSelect'
+                );
 
-    if($('clientSelect')){
 
-        $('clientSelect').value =
-            currentClient.id;
+            if(select){
+
+                select.value =
+                    client.id;
+
+            }
+
+
+            await setActiveClient(
+                client.id
+            );
+
+        }
+
+        else{
+
+            clearClientUI();
+
+        }
 
     }
-
-}
-
-
-
-/* =========================================================
-   CLEAR CLIENT UI
-========================================================= */
-
-function clearClientUI(){
-
-    currentClientId =
-        null;
-
-    currentClient =
-        null;
-
-    currentSettings =
-        null;
-
-
-    $('currentClient')
-        .textContent =
-        '';
-
-
-    if($('clientSelect')){
-
-        $('clientSelect').value =
-            '';
-
-    }
-
-
-    resetForm();
-
-}
-
+);
 
 
 /* =========================================================
@@ -1402,6 +1594,8 @@ function clearClientUI(){
 async function loadSettings(){
 
     if(!currentClientId){
+
+        resetForm();
 
         return;
 
@@ -1459,27 +1653,37 @@ async function loadSettings(){
         }
 
 
-        if(data){
+        currentSettings =
+            data || null;
 
-            currentSettings =
-                data;
+
+        if(data){
 
             fillForm(
                 data
             );
 
-        }else{
 
-            currentSettings =
-                null;
+            showMessage(
+                'Company settings loaded.'
+            );
 
         }
 
+        else{
+
+            resetForm();
+
+
+            showMessage(
+                'No company settings found. You can create them.'
+            );
+
+        }
 
     }catch(error){
 
         console.error(
-            'Company Settings Load Error:',
             error
         );
 
@@ -1495,207 +1699,187 @@ async function loadSettings(){
 }
 
 
-
 /* =========================================================
    FILL FORM
 ========================================================= */
 
 function fillForm(data){
 
-    $('logoUrl').value =
+    document.getElementById(
+        'logoUrl'
+    ).value =
         data.logo_url || '';
 
-    $('faviconUrl').value =
+
+    document.getElementById(
+        'faviconUrl'
+    ).value =
         data.favicon_url || '';
 
-    $('tagline').value =
+
+    document.getElementById(
+        'tagline'
+    ).value =
         data.tagline || '';
 
-    $('phone').value =
+
+    document.getElementById(
+        'phone'
+    ).value =
         data.phone || '';
 
-    $('whatsapp').value =
+
+    document.getElementById(
+        'whatsapp'
+    ).value =
         data.whatsapp || '';
 
-    $('email').value =
+
+    document.getElementById(
+        'email'
+    ).value =
         data.email || '';
 
-    $('website').value =
+
+    document.getElementById(
+        'website'
+    ).value =
         data.website || '';
 
-    $('address').value =
+
+    document.getElementById(
+        'address'
+    ).value =
         data.address || '';
 
-    $('city').value =
+
+    document.getElementById(
+        'city'
+    ).value =
         data.city || '';
 
-    $('state').value =
+
+    document.getElementById(
+        'state'
+    ).value =
         data.state || '';
 
-    $('country').value =
+
+    document.getElementById(
+        'country'
+    ).value =
         data.country || '';
 
-    $('postalCode').value =
+
+    document.getElementById(
+        'postalCode'
+    ).value =
         data.postal_code || '';
 
-    $('about').value =
+
+    document.getElementById(
+        'about'
+    ).value =
         data.about || '';
 
-    $('mission').value =
+
+    document.getElementById(
+        'mission'
+    ).value =
         data.mission || '';
 
-    $('vision').value =
+
+    document.getElementById(
+        'vision'
+    ).value =
         data.vision || '';
 
-    $('websiteTitle').value =
+
+    document.getElementById(
+        'websiteTitle'
+    ).value =
         data.website_title || '';
 
-    $('metaDescription').value =
+
+    document.getElementById(
+        'metaDescription'
+    ).value =
         data.meta_description || '';
 
-    $('facebookUrl').value =
+
+    document.getElementById(
+        'facebookUrl'
+    ).value =
         data.facebook_url || '';
 
-    $('instagramUrl').value =
+
+    document.getElementById(
+        'instagramUrl'
+    ).value =
         data.instagram_url || '';
 
-    $('linkedinUrl').value =
+
+    document.getElementById(
+        'linkedinUrl'
+    ).value =
         data.linkedin_url || '';
 
-    $('youtubeUrl').value =
+
+    document.getElementById(
+        'youtubeUrl'
+    ).value =
         data.youtube_url || '';
 
 
     const primary =
-        validColor(data.primary_color)
+        validColor(
+            data.primary_color
+        )
             ? data.primary_color
             : '#2563eb';
 
 
     const secondary =
-        validColor(data.secondary_color)
+        validColor(
+            data.secondary_color
+        )
             ? data.secondary_color
             : '#111827';
 
 
-    $('primaryColor').value =
+    document.getElementById(
+        'primaryColor'
+    ).value =
         primary;
 
-    $('primaryColorText').value =
+
+    document.getElementById(
+        'primaryColorPicker'
+    ).value =
         primary;
 
 
-    $('secondaryColor').value =
+    document.getElementById(
+        'secondaryColor'
+    ).value =
         secondary;
 
-    $('secondaryColorText').value =
+
+    document.getElementById(
+        'secondaryColorPicker'
+    ).value =
         secondary;
+
+
+    updateLogoPreview();
+
+    updateFaviconPreview();
 
 }
 
 
-
 /* =========================================================
-   RESET FORM
-========================================================= */
-
-function resetForm(){
-
-    $('settingsForm').reset();
-
-
-    $('primaryColor').value =
-        '#2563eb';
-
-    $('primaryColorText').value =
-        '#2563eb';
-
-
-    $('secondaryColor').value =
-        '#111827';
-
-    $('secondaryColorText').value =
-        '#111827';
-
-
-    currentSettings =
-        null;
-
-}
-
-
-
-/* =========================================================
-   COLOR SYNC
-========================================================= */
-
-$('primaryColor')
-    .addEventListener(
-        'input',
-        function(){
-
-            $('primaryColorText').value =
-                this.value;
-
-        }
-    );
-
-
-$('primaryColorText')
-    .addEventListener(
-        'input',
-        function(){
-
-            if(
-                validColor(
-                    this.value
-                )
-            ){
-
-                $('primaryColor').value =
-                    this.value;
-
-            }
-
-        }
-    );
-
-
-$('secondaryColor')
-    .addEventListener(
-        'input',
-        function(){
-
-            $('secondaryColorText').value =
-                this.value;
-
-        }
-    );
-
-
-$('secondaryColorText')
-    .addEventListener(
-        'input',
-        function(){
-
-            if(
-                validColor(
-                    this.value
-                )
-            ){
-
-                $('secondaryColor').value =
-                    this.value;
-
-            }
-
-        }
-    );
-
-
-
-/* =========================================================
-   SAVE SETTINGS - SAFE UPSERT
+   SAVE SETTINGS
 ========================================================= */
 
 async function saveSettings(event){
@@ -1716,20 +1900,18 @@ async function saveSettings(event){
 
 
     const saveButton =
-        $('saveBtn');
+        document.getElementById(
+            'saveBtn'
+        );
 
 
     saveButton.disabled =
         true;
 
+
     saveButton.textContent =
         'Saving...';
 
-
-
-    /*
-     * Build complete payload.
-     */
 
     const payload = {
 
@@ -1738,157 +1920,103 @@ async function saveSettings(event){
 
 
         logo_url:
-            cleanValue(
-                'logoUrl'
-            ),
+            cleanValue('logoUrl'),
 
 
         favicon_url:
-            cleanValue(
-                'faviconUrl'
-            ),
+            cleanValue('faviconUrl'),
 
 
         tagline:
-            cleanValue(
-                'tagline'
-            ),
+            cleanValue('tagline'),
 
 
         phone:
-            cleanValue(
-                'phone'
-            ),
+            cleanValue('phone'),
 
 
         whatsapp:
-            cleanValue(
-                'whatsapp'
-            ),
+            cleanValue('whatsapp'),
 
 
         email:
-            cleanValue(
-                'email'
-            ),
+            cleanValue('email'),
 
 
         website:
-            cleanValue(
-                'website'
-            ),
+            cleanValue('website'),
 
 
         address:
-            cleanValue(
-                'address'
-            ),
+            cleanValue('address'),
 
 
         city:
-            cleanValue(
-                'city'
-            ),
+            cleanValue('city'),
 
 
         state:
-            cleanValue(
-                'state'
-            ),
+            cleanValue('state'),
 
 
         country:
-            cleanValue(
-                'country'
-            ),
+            cleanValue('country'),
 
 
         postal_code:
-            cleanValue(
-                'postalCode'
-            ),
+            cleanValue('postalCode'),
 
 
         about:
-            cleanValue(
-                'about'
-            ),
+            cleanValue('about'),
 
 
         mission:
-            cleanValue(
-                'mission'
-            ),
+            cleanValue('mission'),
 
 
         vision:
-            cleanValue(
-                'vision'
-            ),
+            cleanValue('vision'),
 
 
         website_title:
-            cleanValue(
-                'websiteTitle'
-            ),
+            cleanValue('websiteTitle'),
 
 
         meta_description:
-            cleanValue(
-                'metaDescription'
-            ),
+            cleanValue('metaDescription'),
 
 
         facebook_url:
-            cleanValue(
-                'facebookUrl'
-            ),
+            cleanValue('facebookUrl'),
 
 
         instagram_url:
-            cleanValue(
-                'instagramUrl'
-            ),
+            cleanValue('instagramUrl'),
 
 
         linkedin_url:
-            cleanValue(
-                'linkedinUrl'
-            ),
+            cleanValue('linkedinUrl'),
 
 
         youtube_url:
-            cleanValue(
-                'youtubeUrl'
-            ),
+            cleanValue('youtubeUrl'),
 
 
         primary_color:
             validColor(
-                cleanValue(
-                    'primaryColor'
-                )
+                cleanValue('primaryColor')
             )
-            ?
-            cleanValue(
-                'primaryColor'
-            )
-            :
-            '#2563eb',
+                ? cleanValue('primaryColor')
+                : '#2563eb',
 
 
         secondary_color:
             validColor(
-                cleanValue(
-                    'secondaryColor'
-                )
+                cleanValue('secondaryColor')
             )
-            ?
-            cleanValue(
-                'secondaryColor'
-            )
-            :
-            '#111827',
+                ? cleanValue('secondaryColor')
+                : '#111827',
 
 
         updated_at:
@@ -1897,69 +2025,85 @@ async function saveSettings(event){
     };
 
 
-
     try{
 
+        let result;
+
+
         /*
-         * IMPORTANT:
-         *
-         * client_id has UNIQUE constraint:
-         * company_settings_client_id_key
-         *
-         * Therefore upsert() is safer than
-         * INSERT / UPDATE detection.
-         */
+            UPDATE EXISTING
+        */
 
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from(
-                    'company_settings'
-                )
-                .upsert(
-                    payload,
-                    {
-                        onConflict:
-                            'client_id'
-                    }
-                )
-                .select()
-                .single();
+        if(
+            currentSettings &&
+            currentSettings.id
+        ){
+
+            result =
+                await supabaseClient
+                    .from('company_settings')
+                    .update(payload)
+                    .eq(
+                        'id',
+                        currentSettings.id
+                    )
+                    .eq(
+                        'client_id',
+                        currentClientId
+                    )
+                    .select()
+                    .single();
+
+        }
 
 
-        if(error){
+        /*
+            INSERT NEW
+        */
 
-            throw error;
+        else{
+
+            result =
+                await supabaseClient
+                    .from('company_settings')
+                    .insert({
+
+                        ...payload,
+
+                        created_at:
+                            new Date().toISOString()
+
+                    })
+                    .select()
+                    .single();
+
+        }
+
+
+        if(result.error){
+
+            throw result.error;
 
         }
 
 
         currentSettings =
-            data;
+            result.data;
 
-
-        /*
-         * Refresh form with
-         * database result.
-         */
 
         fillForm(
-            data
+            result.data
         );
 
 
         showMessage(
-            'Company settings saved successfully.',
-            'success'
+            'Company settings saved successfully.'
         );
 
 
     }catch(error){
 
         console.error(
-            'Company Settings Save Error:',
             error
         );
 
@@ -1970,11 +2114,11 @@ async function saveSettings(event){
             'error'
         );
 
-
     }finally{
 
         saveButton.disabled =
             false;
+
 
         saveButton.textContent =
             'Save Company Settings';
@@ -1983,6 +2127,400 @@ async function saveSettings(event){
 
 }
 
+
+/* =========================================================
+   RESET FORM
+========================================================= */
+
+function resetForm(){
+
+    const form =
+        document.getElementById(
+            'settingsForm'
+        );
+
+
+    if(form){
+
+        form.reset();
+
+    }
+
+
+    currentSettings =
+        null;
+
+
+    document.getElementById(
+        'primaryColor'
+    ).value =
+        '#2563eb';
+
+
+    document.getElementById(
+        'primaryColorPicker'
+    ).value =
+        '#2563eb';
+
+
+    document.getElementById(
+        'secondaryColor'
+    ).value =
+        '#111827';
+
+
+    document.getElementById(
+        'secondaryColorPicker'
+    ).value =
+        '#111827';
+
+
+    document.getElementById(
+        'logoPreview'
+    ).removeAttribute(
+        'src'
+    );
+
+
+    document.getElementById(
+        'faviconPreview'
+    ).removeAttribute(
+        'src'
+    );
+
+}
+
+
+/* =========================================================
+   LOGO PREVIEW
+========================================================= */
+
+function updateLogoPreview(){
+
+    const url =
+        document.getElementById(
+            'logoUrl'
+        ).value.trim();
+
+
+    const image =
+        document.getElementById(
+            'logoPreview'
+        );
+
+
+    if(url){
+
+        image.src =
+            url;
+
+    }
+
+    else{
+
+        image.removeAttribute(
+            'src'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FAVICON PREVIEW
+========================================================= */
+
+function updateFaviconPreview(){
+
+    const url =
+        document.getElementById(
+            'faviconUrl'
+        ).value.trim();
+
+
+    const image =
+        document.getElementById(
+            'faviconPreview'
+        );
+
+
+    if(url){
+
+        image.src =
+            url;
+
+    }
+
+    else{
+
+        image.removeAttribute(
+            'src'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   COLOR FUNCTIONS
+========================================================= */
+
+function syncColor(type){
+
+    if(type === 'primary'){
+
+        const picker =
+            document.getElementById(
+                'primaryColorPicker'
+            );
+
+
+        document.getElementById(
+            'primaryColor'
+        ).value =
+            picker.value;
+
+    }
+
+
+    if(type === 'secondary'){
+
+        const picker =
+            document.getElementById(
+                'secondaryColorPicker'
+            );
+
+
+        document.getElementById(
+            'secondaryColor'
+        ).value =
+            picker.value;
+
+    }
+
+}
+
+
+function syncColorPicker(type){
+
+    if(type === 'primary'){
+
+        const input =
+            document.getElementById(
+                'primaryColor'
+            );
+
+
+        if(
+            validColor(
+                input.value
+            )
+        ){
+
+            document.getElementById(
+                'primaryColorPicker'
+            ).value =
+                input.value;
+
+        }
+
+    }
+
+
+    if(type === 'secondary'){
+
+        const input =
+            document.getElementById(
+                'secondaryColor'
+            );
+
+
+        if(
+            validColor(
+                input.value
+            )
+        ){
+
+            document.getElementById(
+                'secondaryColorPicker'
+            ).value =
+                input.value;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   INPUT EVENTS
+========================================================= */
+
+document.getElementById(
+    'logoUrl'
+).addEventListener(
+    'input',
+    updateLogoPreview
+);
+
+
+document.getElementById(
+    'faviconUrl'
+).addEventListener(
+    'input',
+    updateFaviconPreview
+);
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function cleanValue(id){
+
+    const element =
+        document.getElementById(id);
+
+
+    if(!element){
+
+        return null;
+
+    }
+
+
+    const value =
+        element.value.trim();
+
+
+    return value || null;
+
+}
+
+
+function validColor(value){
+
+    return /^#[0-9A-Fa-f]{6}$/.test(
+        String(
+            value || ''
+        ).trim()
+    );
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value)
+        .replace(
+            /&/g,
+            '&amp;'
+        )
+        .replace(
+            /</g,
+            '&lt;'
+        )
+        .replace(
+            />/g,
+            '&gt;'
+        )
+        .replace(
+            /"/g,
+            '&quot;'
+        )
+        .replace(
+            /'/g,
+            '&#039;'
+        );
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+let messageTimer =
+    null;
+
+
+function showMessage(
+    text,
+    type='success'
+){
+
+    const box =
+        document.getElementById(
+            'message'
+        );
+
+
+    box.textContent =
+        text;
+
+
+    box.className =
+        'message show' +
+        (
+            type === 'error'
+                ? ' error'
+                : ''
+        );
+
+
+    clearTimeout(
+        messageTimer
+    );
+
+
+    messageTimer =
+        setTimeout(
+            () => {
+
+                box.classList.remove(
+                    'show'
+                );
+
+            },
+            3500
+        );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+    /*
+        Clear central client context
+        before logout.
+    */
+
+    if(
+        window.MDKClientContext &&
+        typeof window.MDKClientContext.clear === 'function'
+    ){
+
+        MDKClientContext.clear();
+
+    }
+
+
+    await supabaseClient
+        .auth
+        .signOut();
+
+
+    location.href =
+        'login.html';
+
+}
 
 
 /* =========================================================
@@ -1994,5 +2532,4 @@ initialize();
 </script>
 
 </body>
-
 </html>
