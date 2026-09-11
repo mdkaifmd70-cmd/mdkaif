@@ -1882,6 +1882,10 @@ function fillForm(data){
    SAVE SETTINGS
 ========================================================= */
 
+/* =========================================================
+   SAVE SETTINGS
+========================================================= */
+
 async function saveSettings(event){
 
     event.preventDefault();
@@ -2027,72 +2031,48 @@ async function saveSettings(event){
 
     try{
 
-        let result;
-
-
         /*
-            UPDATE EXISTING
+            SAFE UPSERT
+
+            Existing client_settings row:
+            → UPDATE
+
+            No row:
+            → INSERT
+
+            client_id is already UNIQUE.
         */
 
-        if(
-            currentSettings &&
-            currentSettings.id
-        ){
-
-            result =
-                await supabaseClient
-                    .from('company_settings')
-                    .update(payload)
-                    .eq(
-                        'id',
-                        currentSettings.id
-                    )
-                    .eq(
-                        'client_id',
-                        currentClientId
-                    )
-                    .select()
-                    .single();
-
-        }
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from('company_settings')
+                .upsert(
+                    payload,
+                    {
+                        onConflict:
+                            'client_id'
+                    }
+                )
+                .select()
+                .single();
 
 
-        /*
-            INSERT NEW
-        */
+        if(error){
 
-        else{
-
-            result =
-                await supabaseClient
-                    .from('company_settings')
-                    .insert({
-
-                        ...payload,
-
-                        created_at:
-                            new Date().toISOString()
-
-                    })
-                    .select()
-                    .single();
-
-        }
-
-
-        if(result.error){
-
-            throw result.error;
+            throw error;
 
         }
 
 
         currentSettings =
-            result.data;
+            data;
 
 
         fillForm(
-            result.data
+            data
         );
 
 
@@ -2104,6 +2084,7 @@ async function saveSettings(event){
     }catch(error){
 
         console.error(
+            'Company Settings Save Error:',
             error
         );
 
@@ -2126,71 +2107,6 @@ async function saveSettings(event){
     }
 
 }
-
-
-/* =========================================================
-   RESET FORM
-========================================================= */
-
-function resetForm(){
-
-    const form =
-        document.getElementById(
-            'settingsForm'
-        );
-
-
-    if(form){
-
-        form.reset();
-
-    }
-
-
-    currentSettings =
-        null;
-
-
-    document.getElementById(
-        'primaryColor'
-    ).value =
-        '#2563eb';
-
-
-    document.getElementById(
-        'primaryColorPicker'
-    ).value =
-        '#2563eb';
-
-
-    document.getElementById(
-        'secondaryColor'
-    ).value =
-        '#111827';
-
-
-    document.getElementById(
-        'secondaryColorPicker'
-    ).value =
-        '#111827';
-
-
-    document.getElementById(
-        'logoPreview'
-    ).removeAttribute(
-        'src'
-    );
-
-
-    document.getElementById(
-        'faviconPreview'
-    ).removeAttribute(
-        'src'
-    );
-
-}
-
-
 /* =========================================================
    LOGO PREVIEW
 ========================================================= */
