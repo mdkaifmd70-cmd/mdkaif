@@ -16,7 +16,7 @@
         "https://ywvdozdoanmcxscfofcf.supabase.co";
 
     var SUPABASE_KEY =
-        "sb_publishable_aAqQ96BmDbYivhlgl_3z7g_1orXAscB";
+        "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
     var supabaseClient = null;
 
