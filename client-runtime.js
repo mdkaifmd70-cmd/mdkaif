@@ -51,6 +51,8 @@
                     SUPABASE_KEY
                 );
 
+            window.MDKSupabaseClient = db;
+
         } catch (error) {
 
             console.error(
@@ -710,483 +712,202 @@
 
             var result =
                 await db
-                    .from(
-                        "company_settings"
-                    )
+                    .from("company_settings")
                     .select("*")
-                    .eq(
-                        "client_id",
-                        clientId
-                    )
+                    .eq("client_id", clientId)
                     .maybeSingle();
 
-
             if (result.error) {
-
                 console.warn(
                     "MDK Runtime: Company settings error:",
                     result.error
                 );
-
                 return;
-
             }
 
-
             if (!result.data) {
-
                 console.log(
                     "MDK Runtime: No company settings found."
                 );
-
                 return;
-
             }
 
+            var settings = result.data;
 
-            var settings =
-                result.data;
+            console.log(
+                "MDK Runtime: Company settings data:",
+                settings
+            );
 
+            /* TAGLINE */
+            var tagline = getValue(settings, "tagline");
+            if (tagline) {
+                setText('[data-content="tagline"]', tagline);
+                setText('[data-client="tagline"]', tagline);
+                setText('[data-content="hero_eyebrow"]', tagline);
+                setText('[data-content="hero-tagline"]', tagline);
+            }
 
-            /* ================================================
-               PHONE
-            ================================================= */
-
-            var phone =
-                getValue(
-                    settings,
-                    "phone"
-                );
-
-
+            /* PHONE */
+            var phone = getValue(settings, "phone");
             if (phone) {
-
-                setText(
-                    '[data-content="phone"]',
-                    phone
-                );
-
-
-                var phoneNumber =
-                    phone.replace(
-                        /[^0-9+]/g,
-                        ""
-                    );
-
-
+                setText('[data-content="phone"]', phone);
+                var phoneNumber = phone.replace(/[^0-9+]/g, "");
                 setAttribute(
                     '[data-content-link="phone"]',
                     "href",
-                    "tel:" +
-                    phoneNumber
+                    "tel:" + phoneNumber
                 );
-
             }
 
-
-            /* ================================================
-               EMAIL
-            ================================================= */
-
-            var email =
-                getValue(
-                    settings,
-                    "email"
-                );
-
-
+            /* EMAIL */
+            var email = getValue(settings, "email");
             if (email) {
-
-                setText(
-                    '[data-content="email"]',
-                    email
-                );
-
-
+                setText('[data-content="email"]', email);
                 setAttribute(
                     '[data-content-link="email"]',
                     "href",
-                    "mailto:" +
-                    email
+                    "mailto:" + email
                 );
-
             }
 
-
-            /* ================================================
-               WEBSITE
-            ================================================= */
-
-            var website =
-                normalizeUrl(
-                    getValue(
-                        settings,
-                        "website"
-                    )
-                );
-
-
+            /* WEBSITE */
+            var website = normalizeUrl(
+                getValue(settings, "website")
+            );
             if (website) {
-
+                setText('[data-content="website"]', website);
                 setAttribute(
                     '[data-content-link="website"]',
                     "href",
                     website
                 );
-
-
                 document
-                    .querySelectorAll(
-                        '[data-content-link="website"]'
-                    )
-                    .forEach(
-                        function (element) {
-
-                            element.target =
-                                "_blank";
-
-                            element.rel =
-                                "noopener noreferrer";
-
-                        }
-                    );
-
+                    .querySelectorAll('[data-content-link="website"]')
+                    .forEach(function (element) {
+                        element.target = "_blank";
+                        element.rel = "noopener noreferrer";
+                    });
             }
 
-
-            /* ================================================
-               WHATSAPP
-            ================================================= */
-
-            var whatsapp =
-                getValue(
-                    settings,
-                    "whatsapp"
-                );
-
-
+            /* WHATSAPP */
+            var whatsapp = getValue(settings, "whatsapp");
             if (whatsapp) {
-
-                setText(
-                    '[data-content="whatsapp"]',
-                    whatsapp
-                );
-
-
-                var whatsappNumber =
-                    whatsapp.replace(
-                        /[^0-9]/g,
-                        ""
-                    );
-
-
+                setText('[data-content="whatsapp"]', whatsapp);
+                var whatsappNumber = whatsapp.replace(/[^0-9]/g, "");
                 setAttribute(
                     '[data-content-link="whatsapp"]',
                     "href",
-                    "https://wa.me/" +
-                    whatsappNumber
+                    "https://wa.me/" + whatsappNumber
                 );
-
             }
 
+            /* ADDRESS */
+            setText('[data-content="address"]', getValue(settings, "address"));
+            setText('[data-content="city"]', getValue(settings, "city"));
+            setText('[data-content="state"]', getValue(settings, "state"));
+            setText('[data-content="country"]', getValue(settings, "country"));
+            setText('[data-content="postal_code"]', getValue(settings, "postal_code"));
 
-            /* ================================================
-               ADDRESS
-            ================================================= */
+            /* COMPANY PROFILE */
+            setText('[data-content="about"]', getValue(settings, "about"));
+            setText('[data-content="mission"]', getValue(settings, "mission"));
+            setText('[data-content="vision"]', getValue(settings, "vision"));
 
-            var address =
-                getValue(
-                    settings,
-                    "address"
-                );
-
-
-            if (address) {
-
-                setText(
-                    '[data-content="address"]',
-                    address
-                );
-
-            }
-
-
-            /* ================================================
-               CITY
-            ================================================= */
-
-            var city =
-                getValue(
-                    settings,
-                    "city"
-                );
-
-
-            if (city) {
-
-                setText(
-                    '[data-content="city"]',
-                    city
-                );
-
-            }
-
-
-            /* ================================================
-               STATE
-            ================================================= */
-
-            var state =
-                getValue(
-                    settings,
-                    "state"
-                );
-
-
-            if (state) {
-
-                setText(
-                    '[data-content="state"]',
-                    state
-                );
-
-            }
-
-
-            /* ================================================
-               COUNTRY
-            ================================================= */
-
-            var country =
-                getValue(
-                    settings,
-                    "country"
-                );
-
-
-            if (country) {
-
-                setText(
-                    '[data-content="country"]',
-                    country
-                );
-
-            }
-
-
-            /* ================================================
-               POSTAL CODE
-            ================================================= */
-
-            var postalCode =
-                getValue(
-                    settings,
-                    "postal_code"
-                );
-
-
-            if (postalCode) {
-
-                setText(
-                    '[data-content="postal_code"]',
-                    postalCode
-                );
-
-            }
-
-
-            /* ================================================
-               SOCIAL LINKS
-            ================================================= */
-
+            /* SOCIAL LINKS */
             setLink(
                 '[data-content-link="facebook"]',
-                getValue(
-                    settings,
-                    "facebook_url"
-                )
+                getValue(settings, "facebook_url")
             );
-
-
             setLink(
                 '[data-content-link="instagram"]',
-                getValue(
-                    settings,
-                    "instagram_url"
-                )
+                getValue(settings, "instagram_url")
             );
-
-
             setLink(
                 '[data-content-link="linkedin"]',
-                getValue(
-                    settings,
-                    "linkedin_url"
-                )
+                getValue(settings, "linkedin_url")
             );
-
-
             setLink(
                 '[data-content-link="youtube"]',
-                getValue(
-                    settings,
-                    "youtube_url"
-                )
+                getValue(settings, "youtube_url")
             );
 
-
-            /* ================================================
-               WEBSITE TITLE
-            ================================================= */
-
-            var websiteTitle =
-                getValue(
-                    settings,
-                    "website_title"
-                );
-
-
+            /* SEO */
+            var websiteTitle = getValue(settings, "website_title");
             if (websiteTitle) {
-
-                document.title =
-                    websiteTitle;
-
+                document.title = websiteTitle;
             }
 
-
-            /* ================================================
-               META DESCRIPTION
-            ================================================= */
-
-            var metaDescription =
-                getValue(
-                    settings,
-                    "meta_description"
-                );
-
-
+            var metaDescription = getValue(settings, "meta_description");
             if (metaDescription) {
-
-                var meta =
-                    document.querySelector(
-                        'meta[name="description"]'
-                    );
-
-
+                var meta = document.querySelector('meta[name="description"]');
                 if (!meta) {
-
-                    meta =
-                        document.createElement(
-                            "meta"
-                        );
-
-                    meta.name =
-                        "description";
-
-                    document.head.appendChild(
-                        meta
-                    );
-
+                    meta = document.createElement("meta");
+                    meta.name = "description";
+                    document.head.appendChild(meta);
                 }
-
-
-                meta.setAttribute(
-                    "content",
-                    metaDescription
-                );
-
+                meta.setAttribute("content", metaDescription);
             }
 
-
-            /* ================================================
-               FAVICON
-            ================================================= */
-
-            var favicon =
-                getValue(
-                    settings,
-                    "favicon_url"
-                );
-
-
+            /* FAVICON */
+            var favicon = getValue(settings, "favicon_url");
             if (favicon) {
-
-                var faviconLink =
-                    document.querySelector(
-                        'link[rel="icon"]'
-                    );
-
-
+                var faviconLink = document.querySelector('link[rel="icon"]');
                 if (!faviconLink) {
-
-                    faviconLink =
-                        document.createElement(
-                            "link"
-                        );
-
-                    faviconLink.rel =
-                        "icon";
-
-                    document.head.appendChild(
-                        faviconLink
-                    );
-
+                    faviconLink = document.createElement("link");
+                    faviconLink.rel = "icon";
+                    document.head.appendChild(faviconLink);
                 }
-
-
-                faviconLink.href =
-                    favicon;
-
+                faviconLink.href = normalizeUrl(favicon);
             }
 
-
-            /* ================================================
-               LOGO
-               ONLY IF V1 HAS LOGO IMAGE ELEMENT
-            ================================================= */
-
-            var logo =
-                getValue(
-                    settings,
-                    "logo_url"
-                );
-
-
+            /* LOGO */
+            var logo = getValue(settings, "logo_url");
             if (logo) {
-
                 document
                     .querySelectorAll(
-                        '[data-content-image="logo"]'
+                        '[data-content-image="logo"], [data-content="logo_url"], [data-client="logo_url"]'
                     )
-                    .forEach(
-                        function (element) {
-
-                            if (
-                                element.tagName &&
-                                element.tagName.toLowerCase() ===
-                                    "img"
-                            ) {
-
-                                element.src =
-                                    logo;
-
-                            } else {
-
-                                element.style.backgroundImage =
-                                    "url('" +
-                                    logo.replace(
-                                        /'/g,
-                                        "\\'"
-                                    ) +
-                                    "')";
-
-                            }
-
+                    .forEach(function (element) {
+                        if (
+                            element.tagName &&
+                            element.tagName.toLowerCase() === "img"
+                        ) {
+                            element.src = normalizeUrl(logo);
+                            element.alt = "Company Logo";
+                        } else {
+                            element.style.backgroundImage =
+                                "url('" +
+                                normalizeUrl(logo).replace(/'/g, "\\'") +
+                                "')";
                         }
-                    );
-
+                    });
             }
 
+            /* COLORS */
+            var primaryColor = getValue(settings, "primary_color");
+            if (primaryColor) {
+                document.documentElement.style.setProperty(
+                    "--primary-color",
+                    primaryColor
+                );
+                document.documentElement.style.setProperty(
+                    "--primary",
+                    primaryColor
+                );
+            }
+
+            var secondaryColor = getValue(settings, "secondary_color");
+            if (secondaryColor) {
+                document.documentElement.style.setProperty(
+                    "--secondary-color",
+                    secondaryColor
+                );
+                document.documentElement.style.setProperty(
+                    "--secondary",
+                    secondaryColor
+                );
+            }
 
             console.log(
                 "MDK Runtime: Company settings applied."
@@ -1203,10 +924,6 @@
 
     }
 
-
-    /* ========================================================
-       WEBSITE CONTENT
-       ======================================================== */
 
     async function loadWebsiteContent(
         clientId
