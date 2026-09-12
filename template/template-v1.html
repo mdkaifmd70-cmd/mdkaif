@@ -1544,7 +1544,6 @@ button:disabled{
                 +91 12345 67890
             </a>
 
-            <!-- BUSINESS HOURS NOW DYNAMIC -->
             <span data-content="business_hours">
                 Mon - Sat: 9:00 AM - 6:00 PM
             </span>
@@ -3046,28 +3045,22 @@ setTimeout(
    ENQUIRY SYSTEM
    ========================================================= */
 
-const SUPABASE_URL =
-    "https://ywvdozdoanmcxscfofcf.supabase.co";
+/*
+   IMPORTANT:
 
-const SUPABASE_KEY =
-    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+   DO NOT create another Supabase client here.
 
+   client-runtime.js creates the single shared Supabase
+   client and exposes it as:
+
+       window.MDKSupabaseClient
+
+   This prevents:
+
+       Multiple GoTrueClient instances detected
+*/
 
 let enquirySupabase = null;
-
-
-if(
-    window.supabase &&
-    typeof window.supabase.createClient === "function"
-){
-
-    enquirySupabase =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
-}
 
 
 /* =========================================================
@@ -3263,6 +3256,18 @@ if(enquiryForm){
                 return;
 
             }
+
+
+            /*
+               Get the ONE Supabase client created by
+               client-runtime.js.
+
+               This assignment is intentionally inside the
+               submit handler so runtime has already initialized.
+            */
+
+            enquirySupabase =
+                window.MDKSupabaseClient;
 
 
             if(!enquirySupabase){
