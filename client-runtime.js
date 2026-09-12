@@ -513,6 +513,14 @@
             );
 
 
+            /* ========================================================
+               ADVANCED WEBSITE SETTINGS
+               ======================================================== */
+            await loadAdvancedWebsiteSettings(
+                clientId
+            );
+
+
             /* ================================================
                PRODUCTS
             ================================================= */
@@ -744,8 +752,6 @@
             if (tagline) {
                 setText('[data-content="tagline"]', tagline);
                 setText('[data-client="tagline"]', tagline);
-                setText('[data-content="hero_eyebrow"]', tagline);
-                setText('[data-content="hero-tagline"]', tagline);
             }
 
             /* PHONE */
@@ -920,6 +926,236 @@
                 error
             );
 
+        }
+
+    }
+
+
+    /* ========================================================
+       ADVANCED WEBSITE SETTINGS
+       ======================================================== */
+
+    async function loadAdvancedWebsiteSettings(
+        clientId
+    ) {
+
+        try {
+
+            var result =
+                await db
+                    .from("client_website_settings")
+                    .select("*")
+                    .eq("client_id", clientId)
+                    .maybeSingle();
+
+            if (result.error) {
+                console.warn(
+                    "MDK Runtime: Advanced settings error:",
+                    result.error
+                );
+                return;
+            }
+
+            if (!result.data) {
+                console.log(
+                    "MDK Runtime: No advanced website settings found. Using template defaults."
+                );
+                return;
+            }
+
+            var advanced = result.data;
+            var colors = advanced.colors || {};
+            var typography = advanced.typography || {};
+            var layout = advanced.layout || {};
+            var buttons = advanced.buttons || {};
+            var header = advanced.header || {};
+            var hero = advanced.hero || {};
+            var footer = advanced.footer || {};
+            var mobile = advanced.mobile || {};
+
+            var root = document.documentElement;
+
+            function setVar(name, value) {
+                if (value !== null && value !== undefined && String(value).trim() !== "") {
+                    root.style.setProperty(name, String(value));
+                }
+            }
+
+            /* COLORS */
+            setVar("--primary", colors.primary);
+            setVar("--primary-color", colors.primary);
+            setVar("--secondary", colors.secondary);
+            setVar("--secondary-color", colors.secondary);
+            setVar("--brand-name-color", colors.company_name);
+            setVar("--tagline-color", colors.tagline);
+            setVar("--navbar-bg", colors.navbar_bg);
+            setVar("--navbar-text", colors.navbar_text);
+            setVar("--hero-bg", colors.hero_bg);
+            setVar("--hero-heading", colors.hero_heading);
+            setVar("--hero-text", colors.hero_text);
+            setVar("--section-heading", colors.section_heading);
+            setVar("--section-text", colors.section_text);
+            setVar("--card-bg", colors.card_bg);
+            setVar("--card-title", colors.card_title);
+            setVar("--card-text", colors.card_text);
+            setVar("--product-bg", colors.product_bg);
+            setVar("--product-title", colors.product_title);
+            setVar("--product-text", colors.product_text);
+            setVar("--testimonial-bg", colors.testimonial_bg);
+            setVar("--testimonial-name", colors.testimonial_name);
+            setVar("--testimonial-quote", colors.testimonial_quote);
+            setVar("--faq-bg", colors.faq_bg);
+            setVar("--faq-question", colors.faq_question);
+            setVar("--faq-answer", colors.faq_answer);
+            setVar("--cta-bg", colors.cta_bg);
+            setVar("--cta-text", colors.cta_text);
+            setVar("--footer-bg", colors.footer_bg);
+            setVar("--footer-text", colors.footer_text);
+            setVar("--footer-link", colors.footer_link);
+            setVar("--button-bg", colors.button_bg);
+            setVar("--button-text", colors.button_text);
+            setVar("--button-hover", colors.button_hover);
+            setVar("--border", colors.border);
+            setVar("--page-bg", colors.page_bg);
+
+            /* TYPOGRAPHY */
+            setVar("--heading-font", typography.heading_font);
+            setVar("--body-font", typography.body_font);
+            setVar("--heading-weight", typography.heading_weight);
+            setVar("--body-size", typography.body_size);
+            setVar("--heading-letter-spacing", typography.heading_letter_spacing);
+            setVar("--body-line-height", typography.body_line_height);
+
+            /* LAYOUT */
+            setVar("--container-width", layout.container_width);
+            setVar("--section-gap", layout.section_gap);
+            setVar("--card-radius", layout.card_radius);
+            setVar("--card-border-width", layout.card_border_width);
+            setVar("--shadow-strength", layout.shadow_strength);
+
+            /* HEADER */
+            setVar("--header-bg", header.background);
+            setVar("--header-height", header.height);
+            setVar("--nav-font-size", header.font_size);
+
+            /* HERO */
+            setVar("--hero-overlay", hero.overlay);
+            setVar("--hero-min-height", hero.min_height);
+            setVar("--hero-title-size", hero.title_size);
+            setVar("--hero-text-size", hero.text_size);
+
+            /* BUTTONS */
+            setVar("--button-radius", buttons.radius);
+            setVar("--button-font-size", buttons.font_size);
+            setVar("--button-padding-y", buttons.padding_y);
+            setVar("--button-padding-x", buttons.padding_x);
+
+            /* FOOTER */
+            setVar("--footer-heading", footer.heading);
+
+            /* MOBILE */
+            setVar("--mobile-title-size", mobile.title_size);
+            setVar("--mobile-section-gap", mobile.section_gap);
+            setVar("--mobile-card-gap", mobile.card_gap);
+
+            /* DIRECT ELEMENT COLORS */
+            var rules = [
+                ["[data-client=\"company_name\"]", "color", colors.company_name],
+                ["[data-content=\"tagline\"]", "color", colors.tagline],
+                [".brand-tagline", "color", colors.tagline],
+                ["header", "backgroundColor", header.background || colors.navbar_bg],
+                [".navlinks a", "color", colors.navbar_text],
+                [".hero", "backgroundColor", colors.hero_bg],
+                [".hero h1", "color", colors.hero_heading],
+                [".hero p", "color", colors.hero_text],
+                ["section h2", "color", colors.section_heading],
+                ["section p", "color", colors.section_text],
+                [".card", "backgroundColor", colors.card_bg],
+                [".card h3", "color", colors.card_title],
+                [".card p", "color", colors.card_text],
+                [".product-code", "color", colors.product_text],
+                [".quote", "backgroundColor", colors.testimonial_bg],
+                [".quote p", "color", colors.testimonial_quote],
+                [".quote strong", "color", colors.testimonial_name],
+                [".faq-item", "backgroundColor", colors.faq_bg],
+                [".faq-question", "color", colors.faq_question],
+                [".faq-answer", "color", colors.faq_answer],
+                [".btn-primary", "backgroundColor", colors.button_bg],
+                [".btn-primary", "color", colors.button_text],
+                [".btn-outline", "color", colors.button_bg],
+                ["footer", "backgroundColor", colors.footer_bg],
+                ["footer", "color", colors.footer_text],
+                ["footer a", "color", colors.footer_link]
+            ];
+
+            rules.forEach(function (rule) {
+                if (!rule[2]) return;
+                document.querySelectorAll(rule[0]).forEach(function (element) {
+                    element.style[rule[1]] = String(rule[2]);
+                });
+            });
+
+            /* GLOBAL ADVANCED CSS */
+            var style = document.getElementById("mdk-advanced-runtime-style");
+            if (!style) {
+                style = document.createElement("style");
+                style.id = "mdk-advanced-runtime-style";
+                document.head.appendChild(style);
+            }
+
+            style.textContent = `
+                body { background: var(--page-bg, initial); font-family: var(--body-font, inherit); font-size: var(--body-size, inherit); line-height: var(--body-line-height, inherit); }
+                h1,h2,h3,h4,h5,h6 { font-family: var(--heading-font, inherit); font-weight: var(--heading-weight, inherit); letter-spacing: var(--heading-letter-spacing, inherit); }
+                .container { max-width: var(--container-width, 1180px); }
+                section { margin-bottom: var(--section-gap, initial); }
+                .card, .quote, .faq-item { border-radius: var(--card-radius, initial); border-width: var(--card-border-width, initial); }
+                .card { background: var(--card-bg, initial); border-color: var(--border, initial); }
+                .card h3 { color: var(--card-title, initial); }
+                .card p { color: var(--card-text, initial); }
+                .product-image { background: var(--product-bg, var(--card-bg, initial)); }
+                .product-body h3 { color: var(--product-title, var(--card-title, initial)); }
+                .product-body p { color: var(--product-text, var(--card-text, initial)); }
+                .product-code { color: var(--product-text, initial); }
+                .step h3 { color: var(--card-title, initial); }
+                .step p { color: var(--card-text, initial); }
+                .step .number { background: var(--primary, initial); }
+                .quote { background: var(--testimonial-bg, var(--card-bg, initial)); border-color: var(--border, initial); }
+                .quote p { color: var(--testimonial-quote, initial); }
+                .quote strong { color: var(--testimonial-name, initial); }
+                .faq-item { background: var(--faq-bg, var(--card-bg, initial)); border-color: var(--border, initial); }
+                .faq-question { color: var(--faq-question, initial); }
+                .faq-answer { color: var(--faq-answer, initial); }
+                .btn { border-radius: var(--button-radius, initial); font-size: var(--button-font-size, inherit); padding: var(--button-padding-y, initial) var(--button-padding-x, initial); }
+                .btn-primary { background: var(--button-bg, initial); color: var(--button-text, initial); }
+                .btn-outline { color: var(--button-bg, initial); border-color: var(--button-bg, initial); }
+                .btn-primary:hover, .btn-outline:hover { background: var(--button-hover, initial); }
+                header { min-height: var(--header-height, initial); background: var(--header-bg, var(--navbar-bg, initial)); }
+                .navlinks a { font-size: var(--nav-font-size, inherit); color: var(--navbar-text, initial); }
+                .hero { min-height: var(--hero-min-height, initial); background-color: var(--hero-bg, initial); }
+                .hero h1 { font-size: var(--hero-title-size, inherit); color: var(--hero-heading, initial); }
+                .hero p { font-size: var(--hero-text-size, inherit); color: var(--hero-text, initial); }
+                .hero .eyebrow, .eyebrow { color: var(--secondary, initial); }
+                section h2 { color: var(--section-heading, initial); }
+                section p { color: var(--section-text, initial); }
+                .stats .stat strong { color: var(--section-heading, initial); }
+                .stats .stat span { color: var(--section-text, initial); }
+                footer { background: var(--footer-bg, initial); color: var(--footer-text, initial); }
+                footer a { color: var(--footer-link, initial); }
+                @media (max-width: 700px) {
+                    .hero h1 { font-size: var(--mobile-title-size, inherit); }
+                    section { margin-bottom: var(--mobile-section-gap, initial); }
+                }
+            `;
+
+            console.log(
+                "MDK Runtime: Advanced website settings applied."
+            );
+
+        } catch (error) {
+            console.warn(
+                "MDK Runtime: Advanced settings load failed:",
+                error
+            );
         }
 
     }
