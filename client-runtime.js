@@ -33,11 +33,13 @@
         }
 
         supabaseClient = window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
-        loadClient();
+window.MDKSupabaseClient = supabaseClient;
+
+loadClient();
     }
 
 
