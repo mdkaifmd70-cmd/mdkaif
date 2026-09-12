@@ -10,7 +10,7 @@
 
     /* ========================================================
        SUPABASE
-       ======================================================== */
+    ======================================================== */
 
     var SUPABASE_URL =
         "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -18,33 +18,60 @@
     var SUPABASE_KEY =
         "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
-    var supabaseClient = null;
+
+    var db = null;
 
 
     /* ========================================================
        START
-       ======================================================== */
+    ======================================================== */
 
     function startRuntime() {
 
+        console.log(
+            "MDK Runtime: Starting..."
+        );
+
+
         if (!window.supabase) {
-            console.error("MDK Runtime: Supabase library not loaded.");
+
+            console.error(
+                "MDK Runtime: Supabase library not loaded."
+            );
+
             return;
         }
 
-        supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
 
-window.MDKSupabaseClient = supabaseClient;
+        try {
 
-loadClient();
+            db =
+                window.supabase.createClient(
+                    SUPABASE_URL,
+                    SUPABASE_KEY
+                );
+
+        } catch (error) {
+
+            console.error(
+                "MDK Runtime: Supabase initialization failed.",
+                error
+            );
+
+            return;
+        }
+
+
+        loadClient();
+
     }
 
 
     /* ========================================================
-       CLIENT ID
+       GET CLIENT ID
+       URL FIRST
+       ?client=UUID
+       ?client_id=UUID
        ======================================================== */
 
     function getClientId() {
@@ -52,113 +79,221 @@ loadClient();
         try {
 
             var params =
-                new URLSearchParams(window.location.search);
+                new URLSearchParams(
+                    window.location.search
+                );
 
-            var id =
-                params.get("client") ||
+
+            var urlId =
+                params.get("client");
+
+
+            if (urlId) {
+
+                return urlId;
+
+            }
+
+
+            var urlClientId =
                 params.get("client_id");
 
-            if (id) return id;
 
-        } catch (e) {}
+            if (urlClientId) {
+
+                return urlClientId;
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "MDK Runtime: URL read failed.",
+                error
+            );
+
+        }
 
 
         try {
 
             if (
                 window.MDKClientContext &&
-                typeof window.MDKClientContext.id === "function"
+                typeof window.MDKClientContext.id ===
+                    "function"
             ) {
 
                 var contextId =
                     window.MDKClientContext.id();
 
-                if (contextId) return contextId;
+
+                if (contextId) {
+
+                    return contextId;
+
+                }
+
             }
 
-        } catch (e) {}
+        } catch (error) {
+
+            console.warn(
+                "MDK Runtime: Context read failed.",
+                error
+            );
+
+        }
 
 
         try {
 
-            var stored =
-                localStorage.getItem("mdkaif_active_client");
+            var saved =
+                localStorage.getItem(
+                    "mdkaif_active_client"
+                );
 
-            if (stored) return stored;
 
-        } catch (e) {}
+            if (saved) {
+
+                var client =
+                    JSON.parse(saved);
+
+
+                if (
+                    client &&
+                    client.id
+                ) {
+
+                    return client.id;
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "MDK Runtime: LocalStorage read failed.",
+                error
+            );
+
+        }
 
 
         return null;
+
     }
 
 
     /* ========================================================
-       VALUE HELPER
+       SAFE VALUE
        ======================================================== */
 
-    function getValue(obj, keys) {
+    function getValue(
+        object,
+        key,
+        fallback
+    ) {
 
-        if (!obj || !keys) return "";
+        if (!object) {
 
-        for (var i = 0; i < keys.length; i++) {
+            return fallback || "";
 
-            var key = keys[i];
-
-            if (
-                obj[key] !== undefined &&
-                obj[key] !== null &&
-                String(obj[key]).trim() !== ""
-            ) {
-                return obj[key];
-            }
         }
 
-        return "";
-    }
-
-
-    /* ========================================================
-       TEXT
-       ======================================================== */
-
-    function setText(selector, value) {
-
-        if (value === undefined || value === null) return;
-
-        var elements =
-            document.querySelectorAll(selector);
-
-        elements.forEach(function (el) {
-
-            el.textContent = value;
-
-        });
-    }
-
-
-    /* ========================================================
-       ATTRIBUTE
-       ======================================================== */
-
-    function setAttribute(selector, attribute, value) {
 
         if (
-            value === undefined ||
-            value === null ||
-            String(value).trim() === ""
+            object[key] !== null &&
+            object[key] !== undefined &&
+            String(object[key]).trim() !== ""
         ) {
-            return;
+
+            return String(object[key]);
+
         }
 
+
+        return fallback || "";
+
+    }
+
+
+    /* ========================================================
+       SET TEXT
+       ======================================================== */
+
+    function setText(
+        selector,
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined ||
+            String(value).trim() === ""
+        ) {
+
+            return;
+
+        }
+
+
         var elements =
-            document.querySelectorAll(selector);
+            document.querySelectorAll(
+                selector
+            );
 
-        elements.forEach(function (el) {
 
-            el.setAttribute(attribute, value);
+        elements.forEach(
+            function (element) {
 
-        });
+                element.textContent =
+                    String(value);
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       SET ATTRIBUTE
+       ======================================================== */
+
+    function setAttribute(
+        selector,
+        attribute,
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined ||
+            String(value).trim() === ""
+        ) {
+
+            return;
+
+        }
+
+
+        var elements =
+            document.querySelectorAll(
+                selector
+            );
+
+
+        elements.forEach(
+            function (element) {
+
+                element.setAttribute(
+                    attribute,
+                    String(value)
+                );
+
+            }
+        );
+
     }
 
 
@@ -168,74 +303,77 @@ loadClient();
 
     function escapeHTML(value) {
 
-        return String(value || "")
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+        return String(
+            value === null ||
+            value === undefined
+                ? ""
+                : value
+        )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
     }
 
 
     /* ========================================================
-       URL
+       NORMALIZE WEBSITE URL
        ======================================================== */
 
-    function normalizeUrl(url) {
+    function normalizeUrl(
+        url
+    ) {
 
-        if (!url) return "";
+        if (!url) {
 
-        url = String(url).trim();
+            return "";
 
-        if (!url) return "";
-
-        if (
-            url.indexOf("http://") === 0 ||
-            url.indexOf("https://") === 0 ||
-            url.indexOf("mailto:") === 0 ||
-            url.indexOf("tel:") === 0
-        ) {
-            return url;
         }
 
-        return "https://" + url;
-    }
+
+        url =
+            String(url).trim();
 
 
-    /* ========================================================
-       LINK
-       ======================================================== */
+        if (!url) {
 
-    function setLink(selector, url) {
+            return "";
 
-        if (!url) return;
+        }
 
-        var href =
-            normalizeUrl(url);
 
-        if (!href) return;
+        if (
+            url.indexOf("http://") !== 0 &&
+            url.indexOf("https://") !== 0 &&
+            url.indexOf("//") !== 0
+        ) {
 
-        var elements =
-            document.querySelectorAll(selector);
+            url =
+                "https://" +
+                url;
 
-        elements.forEach(function (el) {
+        }
 
-            el.setAttribute("href", href);
 
-            if (
-                href.indexOf("http://") === 0 ||
-                href.indexOf("https://") === 0
-            ) {
+        return url;
 
-                el.setAttribute("target", "_blank");
-
-                el.setAttribute(
-                    "rel",
-                    "noopener noreferrer"
-                );
-            }
-
-        });
     }
 
 
@@ -248,91 +386,134 @@ loadClient();
         var clientId =
             getClientId();
 
+
         if (!clientId) {
 
-            console.warn(
-                "MDK Runtime: Client ID not found."
+            console.log(
+                "MDK Runtime: No client selected. Demo mode."
             );
 
             return;
+
         }
+
+
+        console.log(
+            "MDK Runtime: Client ID:",
+            clientId
+        );
 
 
         try {
 
-            /* -----------------------------------------------
+            /* ================================================
                CLIENT
-               ----------------------------------------------- */
+            ================================================= */
 
-            var result =
-                await supabaseClient
+            var clientResult =
+                await db
                     .from("clients")
                     .select("*")
-                    .eq("id", clientId)
+                    .eq(
+                        "id",
+                        clientId
+                    )
                     .single();
 
 
-            if (result.error)
-                throw result.error;
+            if (clientResult.error) {
+
+                console.error(
+                    "MDK Runtime: Client error:",
+                    clientResult.error
+                );
+
+                return;
+
+            }
 
 
             var client =
-                result.data;
+                clientResult.data;
 
 
-            if (!client)
-                throw new Error(
-                    "Client not found."
+            if (!client) {
+
+                console.error(
+                    "MDK Runtime: Client not found."
                 );
 
+                return;
 
-            /* -----------------------------------------------
-               CLIENT CONTEXT
-               ----------------------------------------------- */
+            }
+
+
+            console.log(
+                "MDK Runtime: Loaded:",
+                client.company_name
+            );
+
+
+            /* ================================================
+               SAVE CONTEXT
+            ================================================= */
 
             try {
 
                 if (
                     window.MDKClientContext &&
-                    typeof window.MDKClientContext.set === "function"
+                    typeof window.MDKClientContext.set ===
+                        "function"
                 ) {
 
-                    window.MDKClientContext.set(client);
+                    window.MDKClientContext.set(
+                        client
+                    );
+
                 }
 
-            } catch (e) {
+            } catch (error) {
 
                 console.warn(
-                    "MDK Client Context error:",
-                    e
+                    "MDK Runtime: Context save failed.",
+                    error
                 );
+
             }
 
 
-            /* -----------------------------------------------
-               BASE CLIENT
-               ----------------------------------------------- */
+            /* ================================================
+               CLIENT BASIC DATA
+            ================================================= */
 
-            applyClient(client);
+            applyClient(
+                client
+            );
 
 
-            /* -----------------------------------------------
+            /* ================================================
                WEBSITE CONTENT
-               ----------------------------------------------- */
+            ================================================= */
 
-            await loadWebsiteContent(clientId);
+            await loadWebsiteContent(
+                clientId
+            );
 
 
-            /* -----------------------------------------------
+            /* ================================================
                COMPANY SETTINGS
-               ----------------------------------------------- */
+               COMPANY SETTINGS OVERRIDES
+               PHONE / EMAIL / ADDRESS / SEO ETC.
+            ================================================= */
 
-            await loadCompanySettings(clientId);
+            await loadCompanySettings(
+                clientId
+            );
 
 
-            /* -----------------------------------------------
+            /* ================================================
                PRODUCTS
-               ----------------------------------------------- */
+            ================================================= */
 
             var products =
                 await loadTable(
@@ -340,12 +521,15 @@ loadClient();
                     clientId
                 );
 
-            renderProducts(products);
+
+            renderProducts(
+                products
+            );
 
 
-            /* -----------------------------------------------
+            /* ================================================
                MANUFACTURING
-               ----------------------------------------------- */
+            ================================================= */
 
             var manufacturing =
                 await loadTable(
@@ -353,14 +537,15 @@ loadClient();
                     clientId
                 );
 
+
             renderManufacturing(
                 manufacturing
             );
 
 
-            /* -----------------------------------------------
+            /* ================================================
                QUALITY
-               ----------------------------------------------- */
+            ================================================= */
 
             var quality =
                 await loadTable(
@@ -368,12 +553,15 @@ loadClient();
                     clientId
                 );
 
-            renderQuality(quality);
+
+            renderQuality(
+                quality
+            );
 
 
-            /* -----------------------------------------------
+            /* ================================================
                INDUSTRIES
-               ----------------------------------------------- */
+            ================================================= */
 
             var industries =
                 await loadTable(
@@ -381,14 +569,15 @@ loadClient();
                     clientId
                 );
 
+
             renderIndustries(
                 industries
             );
 
 
-            /* -----------------------------------------------
+            /* ================================================
                GALLERY
-               ----------------------------------------------- */
+            ================================================= */
 
             var gallery =
                 await loadTable(
@@ -396,12 +585,15 @@ loadClient();
                     clientId
                 );
 
-            renderGallery(gallery);
+
+            renderGallery(
+                gallery
+            );
 
 
-            /* -----------------------------------------------
+            /* ================================================
                TESTIMONIALS
-               ----------------------------------------------- */
+            ================================================= */
 
             var testimonials =
                 await loadTable(
@@ -409,14 +601,15 @@ loadClient();
                     clientId
                 );
 
+
             renderTestimonials(
                 testimonials
             );
 
 
-            /* -----------------------------------------------
+            /* ================================================
                FAQ
-               ----------------------------------------------- */
+            ================================================= */
 
             var faq =
                 await loadTable(
@@ -424,12 +617,11 @@ loadClient();
                     clientId
                 );
 
-            renderFAQ(faq);
 
+            renderFAQ(
+                faq
+            );
 
-            /* -----------------------------------------------
-               COMPLETE
-               ----------------------------------------------- */
 
             document.body.setAttribute(
                 "data-client-loaded",
@@ -438,41 +630,38 @@ loadClient();
 
 
             console.log(
-                "MDK Runtime: Client loaded successfully.",
-                clientId
+                "MDK Runtime: WEBSITE LOADED SUCCESSFULLY"
             );
-
 
         } catch (error) {
 
             console.error(
-                "MDK Runtime error:",
+                "MDK Runtime ERROR:",
                 error
             );
+
         }
+
     }
 
 
     /* ========================================================
-       BASE CLIENT
+       APPLY CLIENT
        ======================================================== */
 
-    function applyClient(client) {
+    function applyClient(
+        client
+    ) {
 
         var companyName =
             getValue(
                 client,
-                [
-                    "company_name",
-                    "name",
-                    "company"
-                ]
+                "company_name",
+                "INDUSTRIA"
             );
 
 
-        /* IMPORTANT:
-           Existing V1 company name logic remains safe.
-        */
+        /* COMPANY NAME */
 
         setText(
             '[data-client="company_name"]',
@@ -480,12 +669,14 @@ loadClient();
         );
 
 
-        if (companyName) {
+        /* PAGE TITLE DEFAULT */
 
-            document.title =
-                companyName;
-        }
+        document.title =
+            companyName +
+            " | Manufacturing Excellence";
 
+
+        /* BODY DATA */
 
         document.body.setAttribute(
             "data-client-id",
@@ -495,8 +686,15 @@ loadClient();
 
         document.body.setAttribute(
             "data-client-name",
-            companyName || ""
+            companyName
         );
+
+
+        document.body.setAttribute(
+            "data-client-slug",
+            client.slug || ""
+        );
+
     }
 
 
@@ -504,26 +702,45 @@ loadClient();
        COMPANY SETTINGS
        ======================================================== */
 
-    async function loadCompanySettings(clientId) {
+    async function loadCompanySettings(
+        clientId
+    ) {
 
         try {
 
             var result =
-                await supabaseClient
-                    .from("company_settings")
+                await db
+                    .from(
+                        "company_settings"
+                    )
                     .select("*")
-                    .eq("client_id", clientId)
+                    .eq(
+                        "client_id",
+                        clientId
+                    )
                     .maybeSingle();
 
 
             if (result.error) {
 
                 console.warn(
-                    "MDK Runtime: Company Settings error:",
+                    "MDK Runtime: Company settings error:",
                     result.error
                 );
 
                 return;
+
+            }
+
+
+            if (!result.data) {
+
+                console.log(
+                    "MDK Runtime: No company settings found."
+                );
+
+                return;
+
             }
 
 
@@ -531,325 +748,301 @@ loadClient();
                 result.data;
 
 
-            if (!settings)
-                return;
+            /* ================================================
+               PHONE
+            ================================================= */
 
-
-            /* -----------------------------------------------
-               COMPANY NAME
-               ----------------------------------------------- */
-
-            var companyName =
+            var phone =
                 getValue(
                     settings,
-                    [
-                        "company_name",
-                        "name",
-                        "company"
-                    ]
+                    "phone"
                 );
 
 
-            if (companyName) {
+            if (phone) {
 
                 setText(
-                    '[data-client="company_name"]',
-                    companyName
+                    '[data-content="phone"]',
+                    phone
                 );
 
-                document.title =
-                    companyName;
+
+                var phoneNumber =
+                    phone.replace(
+                        /[^0-9+]/g,
+                        ""
+                    );
+
+
+                setAttribute(
+                    '[data-content-link="phone"]',
+                    "href",
+                    "tel:" +
+                    phoneNumber
+                );
+
             }
 
 
-            /* -----------------------------------------------
-               CONTACT DETAILS
-               ----------------------------------------------- */
-
-            var mobile =
-                getValue(
-                    settings,
-                    [
-                        "mobile",
-                        "phone",
-                        "phone_number",
-                        "contact_number"
-                    ]
-                );
-
+            /* ================================================
+               EMAIL
+            ================================================= */
 
             var email =
                 getValue(
                     settings,
-                    [
-                        "email",
-                        "email_address"
-                    ]
+                    "email"
                 );
-
-
-            var address =
-                getValue(
-                    settings,
-                    [
-                        "address",
-                        "company_address"
-                    ]
-                );
-
-
-            var whatsapp =
-                getValue(
-                    settings,
-                    [
-                        "whatsapp",
-                        "whatsapp_number"
-                    ]
-                );
-
-
-            var website =
-                getValue(
-                    settings,
-                    [
-                        "website",
-                        "website_url"
-                    ]
-                );
-
-
-            var city =
-                getValue(
-                    settings,
-                    [
-                        "city"
-                    ]
-                );
-
-
-            var state =
-                getValue(
-                    settings,
-                    [
-                        "state"
-                    ]
-                );
-
-
-            var country =
-                getValue(
-                    settings,
-                    [
-                        "country"
-                    ]
-                );
-
-
-            var postalCode =
-                getValue(
-                    settings,
-                    [
-                        "postal_code",
-                        "postcode",
-                        "zip_code",
-                        "pincode"
-                    ]
-                );
-
-
-            /* -----------------------------------------------
-               APPLY CONTACT DETAILS
-               ----------------------------------------------- */
-
-            setText(
-                '[data-client="mobile"]',
-                mobile
-            );
-
-
-            setText(
-                '[data-client="phone"]',
-                mobile
-            );
-
-
-            setText(
-                '[data-client="email"]',
-                email
-            );
-
-
-            setText(
-                '[data-client="address"]',
-                address
-            );
-
-
-            setText(
-                '[data-client="whatsapp"]',
-                whatsapp
-            );
-
-
-            setText(
-                '[data-client="website"]',
-                website
-            );
-
-
-            setText(
-                '[data-client="city"]',
-                city
-            );
-
-
-            setText(
-                '[data-client="state"]',
-                state
-            );
-
-
-            setText(
-                '[data-client="country"]',
-                country
-            );
-
-
-            setText(
-                '[data-client="postal_code"]',
-                postalCode
-            );
-
-
-            /* -----------------------------------------------
-               CLICKABLE CONTACT LINKS
-               ----------------------------------------------- */
-
-            if (mobile) {
-
-                setLink(
-                    '[data-client-link="mobile"]',
-                    "tel:" + String(mobile)
-                );
-
-
-                setLink(
-                    '[data-client-link="phone"]',
-                    "tel:" + String(mobile)
-                );
-            }
 
 
             if (email) {
 
-                setLink(
-                    '[data-client-link="email"]',
-                    "mailto:" + String(email)
+                setText(
+                    '[data-content="email"]',
+                    email
                 );
+
+
+                setAttribute(
+                    '[data-content-link="email"]',
+                    "href",
+                    "mailto:" +
+                    email
+                );
+
             }
+
+
+            /* ================================================
+               WEBSITE
+            ================================================= */
+
+            var website =
+                normalizeUrl(
+                    getValue(
+                        settings,
+                        "website"
+                    )
+                );
 
 
             if (website) {
 
-                setLink(
-                    '[data-client-link="website"]',
+                setAttribute(
+                    '[data-content-link="website"]',
+                    "href",
                     website
                 );
+
+
+                document
+                    .querySelectorAll(
+                        '[data-content-link="website"]'
+                    )
+                    .forEach(
+                        function (element) {
+
+                            element.target =
+                                "_blank";
+
+                            element.rel =
+                                "noopener noreferrer";
+
+                        }
+                    );
+
             }
+
+
+            /* ================================================
+               WHATSAPP
+            ================================================= */
+
+            var whatsapp =
+                getValue(
+                    settings,
+                    "whatsapp"
+                );
 
 
             if (whatsapp) {
 
-                var wa =
-                    String(whatsapp)
-                        .replace(/[^\d]/g, "");
+                setText(
+                    '[data-content="whatsapp"]',
+                    whatsapp
+                );
 
 
-                if (wa) {
-
-                    setLink(
-                        '[data-client-link="whatsapp"]',
-                        "https://wa.me/" + wa
+                var whatsappNumber =
+                    whatsapp.replace(
+                        /[^0-9]/g,
+                        ""
                     );
-                }
+
+
+                setAttribute(
+                    '[data-content-link="whatsapp"]',
+                    "href",
+                    "https://wa.me/" +
+                    whatsappNumber
+                );
+
             }
 
 
-            /* -----------------------------------------------
-               SOCIAL MEDIA
-               ----------------------------------------------- */
+            /* ================================================
+               ADDRESS
+            ================================================= */
 
-            setLink(
-                '[data-client-link="facebook"]',
+            var address =
                 getValue(
                     settings,
-                    [
-                        "facebook",
-                        "facebook_url"
-                    ]
+                    "address"
+                );
+
+
+            if (address) {
+
+                setText(
+                    '[data-content="address"]',
+                    address
+                );
+
+            }
+
+
+            /* ================================================
+               CITY
+            ================================================= */
+
+            var city =
+                getValue(
+                    settings,
+                    "city"
+                );
+
+
+            if (city) {
+
+                setText(
+                    '[data-content="city"]',
+                    city
+                );
+
+            }
+
+
+            /* ================================================
+               STATE
+            ================================================= */
+
+            var state =
+                getValue(
+                    settings,
+                    "state"
+                );
+
+
+            if (state) {
+
+                setText(
+                    '[data-content="state"]',
+                    state
+                );
+
+            }
+
+
+            /* ================================================
+               COUNTRY
+            ================================================= */
+
+            var country =
+                getValue(
+                    settings,
+                    "country"
+                );
+
+
+            if (country) {
+
+                setText(
+                    '[data-content="country"]',
+                    country
+                );
+
+            }
+
+
+            /* ================================================
+               POSTAL CODE
+            ================================================= */
+
+            var postalCode =
+                getValue(
+                    settings,
+                    "postal_code"
+                );
+
+
+            if (postalCode) {
+
+                setText(
+                    '[data-content="postal_code"]',
+                    postalCode
+                );
+
+            }
+
+
+            /* ================================================
+               SOCIAL LINKS
+            ================================================= */
+
+            setLink(
+                '[data-content-link="facebook"]',
+                getValue(
+                    settings,
+                    "facebook_url"
                 )
             );
 
 
             setLink(
-                '[data-client-link="instagram"]',
+                '[data-content-link="instagram"]',
                 getValue(
                     settings,
-                    [
-                        "instagram",
-                        "instagram_url"
-                    ]
+                    "instagram_url"
                 )
             );
 
 
             setLink(
-                '[data-client-link="linkedin"]',
+                '[data-content-link="linkedin"]',
                 getValue(
                     settings,
-                    [
-                        "linkedin",
-                        "linkedin_url"
-                    ]
+                    "linkedin_url"
                 )
             );
 
 
             setLink(
-                '[data-client-link="youtube"]',
+                '[data-content-link="youtube"]',
                 getValue(
                     settings,
-                    [
-                        "youtube",
-                        "youtube_url"
-                    ]
+                    "youtube_url"
                 )
             );
 
 
-            /* -----------------------------------------------
-               WEBSITE TITLE / SEO
-               ----------------------------------------------- */
+            /* ================================================
+               WEBSITE TITLE
+            ================================================= */
 
             var websiteTitle =
                 getValue(
                     settings,
-                    [
-                        "website_title",
-                        "site_title",
-                        "title"
-                    ]
-                );
-
-
-            var metaDescription =
-                getValue(
-                    settings,
-                    [
-                        "meta_description",
-                        "description",
-                        "seo_description"
-                    ]
+                    "website_title"
                 );
 
 
@@ -857,7 +1050,19 @@ loadClient();
 
                 document.title =
                     websiteTitle;
+
             }
+
+
+            /* ================================================
+               META DESCRIPTION
+            ================================================= */
+
+            var metaDescription =
+                getValue(
+                    settings,
+                    "meta_description"
+                );
 
 
             if (metaDescription) {
@@ -875,14 +1080,13 @@ loadClient();
                             "meta"
                         );
 
-                    meta.setAttribute(
-                        "name",
-                        "description"
-                    );
+                    meta.name =
+                        "description";
 
                     document.head.appendChild(
                         meta
                     );
+
                 }
 
 
@@ -890,117 +1094,113 @@ loadClient();
                     "content",
                     metaDescription
                 );
+
             }
 
 
-            /* -----------------------------------------------
+            /* ================================================
                FAVICON
-               ----------------------------------------------- */
+            ================================================= */
 
             var favicon =
                 getValue(
                     settings,
-                    [
-                        "favicon",
-                        "favicon_url"
-                    ]
+                    "favicon_url"
                 );
 
 
             if (favicon) {
 
-                var icon =
+                var faviconLink =
                     document.querySelector(
                         'link[rel="icon"]'
                     );
 
 
-                if (!icon) {
+                if (!faviconLink) {
 
-                    icon =
+                    faviconLink =
                         document.createElement(
                             "link"
                         );
 
-                    icon.setAttribute(
-                        "rel",
-                        "icon"
-                    );
+                    faviconLink.rel =
+                        "icon";
 
                     document.head.appendChild(
-                        icon
+                        faviconLink
                     );
+
                 }
 
 
-                icon.setAttribute(
-                    "href",
-                    normalizeUrl(favicon)
-                );
+                faviconLink.href =
+                    favicon;
+
             }
 
 
-            /* -----------------------------------------------
+            /* ================================================
                LOGO
-               Only works if V1 already has:
-               data-client="logo"
-               ----------------------------------------------- */
+               ONLY IF V1 HAS LOGO IMAGE ELEMENT
+            ================================================= */
 
             var logo =
                 getValue(
                     settings,
-                    [
-                        "logo",
-                        "logo_url"
-                    ]
+                    "logo_url"
                 );
 
 
             if (logo) {
 
-                var logoElements =
-                    document.querySelectorAll(
-                        '[data-client="logo"]'
+                document
+                    .querySelectorAll(
+                        '[data-content-image="logo"]'
+                    )
+                    .forEach(
+                        function (element) {
+
+                            if (
+                                element.tagName &&
+                                element.tagName.toLowerCase() ===
+                                    "img"
+                            ) {
+
+                                element.src =
+                                    logo;
+
+                            } else {
+
+                                element.style.backgroundImage =
+                                    "url('" +
+                                    logo.replace(
+                                        /'/g,
+                                        "\\'"
+                                    ) +
+                                    "')";
+
+                            }
+
+                        }
                     );
 
-
-                logoElements.forEach(
-                    function (el) {
-
-                        if (
-                            el.tagName &&
-                            el.tagName.toLowerCase() === "img"
-                        ) {
-
-                            el.setAttribute(
-                                "src",
-                                normalizeUrl(logo)
-                            );
-
-                        } else {
-
-                            el.style.backgroundImage =
-                                "url('" +
-                                normalizeUrl(logo)
-                                    .replace(
-                                        /'/g,
-                                        "%27"
-                                    ) +
-                                "')";
-                        }
-
-                    }
-                );
             }
 
 
+            console.log(
+                "MDK Runtime: Company settings applied."
+            );
+
         } catch (error) {
 
-            console.error(
-                "MDK Runtime Company Settings error:",
+            console.warn(
+                "MDK Runtime: Company settings load failed:",
                 error
             );
+
         }
+
     }
 
 
@@ -1008,1368 +1208,1795 @@ loadClient();
        WEBSITE CONTENT
        ======================================================== */
 
-    async function loadWebsiteContent(clientId) {
+    async function loadWebsiteContent(
+        clientId
+    ) {
 
-        try {
-
-            var result =
-                await supabaseClient
-                    .from("client_website_content")
-                    .select("*")
-                    .eq("client_id", clientId)
-                    .maybeSingle();
-
-
-            if (result.error) {
-
-                console.warn(
-                    "MDK Runtime: Website content error:",
-                    result.error
-                );
-
-                return;
-            }
-
-
-            var content =
-                result.data;
-
-
-            if (!content)
-                return;
-
-
-            /* -----------------------------------------------
-               BASIC
-               ----------------------------------------------- */
-
-            setText(
-                '[data-content="topbar"]',
-                getValue(
-                    content,
-                    [
-                        "topbar",
-                        "topbar_text",
-                        "announcement"
-                    ]
+        var result =
+            await db
+                .from(
+                    "client_website_content"
                 )
+                .select("*")
+                .eq(
+                    "client_id",
+                    clientId
+                )
+                .maybeSingle();
+
+
+        if (result.error) {
+
+            console.warn(
+                "MDK Runtime: Website content error:",
+                result.error
             );
 
+            return;
+
+        }
+
+
+        if (!result.data) {
+
+            console.log(
+                "MDK Runtime: No website content found."
+            );
+
+            return;
+
+        }
+
+
+        var content =
+            result.data;
+
+
+        /* ================================================
+           TOPBAR
+        ================================================= */
+
+        setText(
+            '[data-content="topbar_text"]',
+            getValue(
+                content,
+                "topbar_text"
+            )
+        );
+
+
+        /* ================================================
+           PHONE
+        ================================================= */
+
+        var phone =
+            getValue(
+                content,
+                "phone"
+            );
+
+
+        if (phone) {
 
             setText(
                 '[data-content="phone"]',
-                getValue(
-                    content,
-                    [
-                        "phone",
-                        "mobile",
-                        "contact_number"
-                    ]
-                )
+                phone
             );
 
+
+            var phoneNumber =
+                phone.replace(
+                    /[^0-9+]/g,
+                    ""
+                );
+
+
+            setAttribute(
+                '[data-content-link="phone"]',
+                "href",
+                "tel:" +
+                phoneNumber
+            );
+
+        }
+
+
+        /* ================================================
+           EMAIL
+        ================================================= */
+
+        var email =
+            getValue(
+                content,
+                "email"
+            );
+
+
+        if (email) {
 
             setText(
                 '[data-content="email"]',
-                getValue(
-                    content,
-                    [
-                        "email",
-                        "email_address"
-                    ]
-                )
+                email
             );
 
 
-            setText(
-                '[data-content="address"]',
-                getValue(
-                    content,
-                    [
-                        "address"
-                    ]
-                )
+            setAttribute(
+                '[data-content-link="email"]',
+                "href",
+                "mailto:" +
+                email
             );
 
+        }
+
+
+        /* ================================================
+           ADDRESS
+        ================================================= */
+
+        setText(
+            '[data-content="address"]',
+            getValue(
+                content,
+                "address"
+            )
+        );
+
+
+        /* ================================================
+           BUSINESS HOURS
+        ================================================= */
+
+        var businessHours =
+            getValue(
+                content,
+                "business_hours"
+            );
+
+
+        if (businessHours) {
 
             setText(
                 '[data-content="business_hours"]',
-                getValue(
-                    content,
-                    [
-                        "business_hours",
-                        "working_hours"
-                    ]
-                )
+                businessHours
             );
 
-
-            setText(
-                '[data-content="website"]',
-                getValue(
-                    content,
-                    [
-                        "website",
-                        "website_url"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="whatsapp"]',
-                getValue(
-                    content,
-                    [
-                        "whatsapp",
-                        "whatsapp_number"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="city"]',
-                getValue(
-                    content,
-                    [
-                        "city"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="state"]',
-                getValue(
-                    content,
-                    [
-                        "state"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="country"]',
-                getValue(
-                    content,
-                    [
-                        "country"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="postal_code"]',
-                getValue(
-                    content,
-                    [
-                        "postal_code",
-                        "postcode",
-                        "zip_code",
-                        "pincode"
-                    ]
-                )
-            );
-
-
-            /* -----------------------------------------------
-               HERO
-               ----------------------------------------------- */
-
-            setText(
-                '[data-content="hero_badge"]',
-                getValue(
-                    content,
-                    [
-                        "hero_badge",
-                        "hero_label"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="hero_title"]',
-                getValue(
-                    content,
-                    [
-                        "hero_title",
-                        "hero_heading"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="hero_subtitle"]',
-                getValue(
-                    content,
-                    [
-                        "hero_subtitle",
-                        "hero_description"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="hero_button"]',
-                getValue(
-                    content,
-                    [
-                        "hero_button",
-                        "hero_cta"
-                    ]
-                )
-            );
-
-
-            setLink(
-                '[data-content-link="hero_button"]',
-                getValue(
-                    content,
-                    [
-                        "hero_button_url",
-                        "hero_cta_url"
-                    ]
-                )
-            );
-
-
-            /* -----------------------------------------------
-               ABOUT
-               ----------------------------------------------- */
-
-            setText(
-                '[data-content="about_badge"]',
-                getValue(
-                    content,
-                    [
-                        "about_badge",
-                        "about_label"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="about_title"]',
-                getValue(
-                    content,
-                    [
-                        "about_title",
-                        "about_heading"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="about_description"]',
-                getValue(
-                    content,
-                    [
-                        "about_description",
-                        "about_text"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="about_button"]',
-                getValue(
-                    content,
-                    [
-                        "about_button",
-                        "about_cta"
-                    ]
-                )
-            );
-
-
-            setLink(
-                '[data-content-link="about_button"]',
-                getValue(
-                    content,
-                    [
-                        "about_button_url",
-                        "about_cta_url"
-                    ]
-                )
-            );
-
-
-            /* -----------------------------------------------
-               MISSION / VISION
-               ----------------------------------------------- */
-
-            setText(
-                '[data-content="mission"]',
-                getValue(
-                    content,
-                    [
-                        "mission",
-                        "mission_text"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="vision"]',
-                getValue(
-                    content,
-                    [
-                        "vision",
-                        "vision_text"
-                    ]
-                )
-            );
-
-
-            /* -----------------------------------------------
-               STATS
-               ----------------------------------------------- */
-
-            for (var s = 1; s <= 4; s++) {
-
-                setText(
-                    '[data-content="stat' +
-                    s +
-                    '_number"]',
-
-                    getValue(
-                        content,
-                        [
-                            "stat" +
-                            s +
-                            "_number",
-
-                            "stat_" +
-                            s +
-                            "_number"
-                        ]
-                    )
-                );
-
-
-                setText(
-                    '[data-content="stat' +
-                    s +
-                    '_label"]',
-
-                    getValue(
-                        content,
-                        [
-                            "stat" +
-                            s +
-                            "_label",
-
-                            "stat_" +
-                            s +
-                            "_label"
-                        ]
-                    )
-                );
-            }
-
-
-            /* -----------------------------------------------
-               SECTION CONTENT
-               ----------------------------------------------- */
-
-            var sections = [
-
-                "products",
-                "manufacturing",
-                "quality",
-                "industries",
-                "gallery",
-                "testimonials",
-                "faq",
-                "contact",
-                "footer"
-
-            ];
-
-
-            sections.forEach(
-                function (section) {
-
-                    setText(
-                        '[data-content="' +
-                        section +
-                        '_heading"]',
-
-                        getValue(
-                            content,
-                            [
-                                section +
-                                "_heading",
-
-                                section +
-                                "_title"
-                            ]
-                        )
-                    );
-
-
-                    setText(
-                        '[data-content="' +
-                        section +
-                        '_description"]',
-
-                        getValue(
-                            content,
-                            [
-                                section +
-                                "_description",
-
-                                section +
-                                "_text"
-                            ]
-                        )
-                    );
-
-                }
-            );
-
-
-            /* -----------------------------------------------
-               PRIVACY / TERMS
-               ----------------------------------------------- */
-
-            setText(
-                '[data-content="privacy"]',
-                getValue(
-                    content,
-                    [
-                        "privacy",
-                        "privacy_text"
-                    ]
-                )
-            );
-
-
-            setText(
-                '[data-content="terms"]',
-                getValue(
-                    content,
-                    [
-                        "terms",
-                        "terms_text"
-                    ]
-                )
-            );
-
-
-            /* -----------------------------------------------
-               SOCIAL
-               ----------------------------------------------- */
-
-            setLink(
-                '[data-content-link="facebook"]',
-                getValue(
-                    content,
-                    [
-                        "facebook",
-                        "facebook_url"
-                    ]
-                )
-            );
-
-
-            setLink(
-                '[data-content-link="instagram"]',
-                getValue(
-                    content,
-                    [
-                        "instagram",
-                        "instagram_url"
-                    ]
-                )
-            );
-
-
-            setLink(
-                '[data-content-link="linkedin"]',
-                getValue(
-                    content,
-                    [
-                        "linkedin",
-                        "linkedin_url"
-                    ]
-                )
-            );
-
-
-            setLink(
-                '[data-content-link="youtube"]',
-                getValue(
-                    content,
-                    [
-                        "youtube",
-                        "youtube_url"
-                    ]
-                )
-            );
-
-
-            /* -----------------------------------------------
-               SEO
-               ----------------------------------------------- */
-
-            var seoTitle =
-                getValue(
-                    content,
-                    [
-                        "website_title",
-                        "seo_title",
-                        "site_title"
-                    ]
-                );
-
-
-            var seoDescription =
-                getValue(
-                    content,
-                    [
-                        "meta_description",
-                        "seo_description"
-                    ]
-                );
-
-
-            if (seoTitle) {
-
-                document.title =
-                    seoTitle;
-            }
-
-
-            if (seoDescription) {
-
-                var description =
-                    document.querySelector(
-                        'meta[name="description"]'
-                    );
-
-
-                if (!description) {
-
-                    description =
-                        document.createElement(
-                            "meta"
-                        );
-
-                    description.setAttribute(
-                        "name",
-                        "description"
-                    );
-
-                    document.head.appendChild(
-                        description
-                    );
-                }
-
-
-                description.setAttribute(
-                    "content",
-                    seoDescription
-                );
-            }
-
-
-        } catch (error) {
-
-            console.error(
-                "MDK Runtime Website Content error:",
-                error
-            );
         }
+
+
+        /* ================================================
+           WEBSITE
+        ================================================= */
+
+        var website =
+            normalizeUrl(
+                getValue(
+                    content,
+                    "website"
+                )
+            );
+
+
+        if (website) {
+
+            setAttribute(
+                '[data-content-link="website"]',
+                "href",
+                website
+            );
+
+
+            document
+                .querySelectorAll(
+                    '[data-content-link="website"]'
+                )
+                .forEach(
+                    function (element) {
+
+                        element.target =
+                            "_blank";
+
+                        element.rel =
+                            "noopener noreferrer";
+
+                    }
+                );
+
+        }
+
+
+        /* ================================================
+           WHATSAPP
+        ================================================= */
+
+        var whatsapp =
+            getValue(
+                content,
+                "whatsapp"
+            );
+
+
+        if (whatsapp) {
+
+            var whatsappNumber =
+                whatsapp.replace(
+                    /[^0-9]/g,
+                    ""
+                );
+
+
+            setAttribute(
+                '[data-content-link="whatsapp"]',
+                "href",
+                "https://wa.me/" +
+                whatsappNumber
+            );
+
+        }
+
+
+        /* ================================================
+           CITY
+        ================================================= */
+
+        setText(
+            '[data-content="city"]',
+            getValue(
+                content,
+                "city"
+            )
+        );
+
+
+        /* ================================================
+           STATE
+        ================================================= */
+
+        setText(
+            '[data-content="state"]',
+            getValue(
+                content,
+                "state"
+            )
+        );
+
+
+        /* ================================================
+           COUNTRY
+        ================================================= */
+
+        setText(
+            '[data-content="country"]',
+            getValue(
+                content,
+                "country"
+            )
+        );
+
+
+        /* ================================================
+           POSTAL CODE
+        ================================================= */
+
+        setText(
+            '[data-content="postal_code"]',
+            getValue(
+                content,
+                "postal_code"
+            )
+        );
+
+
+        /* ================================================
+           HERO
+        ================================================= */
+
+        setText(
+            '[data-content="hero_eyebrow"]',
+            getValue(
+                content,
+                "hero_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="hero_title"]',
+            getValue(
+                content,
+                "hero_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="hero_description"]',
+            getValue(
+                content,
+                "hero_description"
+            )
+        );
+
+
+        var heroImage =
+            getValue(
+                content,
+                "hero_image_url"
+            );
+
+
+        if (heroImage) {
+
+            var hero =
+                document.querySelector(
+                    ".hero"
+                );
+
+
+            if (hero) {
+
+                hero.style.backgroundImage =
+                    "linear-gradient(90deg,rgba(2,6,23,.92),rgba(2,6,23,.55)),url('" +
+                    heroImage.replace(
+                        /'/g,
+                        "\\'"
+                    ) +
+                    "')";
+
+            }
+
+        }
+
+
+        /* ================================================
+           ABOUT
+        ================================================= */
+
+        setText(
+            '[data-content="about_eyebrow"]',
+            getValue(
+                content,
+                "about_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_title"]',
+            getValue(
+                content,
+                "about_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_description"]',
+            getValue(
+                content,
+                "about_description"
+            )
+        );
+
+
+        var aboutDescription2 =
+            getValue(
+                content,
+                "about_description_2"
+            );
+
+
+        if (aboutDescription2) {
+
+            setText(
+                '[data-content="about_description_2"]',
+                aboutDescription2
+            );
+
+        }
+
+
+        /* ABOUT POINTS */
+
+        setText(
+            '[data-content="about_point_1"]',
+            getValue(
+                content,
+                "about_point_1"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_point_2"]',
+            getValue(
+                content,
+                "about_point_2"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_point_3"]',
+            getValue(
+                content,
+                "about_point_3"
+            )
+        );
+
+
+        setText(
+            '[data-content="about_point_4"]',
+            getValue(
+                content,
+                "about_point_4"
+            )
+        );
+
+
+        var aboutImage =
+            getValue(
+                content,
+                "about_image_url"
+            );
+
+
+        if (aboutImage) {
+
+            var visual =
+                document.querySelector(
+                    '[data-content-image="about"]'
+                );
+
+
+            if (visual) {
+
+                visual.style.backgroundImage =
+                    "url('" +
+                    aboutImage.replace(
+                        /'/g,
+                        "\\'"
+                    ) +
+                    "')";
+
+
+                visual.textContent =
+                    "";
+
+            }
+
+        }
+
+
+        /* ================================================
+           MISSION
+        ================================================= */
+
+        setText(
+            '[data-content="mission"]',
+            getValue(
+                content,
+                "mission"
+            )
+        );
+
+
+        /* ================================================
+           VISION
+        ================================================= */
+
+        setText(
+            '[data-content="vision"]',
+            getValue(
+                content,
+                "vision"
+            )
+        );
+
+
+        /* ================================================
+           STATS
+        ================================================= */
+
+        setText(
+            '[data-stat="1-value"]',
+            getValue(
+                content,
+                "stat_1_value"
+            )
+        );
+
+
+        setText(
+            '[data-stat="1-label"]',
+            getValue(
+                content,
+                "stat_1_label"
+            )
+        );
+
+
+        setText(
+            '[data-stat="2-value"]',
+            getValue(
+                content,
+                "stat_2_value"
+            )
+        );
+
+
+        setText(
+            '[data-stat="2-label"]',
+            getValue(
+                content,
+                "stat_2_label"
+            )
+        );
+
+
+        setText(
+            '[data-stat="3-value"]',
+            getValue(
+                content,
+                "stat_3_value"
+            )
+        );
+
+
+        setText(
+            '[data-stat="3-label"]',
+            getValue(
+                content,
+                "stat_3_label"
+            )
+        );
+
+
+        setText(
+            '[data-stat="4-value"]',
+            getValue(
+                content,
+                "stat_4_value"
+            )
+        );
+
+
+        setText(
+            '[data-stat="4-label"]',
+            getValue(
+                content,
+                "stat_4_label"
+            )
+        );
+
+
+        /* ================================================
+           PRODUCTS SECTION
+        ================================================= */
+
+        setText(
+            '[data-content="products_eyebrow"]',
+            getValue(
+                content,
+                "products_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="products_title"]',
+            getValue(
+                content,
+                "products_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="products_description"]',
+            getValue(
+                content,
+                "products_description"
+            )
+        );
+
+
+        /* ================================================
+           MANUFACTURING
+        ================================================= */
+
+        setText(
+            '[data-content="manufacturing_eyebrow"]',
+            getValue(
+                content,
+                "manufacturing_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="manufacturing_title"]',
+            getValue(
+                content,
+                "manufacturing_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="manufacturing_description"]',
+            getValue(
+                content,
+                "manufacturing_description"
+            )
+        );
+
+
+        /* ================================================
+           QUALITY
+        ================================================= */
+
+        setText(
+            '[data-content="quality_eyebrow"]',
+            getValue(
+                content,
+                "quality_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="quality_title"]',
+            getValue(
+                content,
+                "quality_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="quality_description"]',
+            getValue(
+                content,
+                "quality_description"
+            )
+        );
+
+
+        /* ================================================
+           INDUSTRIES
+        ================================================= */
+
+        setText(
+            '[data-content="industries_eyebrow"]',
+            getValue(
+                content,
+                "industries_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="industries_title"]',
+            getValue(
+                content,
+                "industries_heading"
+            )
+        );
+
+
+        /* ================================================
+           GALLERY
+        ================================================= */
+
+        setText(
+            '[data-content="gallery_eyebrow"]',
+            getValue(
+                content,
+                "gallery_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="gallery_title"]',
+            getValue(
+                content,
+                "gallery_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="gallery_description"]',
+            getValue(
+                content,
+                "gallery_description"
+            )
+        );
+
+
+        /* ================================================
+           TESTIMONIALS
+        ================================================= */
+
+        setText(
+            '[data-content="testimonials_eyebrow"]',
+            getValue(
+                content,
+                "testimonials_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="testimonials_title"]',
+            getValue(
+                content,
+                "testimonials_heading"
+            )
+        );
+
+
+        /* ================================================
+           FAQ
+        ================================================= */
+
+        setText(
+            '[data-content="faq_eyebrow"]',
+            getValue(
+                content,
+                "faq_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="faq_title"]',
+            getValue(
+                content,
+                "faq_heading"
+            )
+        );
+
+
+        /* ================================================
+           CONTACT
+        ================================================= */
+
+        setText(
+            '[data-content="contact_eyebrow"]',
+            getValue(
+                content,
+                "contact_eyebrow"
+            )
+        );
+
+
+        setText(
+            '[data-content="contact_title"]',
+            getValue(
+                content,
+                "contact_heading"
+            )
+        );
+
+
+        setText(
+            '[data-content="contact_description"]',
+            getValue(
+                content,
+                "contact_description"
+            )
+        );
+
+
+        /* ================================================
+           FOOTER
+        ================================================= */
+
+        setText(
+            '[data-content="footer_description"]',
+            getValue(
+                content,
+                "footer_description"
+            )
+        );
+
+
+        /* ================================================
+           LEGAL LINKS
+        ================================================= */
+
+        setLink(
+            '[data-content-link="privacy"]',
+            getValue(
+                content,
+                "privacy_url"
+            )
+        );
+
+
+        setLink(
+            '[data-content-link="terms"]',
+            getValue(
+                content,
+                "terms_url"
+            )
+        );
+
+
+        setLink(
+            '[data-content-link="linkedin"]',
+            getValue(
+                content,
+                "linkedin_url"
+            )
+        );
+
+
+        /* ================================================
+           SOCIAL LINKS
+        ================================================= */
+
+        setLink(
+            '[data-content-link="facebook"]',
+            getValue(
+                content,
+                "facebook_url"
+            )
+        );
+
+
+        setLink(
+            '[data-content-link="instagram"]',
+            getValue(
+                content,
+                "instagram_url"
+            )
+        );
+
+
+        setLink(
+            '[data-content-link="youtube"]',
+            getValue(
+                content,
+                "youtube_url"
+            )
+        );
+
+
+        /* ================================================
+           META / SEO
+        ================================================= */
+
+        var websiteTitle =
+            getValue(
+                content,
+                "website_title"
+            );
+
+
+        if (websiteTitle) {
+
+            document.title =
+                websiteTitle;
+
+        }
+
+
+        var metaDescription =
+            getValue(
+                content,
+                "meta_description"
+            );
+
+
+        if (metaDescription) {
+
+            var meta =
+                document.querySelector(
+                    'meta[name="description"]'
+                );
+
+
+            if (!meta) {
+
+                meta =
+                    document.createElement(
+                        "meta"
+                    );
+
+                meta.name =
+                    "description";
+
+                document.head.appendChild(
+                    meta
+                );
+
+            }
+
+
+            meta.setAttribute(
+                "content",
+                metaDescription
+            );
+
+        }
+
     }
 
 
     /* ========================================================
-       GENERIC TABLE LOADER
+       LINK
        ======================================================== */
 
+    function setLink(
+        selector,
+        url
+    ) {
+
+        if (!url) {
+
+            return;
+
+        }
+
+
+        var normalized =
+            normalizeUrl(
+                url
+            );
+
+
+        if (!normalized) {
+
+            return;
+
+        }
+
+
+        var elements =
+            document.querySelectorAll(
+                selector
+            );
+
+
+        elements.forEach(
+            function (element) {
+
+                element.href =
+                    normalized;
+
+
+                if (
+                    normalized.indexOf(
+                        "http"
+                    ) === 0
+                ) {
+
+                    element.target =
+                        "_blank";
+
+
+                    element.rel =
+                        "noopener noreferrer";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       LOAD TABLE
+    ======================================================== */
+
     async function loadTable(
-        tableName,
+        table,
         clientId
     ) {
 
         try {
 
             var result =
-                await supabaseClient
-                    .from(tableName)
+                await db
+                    .from(table)
                     .select("*")
-                    .eq("client_id", clientId);
+                    .eq(
+                        "client_id",
+                        clientId
+                    );
 
 
             if (result.error) {
 
                 console.warn(
-                    "MDK Runtime table error:",
-                    tableName,
+                    "MDK Runtime:",
+                    table,
                     result.error
                 );
 
                 return [];
+
             }
 
 
             return result.data || [];
 
-
         } catch (error) {
 
-            console.error(
-                "MDK Runtime table error:",
-                tableName,
+            console.warn(
+                "MDK Runtime:",
+                table,
                 error
             );
 
             return [];
+
         }
+
     }
 
 
     /* ========================================================
-       FIRST VALUE
+       GET FIRST AVAILABLE FIELD
        ======================================================== */
 
-    function first(obj, keys) {
+    function first(
+        row,
+        fields,
+        fallback
+    ) {
 
-        return getValue(
-            obj,
-            keys
-        );
+        for (
+            var i = 0;
+            i < fields.length;
+            i++
+        ) {
+
+            var key =
+                fields[i];
+
+
+            if (
+                row[key] !== null &&
+                row[key] !== undefined &&
+                String(row[key]).trim() !== ""
+            ) {
+
+                return String(
+                    row[key]
+                );
+
+            }
+
+        }
+
+
+        return fallback || "";
+
     }
 
 
     /* ========================================================
        PRODUCTS
-       ======================================================== */
+    ======================================================== */
 
-    function renderProducts(rows) {
+    function renderProducts(
+        items
+    ) {
 
-        var containers =
-            document.querySelectorAll(
+        var container =
+            document.querySelector(
                 "[data-products]"
             );
 
 
-        if (!containers.length)
+        if (!container) {
+
             return;
 
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML = "";
+        }
 
 
-                rows.forEach(
-                    function (row) {
-
-                        var name =
-                            first(
-                                row,
-                                [
-                                    "name",
-                                    "product_name",
-                                    "title"
-                                ]
-                            );
+        container.innerHTML =
+            "";
 
 
-                        var description =
-                            first(
-                                row,
-                                [
-                                    "description",
-                                    "product_description",
-                                    "details"
-                                ]
-                            );
+        items.forEach(
+            function (item) {
+
+                var name =
+                    first(
+                        item,
+                        [
+                            "name",
+                            "product_name",
+                            "title"
+                        ],
+                        "Product"
+                    );
 
 
-                        var code =
-                            first(
-                                row,
-                                [
-                                    "code",
-                                    "product_code",
-                                    "material_code"
-                                ]
-                            );
+                var description =
+                    first(
+                        item,
+                        [
+                            "description",
+                            "product_description",
+                            "details"
+                        ],
+                        ""
+                    );
 
 
-                        var image =
-                            first(
-                                row,
-                                [
-                                    "image",
-                                    "image_url",
-                                    "photo",
-                                    "photo_url"
-                                ]
-                            );
+                var image =
+                    first(
+                        item,
+                        [
+                            "image_url",
+                            "product_image_url",
+                            "image",
+                            "photo_url"
+                        ],
+                        ""
+                    );
 
 
-                        var card =
-                            document.createElement(
-                                "div"
-                            );
+                var code =
+                    first(
+                        item,
+                        [
+                            "product_code",
+                            "code",
+                            "sku"
+                        ],
+                        ""
+                    );
 
 
-                        card.className =
-                            "card";
+                var card =
+                    document.createElement(
+                        "article"
+                    );
 
 
-                        var html = "";
+                card.className =
+                    "card";
 
 
-                        if (image) {
-
-                            html +=
-                                '<img src="' +
-                                escapeHTML(
-                                    normalizeUrl(image)
-                                ) +
-                                '" alt="' +
-                                escapeHTML(name) +
-                                '">';
-                        }
-
-
-                        html +=
-                            '<div class="card-body">';
-
-
-                        if (code) {
-
-                            html +=
-                                '<div class="product-code">' +
-                                escapeHTML(code) +
-                                "</div>";
-                        }
-
-
-                        html +=
-                            "<h3>" +
+                var imageHTML =
+                    image
+                        ? (
+                            '<div class="product-image">' +
+                            '<img src="' +
+                            escapeHTML(image) +
+                            '" alt="' +
                             escapeHTML(name) +
-                            "</h3>";
-
-
-                        if (description) {
-
-                            html +=
-                                "<p>" +
-                                escapeHTML(description) +
-                                "</p>";
-                        }
-
-
-                        html +=
-                            "</div>";
-
-
-                        card.innerHTML =
-                            html;
-
-
-                        container.appendChild(
-                            card
+                            '" style="width:100%;height:100%;object-fit:cover;">' +
+                            '</div>'
+                        )
+                        : (
+                            '<div class="product-image">' +
+                            'PRODUCT IMAGE' +
+                            '</div>'
                         );
 
-                    }
+
+                card.innerHTML =
+                    imageHTML +
+                    '<div class="product-body">' +
+                    '<div class="product-code">' +
+                    escapeHTML(code) +
+                    '</div>' +
+                    '<h3>' +
+                    escapeHTML(name) +
+                    '</h3>' +
+                    '<p>' +
+                    escapeHTML(description) +
+                    '</p>' +
+                    '</div>';
+
+
+                container.appendChild(
+                    card
                 );
 
             }
         );
+
     }
 
 
     /* ========================================================
        MANUFACTURING
-       ======================================================== */
+    ======================================================== */
 
-    function renderManufacturing(rows) {
+    function renderManufacturing(
+        items
+    ) {
 
-        var containers =
-            document.querySelectorAll(
+        var container =
+            document.querySelector(
                 "[data-manufacturing]"
             );
 
 
-        if (!containers.length)
+        if (!container) {
+
             return;
 
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML = "";
+        }
 
 
-                rows.forEach(
-                    function (row, index) {
-
-                        var number =
-                            first(
-                                row,
-                                [
-                                    "step_no",
-                                    "number",
-                                    "sort_order"
-                                ]
-                            ) ||
-                            (index + 1);
+        container.innerHTML =
+            "";
 
 
-                        var title =
-                            first(
-                                row,
-                                [
-                                    "title",
-                                    "name",
-                                    "step_title"
-                                ]
-                            );
+        items.forEach(
+            function (item, index) {
+
+                var title =
+                    first(
+                        item,
+                        [
+                            "title",
+                            "name",
+                            "step_name"
+                        ],
+                        "Manufacturing Step"
+                    );
 
 
-                        var description =
-                            first(
-                                row,
-                                [
-                                    "description",
-                                    "details",
-                                    "step_description"
-                                ]
-                            );
+                var description =
+                    first(
+                        item,
+                        [
+                            "description",
+                            "step_description",
+                            "details"
+                        ],
+                        ""
+                    );
 
 
-                        var item =
-                            document.createElement(
-                                "div"
-                            );
+                var number =
+                    first(
+                        item,
+                        [
+                            "step_number",
+                            "number",
+                            "sequence"
+                        ],
+                        String(
+                            index + 1
+                        )
+                    );
 
 
-                        item.className =
-                            "step";
+                var card =
+                    document.createElement(
+                        "div"
+                    );
 
 
-                        item.innerHTML =
-
-                            '<div class="step-number">' +
-                            escapeHTML(number) +
-                            "</div>" +
-
-                            "<h3>" +
-                            escapeHTML(title) +
-                            "</h3>" +
-
-                            "<p>" +
-                            escapeHTML(description) +
-                            "</p>";
+                card.className =
+                    "step";
 
 
-                        container.appendChild(
-                            item
-                        );
+                card.innerHTML =
+                    '<div class="number">' +
+                    escapeHTML(number) +
+                    '</div>' +
+                    '<h3>' +
+                    escapeHTML(title) +
+                    '</h3>' +
+                    '<p>' +
+                    escapeHTML(description) +
+                    '</p>';
 
-                    }
+
+                container.appendChild(
+                    card
                 );
 
             }
         );
+
     }
 
 
     /* ========================================================
        QUALITY
-       ======================================================== */
+    ======================================================== */
 
-    function renderQuality(rows) {
+    function renderQuality(
+        items
+    ) {
 
-        var containers =
-            document.querySelectorAll(
+        var container =
+            document.querySelector(
                 "[data-quality]"
             );
 
 
-        if (!containers.length)
+        if (!container) {
+
             return;
 
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML = "";
+        }
 
 
-                rows.forEach(
-                    function (row) {
-
-                        var icon =
-                            first(
-                                row,
-                                [
-                                    "icon",
-                                    "icon_class"
-                                ]
-                            );
+        container.innerHTML =
+            "";
 
 
-                        var title =
-                            first(
-                                row,
-                                [
-                                    "title",
-                                    "name"
-                                ]
-                            );
+        items.forEach(
+            function (item) {
+
+                var title =
+                    first(
+                        item,
+                        [
+                            "title",
+                            "name",
+                            "quality_name"
+                        ],
+                        "Quality Assurance"
+                    );
 
 
-                        var description =
-                            first(
-                                row,
-                                [
-                                    "description",
-                                    "details"
-                                ]
-                            );
+                var description =
+                    first(
+                        item,
+                        [
+                            "description",
+                            "details"
+                        ],
+                        ""
+                    );
 
 
-                        var card =
-                            document.createElement(
-                                "div"
-                            );
+                var icon =
+                    first(
+                        item,
+                        [
+                            "icon",
+                            "icon_text"
+                        ],
+                        "✓"
+                    );
 
 
-                        card.className =
-                            "card";
+                var card =
+                    document.createElement(
+                        "div"
+                    );
 
 
-                        card.innerHTML =
-
-                            (
-                                icon
-                                    ? '<div class="quality-icon">' +
-                                      escapeHTML(icon) +
-                                      "</div>"
-                                    : ""
-                            ) +
-
-                            "<h3>" +
-                            escapeHTML(title) +
-                            "</h3>" +
-
-                            "<p>" +
-                            escapeHTML(description) +
-                            "</p>";
+                card.className =
+                    "card";
 
 
-                        container.appendChild(
-                            card
-                        );
+                card.innerHTML =
+                    '<div class="icon">' +
+                    escapeHTML(icon) +
+                    '</div>' +
+                    '<h3>' +
+                    escapeHTML(title) +
+                    '</h3>' +
+                    '<p>' +
+                    escapeHTML(description) +
+                    '</p>';
 
-                    }
+
+                container.appendChild(
+                    card
                 );
 
             }
         );
+
     }
 
 
     /* ========================================================
        INDUSTRIES
-       ======================================================== */
+    ======================================================== */
 
-    function renderIndustries(rows) {
+    function renderIndustries(
+        items
+    ) {
 
-        var containers =
-            document.querySelectorAll(
+        var container =
+            document.querySelector(
                 "[data-industries]"
             );
 
 
-        if (!containers.length)
+        if (!container) {
+
             return;
 
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML = "";
+        }
 
 
-                rows.forEach(
-                    function (row) {
-
-                        var name =
-                            first(
-                                row,
-                                [
-                                    "name",
-                                    "industry_name",
-                                    "title"
-                                ]
-                            );
+        container.innerHTML =
+            "";
 
 
-                        var pill =
-                            document.createElement(
-                                "div"
-                            );
+        items.forEach(
+            function (item) {
+
+                var name =
+                    first(
+                        item,
+                        [
+                            "name",
+                            "title",
+                            "industry_name"
+                        ],
+                        "Industry"
+                    );
 
 
-                        pill.className =
-                            "pill";
+                var pill =
+                    document.createElement(
+                        "div"
+                    );
 
 
-                        pill.textContent =
-                            name;
+                pill.className =
+                    "pill";
 
 
-                        container.appendChild(
-                            pill
-                        );
+                pill.textContent =
+                    name;
 
-                    }
+
+                container.appendChild(
+                    pill
                 );
 
             }
         );
+
     }
 
 
     /* ========================================================
        GALLERY
-       ======================================================== */
+    ======================================================== */
 
-    function renderGallery(rows) {
+    function renderGallery(
+        items
+    ) {
 
-        var containers =
-            document.querySelectorAll(
+        var container =
+            document.querySelector(
                 "[data-gallery]"
             );
 
 
-        if (!containers.length)
+        if (!container) {
+
             return;
 
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML = "";
+        }
 
 
-                rows.forEach(
-                    function (row) {
-
-                        var image =
-                            first(
-                                row,
-                                [
-                                    "image",
-                                    "image_url",
-                                    "photo",
-                                    "photo_url"
-                                ]
-                            );
+        container.innerHTML =
+            "";
 
 
-                        var title =
-                            first(
-                                row,
-                                [
-                                    "title",
-                                    "name",
-                                    "caption"
-                                ]
-                            );
+        items.forEach(
+            function (item) {
+
+                var image =
+                    first(
+                        item,
+                        [
+                            "image_url",
+                            "gallery_image_url",
+                            "image",
+                            "photo_url"
+                        ],
+                        ""
+                    );
 
 
-                        var item =
-                            document.createElement(
-                                "div"
-                            );
+                var title =
+                    first(
+                        item,
+                        [
+                            "title",
+                            "name",
+                            "caption"
+                        ],
+                        "Gallery"
+                    );
 
 
-                        item.className =
-                            "gallery-item";
+                if (!image) {
+
+                    return;
+
+                }
 
 
-                        if (image) {
-
-                            item.style.backgroundImage =
-                                "url('" +
-                                normalizeUrl(image)
-                                    .replace(
-                                        /'/g,
-                                        "%27"
-                                    ) +
-                                "')";
-                        }
+                var element =
+                    document.createElement(
+                        "div"
+                    );
 
 
-                        if (title) {
-
-                            item.setAttribute(
-                                "title",
-                                title
-                            );
-                        }
+                element.className =
+                    "gallery-item";
 
 
-                        container.appendChild(
-                            item
-                        );
+                element.style.backgroundImage =
+                    "url('" +
+                    image.replace(
+                        /'/g,
+                        "\\'"
+                    ) +
+                    "')";
 
-                    }
+
+                element.setAttribute(
+                    "title",
+                    title
+                );
+
+
+                container.appendChild(
+                    element
                 );
 
             }
         );
+
     }
 
 
     /* ========================================================
        TESTIMONIALS
-       ======================================================== */
+    ======================================================== */
 
-    function renderTestimonials(rows) {
+    function renderTestimonials(
+        items
+    ) {
 
-        var containers =
-            document.querySelectorAll(
+        var container =
+            document.querySelector(
                 "[data-testimonials]"
             );
 
 
-        if (!containers.length)
+        if (!container) {
+
             return;
 
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML = "";
+        }
 
 
-                rows.forEach(
-                    function (row) {
-
-                        var message =
-                            first(
-                                row,
-                                [
-                                    "message",
-                                    "testimonial",
-                                    "quote",
-                                    "text",
-                                    "content"
-                                ]
-                            );
+        container.innerHTML =
+            "";
 
 
-                        var name =
-                            first(
-                                row,
-                                [
-                                    "name",
-                                    "client_name",
-                                    "person_name"
-                                ]
-                            );
+        items.forEach(
+            function (item) {
+
+                var name =
+                    first(
+                        item,
+                        [
+                            "name",
+                            "customer_name",
+                            "client_name",
+                            "author"
+                        ],
+                        "Customer"
+                    );
 
 
-                        var company =
-                            first(
-                                row,
-                                [
-                                    "company",
-                                    "company_name"
-                                ]
-                            );
+                var message =
+                    first(
+                        item,
+                        [
+                            "message",
+                            "testimonial",
+                            "review",
+                            "description"
+                        ],
+                        ""
+                    );
 
 
-                        var card =
-                            document.createElement(
-                                "div"
-                            );
+                var company =
+                    first(
+                        item,
+                        [
+                            "company",
+                            "company_name",
+                            "organization"
+                        ],
+                        ""
+                    );
 
 
-                        card.className =
-                            "quote";
+                var card =
+                    document.createElement(
+                        "div"
+                    );
 
 
-                        card.innerHTML =
-
-                            '<div class="quote-mark">“</div>' +
-
-                            "<p>" +
-                            escapeHTML(message) +
-                            "</p>" +
-
-                            '<div class="quote-name">' +
-                            escapeHTML(name) +
-                            "</div>" +
-
-                            (
-                                company
-                                    ? '<div class="quote-company">' +
-                                      escapeHTML(company) +
-                                      "</div>"
-                                    : ""
-                            );
+                card.className =
+                    "quote";
 
 
-                        container.appendChild(
-                            card
-                        );
+                card.innerHTML =
+                    '<p>“' +
+                    escapeHTML(message) +
+                    '”</p>' +
+                    '<strong>' +
+                    escapeHTML(name) +
+                    '</strong>' +
+                    (
+                        company
+                            ? '<small>' +
+                              escapeHTML(company) +
+                              '</small>'
+                            : ""
+                    );
 
-                    }
+
+                container.appendChild(
+                    card
                 );
 
             }
         );
+
     }
 
 
     /* ========================================================
        FAQ
-       ======================================================== */
+    ======================================================== */
 
-    function renderFAQ(rows) {
+    function renderFAQ(
+        items
+    ) {
 
-        var containers =
-            document.querySelectorAll(
+        var container =
+            document.querySelector(
                 "[data-faq]"
             );
 
 
-        if (!containers.length)
+        if (!container) {
+
             return;
 
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML = "";
+        }
 
 
-                rows.forEach(
-                    function (row) {
-
-                        var question =
-                            first(
-                                row,
-                                [
-                                    "question",
-                                    "faq_question",
-                                    "title"
-                                ]
-                            );
+        container.innerHTML =
+            "";
 
 
-                        var answer =
-                            first(
-                                row,
-                                [
-                                    "answer",
-                                    "faq_answer",
-                                    "description",
-                                    "content"
-                                ]
-                            );
+        items.forEach(
+            function (item) {
+
+                var question =
+                    first(
+                        item,
+                        [
+                            "question",
+                            "title",
+                            "faq_question"
+                        ],
+                        "Question"
+                    );
 
 
-                        var item =
-                            document.createElement(
-                                "div"
-                            );
+                var answer =
+                    first(
+                        item,
+                        [
+                            "answer",
+                            "description",
+                            "faq_answer"
+                        ],
+                        ""
+                    );
 
 
-                        item.className =
-                            "faq-item";
+                var wrapper =
+                    document.createElement(
+                        "div"
+                    );
 
 
-                        item.innerHTML =
-
-                            '<button type="button" class="faq-question">' +
-
-                            "<span>" +
-                            escapeHTML(question) +
-                            "</span>" +
-
-                            '<span class="faq-icon">+</span>' +
-
-                            "</button>" +
-
-                            '<div class="faq-answer">' +
-                            escapeHTML(answer) +
-                            "</div>";
+                wrapper.className =
+                    "faq-item";
 
 
-                        var button =
-                            item.querySelector(
-                                ".faq-question"
-                            );
+                wrapper.innerHTML =
+                    '<button type="button" class="faq-question">' +
+                    '<span>' +
+                    escapeHTML(question) +
+                    '</span>' +
+                    '<span>+</span>' +
+                    '</button>' +
+                    '<div class="faq-answer">' +
+                    '<p>' +
+                    escapeHTML(answer) +
+                    '</p>' +
+                    '</div>';
 
 
-                        button.addEventListener(
-                            "click",
-                            function () {
-
-                                item.classList.toggle(
-                                    "open"
-                                );
-
-
-                                var icon =
-                                    item.querySelector(
-                                        ".faq-icon"
-                                    );
-
-
-                                if (icon) {
-
-                                    icon.textContent =
-                                        item.classList.contains(
-                                            "open"
-                                        )
-                                            ? "−"
-                                            : "+";
-                                }
-
-                            }
-                        );
-
-
-                        container.appendChild(
-                            item
-                        );
-
-                    }
+                container.appendChild(
+                    wrapper
                 );
 
             }
         );
+
+
+        container
+            .querySelectorAll(
+                ".faq-question"
+            )
+            .forEach(
+                function (button) {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            var item =
+                                button.parentElement;
+
+
+                            item.classList.toggle(
+                                "open"
+                            );
+
+
+                            var icon =
+                                button.querySelector(
+                                    "span:last-child"
+                                );
+
+
+                            if (icon) {
+
+                                icon.textContent =
+                                    item.classList.contains(
+                                        "open"
+                                    )
+                                        ? "−"
+                                        : "+";
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
     }
 
 
     /* ========================================================
        INITIALIZE
-       ======================================================== */
+    ======================================================== */
 
     if (
         document.readyState ===
@@ -2384,6 +3011,7 @@ loadClient();
     } else {
 
         startRuntime();
+
     }
 
 
