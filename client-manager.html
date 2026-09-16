@@ -9,11 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-/* =========================================================
-   MD KAIF CLIENT MANAGER
-   CENTRAL CONTROL CENTER
-   ========================================================= */
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -27,10 +22,7 @@ body{
     min-height:100vh;
 }
 
-button,
-input,
-select,
-textarea{
+button,input,select,textarea{
     font:inherit;
 }
 
@@ -40,11 +32,11 @@ button{
 
 /* =========================================================
    HEADER
-   ========================================================= */
+========================================================= */
 
 .header{
     height:70px;
-    background:#ffffff;
+    background:#fff;
     border-bottom:1px solid #e5e9f0;
     display:flex;
     align-items:center;
@@ -66,7 +58,7 @@ button{
     height:42px;
     border-radius:10px;
     background:#111827;
-    color:#ffffff;
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -108,19 +100,15 @@ button{
 
 .logout-btn{
     border:1px solid #e1e6ee;
-    background:#ffffff;
+    background:#fff;
     padding:9px 13px;
     border-radius:8px;
     font-weight:600;
 }
 
-.logout-btn:hover{
-    background:#f7f8fa;
-}
-
 /* =========================================================
    LAYOUT
-   ========================================================= */
+========================================================= */
 
 .layout{
     display:flex;
@@ -130,7 +118,7 @@ button{
 .sidebar{
     width:235px;
     background:#111827;
-    color:#ffffff;
+    color:#fff;
     padding:20px 13px;
     flex-shrink:0;
 }
@@ -160,7 +148,7 @@ button{
 .side-link:hover,
 .side-link.active{
     background:#1f2937;
-    color:#ffffff;
+    color:#fff;
 }
 
 .main{
@@ -170,8 +158,8 @@ button{
 }
 
 /* =========================================================
-   PAGE HEADER
-   ========================================================= */
+   PAGE
+========================================================= */
 
 .page-head{
     display:flex;
@@ -200,7 +188,7 @@ button{
 
 /* =========================================================
    BUTTONS
-   ========================================================= */
+========================================================= */
 
 .btn{
     border:0;
@@ -212,15 +200,11 @@ button{
 
 .btn-primary{
     background:#111827;
-    color:#ffffff;
-}
-
-.btn-primary:hover{
-    background:#000000;
+    color:#fff;
 }
 
 .btn-light{
-    background:#ffffff;
+    background:#fff;
     border:1px solid #dfe5ed;
     color:#263246;
 }
@@ -243,11 +227,11 @@ button{
 }
 
 /* =========================================================
-   CLIENT SELECTOR
-   ========================================================= */
+   CLIENT BAR
+========================================================= */
 
 .client-bar{
-    background:#ffffff;
+    background:#fff;
     border:1px solid #e4e9f0;
     border-radius:12px;
     padding:16px;
@@ -270,12 +254,12 @@ button{
     border:1px solid #dce2eb;
     border-radius:8px;
     padding:10px 12px;
-    background:#ffffff;
+    background:#fff;
 }
 
 /* =========================================================
    STATS
-   ========================================================= */
+========================================================= */
 
 .stats{
     display:grid;
@@ -285,7 +269,7 @@ button{
 }
 
 .stat-card{
-    background:#ffffff;
+    background:#fff;
     border:1px solid #e5e9f0;
     border-radius:12px;
     padding:17px;
@@ -303,11 +287,11 @@ button{
 }
 
 /* =========================================================
-   CLIENT CARD
-   ========================================================= */
+   CLIENT OVERVIEW
+========================================================= */
 
 .client-overview{
-    background:#ffffff;
+    background:#fff;
     border:1px solid #e4e9f0;
     border-radius:12px;
     padding:20px;
@@ -381,7 +365,7 @@ button{
 
 /* =========================================================
    MANAGEMENT
-   ========================================================= */
+========================================================= */
 
 .management-title{
     font-size:17px;
@@ -396,7 +380,7 @@ button{
 }
 
 .manage-card{
-    background:#ffffff;
+    background:#fff;
     border:1px solid #e4e9f0;
     border-radius:12px;
     padding:17px;
@@ -437,11 +421,11 @@ button{
 }
 
 /* =========================================================
-   CLIENT TABLE
-   ========================================================= */
+   TABLE
+========================================================= */
 
 .section{
-    background:#ffffff;
+    background:#fff;
     border:1px solid #e4e9f0;
     border-radius:12px;
     margin-top:22px;
@@ -513,7 +497,7 @@ td{
 
 /* =========================================================
    MODAL
-   ========================================================= */
+========================================================= */
 
 .modal-backdrop{
     display:none;
@@ -531,10 +515,10 @@ td{
 }
 
 .modal{
-    width:min(850px,100%);
-    max-height:90vh;
+    width:min(900px,100%);
+    max-height:92vh;
     overflow-y:auto;
-    background:#ffffff;
+    background:#fff;
     border-radius:14px;
     box-shadow:0 25px 80px rgba(0,0,0,.25);
 }
@@ -574,8 +558,8 @@ td{
 }
 
 /* =========================================================
-   FORM
-   ========================================================= */
+   FORMS
+========================================================= */
 
 .form-grid{
     display:grid;
@@ -605,7 +589,7 @@ td{
     border-radius:8px;
     padding:10px 11px;
     outline:none;
-    background:#ffffff;
+    background:#fff;
 }
 
 .form-control:focus{
@@ -613,7 +597,7 @@ td{
 }
 
 textarea.form-control{
-    min-height:90px;
+    min-height:100px;
     resize:vertical;
 }
 
@@ -623,7 +607,7 @@ textarea.form-control{
 
 /* =========================================================
    TEMPLATE
-   ========================================================= */
+========================================================= */
 
 .template-box{
     background:#f8fafc;
@@ -650,7 +634,7 @@ textarea.form-control{
     border-radius:8px;
     padding:11px 6px;
     text-align:center;
-    background:#ffffff;
+    background:#fff;
     cursor:pointer;
     font-size:11px;
     font-weight:700;
@@ -673,15 +657,80 @@ textarea.form-control{
 }
 
 /* =========================================================
+   SETTINGS MODAL
+========================================================= */
+
+.settings-note{
+    background:#f8fafc;
+    border:1px solid #e5e9ef;
+    border-radius:9px;
+    padding:12px;
+    margin-bottom:18px;
+    color:#6b7586;
+    font-size:12px;
+    line-height:1.6;
+}
+
+.settings-section{
+    border:1px solid #e5e9ef;
+    border-radius:10px;
+    margin-bottom:15px;
+    overflow:hidden;
+}
+
+.settings-section-title{
+    padding:13px 15px;
+    background:#f8fafc;
+    border-bottom:1px solid #e5e9ef;
+    font-size:13px;
+    font-weight:800;
+}
+
+.settings-section-body{
+    padding:16px;
+}
+
+.color-row{
+    display:grid;
+    grid-template-columns:1fr 70px 110px;
+    gap:10px;
+    align-items:end;
+}
+
+.color-preview{
+    height:40px;
+    border-radius:8px;
+    border:1px solid #dce2eb;
+}
+
+.image-preview{
+    width:80px;
+    height:55px;
+    border:1px dashed #cbd5e1;
+    border-radius:8px;
+    object-fit:contain;
+    background:#f8fafc;
+    display:none;
+    margin-top:7px;
+}
+
+.save-status{
+    font-size:11px;
+    color:#6b7280;
+    margin-right:auto;
+    align-self:center;
+}
+
+/* =========================================================
    TOAST
-   ========================================================= */
+========================================================= */
 
 .toast{
     position:fixed;
     right:20px;
     bottom:20px;
     background:#111827;
-    color:#ffffff;
+    color:#fff;
     padding:12px 16px;
     border-radius:9px;
     font-size:12px;
@@ -699,8 +748,8 @@ textarea.form-control{
 }
 
 /* =========================================================
-   EMPTY
-   ========================================================= */
+   EMPTY / LOADING
+========================================================= */
 
 .empty{
     padding:40px 20px;
@@ -717,7 +766,7 @@ textarea.form-control{
 
 /* =========================================================
    RESPONSIVE
-   ========================================================= */
+========================================================= */
 
 @media(max-width:1100px){
 
@@ -775,6 +824,10 @@ textarea.form-control{
     .template-options{
         grid-template-columns:repeat(2,1fr);
     }
+
+    .color-row{
+        grid-template-columns:1fr;
+    }
 }
 
 @media(max-width:520px){
@@ -782,14 +835,6 @@ textarea.form-control{
     .stats{
         grid-template-columns:1fr 1fr;
         gap:9px;
-    }
-
-    .stat-card{
-        padding:13px;
-    }
-
-    .stat-value{
-        font-size:20px;
     }
 
     .management-grid{
@@ -821,7 +866,7 @@ textarea.form-control{
 
 <!-- =========================================================
      HEADER
-     ========================================================= -->
+========================================================= -->
 
 <header class="header">
 
@@ -855,7 +900,9 @@ textarea.form-control{
             </div>
         </div>
 
-        <button class="logout-btn" id="logoutBtn">
+        <button
+            class="logout-btn"
+            id="logoutBtn">
             Logout
         </button>
 
@@ -864,652 +911,642 @@ textarea.form-control{
 </header>
 
 
-<!-- =========================================================
-     LAYOUT
-     ========================================================= -->
-
 <div class="layout">
 
-    <!-- SIDEBAR -->
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-        <div class="side-title">
-            Main
-        </div>
+    <div class="side-title">
+        Main
+    </div>
 
-        <a href="dashboard.html" class="side-link">
-            ◼ Dashboard
-        </a>
+    <a href="dashboard.html" class="side-link">
+        ◼ Dashboard
+    </a>
 
-        <a href="client-manager.html" class="side-link active">
-            ◉ Client Manager
-        </a>
+    <a href="client-manager.html" class="side-link active">
+        ◉ Client Manager
+    </a>
 
-        <a href="template-manager.html" class="side-link">
-            ▣ Template Manager
-        </a>
+    <a href="template-manager.html" class="side-link">
+        ▣ Template Manager
+    </a>
+
+    <div class="side-title" style="margin-top:20px;">
+        Website
+    </div>
+
+    <div class="side-link">
+        ⚙ General
+    </div>
+
+    <div class="side-link">
+        🎨 Design & Branding
+    </div>
+
+    <div class="side-link">
+        🛍 Products
+    </div>
+
+    <div class="side-link">
+        🖼 Media
+    </div>
+
+    <div class="side-link">
+        ⭐ Testimonials
+    </div>
+
+    <div class="side-link">
+        ❓ FAQ
+    </div>
+
+    <div class="side-link">
+        📄 Policies
+    </div>
+
+    <div class="side-link">
+        📩 Enquiries
+    </div>
+
+</aside>
 
 
-        <div class="side-title" style="margin-top:20px;">
-            Website
-        </div>
+<!-- =========================================================
+     MAIN
+========================================================= -->
 
-        <div class="side-link" style="cursor:default;">
-            ⚙ General Settings
-        </div>
+<main class="main">
 
-        <div class="side-link" style="cursor:default;">
-            🎨 Design & Branding
-        </div>
+    <div class="page-head">
 
-        <div class="side-link" style="cursor:default;">
-            🛍 Products
-        </div>
+        <div>
 
-        <div class="side-link" style="cursor:default;">
-            🖼 Media
-        </div>
-
-        <div class="side-link" style="cursor:default;">
-            ⭐ Testimonials
-        </div>
-
-        <div class="side-link" style="cursor:default;">
-            ❓ FAQ
-        </div>
-
-        <div class="side-link" style="cursor:default;">
-            📄 Policies
-        </div>
-
-        <div class="side-link" style="cursor:default;">
-            📩 Enquiries
-        </div>
-
-    </aside>
-
-
-    <!-- MAIN -->
-
-    <main class="main">
-
-        <div class="page-head">
-
-            <div>
-                <div class="page-title">
-                    Client Manager
-                </div>
-
-                <div class="page-desc">
-                    Manage client, template, website and all business settings from one place.
-                </div>
+            <div class="page-title">
+                Client Manager
             </div>
 
-            <div class="head-actions">
-
-                <button
-                    class="btn btn-light"
-                    id="previewBtn">
-                    Preview Website
-                </button>
-
-                <button
-                    class="btn btn-primary"
-                    id="addClientBtn">
-                    + Add Client
-                </button>
-
+            <div class="page-desc">
+                Central control center for client, website and business settings.
             </div>
 
         </div>
 
-
-        <!-- CLIENT SELECTOR -->
-
-        <div class="client-bar">
-
-            <label>
-                ACTIVE CLIENT
-            </label>
-
-            <select
-                id="clientSelect"
-                class="client-select">
-                <option value="">
-                    Select Client
-                </option>
-            </select>
+        <div class="head-actions">
 
             <button
-                class="btn btn-light btn-small"
-                id="refreshBtn">
-                Refresh
+                class="btn btn-light"
+                id="previewBtn">
+                Preview Website
+            </button>
+
+            <button
+                class="btn btn-primary"
+                id="addClientBtn">
+                + Add Client
             </button>
 
         </div>
 
+    </div>
 
-        <!-- STATS -->
 
-        <div class="stats">
+    <!-- CLIENT SELECTOR -->
 
-            <div class="stat-card">
-                <div class="stat-label">
-                    Total Clients
-                </div>
+    <div class="client-bar">
 
-                <div
-                    class="stat-value"
-                    id="totalClients">
-                    0
-                </div>
+        <label>
+            ACTIVE CLIENT
+        </label>
+
+        <select
+            id="clientSelect"
+            class="client-select">
+
+            <option value="">
+                Select Client
+            </option>
+
+        </select>
+
+        <button
+            class="btn btn-light btn-small"
+            id="refreshBtn">
+            Refresh
+        </button>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Clients
             </div>
 
-
-            <div class="stat-card">
-                <div class="stat-label">
-                    Active Clients
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="activeClients">
-                    0
-                </div>
-            </div>
-
-
-            <div class="stat-card">
-                <div class="stat-label">
-                    Assigned Templates
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="assignedTemplates">
-                    0
-                </div>
-            </div>
-
-
-            <div class="stat-card">
-                <div class="stat-label">
-                    Website Status
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="websiteStatus">
-                    —
-                </div>
+            <div
+                class="stat-value"
+                id="totalClients">
+                0
             </div>
 
         </div>
 
 
-        <!-- ACTIVE CLIENT -->
+        <div class="stat-card">
 
-        <div
-            id="clientOverview"
-            class="client-overview">
+            <div class="stat-label">
+                Active Clients
+            </div>
 
-            <div class="empty">
-                Select a client to manage website.
+            <div
+                class="stat-value"
+                id="activeClients">
+                0
             </div>
 
         </div>
 
 
-        <!-- WEBSITE MANAGEMENT -->
+        <div class="stat-card">
 
-        <div id="managementArea">
-
-            <div class="management-title">
-                Website Management
+            <div class="stat-label">
+                Assigned Templates
             </div>
 
-
-            <div class="management-grid">
-
-                <!-- GENERAL -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        ⚙
-                    </div>
-
-                    <h3>
-                        General
-                    </h3>
-
-                    <p>
-                        Company information, business details and basic website configuration.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('general')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- DESIGN -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        🎨
-                    </div>
-
-                    <h3>
-                        Design & Branding
-                    </h3>
-
-                    <p>
-                        Logo, favicon, colors, typography, layout and visual identity.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('design')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- HERO -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        🖥
-                    </div>
-
-                    <h3>
-                        Hero Section
-                    </h3>
-
-                    <p>
-                        Homepage heading, description, image, CTA and hero content.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('hero')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- ABOUT -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        🏢
-                    </div>
-
-                    <h3>
-                        About Company
-                    </h3>
-
-                    <p>
-                        About, mission, vision, company story and highlights.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('about')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- SERVICES -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        🛠
-                    </div>
-
-                    <h3>
-                        Services
-                    </h3>
-
-                    <p>
-                        Manage company services, descriptions, images and display order.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('services')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- PRODUCTS -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        🛍
-                    </div>
-
-                    <h3>
-                        Products
-                    </h3>
-
-                    <p>
-                        Categories, products, descriptions, specifications and product settings.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('products')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- MEDIA -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        🖼
-                    </div>
-
-                    <h3>
-                        Product Images & Gallery
-                    </h3>
-
-                    <p>
-                        Product images, gallery, captions, categories and media management.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('media')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- TESTIMONIAL -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        ⭐
-                    </div>
-
-                    <h3>
-                        Testimonials
-                    </h3>
-
-                    <p>
-                        Customer reviews, ratings, designation, company and profile image.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('testimonials')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- FAQ -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        ❓
-                    </div>
-
-                    <h3>
-                        FAQ
-                    </h3>
-
-                    <p>
-                        Frequently asked questions, answers, order and visibility.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('faq')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- POLICIES -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        📄
-                    </div>
-
-                    <h3>
-                        Policies
-                    </h3>
-
-                    <p>
-                        Privacy, Terms, Refund, Shipping, Disclaimer and custom policies.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('policies')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- CONTACT -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        📞
-                    </div>
-
-                    <h3>
-                        Contact
-                    </h3>
-
-                    <p>
-                        Phone, WhatsApp, email, address, business hours and contact information.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('contact')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- SOCIAL -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        🔗
-                    </div>
-
-                    <h3>
-                        Social Media
-                    </h3>
-
-                    <p>
-                        Facebook, Instagram, LinkedIn, YouTube and other social links.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('social')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- SEO -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        🔎
-                    </div>
-
-                    <h3>
-                        SEO
-                    </h3>
-
-                    <p>
-                        Website title, meta description and search engine configuration.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('seo')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- ENQUIRIES -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        📩
-                    </div>
-
-                    <h3>
-                        Enquiries / Leads
-                    </h3>
-
-                    <p>
-                        Customer enquiries, requirements, status and lead management.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('enquiries')">
-                        Manage
-                    </button>
-
-                </div>
-
-
-                <!-- CLIENT ADMIN -->
-
-                <div class="manage-card">
-
-                    <div class="manage-icon">
-                        👤
-                    </div>
-
-                    <h3>
-                        Client Admin Access
-                    </h3>
-
-                    <p>
-                        Manage client-side access, account status and permissions.
-                    </p>
-
-                    <button
-                        class="btn btn-light btn-small"
-                        onclick="openManagement('admin')">
-                        Manage
-                    </button>
-
-                </div>
-
+            <div
+                class="stat-value"
+                id="assignedTemplates">
+                0
             </div>
 
         </div>
 
 
-        <!-- CLIENT LIST -->
+        <div class="stat-card">
 
-        <div class="section">
+            <div class="stat-label">
+                Website Status
+            </div>
 
-            <div class="section-head">
+            <div
+                class="stat-value"
+                id="websiteStatus">
+                —
+            </div>
 
-                <div class="section-title">
-                    All Clients
+        </div>
+
+    </div>
+
+
+    <!-- ACTIVE CLIENT -->
+
+    <div
+        id="clientOverview"
+        class="client-overview">
+
+        <div class="empty">
+            Select a client to manage website.
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         WEBSITE MANAGEMENT
+    ====================================================== -->
+
+    <div>
+
+        <div class="management-title">
+            Website Management
+        </div>
+
+
+        <div class="management-grid">
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    ⚙
                 </div>
 
-                <input
-                    type="text"
-                    id="clientSearch"
-                    class="search"
-                    placeholder="Search clients...">
+                <h3>
+                    General
+                </h3>
+
+                <p>
+                    Company information, tagline, about, mission and vision.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('general')">
+                    Manage
+                </button>
 
             </div>
 
-            <div class="table-wrap">
 
-                <table>
+            <div class="manage-card">
 
-                    <thead>
-                        <tr>
-                            <th>Client</th>
-                            <th>Domain</th>
-                            <th>Template</th>
-                            <th>Hosting</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
+                <div class="manage-icon">
+                    🎨
+                </div>
 
-                    <tbody id="clientTableBody">
+                <h3>
+                    Design & Branding
+                </h3>
 
-                        <tr>
-                            <td colspan="6">
-                                <div class="loading">
-                                    Loading clients...
-                                </div>
-                            </td>
-                        </tr>
+                <p>
+                    Logo, favicon and website primary and secondary colors.
+                </p>
 
-                    </tbody>
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('design')">
+                    Manage
+                </button>
 
-                </table>
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    🖥
+                </div>
+
+                <h3>
+                    Hero Section
+                </h3>
+
+                <p>
+                    Homepage hero content will be managed here.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('hero')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    About Company
+                </h3>
+
+                <p>
+                    About, mission, vision and company information.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('about')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    🛠
+                </div>
+
+                <h3>
+                    Services
+                </h3>
+
+                <p>
+                    Manage website services and service information.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('services')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    🛍
+                </div>
+
+                <h3>
+                    Products
+                </h3>
+
+                <p>
+                    Categories, products and product information.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('products')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    🖼
+                </div>
+
+                <h3>
+                    Product Images & Gallery
+                </h3>
+
+                <p>
+                    Product images and website gallery.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('media')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    ⭐
+                </div>
+
+                <h3>
+                    Testimonials
+                </h3>
+
+                <p>
+                    Customer reviews, ratings and testimonials.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('testimonials')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    ❓
+                </div>
+
+                <h3>
+                    FAQ
+                </h3>
+
+                <p>
+                    Questions, answers, ordering and visibility.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('faq')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    📄
+                </div>
+
+                <h3>
+                    Policies
+                </h3>
+
+                <p>
+                    Privacy, Terms, Refund, Shipping and custom policies.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('policies')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    📞
+                </div>
+
+                <h3>
+                    Contact
+                </h3>
+
+                <p>
+                    Phone, WhatsApp, email and complete address.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('contact')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    🔗
+                </div>
+
+                <h3>
+                    Social Media
+                </h3>
+
+                <p>
+                    Facebook, Instagram, LinkedIn and YouTube.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('social')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    🔎
+                </div>
+
+                <h3>
+                    SEO
+                </h3>
+
+                <p>
+                    Website title and search engine meta description.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('seo')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    📩
+                </div>
+
+                <h3>
+                    Enquiries / Leads
+                </h3>
+
+                <p>
+                    Customer enquiries and lead management.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('enquiries')">
+                    Manage
+                </button>
+
+            </div>
+
+
+            <div class="manage-card">
+
+                <div class="manage-icon">
+                    👤
+                </div>
+
+                <h3>
+                    Client Admin Access
+                </h3>
+
+                <p>
+                    Client account and permissions.
+                </p>
+
+                <button
+                    class="btn btn-light btn-small"
+                    onclick="openManagement('admin')">
+                    Manage
+                </button>
 
             </div>
 
         </div>
 
-    </main>
+    </div>
+
+
+    <!-- CLIENT LIST -->
+
+    <div class="section">
+
+        <div class="section-head">
+
+            <div class="section-title">
+                All Clients
+            </div>
+
+            <input
+                type="text"
+                id="clientSearch"
+                class="search"
+                placeholder="Search clients...">
+
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Client</th>
+                        <th>Domain</th>
+                        <th>Template</th>
+                        <th>Hosting</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="clientTableBody">
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <div class="loading">
+                                Loading clients...
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
 
 </div>
 
 
 <!-- =========================================================
      CLIENT MODAL
-     ========================================================= -->
+========================================================= -->
 
 <div
     class="modal-backdrop"
@@ -1662,8 +1699,6 @@ textarea.form-control{
                 </div>
 
 
-                <!-- TEMPLATE -->
-
                 <div class="template-box">
 
                     <div class="template-box-title">
@@ -1673,7 +1708,6 @@ textarea.form-control{
                     <div
                         class="template-options"
                         id="templateOptions">
-
                     </div>
 
                     <input
@@ -1709,12 +1743,12 @@ textarea.form-control{
 
 
 <!-- =========================================================
-     MANAGEMENT MODAL
-     ========================================================= -->
+     SETTINGS MODAL
+========================================================= -->
 
 <div
     class="modal-backdrop"
-    id="managementModal">
+    id="settingsModal">
 
     <div class="modal">
 
@@ -1722,37 +1756,59 @@ textarea.form-control{
 
             <div
                 class="modal-title"
-                id="managementModalTitle">
-                Website Management
+                id="settingsModalTitle">
+                Website Settings
             </div>
 
             <button
                 class="close-btn"
-                onclick="closeManagement()">
+                onclick="closeSettings()">
                 ×
             </button>
 
         </div>
 
+
         <div class="modal-body">
 
-            <div
-                id="managementContent">
+            <div class="settings-note">
 
-                <div class="empty">
-                    Select a client first.
-                </div>
+                <strong id="settingsClientName">
+                    —
+                </strong>
+
+                <br>
+
+                These settings are saved specifically for this client.
+                Changes will be available to the website runtime after saving.
+
+            </div>
+
+
+            <div id="settingsContent">
 
             </div>
 
         </div>
 
+
         <div class="modal-foot">
+
+            <div
+                class="save-status"
+                id="settingsSaveStatus">
+            </div>
 
             <button
                 class="btn btn-light"
-                onclick="closeManagement()">
+                onclick="closeSettings()">
                 Close
+            </button>
+
+            <button
+                class="btn btn-primary"
+                id="saveSettingsBtn">
+                Save Changes
             </button>
 
         </div>
@@ -1762,9 +1818,7 @@ textarea.form-control{
 </div>
 
 
-<!-- =========================================================
-     TOAST
-     ========================================================= -->
+<!-- TOAST -->
 
 <div
     class="toast"
@@ -1775,7 +1829,7 @@ textarea.form-control{
 <script>
 /* =========================================================
    SUPABASE
-   ========================================================= */
+========================================================= */
 
 const SUPABASE_URL =
 "https://ywvdozdoanmcxscfofc.supabase.co";
@@ -1799,7 +1853,7 @@ window.supabase.createClient(
 
 /* =========================================================
    STATE
-   ========================================================= */
+========================================================= */
 
 let currentUser = null;
 let currentProfile = null;
@@ -1809,10 +1863,13 @@ let selectedClient = null;
 
 let editingClient = null;
 
+let currentSettingsSection = null;
+let companySettings = null;
+
 
 /* =========================================================
    DOM
-   ========================================================= */
+========================================================= */
 
 const clientSelect =
 document.getElementById("clientSelect");
@@ -1829,16 +1886,16 @@ document.getElementById("clientSearch");
 const clientModal =
 document.getElementById("clientModal");
 
-const managementModal =
-document.getElementById("managementModal");
+const settingsModal =
+document.getElementById("settingsModal");
 
-const managementContent =
-document.getElementById("managementContent");
+const settingsContent =
+document.getElementById("settingsContent");
 
 
 /* =========================================================
    INIT
-   ========================================================= */
+========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -1893,7 +1950,7 @@ async function init(){
 
 /* =========================================================
    PROFILE
-   ========================================================= */
+========================================================= */
 
 async function loadProfile(){
 
@@ -1903,8 +1960,13 @@ async function loadProfile(){
     } =
     await supabaseClient
         .from("profiles")
-        .select("id,role,client_id,full_name")
-        .eq("id",currentUser.id)
+        .select(
+            "id,role,client_id,full_name"
+        )
+        .eq(
+            "id",
+            currentUser.id
+        )
         .maybeSingle();
 
 
@@ -1939,7 +2001,7 @@ async function loadProfile(){
 
 /* =========================================================
    LOAD CLIENTS
-   ========================================================= */
+========================================================= */
 
 async function loadClients(){
 
@@ -1966,23 +2028,13 @@ async function loadClients(){
             );
 
 
-    /*
-       Super Admin / Admin:
-       Load all clients.
-
-       Other users:
-       Load only their assigned client.
-    */
-
     if(
         currentProfile &&
         currentProfile.role !== "super_admin" &&
         currentProfile.role !== "admin"
     ){
 
-        if(
-            currentProfile.client_id
-        ){
+        if(currentProfile.client_id){
 
             query =
                 query.eq(
@@ -2030,11 +2082,6 @@ async function loadClients(){
     renderAll();
 
 
-    /*
-       Restore active client from
-       localStorage where possible.
-    */
-
     const stored =
         localStorage.getItem(
             "mdkaif_active_client"
@@ -2071,18 +2118,12 @@ async function loadClients(){
         }
         catch(e){
 
-            console.warn(
-                "Invalid stored client"
-            );
+            console.warn(e);
 
         }
 
     }
 
-
-    /*
-       Otherwise first client.
-    */
 
     if(clients.length){
 
@@ -2103,8 +2144,8 @@ async function loadClients(){
 
 
 /* =========================================================
-   RENDER ALL
-   ========================================================= */
+   RENDER
+========================================================= */
 
 function renderAll(){
 
@@ -2116,10 +2157,6 @@ function renderAll(){
 
 }
 
-
-/* =========================================================
-   CLIENT SELECT
-   ========================================================= */
 
 function renderClientSelect(){
 
@@ -2157,7 +2194,7 @@ function renderClientSelect(){
 
 /* =========================================================
    TABLE
-   ========================================================= */
+========================================================= */
 
 function renderClientTable(){
 
@@ -2206,24 +2243,18 @@ function renderClientTable(){
     clientTableBody.innerHTML =
         filtered.map(client => {
 
-            const active =
-                client.status === "active";
-
-
             return `
                 <tr>
 
                     <td>
 
-                        <div
-                            class="client-row-name">
+                        <div class="client-row-name">
                             ${escapeHTML(
                                 client.company_name || "—"
                             )}
                         </div>
 
-                        <div
-                            class="client-row-slug">
+                        <div class="client-row-slug">
                             ${escapeHTML(
                                 client.slug || "—"
                             )}
@@ -2231,13 +2262,11 @@ function renderClientTable(){
 
                     </td>
 
-
                     <td>
                         ${escapeHTML(
                             client.domain || "—"
                         )}
                     </td>
-
 
                     <td>
                         ${escapeHTML(
@@ -2247,25 +2276,22 @@ function renderClientTable(){
                         )}
                     </td>
 
-
                     <td>
                         ${escapeHTML(
-                            client.hosting_type ||
-                            "—"
+                            client.hosting_type || "—"
                         )}
                     </td>
-
 
                     <td>
 
                         <span class="badge ${
-                            active
+                            client.status === "active"
                             ? "badge-active"
                             : "badge-inactive"
                         }">
 
                             ${
-                                active
+                                client.status === "active"
                                 ? "Active"
                                 : "Inactive"
                             }
@@ -2274,7 +2300,6 @@ function renderClientTable(){
 
                     </td>
 
-
                     <td>
 
                         <div class="action-group">
@@ -2282,27 +2307,19 @@ function renderClientTable(){
                             <button
                                 class="btn btn-light btn-small"
                                 onclick="selectClient('${client.id}')">
-
                                 Open
-
                             </button>
-
 
                             <button
                                 class="btn btn-light btn-small"
                                 onclick="editClient('${client.id}')">
-
                                 Edit
-
                             </button>
-
 
                             <button
                                 class="btn btn-danger btn-small"
                                 onclick="deleteClient('${client.id}')">
-
                                 Delete
-
                             </button>
 
                         </div>
@@ -2319,42 +2336,30 @@ function renderClientTable(){
 
 /* =========================================================
    STATS
-   ========================================================= */
+========================================================= */
 
 function updateStats(){
-
-    const total =
-        clients.length;
-
-
-    const active =
-        clients.filter(
-            c => c.status === "active"
-        ).length;
-
-
-    const assigned =
-        clients.filter(
-            c => c.template
-        ).length;
-
 
     document.getElementById(
         "totalClients"
     ).textContent =
-        total;
+        clients.length;
 
 
     document.getElementById(
         "activeClients"
     ).textContent =
-        active;
+        clients.filter(
+            c => c.status === "active"
+        ).length;
 
 
     document.getElementById(
         "assignedTemplates"
     ).textContent =
-        assigned;
+        clients.filter(
+            c => c.template
+        ).length;
 
 
     document.getElementById(
@@ -2373,7 +2378,7 @@ function updateStats(){
 
 /* =========================================================
    SELECT CLIENT
-   ========================================================= */
+========================================================= */
 
 function selectClient(clientId){
 
@@ -2399,11 +2404,6 @@ function selectClient(clientId){
         client.id;
 
 
-    /*
-       Existing MDK client context
-       compatibility.
-    */
-
     try{
 
         localStorage.setItem(
@@ -2427,8 +2427,8 @@ function selectClient(clientId){
 
 
 /* =========================================================
-   ACTIVE CLIENT VIEW
-   ========================================================= */
+   CLIENT OVERVIEW
+========================================================= */
 
 function renderSelectedClient(){
 
@@ -2446,12 +2446,6 @@ function renderSelectedClient(){
 
     const c =
         selectedClient;
-
-
-    const template =
-        normalizeTemplate(
-            c.template
-        );
 
 
     clientOverview.innerHTML = `
@@ -2473,7 +2467,6 @@ function renderSelectedClient(){
                 </div>
 
             </div>
-
 
             <div>
 
@@ -2507,7 +2500,9 @@ function renderSelectedClient(){
                 <div class="info-value">
                     ${
                         escapeHTML(
-                            template || "Not Assigned"
+                            normalizeTemplate(
+                                c.template
+                            ) || "Not Assigned"
                         )
                     }
                 </div>
@@ -2561,7 +2556,9 @@ function renderSelectedClient(){
                         c.hosting_url
                         ? `<a
                             href="${escapeAttribute(
-                                normalizeUrl(c.hosting_url)
+                                normalizeUrl(
+                                    c.hosting_url
+                                )
                             )}"
                             target="_blank"
                             rel="noopener">
@@ -2587,11 +2584,8 @@ function renderSelectedClient(){
             <button
                 class="btn btn-primary btn-small"
                 onclick="previewSelectedClient()">
-
                 Preview Website
-
             </button>
-
 
             ${
                 c.hosting_url
@@ -2599,21 +2593,16 @@ function renderSelectedClient(){
                     <button
                         class="btn btn-light btn-small"
                         onclick="openLiveWebsite()">
-
                         Open Live Website
-
                     </button>
                   `
                 : ""
             }
 
-
             <button
                 class="btn btn-light btn-small"
                 onclick="editClient('${c.id}')">
-
                 Edit Client
-
             </button>
 
         </div>
@@ -2625,12 +2614,11 @@ function renderSelectedClient(){
 
 /* =========================================================
    ADD CLIENT
-   ========================================================= */
+========================================================= */
 
 function openAddClient(){
 
     editingClient = null;
-
 
     document.getElementById(
         "clientModalTitle"
@@ -2640,65 +2628,54 @@ function openAddClient(){
 
     document.getElementById(
         "editClientId"
-    ).value =
-        "";
+    ).value = "";
 
 
     document.getElementById(
         "companyName"
-    ).value =
-        "";
+    ).value = "";
 
 
     document.getElementById(
         "companySlug"
-    ).value =
-        "";
+    ).value = "";
 
 
     document.getElementById(
         "domain"
-    ).value =
-        "";
+    ).value = "";
 
 
     document.getElementById(
         "status"
-    ).value =
-        "active";
+    ).value = "active";
 
 
     document.getElementById(
         "hostingType"
-    ).value =
-        "GitHub Pages";
+    ).value = "GitHub Pages";
 
 
     document.getElementById(
         "hostingUrl"
-    ).value =
-        "";
+    ).value = "";
 
 
     document.getElementById(
         "selectedTemplate"
-    ).value =
-        "";
+    ).value = "";
 
 
     renderTemplateOptions("");
 
-
-    clientModal.classList.add(
-        "show"
-    );
+    clientModal.classList.add("show");
 
 }
 
 
 /* =========================================================
    EDIT CLIENT
-   ========================================================= */
+========================================================= */
 
 function editClient(clientId){
 
@@ -2786,16 +2763,14 @@ function editClient(clientId){
     );
 
 
-    clientModal.classList.add(
-        "show"
-    );
+    clientModal.classList.add("show");
 
 }
 
 
 /* =========================================================
-   TEMPLATE OPTIONS
-   ========================================================= */
+   TEMPLATE
+========================================================= */
 
 function renderTemplateOptions(selected){
 
@@ -2808,21 +2783,21 @@ function renderTemplateOptions(selected){
     let html = "";
 
 
-    for(let i = 1; i <= 10; i++){
+    for(
+        let i = 1;
+        i <= 10;
+        i++
+    ){
 
         const slug =
             "template-v" + i;
-
-
-        const isSelected =
-            selected === slug;
 
 
         html += `
 
             <div
                 class="template-option ${
-                    isSelected
+                    selected === slug
                     ? "selected"
                     : ""
                 }"
@@ -2847,10 +2822,6 @@ function renderTemplateOptions(selected){
 
 }
 
-
-/* =========================================================
-   CHOOSE TEMPLATE
-   ========================================================= */
 
 function chooseTemplate(template){
 
@@ -2879,7 +2850,7 @@ function chooseTemplate(template){
 
 /* =========================================================
    SAVE CLIENT
-   ========================================================= */
+========================================================= */
 
 async function saveClient(){
 
@@ -2905,22 +2876,10 @@ async function saveClient(){
         ).value.trim();
 
 
-    if(!slug){
-
-        slug =
-            slugify(
-                companyName
-            );
-
-    }
-    else{
-
-        slug =
-            slugify(
-                slug
-            );
-
-    }
+    slug =
+        slugify(
+            slug || companyName
+        );
 
 
     const payload = {
@@ -2968,8 +2927,7 @@ async function saveClient(){
         );
 
 
-    saveButton.disabled =
-        true;
+    saveButton.disabled = true;
 
     saveButton.textContent =
         "Saving...";
@@ -3021,7 +2979,6 @@ async function saveClient(){
 
         closeClientModal();
 
-
         showToast(
             editingClient
             ? "Client updated successfully."
@@ -3031,13 +2988,6 @@ async function saveClient(){
 
         await loadClients();
 
-
-        /*
-           Important:
-           If a new client was created with
-           a template, preview is already
-           available through existing router.
-        */
 
         if(result.data){
 
@@ -3060,8 +3010,7 @@ async function saveClient(){
     }
     finally{
 
-        saveButton.disabled =
-            false;
+        saveButton.disabled = false;
 
         saveButton.textContent =
             "Save Client";
@@ -3073,7 +3022,7 @@ async function saveClient(){
 
 /* =========================================================
    DELETE CLIENT
-   ========================================================= */
+========================================================= */
 
 async function deleteClient(clientId){
 
@@ -3091,18 +3040,13 @@ async function deleteClient(clientId){
     }
 
 
-    const confirmed =
-        confirm(
+    if(
+        !confirm(
             "Delete client \"" +
             client.company_name +
-            "\"?\n\n" +
-            "This action may also remove related " +
-            "client data if database relationships " +
-            "use cascade."
-        );
-
-
-    if(!confirmed){
+            "\"?"
+        )
+    ){
 
         return;
     }
@@ -3135,8 +3079,7 @@ async function deleteClient(clientId){
             String(clientId)
         ){
 
-            selectedClient =
-                null;
+            selectedClient = null;
 
             localStorage.removeItem(
                 "mdkaif_active_client"
@@ -3169,7 +3112,7 @@ async function deleteClient(clientId){
 
 /* =========================================================
    PREVIEW
-   ========================================================= */
+========================================================= */
 
 function previewSelectedClient(){
 
@@ -3208,25 +3151,17 @@ function previewSelectedClient(){
     }
 
 
-    const url =
+    window.open(
         "preview.html?client=" +
         encodeURIComponent(
             selectedClient.id
         ) +
-        "&preview=1";
-
-
-    window.open(
-        url,
+        "&preview=1",
         "_blank"
     );
 
 }
 
-
-/* =========================================================
-   LIVE WEBSITE
-   ========================================================= */
 
 function openLiveWebsite(){
 
@@ -3240,9 +3175,7 @@ function openLiveWebsite(){
     }
 
 
-    if(
-        !selectedClient.hosting_url
-    ){
+    if(!selectedClient.hosting_url){
 
         showToast(
             "Live website URL is not configured."
@@ -3263,10 +3196,10 @@ function openLiveWebsite(){
 
 
 /* =========================================================
-   MANAGEMENT PLACEHOLDER
-   ========================================================= */
+   CENTRAL MANAGEMENT
+========================================================= */
 
-function openManagement(section){
+async function openManagement(section){
 
     if(!selectedClient){
 
@@ -3278,7 +3211,7 @@ function openManagement(section){
     }
 
 
-    const names = {
+    const titles = {
 
         general:
             "General Settings",
@@ -3328,97 +3261,76 @@ function openManagement(section){
     };
 
 
-    const title =
-        names[section] ||
-        "Website Management";
+    currentSettingsSection =
+        section;
 
 
     document.getElementById(
-        "managementModalTitle"
+        "settingsModalTitle"
     ).textContent =
-        title;
+        titles[section] ||
+        "Website Settings";
+
+
+    document.getElementById(
+        "settingsClientName"
+    ).textContent =
+        selectedClient.company_name;
 
 
     /*
-       This is deliberately a central
-       placeholder.
-
-       Database wiring will be added
-       section-by-section without creating
-       separate manager HTML files.
+       2A actual sections.
+       Remaining sections stay ready
+       for 2B / later integration.
     */
 
-    managementContent.innerHTML = `
+    if(
+        [
+            "general",
+            "design",
+            "contact",
+            "social",
+            "seo"
+        ].includes(section)
+    ){
 
-        <div style="
-            background:#f8fafc;
-            border:1px solid #e5e9ef;
-            border-radius:10px;
-            padding:20px;
-        ">
+        await loadCompanySettings();
 
-            <div style="
-                font-size:15px;
-                font-weight:800;
-                margin-bottom:7px;
-            ">
+        renderSettingsSection(
+            section
+        );
 
-                ${escapeHTML(title)}
+    }
+    else{
 
-            </div>
+        settingsContent.innerHTML = `
 
-
-            <div style="
-                font-size:12px;
-                color:#7b8494;
-                line-height:1.7;
-            ">
-
-                Client:
+            <div class="settings-note">
 
                 <strong>
                     ${escapeHTML(
-                        selectedClient.company_name
-                    )}
-                </strong>
-
-                <br>
-
-                Client ID:
-
-                <strong>
-                    ${escapeHTML(
-                        selectedClient.id
+                        titles[section] ||
+                        "Website Management"
                     )}
                 </strong>
 
                 <br><br>
 
-                This section is connected to the
-                Central Client Manager architecture.
+                This section is reserved for the
+                next central integration step.
 
-                The actual Supabase fields and
-                existing module functionality will
-                be moved here in the next integration
-                step.
+                It will use the existing database
+                module without creating another
+                separate HTML manager.
 
             </div>
 
-        </div>
+        `;
 
-    `;
-
-
-    managementModal.classList.add(
-        "show"
-    );
-
-}
+    }
 
 
-function closeManagement(){
-
-    managementModal.classList.remove(
+    settingsModal.classList.add(
         "show"
     );
 
@@ -3426,427 +3338,480 @@ function closeManagement(){
 
 
 /* =========================================================
-   CLOSE CLIENT MODAL
-   ========================================================= */
+   LOAD COMPANY SETTINGS
+========================================================= */
 
-function closeClientModal(){
+async function loadCompanySettings(){
 
-    clientModal.classList.remove(
-        "show"
-    );
-
-    editingClient = null;
-
-}
+    companySettings = null;
 
 
-/* =========================================================
-   EVENTS
-   ========================================================= */
-
-function bindEvents(){
-
-    document.getElementById(
-        "addClientBtn"
-    ).addEventListener(
-        "click",
-        openAddClient
-    );
-
-
-    document.getElementById(
-        "previewBtn"
-    ).addEventListener(
-        "click",
-        previewSelectedClient
-    );
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("company_settings")
+        .select("*")
+        .eq(
+            "client_id",
+            selectedClient.id
+        )
+        .maybeSingle();
 
 
-    document.getElementById(
-        "refreshBtn"
-    ).addEventListener(
-        "click",
-        loadClients
-    );
+    if(error){
 
+        console.error(error);
 
-    document.getElementById(
-        "logoutBtn"
-    ).addEventListener(
-        "click",
-        logout
-    );
+        /*
+           Do not block the form when there is
+           simply no row yet.
+        */
 
+        if(
+            !String(
+                error.message || ""
+            )
+            .toLowerCase()
+            .includes("no rows")
+        ){
 
-    document.getElementById(
-        "closeClientModal"
-    ).addEventListener(
-        "click",
-        closeClientModal
-    );
-
-
-    document.getElementById(
-        "cancelClientBtn"
-    ).addEventListener(
-        "click",
-        closeClientModal
-    );
-
-
-    document.getElementById(
-        "saveClientBtn"
-    ).addEventListener(
-        "click",
-        saveClient
-    );
-
-
-    clientSelect.addEventListener(
-        "change",
-        function(){
-
-            if(this.value){
-
-                selectClient(
-                    this.value
-                );
-
-            }
+            showToast(
+                "Could not load company settings."
+            );
 
         }
-    );
-
-
-    clientSearch.addEventListener(
-        "input",
-        renderClientTable
-    );
-
-
-    /*
-       Auto slug.
-    */
-
-    document.getElementById(
-        "companyName"
-    ).addEventListener(
-        "input",
-        function(){
-
-            if(
-                !editingClient
-            ){
-
-                document.getElementById(
-                    "companySlug"
-                ).value =
-                    slugify(
-                        this.value
-                    );
-
-            }
-
-        }
-    );
-
-
-    /*
-       Close modal when clicking
-       backdrop.
-    */
-
-    clientModal.addEventListener(
-        "click",
-        function(e){
-
-            if(
-                e.target ===
-                clientModal
-            ){
-
-                closeClientModal();
-
-            }
-
-        }
-    );
-
-
-    managementModal.addEventListener(
-        "click",
-        function(e){
-
-            if(
-                e.target ===
-                managementModal
-            ){
-
-                closeManagement();
-
-            }
-
-        }
-    );
-
-
-    document.addEventListener(
-        "keydown",
-        function(e){
-
-            if(
-                e.key === "Escape"
-            ){
-
-                closeClientModal();
-
-                closeManagement();
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   LOGOUT
-   ========================================================= */
-
-async function logout(){
-
-    await supabaseClient.auth.signOut();
-
-    localStorage.removeItem(
-        "mdkaif_active_client"
-    );
-
-    window.location.href =
-        "index.html";
-
-}
-
-
-/* =========================================================
-   TEMPLATE NORMALIZATION
-   ========================================================= */
-
-function normalizeTemplate(value){
-
-    if(!value){
-
-        return "";
 
     }
 
 
-    let text =
-        String(value)
-            .trim()
-            .toLowerCase();
+    companySettings =
+        data || {};
+
+}
 
 
-    /*
-       If DB contains:
-       template-v1
-       template-v1.html
-       /template/template-v1.html
-       etc.
-    */
+/* =========================================================
+   RENDER SETTINGS
+========================================================= */
 
-    const match =
-        text.match(
-            /template-v(\d+)/
-        );
+function renderSettingsSection(section){
+
+    const s =
+        companySettings || {};
 
 
-    if(match){
+    if(section === "general"){
 
-        return (
-            "template-v" +
-            match[1]
-        );
+        settingsContent.innerHTML = `
 
+            <div class="settings-section">
+
+                <div class="settings-section-title">
+                    Company Information
+                </div>
+
+                <div class="settings-section-body">
+
+                    <div class="form-grid">
+
+                        <div class="form-group full">
+
+                            <label class="form-label">
+                                Tagline
+                            </label>
+
+                            <input
+                                id="cs_tagline"
+                                class="form-control"
+                                value="${attr(
+                                    s.tagline
+                                )}"
+                                placeholder="Your company tagline">
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label class="form-label">
+                                About Company
+                            </label>
+
+                            <textarea
+                                id="cs_about"
+                                class="form-control"
+                                placeholder="About your company">${text(
+                                    s.about
+                                )}</textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Mission
+                            </label>
+
+                            <textarea
+                                id="cs_mission"
+                                class="form-control"
+                                placeholder="Company mission">${text(
+                                    s.mission
+                                )}</textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Vision
+                            </label>
+
+                            <textarea
+                                id="cs_vision"
+                                class="form-control"
+                                placeholder="Company vision">${text(
+                                    s.vision
+                                )}</textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
     }
 
 
-    return text;
+    if(section === "design"){
 
-}
+        settingsContent.innerHTML = `
+
+            <div class="settings-section">
+
+                <div class="settings-section-title">
+                    Branding
+                </div>
+
+                <div class="settings-section-body">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Logo URL
+                            </label>
+
+                            <input
+                                id="cs_logo_url"
+                                class="form-control"
+                                value="${attr(
+                                    s.logo_url
+                                )}"
+                                placeholder="https://...">
+
+                            <img
+                                id="logoPreview"
+                                class="image-preview"
+                                alt="Logo Preview">
+
+                        </div>
 
 
-/* =========================================================
-   SLUGIFY
-   ========================================================= */
+                        <div class="form-group">
 
-function slugify(value){
+                            <label class="form-label">
+                                Favicon URL
+                            </label>
 
-    return String(value || "")
-        .toLowerCase()
-        .trim()
-        .replace(
-            /[^a-z0-9]+/g,
-            "-"
-        )
-        .replace(
-            /^-+|-+$/g,
-            ""
+                            <input
+                                id="cs_favicon_url"
+                                class="form-control"
+                                value="${attr(
+                                    s.favicon_url
+                                )}"
+                                placeholder="https://...">
+
+                            <img
+                                id="faviconPreview"
+                                class="image-preview"
+                                alt="Favicon Preview">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-section">
+
+                <div class="settings-section-title">
+                    Website Colors
+                </div>
+
+                <div class="settings-section-body">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Primary Color
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cs_primary_color"
+                                class="form-control"
+                                value="${attr(
+                                    s.primary_color || "#111827"
+                                )}"
+                                placeholder="#111827">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Secondary Color
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cs_secondary_color"
+                                class="form-control"
+                                value="${attr(
+                                    s.secondary_color || "#64748B"
+                                )}"
+                                placeholder="#64748B">
+
+                        </div>
+
+                    </div>
+
+                    <div style="
+                        margin-top:15px;
+                        display:flex;
+                        gap:10px;
+                    ">
+
+                        <div
+                            id="primaryPreview"
+                            class="color-preview"
+                            style="width:100%;background:${
+                                escapeAttribute(
+                                    s.primary_color ||
+                                    "#111827"
+                                )
+                            }">
+                        </div>
+
+                        <div
+                            id="secondaryPreview"
+                            class="color-preview"
+                            style="width:100%;background:${
+                                escapeAttribute(
+                                    s.secondary_color ||
+                                    "#64748B"
+                                )
+                            }">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+        setupImagePreview(
+            "cs_logo_url",
+            "logoPreview"
         );
 
-}
+        setupImagePreview(
+            "cs_favicon_url",
+            "faviconPreview"
+        );
 
+        setupColorPreview(
+            "cs_primary_color",
+            "primaryPreview"
+        );
 
-/* =========================================================
-   URL
-   ========================================================= */
+        setupColorPreview(
+            "cs_secondary_color",
+            "secondaryPreview"
+        );
 
-function normalizeUrl(url){
-
-    if(!url){
-
-        return "";
-
+        return;
     }
 
 
-    const value =
-        String(url).trim();
+    if(section === "contact"){
+
+        settingsContent.innerHTML = `
+
+            <div class="settings-section">
+
+                <div class="settings-section-title">
+                    Contact Information
+                </div>
+
+                <div class="settings-section-body">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Phone
+                            </label>
+
+                            <input
+                                id="cs_phone"
+                                class="form-control"
+                                value="${attr(
+                                    s.phone
+                                )}"
+                                placeholder="+91 ...">
+
+                        </div>
 
 
-    if(
-        /^https?:\/\//i.test(
-            value
-        )
-    ){
+                        <div class="form-group">
 
-        return value;
+                            <label class="form-label">
+                                WhatsApp
+                            </label>
 
-    }
+                            <input
+                                id="cs_whatsapp"
+                                class="form-control"
+                                value="${attr(
+                                    s.whatsapp
+                                )}"
+                                placeholder="+91 ...">
 
-
-    return "https://" + value;
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-   ========================================================= */
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
+                        </div>
 
 
-/* =========================================================
-   ESCAPE ATTRIBUTE
-   ========================================================= */
+                        <div class="form-group">
 
-function escapeAttribute(value){
+                            <label class="form-label">
+                                Email
+                            </label>
 
-    return escapeHTML(
-        value
-    );
+                            <input
+                                id="cs_email"
+                                type="email"
+                                class="form-control"
+                                value="${attr(
+                                    s.email
+                                )}"
+                                placeholder="info@example.com">
 
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-let toastTimer = null;
+                        </div>
 
 
-function showToast(message){
+                        <div class="form-group">
 
-    const toast =
-        document.getElementById(
-            "toast"
-        );
+                            <label class="form-label">
+                                Website
+                            </label>
 
+                            <input
+                                id="cs_website"
+                                class="form-control"
+                                value="${attr(
+                                    s.website
+                                )}"
+                                placeholder="https://example.com">
 
-    toast.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        toastTimer
-    );
+                        </div>
 
 
-    toastTimer =
-        setTimeout(
-            function(){
+                        <div class="form-group full">
 
-                toast.classList.remove(
-                    "show"
-                );
+                            <label class="form-label">
+                                Address
+                            </label>
 
-            },
-            2800
-        );
+                            <textarea
+                                id="cs_address"
+                                class="form-control"
+                                placeholder="Complete address">${text(
+                                    s.address
+                                )}</textarea>
 
-}
+                        </div>
 
 
-/* =========================================================
-   GLOBAL FUNCTIONS
-   ========================================================= */
+                        <div class="form-group">
 
-window.selectClient =
-    selectClient;
+                            <label class="form-label">
+                                City
+                            </label>
 
-window.editClient =
-    editClient;
+                            <input
+                                id="cs_city"
+                                class="form-control"
+                                value="${attr(
+                                    s.city
+                                )}">
 
-window.deleteClient =
-    deleteClient;
+                        </div>
 
-window.chooseTemplate =
-    chooseTemplate;
 
-window.openManagement =
-    openManagement;
+                        <div class="form-group">
 
-window.closeManagement =
-    closeManagement;
+                            <label class="form-label">
+                                State
+                            </label>
 
-window.previewSelectedClient =
-    previewSelectedClient;
+                            <input
+                                id="cs_state"
+                                class="form-control"
+                                value="${attr(
+                                    s.state
+                                )}">
 
-window.openLiveWebsite =
-    openLiveWebsite;
+                        </div>
 
-</script>
 
-</body>
-</html>
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Country
+                            </label>
+
+                            <input
+                                id="cs_country"
+                                class="form-control"
+                                value="${attr(
+                                    s.country
+                                )}">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Postal Code
+                            </
