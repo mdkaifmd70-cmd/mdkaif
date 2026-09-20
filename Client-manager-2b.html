@@ -1,0 +1,3022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MD Kaif Web Platform — Client Manager</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#6b7280;
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --border:#e5e7eb;
+    --danger:#dc2626;
+    --success:#16a34a;
+    --warning:#d97706;
+    --sidebar:#111827;
+}
+
+body{
+    font-family:Inter,Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.topbar{
+    height:64px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 22px;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:800;
+    font-size:18px;
+}
+
+.brand-logo{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-info{
+    font-size:13px;
+    color:var(--muted);
+    margin-right:8px;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.layout{
+    display:flex;
+    min-height:calc(100vh - 64px);
+}
+
+.sidebar{
+    width:250px;
+    background:var(--sidebar);
+    color:#fff;
+    padding:18px 12px;
+    flex-shrink:0;
+}
+
+.sidebar-title{
+    font-size:11px;
+    color:#9ca3af;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    padding:10px 12px 7px;
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 13px;
+    margin:3px 0;
+    border-radius:9px;
+    color:#d1d5db;
+    text-decoration:none;
+    font-size:14px;
+    transition:.2s;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:#1f2937;
+    color:#fff;
+}
+
+.nav-icon{
+    width:20px;
+    text-align:center;
+}
+
+.main{
+    flex:1;
+    padding:24px;
+    min-width:0;
+}
+
+.page-title{
+    font-size:25px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.page-subtitle{
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:24px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn{
+    border:none;
+    border-radius:8px;
+    padding:9px 14px;
+    font-size:13px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn-secondary{
+    background:#eef2ff;
+    color:#3730a3;
+}
+
+.btn-light{
+    background:#f3f4f6;
+    color:#374151;
+}
+
+.btn-danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.btn-success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.btn-warning{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.btn-sm{
+    padding:7px 10px;
+    font-size:12px;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px;
+}
+
+.stat-label{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:7px;
+}
+
+.stat-value{
+    font-size:26px;
+    font-weight:800;
+}
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.search{
+    flex:1;
+}
+
+.search input,
+.toolbar select{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:10px 12px;
+    outline:none;
+    background:#fff;
+}
+
+.search input:focus,
+.toolbar select:focus{
+    border-color:var(--primary);
+}
+
+/* =========================================================
+   CLIENT CARDS
+========================================================= */
+
+.clients-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+}
+
+.client-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:18px;
+}
+
+.client-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.client-name{
+    font-size:18px;
+    font-weight:800;
+}
+
+.client-slug{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:3px;
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    border-radius:20px;
+    padding:5px 9px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.status-active{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-inactive{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.client-details{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.detail{
+    background:#f8fafc;
+    border-radius:8px;
+    padding:10px;
+}
+
+.detail-label{
+    font-size:10px;
+    text-transform:uppercase;
+    color:#9ca3af;
+    margin-bottom:4px;
+}
+
+.detail-value{
+    font-size:13px;
+    font-weight:700;
+    word-break:break-word;
+}
+
+.client-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    border-top:1px solid var(--border);
+    padding-top:13px;
+}
+
+/* =========================================================
+   MANAGEMENT
+========================================================= */
+
+.section-title{
+    font-size:18px;
+    font-weight:800;
+    margin:30px 0 13px;
+}
+
+.management-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+}
+
+.management-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:11px;
+    padding:16px;
+    transition:.2s;
+}
+
+.management-card:hover{
+    border-color:#bfdbfe;
+    transform:translateY(-1px);
+}
+
+.management-icon{
+    font-size:23px;
+    margin-bottom:9px;
+}
+
+.management-name{
+    font-weight:800;
+    font-size:14px;
+    margin-bottom:4px;
+}
+
+.management-description{
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.45;
+    margin-bottom:11px;
+}
+
+.management-card button{
+    width:100%;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+    background:#fff;
+    border:1px dashed #cbd5e1;
+    border-radius:12px;
+    padding:45px 20px;
+    text-align:center;
+    color:var(--muted);
+}
+
+.empty-icon{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.58);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:500;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:min(720px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:#fff;
+    border-radius:15px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 20px;
+    border-bottom:1px solid var(--border);
+}
+
+.modal-title{
+    font-size:18px;
+    font-weight:800;
+}
+
+.close-btn{
+    border:none;
+    background:#f3f4f6;
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    font-size:18px;
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.modal-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:9px;
+    padding:15px 20px;
+    border-top:1px solid var(--border);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.form-group.full{
+    grid-column:1 / -1;
+}
+
+.form-label{
+    font-size:12px;
+    font-weight:800;
+    color:#374151;
+}
+
+.form-control{
+    width:100%;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    padding:10px 11px;
+    outline:none;
+    background:#fff;
+}
+
+.form-control:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(37,99,235,.08);
+}
+
+.help{
+    color:#9ca3af;
+    font-size:11px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#111827;
+    color:#fff;
+    padding:12px 16px;
+    border-radius:9px;
+    font-size:13px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transform:translateY(80px);
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:1000;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+.toast.success{
+    background:#166534;
+}
+
+.toast.error{
+    background:#991b1b;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+    padding:40px;
+    text-align:center;
+    color:var(--muted);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+    .management-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .clients-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:850px){
+
+    .sidebar{
+        width:70px;
+        padding:12px 8px;
+    }
+
+    .sidebar-title,
+    .nav-item span:not(.nav-icon){
+        display:none;
+    }
+
+    .nav-item{
+        justify-content:center;
+        padding:12px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .management-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .topbar{
+        padding:0 12px;
+    }
+
+    .user-info{
+        display:none;
+    }
+
+    .main{
+        padding:15px;
+    }
+
+    .page-title{
+        font-size:21px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+    }
+
+    .stat-card{
+        padding:13px;
+    }
+
+    .stat-value{
+        font-size:21px;
+    }
+
+    .toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .client-details{
+        grid-template-columns:1fr;
+    }
+
+    .management-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .modal-overlay{
+        padding:8px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-logo">MK</div>
+        <div>MD Kaif Web Platform</div>
+    </div>
+
+    <div class="top-actions">
+
+        <div class="user-info" id="userInfo">
+            Loading...
+        </div>
+
+        <button class="btn btn-light btn-sm" onclick="goDashboard()">
+            Dashboard
+        </button>
+
+        <button class="btn btn-danger btn-sm" onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN LAYOUT
+========================================================= -->
+
+<div class="layout">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-title">
+            Main
+        </div>
+
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="client-manager.html" class="nav-item active">
+            <span class="nav-icon">👥</span>
+            <span>Client Manager</span>
+        </a>
+
+        <a href="template-manager.html" class="nav-item">
+            <span class="nav-icon">🎨</span>
+            <span>Template Manager</span>
+        </a>
+
+
+        <div class="sidebar-title">
+            Website
+        </div>
+
+        <a href="#website-management" class="nav-item">
+            <span class="nav-icon">⚙️</span>
+            <span>Website Management</span>
+        </a>
+
+        <a href="#enquiries" class="nav-item">
+            <span class="nav-icon">📩</span>
+            <span>Enquiries</span>
+        </a>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main">
+
+        <h1 class="page-title">
+            Client Manager
+        </h1>
+
+        <p class="page-subtitle">
+            Central control center for clients, templates, websites and future ecommerce management.
+        </p>
+
+
+        <!-- =================================================
+             STATS
+        ================================================== -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <div class="stat-label">
+                    Total Clients
+                </div>
+                <div class="stat-value" id="totalClients">
+                    0
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">
+                    Active Clients
+                </div>
+                <div class="stat-value" id="activeClients">
+                    0
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">
+                    Inactive Clients
+                </div>
+                <div class="stat-value" id="inactiveClients">
+                    0
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">
+                    Templates Assigned
+                </div>
+                <div class="stat-value" id="assignedTemplates">
+                    0
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             TOOLBAR
+        ================================================== -->
+
+        <div class="toolbar">
+
+            <div class="search">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search company, slug, domain..."
+                    oninput="renderClients()"
+                >
+            </div>
+
+            <div style="width:170px;">
+                <select id="statusFilter" onchange="renderClients()">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="openCreateModal()">
+                + Add Client
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             CLIENT LIST
+        ================================================== -->
+
+        <div id="clientsContainer">
+            <div class="loading">
+                Loading clients...
+            </div>
+        </div>
+
+
+        <!-- =================================================
+             WEBSITE MANAGEMENT
+        ================================================== -->
+
+        <section id="website-management">
+
+            <div class="section-title">
+                Website Management
+            </div>
+
+            <div class="management-grid">
+
+                <div class="management-card">
+                    <div class="management-icon">⚙️</div>
+                    <div class="management-name">General</div>
+                    <div class="management-description">
+                        Basic website information and company configuration.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('General')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">🎨</div>
+                    <div class="management-name">Design</div>
+                    <div class="management-description">
+                        Colors, typography, layout and visual settings.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Design')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">🖼️</div>
+                    <div class="management-name">Hero</div>
+                    <div class="management-description">
+                        Hero heading, description, image and call-to-action.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Hero')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">📖</div>
+                    <div class="management-name">About</div>
+                    <div class="management-description">
+                        About company, mission, vision and key points.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('About')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">🛠️</div>
+                    <div class="management-name">Services</div>
+                    <div class="management-description">
+                        Manage company services and service sections.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Services')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">📦</div>
+                    <div class="management-name">Products</div>
+                    <div class="management-description">
+                        Product catalog, categories, specifications and pricing.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Products')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">🖼️</div>
+                    <div class="management-name">Gallery</div>
+                    <div class="management-description">
+                        Product and company gallery images.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Gallery')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">⭐</div>
+                    <div class="management-name">Testimonials</div>
+                    <div class="management-description">
+                        Customer reviews, ratings and testimonial images.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Testimonials')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">❓</div>
+                    <div class="management-name">FAQ</div>
+                    <div class="management-description">
+                        Frequently asked questions and answers.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('FAQ')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">📄</div>
+                    <div class="management-name">Policies</div>
+                    <div class="management-description">
+                        Privacy, terms, refund, shipping and other policies.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Policies')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">📞</div>
+                    <div class="management-name">Contact</div>
+                    <div class="management-description">
+                        Phone, WhatsApp, email, address and contact details.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Contact')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">🔗</div>
+                    <div class="management-name">Social Media</div>
+                    <div class="management-description">
+                        Facebook, Instagram, LinkedIn, YouTube and other links.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Social Media')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">🔎</div>
+                    <div class="management-name">SEO</div>
+                    <div class="management-description">
+                        Website title, meta description and SEO settings.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('SEO')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card" id="enquiries">
+                    <div class="management-icon">📩</div>
+                    <div class="management-name">Enquiries / Leads</div>
+                    <div class="management-description">
+                        Website enquiries, customer requirements and lead status.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Enquiries')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">👤</div>
+                    <div class="management-name">Client Admin</div>
+                    <div class="management-description">
+                        Future client-side admin access and permissions.
+                    </div>
+                    <button class="btn btn-light btn-sm"
+                            onclick="comingSoon('Client Admin')">
+                        Manage
+                    </button>
+                </div>
+
+
+                <div class="management-card">
+                    <div class="management-icon">👁️</div>
+                    <div class="management-name">Preview Website</div>
+                    <div class="management-description">
+                        Open the selected client's complete website preview.
+                    </div>
+                    <button class="btn btn-primary btn-sm"
+                            onclick="previewSelectedClient()">
+                        Preview
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     CREATE / EDIT MODAL
+========================================================= -->
+
+<div class="modal-overlay" id="clientModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div class="modal-title" id="modalTitle">
+                Add Client
+            </div>
+
+            <button class="close-btn" onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <form id="clientForm">
+
+                <input type="hidden" id="clientId">
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+
+                        <label class="form-label">
+                            Company Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="companyName"
+                            class="form-control"
+                            placeholder="Example: ABC Industries"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Client Slug *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="clientSlug"
+                            class="form-control"
+                            placeholder="abc-industries"
+                            required
+                        >
+
+                        <div class="help">
+                            Auto-generated from company name.
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Status
+                        </label>
+
+                        <select id="clientStatus" class="form-control">
+
+                            <option value="active">
+                                Active
+                            </option>
+
+                            <option value="inactive">
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Domain
+                        </label>
+
+                        <input
+                            type="text"
+                            id="domain"
+                            class="form-control"
+                            placeholder="www.example.com"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Hosting Type
+                        </label>
+
+                        <select id="hostingType" class="form-control">
+
+                            <option value="GitHub Pages">
+                                GitHub Pages
+                            </option>
+
+                            <option value="Custom Domain">
+                                Custom Domain
+                            </option>
+
+                            <option value="Web Hosting">
+                                Web Hosting
+                            </option>
+
+                            <option value="Cloud Hosting">
+                                Cloud Hosting
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label class="form-label">
+                            Hosting URL
+                        </label>
+
+                        <input
+                            type="text"
+                            id="hostingUrl"
+                            class="form-control"
+                            placeholder="https://example.github.io/site/"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label class="form-label">
+                            Website Template
+                        </label>
+
+                        <select id="template" class="form-control">
+
+                            <option value="">
+                                — No Template —
+                            </option>
+
+                            <option value="template-v1">
+                                V1 — Industria
+                            </option>
+
+                            <option value="template-v2">
+                                V2
+                            </option>
+
+                            <option value="template-v3">
+                                V3
+                            </option>
+
+                            <option value="template-v4">
+                                V4
+                            </option>
+
+                            <option value="template-v5">
+                                V5
+                            </option>
+
+                            <option value="template-v6">
+                                V6
+                            </option>
+
+                            <option value="template-v7">
+                                V7
+                            </option>
+
+                            <option value="template-v8">
+                                V8
+                            </option>
+
+                            <option value="template-v9">
+                                V9
+                            </option>
+
+                            <option value="template-v10">
+                                V10
+                            </option>
+
+                        </select>
+
+                        <div class="help">
+                            Assigning a template makes the client's base website immediately previewable.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button class="btn btn-light" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button class="btn btn-primary" onclick="saveClient()">
+                Save Client
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* ============================================================
+   SUPABASE
+============================================================ */
+
+const SUPABASE_URL =
+"https://ywvdozdoanmcxscfofc.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+        auth:{
+            persistSession:true,
+            autoRefreshToken:true,
+            detectSessionInUrl:true
+        }
+    }
+);
+
+
+/* ============================================================
+   GLOBAL STATE
+============================================================ */
+
+let clients = [];
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let selectedClientId = null;
+
+
+/* ============================================================
+   TEMPLATE MAP
+============================================================ */
+
+const TEMPLATE_MAP = {
+
+    "template-v1":
+        "template/template-v1.html",
+
+    "template-v2":
+        "template/template-v2.html",
+
+    "template-v3":
+        "template/template-v3.html",
+
+    "template-v4":
+        "template/template-v4.html",
+
+    "template-v5":
+        "template/template-v5.html",
+
+    "template-v6":
+        "template/template-v6.html",
+
+    "template-v7":
+        "template/template-v7.html",
+
+    "template-v8":
+        "template/template-v8.html",
+
+    "template-v9":
+        "template/template-v9.html",
+
+    "template-v10":
+        "template/template-v10.html"
+
+};
+
+
+/* ============================================================
+   INIT
+============================================================ */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
+
+
+async function init(){
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient.auth.getSession();
+
+        if(error){
+
+            console.error(error);
+
+            showToast(
+                "Unable to check login session.",
+                "error"
+            );
+
+            return;
+
+        }
+
+        if(!data.session){
+
+            window.location.href =
+                "admin.html";
+
+            return;
+
+        }
+
+        currentUser =
+            data.session.user;
+
+        document.getElementById(
+            "userInfo"
+        ).textContent =
+            currentUser.email || "Admin";
+
+        await loadProfile();
+
+        await loadClients();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Something went wrong.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   PROFILE
+============================================================ */
+
+async function loadProfile(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select("*")
+            .eq(
+                "id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+        if(error){
+
+            console.error(
+                "Profile error:",
+                error
+            );
+
+            currentProfile = null;
+
+            return;
+
+        }
+
+        currentProfile = data;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        currentProfile = null;
+
+    }
+
+}
+
+
+/* ============================================================
+   CHECK SUPER ADMIN
+============================================================ */
+
+function isSuperAdmin(){
+
+    if(!currentProfile){
+        return false;
+    }
+
+    return (
+        currentProfile.role ===
+        "super_admin"
+        ||
+        currentProfile.role ===
+        "admin"
+    );
+
+}
+
+
+/* ============================================================
+   LOAD CLIENTS
+============================================================ */
+
+async function loadClients(){
+
+    const container =
+        document.getElementById(
+            "clientsContainer"
+        );
+
+    container.innerHTML =
+        '<div class="loading">Loading clients...</div>';
+
+    try{
+
+        let query =
+            supabaseClient
+                .from("clients")
+                .select("*")
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                );
+
+
+        /*
+         * SUPER ADMIN
+         * ------------
+         * Can see all clients.
+         */
+
+        if(!isSuperAdmin()){
+
+            if(
+                !currentProfile ||
+                !currentProfile.client_id
+            ){
+
+                clients = [];
+
+                renderClients();
+
+                return;
+
+            }
+
+            query =
+                query.eq(
+                    "id",
+                    currentProfile.client_id
+                );
+
+        }
+
+
+        const {
+            data,
+            error
+        } = await query;
+
+
+        if(error){
+
+            console.error(
+                "Clients error:",
+                error
+            );
+
+            container.innerHTML =
+                `
+                <div class="empty">
+                    <div class="empty-icon">⚠️</div>
+                    <strong>Unable to load clients</strong>
+                    <p style="margin-top:6px;">
+                        ${escapeHtml(error.message)}
+                    </p>
+                </div>
+                `;
+
+            return;
+
+        }
+
+
+        clients = data || [];
+
+        renderStats();
+
+        renderClients();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                <div class="empty-icon">⚠️</div>
+                Unable to load clients.
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* ============================================================
+   STATS
+============================================================ */
+
+function renderStats(){
+
+    const total =
+        clients.length;
+
+    const active =
+        clients.filter(
+            c =>
+                String(c.status || "").toLowerCase()
+                === "active"
+        ).length;
+
+    const inactive =
+        total - active;
+
+    const assigned =
+        clients.filter(
+            c =>
+                c.template &&
+                String(c.template).trim() !== ""
+        ).length;
+
+
+    document.getElementById(
+        "totalClients"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "activeClients"
+    ).textContent = active;
+
+
+    document.getElementById(
+        "inactiveClients"
+    ).textContent = inactive;
+
+
+    document.getElementById(
+        "assignedTemplates"
+    ).textContent = assigned;
+
+}
+
+
+/* ============================================================
+   RENDER CLIENTS
+============================================================ */
+
+function renderClients(){
+
+    const container =
+        document.getElementById(
+            "clientsContainer"
+        );
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    let filtered =
+        clients.filter(
+            client => {
+
+                const searchable = [
+
+                    client.company_name,
+
+                    client.slug,
+
+                    client.domain,
+
+                    client.hosting_url,
+
+                    client.template
+
+                ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    searchable.includes(search);
+
+
+                const clientStatus =
+                    String(
+                        client.status || ""
+                    ).toLowerCase();
+
+
+                const matchesStatus =
+                    status === "all"
+                    ||
+                    clientStatus === status;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+
+    if(!filtered.length){
+
+        container.innerHTML =
+            `
+            <div class="empty">
+
+                <div class="empty-icon">
+                    👥
+                </div>
+
+                <strong>
+                    No clients found
+                </strong>
+
+                <p style="margin-top:6px;">
+                    Create your first client using the
+                    <b>+ Add Client</b> button.
+                </p>
+
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        `
+        <div class="clients-grid">
+
+            ${
+                filtered
+                    .map(
+                        clientCard
+                    )
+                    .join("")
+            }
+
+        </div>
+        `;
+
+}
+
+
+/* ============================================================
+   CLIENT CARD
+============================================================ */
+
+function clientCard(client){
+
+    const status =
+        String(
+            client.status || "inactive"
+        ).toLowerCase();
+
+
+    const statusClass =
+        status === "active"
+        ? "status-active"
+        : "status-inactive";
+
+
+    const statusText =
+        status === "active"
+        ? "Active"
+        : "Inactive";
+
+
+    const template =
+        normalizeTemplate(
+            client.template
+        );
+
+
+    const templateLabel =
+        template
+        ? template.toUpperCase()
+        : "Not Assigned";
+
+
+    const domain =
+        client.domain ||
+        "Not connected";
+
+
+    const hosting =
+        client.hosting_url ||
+        "Not configured";
+
+
+    return `
+
+    <div class="client-card">
+
+        <div class="client-header">
+
+            <div>
+
+                <div class="client-name">
+                    ${escapeHtml(
+                        client.company_name ||
+                        "Unnamed Client"
+                    )}
+                </div>
+
+                <div class="client-slug">
+                    /${escapeHtml(
+                        client.slug || ""
+                    )}
+                </div>
+
+            </div>
+
+            <span class="status ${statusClass}">
+                ${statusText}
+            </span>
+
+        </div>
+
+
+        <div class="client-details">
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Domain
+                </div>
+
+                <div class="detail-value">
+                    ${escapeHtml(domain)}
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Template
+                </div>
+
+                <div class="detail-value">
+                    ${escapeHtml(templateLabel)}
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Hosting
+                </div>
+
+                <div class="detail-value">
+                    ${escapeHtml(
+                        client.hosting_type ||
+                        "Not configured"
+                    )}
+                </div>
+
+            </div>
+
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Hosting URL
+                </div>
+
+                <div class="detail-value">
+                    ${escapeHtml(hosting)}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="client-actions">
+
+            <button
+                class="btn btn-primary btn-sm"
+                onclick="previewClient('${client.id}')"
+            >
+                👁 Preview
+            </button>
+
+
+            <button
+                class="btn btn-secondary btn-sm"
+                onclick="openLiveWebsite('${client.id}')"
+            >
+                🌐 Live Website
+            </button>
+
+
+            <button
+                class="btn btn-light btn-sm"
+                onclick="editClient('${client.id}')"
+            >
+                ✏️ Edit
+            </button>
+
+
+            ${
+                status === "active"
+
+                ?
+
+                `
+                <button
+                    class="btn btn-warning btn-sm"
+                    onclick="toggleClientStatus('${client.id}', 'inactive')"
+                >
+                    Deactivate
+                </button>
+                `
+
+                :
+
+                `
+                <button
+                    class="btn btn-success btn-sm"
+                    onclick="toggleClientStatus('${client.id}', 'active')"
+                >
+                    Activate
+                </button>
+                `
+            }
+
+
+            <button
+                class="btn btn-danger btn-sm"
+                onclick="deleteClient('${client.id}')"
+            >
+                🗑 Delete
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* ============================================================
+   OPEN CREATE MODAL
+============================================================ */
+
+function openCreateModal(){
+
+    selectedClientId = null;
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Add Client";
+
+
+    document.getElementById(
+        "clientForm"
+    ).reset();
+
+
+    document.getElementById(
+        "clientId"
+    ).value = "";
+
+
+    document.getElementById(
+        "clientStatus"
+    ).value =
+        "active";
+
+
+    document.getElementById(
+        "hostingType"
+    ).value =
+        "GitHub Pages";
+
+
+    document.getElementById(
+        "clientModal"
+    ).classList.add("show");
+
+}
+
+
+/* ============================================================
+   CLOSE MODAL
+============================================================ */
+
+function closeModal(){
+
+    document.getElementById(
+        "clientModal"
+    ).classList.remove("show");
+
+}
+
+
+/* ============================================================
+   AUTO SLUG
+============================================================ */
+
+document.getElementById(
+    "companyName"
+).addEventListener(
+    "input",
+    function(){
+
+        if(
+            !selectedClientId
+        ){
+
+            document.getElementById(
+                "clientSlug"
+            ).value =
+                slugify(
+                    this.value
+                );
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   EDIT CLIENT
+============================================================ */
+
+function editClient(id){
+
+    const client =
+        clients.find(
+            c =>
+                String(c.id) ===
+                String(id)
+        );
+
+
+    if(!client){
+
+        showToast(
+            "Client not found.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    selectedClientId =
+        client.id;
+
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Edit Client";
+
+
+    document.getElementById(
+        "clientId"
+    ).value =
+        client.id || "";
+
+
+    document.getElementById(
+        "companyName"
+    ).value =
+        client.company_name || "";
+
+
+    document.getElementById(
+        "clientSlug"
+    ).value =
+        client.slug || "";
+
+
+    document.getElementById(
+        "domain"
+    ).value =
+        client.domain || "";
+
+
+    document.getElementById(
+        "hostingType"
+    ).value =
+        client.hosting_type ||
+        "GitHub Pages";
+
+
+    document.getElementById(
+        "hostingUrl"
+    ).value =
+        client.hosting_url || "";
+
+
+    document.getElementById(
+        "template"
+    ).value =
+        normalizeTemplate(
+            client.template
+        );
+
+
+    document.getElementById(
+        "clientStatus"
+    ).value =
+        String(
+            client.status || "active"
+        ).toLowerCase();
+
+
+    document.getElementById(
+        "clientModal"
+    ).classList.add("show");
+
+}
+
+
+/* ============================================================
+   SAVE CLIENT
+============================================================ */
+
+async function saveClient(){
+
+    const id =
+        document.getElementById(
+            "clientId"
+        ).value.trim();
+
+
+    const companyName =
+        document.getElementById(
+            "companyName"
+        ).value.trim();
+
+
+    const slug =
+        document.getElementById(
+            "clientSlug"
+        ).value.trim();
+
+
+    const domain =
+        document.getElementById(
+            "domain"
+        ).value.trim();
+
+
+    const hostingType =
+        document.getElementById(
+            "hostingType"
+        ).value;
+
+
+    const hostingUrl =
+        document.getElementById(
+            "hostingUrl"
+        ).value.trim();
+
+
+    const template =
+        document.getElementById(
+            "template"
+        ).value;
+
+
+    const status =
+        document.getElementById(
+            "clientStatus"
+        ).value;
+
+
+    if(!companyName){
+
+        showToast(
+            "Company name is required.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!slug){
+
+        showToast(
+            "Client slug is required.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const payload = {
+
+        company_name:
+            companyName,
+
+        slug:
+            slug,
+
+        domain:
+            domain || null,
+
+        hosting_type:
+            hostingType || null,
+
+        hosting_url:
+            hostingUrl || null,
+
+        template:
+            template || null,
+
+        status:
+            status || "active"
+
+    };
+
+
+    try{
+
+        let result;
+
+
+        if(id){
+
+            result =
+                await supabaseClient
+                    .from("clients")
+                    .update(payload)
+                    .eq(
+                        "id",
+                        id
+                    )
+                    .select()
+                    .single();
+
+        }
+        else{
+
+            result =
+                await supabaseClient
+                    .from("clients")
+                    .insert(payload)
+                    .select()
+                    .single();
+
+        }
+
+
+        if(result.error){
+
+            console.error(
+                result.error
+            );
+
+            showToast(
+                result.error.message ||
+                "Unable to save client.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        closeModal();
+
+
+        showToast(
+            id
+            ? "Client updated successfully."
+            : "Client created successfully.",
+            "success"
+        );
+
+
+        await loadClients();
+
+
+        /*
+         * If a new client has been created
+         * with a template, immediately offer
+         * preview.
+         */
+
+        if(
+            !id &&
+            result.data &&
+            result.data.id &&
+            result.data.template
+        ){
+
+            setTimeout(
+                function(){
+
+                    if(
+                        confirm(
+                            "Client created and template assigned.\n\nOpen website preview now?"
+                        )
+                    ){
+
+                        previewClient(
+                            result.data.id
+                        );
+
+                    }
+
+                },
+                300
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Unexpected error while saving client.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   TOGGLE STATUS
+============================================================ */
+
+async function toggleClientStatus(
+    id,
+    newStatus
+){
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("clients")
+            .update({
+                status:newStatus
+            })
+            .eq(
+                "id",
+                id
+            );
+
+
+        if(error){
+
+            console.error(error);
+
+            showToast(
+                error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showToast(
+            newStatus === "active"
+            ? "Client activated."
+            : "Client deactivated.",
+            "success"
+        );
+
+
+        await loadClients();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Unable to update status.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   DELETE CLIENT
+============================================================ */
+
+async function deleteClient(id){
+
+    const client =
+        clients.find(
+            c =>
+                String(c.id) ===
+                String(id)
+        );
+
+
+    if(!client){
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Delete client \"" +
+            (client.company_name || "") +
+            "\"?\n\nThis action cannot be undone."
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("clients")
+            .delete()
+            .eq(
+                "id",
+                id
+            );
+
+
+        if(error){
+
+            console.error(error);
+
+            showToast(
+                error.message ||
+                "Unable to delete client.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        showToast(
+            "Client deleted successfully.",
+            "success"
+        );
+
+
+        await loadClients();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Unexpected error while deleting client.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   PREVIEW CLIENT
+============================================================ */
+
+function previewClient(id){
+
+    const client =
+        clients.find(
+            c =>
+                String(c.id) ===
+                String(id)
+        );
+
+
+    if(!client){
+
+        showToast(
+            "Client not found.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        String(client.status || "").toLowerCase()
+        !== "active"
+    ){
+
+        showToast(
+            "This client is inactive.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!client.template){
+
+        showToast(
+            "Please assign a template first.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    selectedClientId =
+        client.id;
+
+
+    /*
+     * preview.html handles:
+     *
+     * client ID
+     * assigned template
+     * template URL
+     * client-runtime
+     *
+     */
+
+    const url =
+        "preview.html?client=" +
+        encodeURIComponent(
+            client.id
+        );
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* ============================================================
+   PREVIEW SELECTED CLIENT
+============================================================ */
+
+function previewSelectedClient(){
+
+    if(selectedClientId){
+
+        previewClient(
+            selectedClientId
+        );
+
+        return;
+
+    }
+
+
+    if(clients.length === 1){
+
+        previewClient(
+            clients[0].id
+        );
+
+        return;
+
+    }
+
+
+    showToast(
+        "Select/edit a client first, then preview its website.",
+        "error"
+    );
+
+}
+
+
+/* ============================================================
+   LIVE WEBSITE
+============================================================ */
+
+function openLiveWebsite(id){
+
+    const client =
+        clients.find(
+            c =>
+                String(c.id) ===
+                String(id)
+        );
+
+
+    if(!client){
+        return;
+    }
+
+
+    let url =
+        client.hosting_url ||
+        client.domain ||
+        "";
+
+
+    url = String(url).trim();
+
+
+    if(!url){
+
+        showToast(
+            "Live website URL is not configured.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !/^https?:\/\//i.test(url)
+    ){
+
+        url =
+            "https://" +
+            url;
+
+    }
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* ============================================================
+   TEMPLATE NORMALIZATION
+============================================================ */
+
+function normalizeTemplate(value){
+
+    if(!value){
+        return "";
+    }
+
+
+    let v =
+        String(value)
+            .trim()
+            .toLowerCase();
+
+
+    /*
+     * Accept:
+     *
+     * template-v1
+     * v1
+     * template/v1.html
+     * template/template-v1.html
+     */
+
+    v =
+        v.replace(
+            /\.html$/i,
+            ""
+        );
+
+
+    v =
+        v.replace(
+            /\\/g,
+            "/"
+        );
+
+
+    if(
+        v.includes("/")
+    ){
+
+        v =
+            v.split("/")
+                .pop();
+
+    }
+
+
+    if(
+        /^v\d+$/.test(v)
+    ){
+
+        v =
+            "template-" +
+            v;
+
+    }
+
+
+    return v;
+
+}
+
+
+/* ============================================================
+   SLUGIFY
+============================================================ */
+
+function slugify(value){
+
+    return String(
+        value || ""
+    )
+    .toLowerCase()
+    .trim()
+    .replace(
+        /[^a-z0-9]+/g,
+        "-"
+    )
+    .replace(
+        /^-+|-+$/g,
+        "");
+
+}
+
+
+/* ============================================================
+   ESCAPE HTML
+============================================================ */
+
+function escapeHtml(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* ============================================================
+   COMING SOON
+============================================================ */
+
+function comingSoon(name){
+
+    showToast(
+        name +
+        " central management will be connected in the next step.",
+        "success"
+    );
+
+}
+
+
+/* ============================================================
+   TOAST
+============================================================ */
+
+let toastTimer = null;
+
+
+function showToast(
+    message,
+    type = ""
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.className =
+        "toast show " +
+        type;
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3200
+        );
+
+}
+
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+
+function goDashboard(){
+
+    window.location.href =
+        "dashboard.html";
+
+}
+
+
+/* ============================================================
+   LOGOUT
+============================================================ */
+
+async function logout(){
+
+    try{
+
+        await supabaseClient.auth.signOut();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+    }
+
+
+    window.location.href =
+        "admin.html";
+
+}
+
+
+/* ============================================================
+   AUTH STATE
+============================================================ */
+
+supabaseClient.auth.onAuthStateChange(
+    function(event, session){
+
+        if(
+            event === "SIGNED_OUT"
+        ){
+
+            window.location.href =
+                "admin.html";
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   CLOSE MODAL ON BACKDROP CLICK
+============================================================ */
+
+document.getElementById(
+    "clientModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
