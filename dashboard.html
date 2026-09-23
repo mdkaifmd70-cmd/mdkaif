@@ -3,1767 +3,5528 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Dashboard - MD Kaif Web Platform</title>
+<title>Client Manager - MD Kaif Web Platform</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="client-context.js"></script>
 
 <style>
-
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
 }
 
 body{
+    margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:#f1f5f9;
-    color:#0f172a;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
 }
 
 .header{
-    height:70px;
-    background:#0f172a;
-    color:white;
+    background:#0b1728;
+    color:#fff;
+    padding:16px 25px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 25px;
+    gap:20px;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
 
 .logo{
-    font-size:21px;
-    font-weight:900;
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:1px;
 }
 
-.logo span{
-    color:#60a5fa;
-}
-
-.header-right{
+.header-actions{
     display:flex;
-    align-items:center;
-    gap:15px;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
-.user-info{
-    text-align:right;
-}
-
-.user-name{
-    font-size:14px;
-    font-weight:700;
-}
-
-.user-role{
-    font-size:11px;
-    color:#94a3b8;
-    margin-top:3px;
-}
-
-.logout{
-    background:#334155;
-    color:white;
+.header-actions a,
+.header-actions button{
     border:0;
     padding:9px 15px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:700;
-}
-
-.logout:hover{
-    background:#475569;
-}
-
-.layout{
-    display:flex;
-    min-height:calc(100vh - 70px);
-}
-
-.sidebar{
-    width:240px;
-    background:white;
-    border-right:1px solid #e2e8f0;
-    padding:20px 12px;
-}
-
-.menu-title{
-    font-size:11px;
-    font-weight:800;
-    color:#94a3b8;
-    text-transform:uppercase;
-    padding:10px 12px;
-}
-
-.menu{
-    display:block;
-    width:100%;
+    border-radius:7px;
     text-decoration:none;
-    color:#334155;
-    padding:12px;
-    border-radius:9px;
-    margin-bottom:4px;
-    font-size:14px;
-    font-weight:700;
+    color:#fff;
+    background:#20324c;
 }
 
-.menu:hover{
-    background:#eff6ff;
-    color:#2563eb;
+.header-actions a:hover,
+.header-actions button:hover{
+    background:#2d4568;
 }
 
-.menu.active{
-    background:#dbeafe;
-    color:#1d4ed8;
-}
-
-.menu-icon{
-    width:25px;
-    display:inline-block;
-}
-
-.main{
-    flex:1;
+.container{
+    max-width:1450px;
+    margin:0 auto;
     padding:25px;
-    min-width:0;
 }
 
 .page-title{
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
 
 .page-title h1{
+    margin:0 0 6px;
     font-size:28px;
 }
 
 .page-title p{
-    color:#64748b;
-    font-size:14px;
-    margin-top:5px;
+    margin:0;
+    color:#6d7888;
 }
 
-.client-box{
-    background:white;
-    border:1px solid #e2e8f0;
-    border-radius:14px;
-    padding:18px;
+.card{
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 4px 20px rgba(15,35,60,.07);
+    padding:22px;
     margin-bottom:22px;
 }
 
-.client-label{
-    font-size:12px;
-    font-weight:800;
-    color:#64748b;
-    margin-bottom:9px;
+.card h2{
+    margin:0 0 18px;
+    font-size:20px;
 }
 
-.client-selector{
-    width:100%;
-    max-width:520px;
-    padding:12px;
-    border:1px solid #cbd5e1;
-    border-radius:9px;
-    font-size:14px;
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
     font-weight:700;
-    color:#0f172a;
-    background:white;
-    outline:none;
-    margin-bottom:12px;
+    font-size:13px;
+    color:#374151;
 }
 
-.client-selector.hidden{
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    border:1px solid #d8dee8;
+    border-radius:7px;
+    padding:11px 12px;
+    outline:none;
+    background:#fff;
+}
+
+.form-group textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:#168c9c;
+    box-shadow:0 0 0 3px rgba(22,140,156,.08);
+}
+
+.actions{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-top:18px;
+}
+
+.btn{
+    border:0;
+    padding:10px 15px;
+    border-radius:7px;
+    font-weight:700;
+}
+
+.btn-primary{
+    background:#087f8c;
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:#066c77;
+}
+
+.btn-secondary{
+    background:#e8edf4;
+    color:#243247;
+}
+
+.btn-success{
+    background:#16834d;
+    color:#fff;
+}
+
+.btn-danger{
+    background:#c73939;
+    color:#fff;
+}
+
+.btn-warning{
+    background:#c98719;
+    color:#fff;
+}
+
+.btn-info{
+    background:#2563a8;
+    color:#fff;
+}
+
+.btn-small{
+    padding:7px 10px;
+    font-size:12px;
+}
+
+.table-wrap{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    border-bottom:1px solid #edf0f4;
+    padding:12px 10px;
+    text-align:left;
+    vertical-align:middle;
+    white-space:nowrap;
+}
+
+th{
+    background:#f8fafc;
+    font-size:13px;
+}
+
+td{
+    font-size:13px;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:30px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.status-active{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-inactive{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.action-row{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.muted{
+    color:#7b8493;
+}
+
+.empty{
+    padding:30px;
+    text-align:center;
+    color:#788393;
+}
+
+/* Modal */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(4,12,24,.68);
+    z-index:2000;
+    display:none;
+    padding:18px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.manager{
+    width:100%;
+    max-width:1500px;
+    margin:auto;
+    background:#f4f7fb;
+    border-radius:13px;
+    overflow:hidden;
+    height:95vh;
+    display:flex;
+    flex-direction:column;
+}
+
+.manager-header{
+    background:#0b1728;
+    color:#fff;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.manager-header h2{
+    margin:0;
+    font-size:20px;
+}
+
+.manager-header small{
+    display:block;
+    margin-top:4px;
+    color:#aebbd0;
+}
+
+.manager-close{
+    border:0;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#24354d;
+    color:#fff;
+    font-size:20px;
+}
+
+.manager-body{
+    flex:1;
+    min-height:0;
+    display:flex;
+}
+
+.manager-sidebar{
+    width:235px;
+    background:#fff;
+    border-right:1px solid #dfe5ed;
+    overflow-y:auto;
+    padding:12px;
+}
+
+.nav-title{
+    font-size:11px;
+    text-transform:uppercase;
+    color:#8b96a6;
+    font-weight:800;
+    padding:10px 9px 6px;
+    letter-spacing:.5px;
+}
+
+.nav-btn{
+    width:100%;
+    text-align:left;
+    border:0;
+    background:transparent;
+    padding:10px 11px;
+    border-radius:7px;
+    margin-bottom:3px;
+    color:#334155;
+    font-weight:600;
+}
+
+.nav-btn:hover{
+    background:#eef7f8;
+}
+
+.nav-btn.active{
+    background:#dff4f5;
+    color:#087f8c;
+}
+
+.manager-content{
+    flex:1;
+    min-width:0;
+    overflow-y:auto;
+    padding:24px;
+}
+
+.section{
     display:none;
 }
 
-.client-name{
-    font-size:18px;
-    font-weight:900;
-}
-
-.client-domain{
-    font-size:13px;
-    color:#64748b;
-    margin-top:4px;
-}
-
-.client-template{
-    font-size:12px;
-    color:#64748b;
-    margin-top:5px;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    margin-bottom:25px;
-}
-
-.stat-card{
-    background:white;
-    border:1px solid #e2e8f0;
-    border-radius:14px;
-    padding:20px;
-}
-
-.stat-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.stat-title{
-    color:#64748b;
-    font-size:13px;
-    font-weight:700;
-}
-
-.stat-icon{
-    width:38px;
-    height:38px;
-    border-radius:9px;
-    background:#eff6ff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:19px;
-}
-
-.stat-number{
-    font-size:30px;
-    font-weight:900;
-    margin-top:15px;
+.section.active{
+    display:block;
 }
 
 .section-title{
-    font-size:19px;
-    font-weight:900;
+    margin-bottom:18px;
+}
+
+.section-title h3{
+    margin:0 0 5px;
+    font-size:22px;
+}
+
+.section-title p{
+    margin:0;
+    color:#727d8d;
+    font-size:13px;
+}
+
+.subcard{
+    background:#fff;
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 2px 12px rgba(15,35,60,.05);
+}
+
+.subcard h4{
+    margin:0 0 15px;
+    font-size:16px;
+}
+
+.save-bar{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:18px;
+}
+
+/* repeated data */
+
+.repeat-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
     margin-bottom:15px;
 }
 
-.modules{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
+.repeat-header h4{
+    margin:0;
 }
 
-.module{
-    background:white;
-    border:1px solid #e2e8f0;
-    border-radius:14px;
-    padding:22px;
-    text-decoration:none;
-    color:#0f172a;
-    transition:.15s;
+.repeat-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
 }
 
-.module:hover{
-    border-color:#93c5fd;
-    transform:translateY(-2px);
-    box-shadow:0 8px 20px rgba(15,23,42,.06);
-}
-
-.module-icon{
-    font-size:27px;
-    margin-bottom:12px;
-}
-
-.module h3{
-    font-size:16px;
-    margin-bottom:7px;
-}
-
-.module p{
-    color:#64748b;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.session-error{
-    background:#fee2e2;
-    border:1px solid #fecaca;
-    color:#991b1b;
+.repeat-item{
+    border:1px solid #e0e5eb;
+    border-radius:9px;
     padding:15px;
-    border-radius:10px;
-    margin-bottom:20px;
-    display:none;
+    background:#fff;
 }
 
-.session-error a{
-    color:#991b1b;
+.repeat-item-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:flex-start;
+}
+
+.repeat-item-title{
     font-weight:800;
 }
 
-.loading{
-    opacity:.6;
+.repeat-actions{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
 }
 
-@media(max-width:1000px){
+.item-form{
+    margin-top:15px;
+    border-top:1px solid #edf0f4;
+    padding-top:15px;
+}
 
-    .stats{
-        grid-template-columns:repeat(2,1fr);
+.item-form .form-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.active-check{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:10px;
+}
+
+.active-check input{
+    width:auto;
+}
+
+/* toast */
+
+.toast{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:5000;
+    background:#132238;
+    color:#fff;
+    padding:13px 18px;
+    border-radius:8px;
+    box-shadow:0 8px 30px rgba(0,0,0,.2);
+    display:none;
+    max-width:400px;
+}
+
+.toast.show{
+    display:block;
+}
+
+.toast.success{
+    background:#166534;
+}
+
+.toast.error{
+    background:#991b1b;
+}
+
+/* loading */
+
+.loading{
+    position:fixed;
+    inset:0;
+    background:rgba(255,255,255,.75);
+    z-index:6000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+.loading.show{
+    display:flex;
+}
+
+.loader-box{
+    background:#fff;
+    border-radius:10px;
+    padding:20px 25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    font-weight:700;
+}
+
+@media(max-width:900px){
+
+    .form-grid{
+        grid-template-columns:1fr;
     }
 
-    .modules{
-        grid-template-columns:repeat(2,1fr);
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .manager-sidebar{
+        width:190px;
+    }
+
+    .manager-content{
+        padding:16px;
     }
 
 }
 
 @media(max-width:700px){
 
-    .sidebar{
-        width:65px;
-        padding:15px 8px;
-    }
-
-    .menu-title,
-    .menu-text{
-        display:none;
-    }
-
-    .menu{
-        text-align:center;
-        padding:12px 5px;
-    }
-
-    .menu-icon{
-        width:auto;
-        font-size:18px;
-    }
-
-    .main{
+    .container{
         padding:15px;
     }
 
-    .stats{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
+    .header{
+        padding:13px 15px;
+        flex-direction:column;
+        align-items:flex-start;
     }
 
-    .modules{
-        grid-template-columns:1fr;
+    .manager{
+        height:100vh;
+        border-radius:0;
     }
 
-    .user-info{
+    .manager-body{
+        flex-direction:column;
+    }
+
+    .manager-sidebar{
+        width:100%;
+        max-height:190px;
+        border-right:0;
+        border-bottom:1px solid #dfe5ed;
+        display:flex;
+        overflow-x:auto;
+        gap:4px;
+        padding:8px;
+    }
+
+    .nav-title{
         display:none;
     }
 
-    .header{
-        padding:0 15px;
+    .nav-btn{
+        width:auto;
+        min-width:max-content;
+        margin:0;
+    }
+
+    .manager-content{
+        padding:14px;
+    }
+
+    .item-form .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .manager-header{
+        padding:12px 14px;
     }
 
 }
-
 </style>
 </head>
 
 <body>
 
 <header class="header">
+    <div class="logo">MD KAIF</div>
 
-    <div class="logo">
-        MD <span>KAIF</span>
+    <div class="header-actions">
+        <a href="dashboard.html">Dashboard</a>
+        <button type="button" onclick="logout()">Logout</button>
     </div>
-
-    <div class="header-right">
-
-        <div class="user-info">
-
-            <div class="user-name" id="userName">
-                Loading...
-            </div>
-
-            <div class="user-role" id="userRole">
-                Loading...
-            </div>
-
-        </div>
-
-        <button
-            class="logout"
-            id="logoutBtn">
-
-            Logout
-
-        </button>
-
-    </div>
-
 </header>
 
-
-<div class="layout">
-
-<aside class="sidebar">
-
-    <div class="menu-title">
-        Management
-    </div>
-
-    <a href="dashboard.html" class="menu active">
-        <span class="menu-icon">📊</span>
-        <span class="menu-text">Dashboard</span>
-    </a>
-
-    <a href="client-manager.html" class="menu">
-        <span class="menu-icon">👥</span>
-        <span class="menu-text">Clients</span>
-    </a>
-
-    <a href="template-manager.html" class="menu">
-        <span class="menu-icon">🧩</span>
-        <span class="menu-text">Template Manager</span>
-    </a>
-
-    <a href="category-manager.html" class="menu">
-        <span class="menu-icon">📁</span>
-        <span class="menu-text">Categories</span>
-    </a>
-
-    <a href="product-manager.html" class="menu">
-        <span class="menu-icon">📦</span>
-        <span class="menu-text">Products</span>
-    </a>
-
-
-    <div class="menu-title">
-        Website
-    </div>
-
-    <a href="product-image-manager.html" class="menu">
-        <span class="menu-icon">🖼️</span>
-        <span class="menu-text">Product Images</span>
-    </a>
-
-    <a href="gallery-manager.html" class="menu">
-        <span class="menu-icon">🌄</span>
-        <span class="menu-text">Gallery</span>
-    </a>
-
-    <a href="testimonials-manager.html" class="menu">
-        <span class="menu-icon">⭐</span>
-        <span class="menu-text">Testimonials</span>
-    </a>
-
-    <a href="faqs-manager.html" class="menu">
-        <span class="menu-icon">❓</span>
-        <span class="menu-text">FAQs</span>
-    </a>
-
-
-    <div class="menu-title">
-        Business
-    </div>
-
-    <a href="enquiries-manager.html" class="menu">
-        <span class="menu-icon">📩</span>
-        <span class="menu-text">Enquiries</span>
-    </a>
-
-    <a href="company-settings.html" class="menu">
-        <span class="menu-icon">⚙️</span>
-        <span class="menu-text">Company Settings</span>
-    </a>
-
-    <a href="policy-manager.html" class="menu">
-        <span class="menu-icon">📜</span>
-        <span class="menu-text">Policy Manager</span>
-    </a>
-
-</aside>
-
-
-<main class="main">
+<main class="container">
 
     <div class="page-title">
+        <h1>Client Manager</h1>
+        <p>Manage clients, website templates and complete website content.</p>
+    </div>
 
-        <h1>Dashboard</h1>
+    <!-- ADD CLIENT -->
 
-        <p>
-            Manage your business website from one place.
-        </p>
+    <div class="card">
+
+        <h2>Add Client</h2>
+
+        <form id="clientForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input
+                        type="text"
+                        id="company_name"
+                        required
+                        placeholder="Company Name"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Slug</label>
+                    <input
+                        type="text"
+                        id="slug"
+                        required
+                        placeholder="company-name"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Domain</label>
+                    <input
+                        type="text"
+                        id="domain"
+                        placeholder="example.com"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Hosting Type</label>
+
+                    <select id="hosting_type">
+                        <option value="GitHub Pages">GitHub Pages</option>
+                        <option value="Custom Domain">Custom Domain</option>
+                        <option value="Web Hosting">Web Hosting</option>
+                        <option value="Cloud Hosting">Cloud Hosting</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Hosting URL</label>
+                    <input
+                        type="text"
+                        id="hosting_url"
+                        placeholder="https://example.github.io/site/"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Website Template</label>
+
+                    <select id="template">
+                        <option value="template-v1">Template V1</option>
+                        <option value="template-v2">Template V2</option>
+                        <option value="template-v3">Template V3</option>
+                        <option value="template-v4">Template V4</option>
+                        <option value="template-v5">Template V5</option>
+                        <option value="template-v6">Template V6</option>
+                        <option value="template-v7">Template V7</option>
+                        <option value="template-v8">Template V8</option>
+                        <option value="template-v9">Template V9</option>
+                        <option value="template-v10">Template V10</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+
+                    <select id="status">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" type="submit">
+                    Add Client
+                </button>
+
+                <button
+                    class="btn btn-secondary"
+                    type="button"
+                    onclick="resetClientForm()"
+                >
+                    Clear
+                </button>
+            </div>
+
+        </form>
 
     </div>
 
 
-    <div
-        id="sessionError"
-        class="session-error">
+    <!-- CLIENT LIST -->
 
-        <strong>
-            Session not found.
-        </strong>
+    <div class="card">
 
-        <br>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px;">
+            <h2 style="margin:0;">Clients</h2>
 
-        Please login again.
-
-        <br><br>
-
-        <a href="admin.html">
-            Go to Admin Login →
-        </a>
-
-    </div>
-
-
-    <div class="client-box">
-
-        <div class="client-label">
-            ACTIVE CLIENT / WEBSITE
+            <button
+                class="btn btn-secondary"
+                type="button"
+                onclick="loadClients()"
+            >
+                Refresh
+            </button>
         </div>
 
-        <select
-            id="globalClientSelect"
-            class="client-selector hidden">
+        <div class="table-wrap">
 
-            <option value="">
-                Loading clients...
-            </option>
+            <table>
 
-        </select>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Slug</th>
+                        <th>Domain</th>
+                        <th>Hosting</th>
+                        <th>Template</th>
+                        <th>Status</th>
+                        <th>Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
+                <tbody id="clientsTableBody">
+                    <tr>
+                        <td colspan="8" class="empty">
+                            Loading clients...
+                        </td>
+                    </tr>
+                </tbody>
 
-        <div
-            class="client-name loading"
-            id="clientName">
-
-            Loading...
-
-        </div>
-
-        <div
-            class="client-domain"
-            id="clientDomain">
-
-            Loading...
-
-        </div>
-
-        <div
-            class="client-template"
-            id="clientTemplate">
-
-            Template: —
+            </table>
 
         </div>
-
-    </div>
-
-
-    <div class="stats">
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-
-                <div class="stat-title">
-                    Categories
-                </div>
-
-                <div class="stat-icon">
-                    📁
-                </div>
-
-            </div>
-
-            <div
-                class="stat-number"
-                id="categoryCount">
-
-                —
-
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-
-                <div class="stat-title">
-                    Products
-                </div>
-
-                <div class="stat-icon">
-                    📦
-                </div>
-
-            </div>
-
-            <div
-                class="stat-number"
-                id="productCount">
-
-                —
-
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-
-                <div class="stat-title">
-                    Gallery
-                </div>
-
-                <div class="stat-icon">
-                    🌄
-                </div>
-
-            </div>
-
-            <div
-                class="stat-number"
-                id="galleryCount">
-
-                —
-
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-
-                <div class="stat-title">
-                    Enquiries
-                </div>
-
-                <div class="stat-icon">
-                    📩
-                </div>
-
-            </div>
-
-            <div
-                class="stat-number"
-                id="enquiryCount">
-
-                —
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="section-title">
-        Website Management
-    </div>
-
-
-    <div class="modules">
-
-        <a href="client-manager.html" class="module">
-
-            <div class="module-icon">
-                👥
-            </div>
-
-            <h3>
-                Client Manager
-            </h3>
-
-            <p>
-                Create, edit and manage all website clients.
-            </p>
-
-        </a>
-
-
-        <a href="template-manager.html" class="module">
-
-            <div class="module-icon">
-                🧩
-            </div>
-
-            <h3>
-                Template Manager
-            </h3>
-
-            <p>
-                Manage website templates and GitHub website URLs.
-            </p>
-
-        </a>
-
-
-        <a href="category-manager.html" class="module">
-
-            <div class="module-icon">
-                📁
-            </div>
-
-            <h3>
-                Categories
-            </h3>
-
-            <p>
-                Create, edit and manage product categories.
-            </p>
-
-        </a>
-
-
-        <a href="product-manager.html" class="module">
-
-            <div class="module-icon">
-                📦
-            </div>
-
-            <h3>
-                Products
-            </h3>
-
-            <p>
-                Manage products, descriptions and categories.
-            </p>
-
-        </a>
-
-
-        <a href="product-image-manager.html" class="module">
-
-            <div class="module-icon">
-                🖼️
-            </div>
-
-            <h3>
-                Product Images
-            </h3>
-
-            <p>
-                Upload and manage multiple product images.
-            </p>
-
-        </a>
-
-
-        <a href="gallery-manager.html" class="module">
-
-            <div class="module-icon">
-                🌄
-            </div>
-
-            <h3>
-                Gallery
-            </h3>
-
-            <p>
-                Manage website gallery images.
-            </p>
-
-        </a>
-
-
-        <a href="testimonials-manager.html" class="module">
-
-            <div class="module-icon">
-                ⭐
-            </div>
-
-            <h3>
-                Testimonials
-            </h3>
-
-            <p>
-                Manage customer testimonials and reviews.
-            </p>
-
-        </a>
-
-
-        <a href="faqs-manager.html" class="module">
-
-            <div class="module-icon">
-                ❓
-            </div>
-
-            <h3>
-                FAQs
-            </h3>
-
-            <p>
-                Manage frequently asked questions.
-            </p>
-
-        </a>
-
-
-        <a href="enquiries-manager.html" class="module">
-
-            <div class="module-icon">
-                📩
-            </div>
-
-            <h3>
-                Enquiries
-            </h3>
-
-            <p>
-                View and manage customer enquiries.
-            </p>
-
-        </a>
-
-
-        <a href="company-settings.html" class="module">
-
-            <div class="module-icon">
-                ⚙️
-            </div>
-
-            <h3>
-                Company Settings
-            </h3>
-
-            <p>
-                Manage company information and website settings.
-            </p>
-
-        </a>
-
-
-        <a href="policy-manager.html" class="module">
-
-            <div class="module-icon">
-                📜
-            </div>
-
-            <h3>
-                Policy Manager
-            </h3>
-
-            <p>
-                Manage Privacy Policy, Terms and other policies.
-            </p>
-
-        </a>
 
     </div>
 
 </main>
 
+
+<!-- MANAGE WEBSITE MODAL -->
+
+<div class="modal" id="websiteModal">
+
+    <div class="manager">
+
+        <div class="manager-header">
+
+            <div>
+                <h2 id="managerCompanyName">
+                    Manage Website
+                </h2>
+
+                <small id="managerCompanyMeta"></small>
+            </div>
+
+            <button
+                class="manager-close"
+                type="button"
+                onclick="closeWebsiteManager()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="manager-body">
+
+            <!-- SIDEBAR -->
+
+            <aside class="manager-sidebar">
+
+                <div class="nav-title">Website</div>
+
+                <button class="nav-btn active" data-section="general">
+                    General
+                </button>
+
+                <button class="nav-btn" data-section="hero">
+                    Hero
+                </button>
+
+                <button class="nav-btn" data-section="about">
+                    About
+                </button>
+
+                <button class="nav-btn" data-section="products">
+                    Products
+                </button>
+
+                <button class="nav-btn" data-section="manufacturing">
+                    Manufacturing
+                </button>
+
+                <button class="nav-btn" data-section="quality">
+                    Quality
+                </button>
+
+                <button class="nav-btn" data-section="industries">
+                    Industries
+                </button>
+
+                <button class="nav-btn" data-section="gallery">
+                    Gallery
+                </button>
+
+                <button class="nav-btn" data-section="testimonials">
+                    Testimonials
+                </button>
+
+                <button class="nav-btn" data-section="faq">
+                    FAQ
+                </button>
+
+                <button class="nav-btn" data-section="contact">
+                    Contact
+                </button>
+
+
+                <div class="nav-title">Settings</div>
+
+                <button class="nav-btn" data-section="design">
+                    Design
+                </button>
+
+                <button class="nav-btn" data-section="social">
+                    Social Media
+                </button>
+
+                <button class="nav-btn" data-section="seo">
+                    SEO
+                </button>
+
+                <button class="nav-btn" data-section="policies">
+                    Policies
+                </button>
+
+                <button class="nav-btn" data-section="enquiries">
+                    Enquiries
+                </button>
+
+                <button class="nav-btn" data-section="client-admin">
+                    Client Admin
+                </button>
+
+            </aside>
+
+
+            <!-- CONTENT -->
+
+            <div class="manager-content">
+
+
+                <!-- GENERAL -->
+
+                <section id="section-general" class="section active">
+
+                    <div class="section-title">
+                        <h3>General Website Settings</h3>
+                        <p>Basic company information used across the website.</p>
+                    </div>
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Logo URL</label>
+                                <input id="wc_logo_url" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input id="wc_phone" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input id="wc_email" type="email">
+                            </div>
+
+                            <div class="form-group">
+                                <label>WhatsApp</label>
+                                <input id="wc_whatsapp" type="text">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Address</label>
+                                <textarea id="wc_address"></textarea>
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Top Bar Text</label>
+                                <input id="wc_topbar_text" type="text">
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('general')"
+                            >
+                                Save General
+                            </button>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- HERO -->
+
+                <section id="section-hero" class="section">
+
+                    <div class="section-title">
+                        <h3>Hero Section</h3>
+                        <p>Main banner content of the website.</p>
+                    </div>
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group full">
+                                <label>Eyebrow</label>
+                                <input id="wc_hero_eyebrow" type="text">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Heading</label>
+                                <input id="wc_hero_heading" type="text">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Description</label>
+                                <textarea id="wc_hero_description"></textarea>
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Hero Image URL</label>
+                                <input id="wc_hero_image_url" type="text">
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('hero')"
+                            >
+                                Save Hero
+                            </button>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ABOUT -->
+
+                <section id="section-about" class="section">
+
+                    <div class="section-title">
+                        <h3>About Section</h3>
+                        <p>Company introduction and statistics.</p>
+                    </div>
+
+                    <div class="subcard">
+
+                        <h4>About Content</h4>
+
+                        <div class="form-grid">
+
+                            <div class="form-group full">
+                                <label>Eyebrow</label>
+                                <input id="wc_about_eyebrow" type="text">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Heading</label>
+                                <input id="wc_about_heading" type="text">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Description</label>
+                                <textarea id="wc_about_description"></textarea>
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Image URL</label>
+                                <input id="wc_about_image_url" type="text">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <h4>Statistics</h4>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Stat 1 Value</label>
+                                <input id="wc_stat_1_value">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Stat 1 Label</label>
+                                <input id="wc_stat_1_label">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Stat 2 Value</label>
+                                <input id="wc_stat_2_value">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Stat 2 Label</label>
+                                <input id="wc_stat_2_label">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Stat 3 Value</label>
+                                <input id="wc_stat_3_value">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Stat 3 Label</label>
+                                <input id="wc_stat_3_label">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Stat 4 Value</label>
+                                <input id="wc_stat_4_value">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Stat 4 Label</label>
+                                <input id="wc_stat_4_label">
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('about')"
+                            >
+                                Save About
+                            </button>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- PRODUCTS -->
+
+                <section id="section-products" class="section">
+
+                    <div class="section-title">
+                        <h3>Products</h3>
+                        <p>Manage website products.</p>
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <h4>Products Section Heading</h4>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Eyebrow</label>
+                                <input id="wc_products_eyebrow">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Heading</label>
+                                <input id="wc_products_heading">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Description</label>
+                                <textarea id="wc_products_description"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('products')"
+                            >
+                                Save Products Heading
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="repeat-header">
+
+                            <h4>Product List</h4>
+
+                            <button
+                                class="btn btn-success btn-small"
+                                onclick="showProductForm()"
+                            >
+                                + Add Product
+                            </button>
+
+                        </div>
+
+                        <div id="productFormContainer"></div>
+
+                        <div
+                            id="productsList"
+                            class="repeat-list"
+                        >
+                            <div class="empty">
+                                Loading products...
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- MANUFACTURING -->
+
+                <section id="section-manufacturing" class="section">
+
+                    <div class="section-title">
+                        <h3>Manufacturing / Process</h3>
+                        <p>Manage manufacturing process steps.</p>
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Eyebrow</label>
+                                <input id="wc_manufacturing_eyebrow">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Heading</label>
+                                <input id="wc_manufacturing_heading">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Description</label>
+                                <textarea id="wc_manufacturing_description"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('manufacturing')"
+                            >
+                                Save Manufacturing Heading
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="repeat-header">
+                            <h4>Process Steps</h4>
+
+                            <button
+                                class="btn btn-success btn-small"
+                                onclick="showManufacturingForm()"
+                            >
+                                + Add Step
+                            </button>
+                        </div>
+
+                        <div id="manufacturingFormContainer"></div>
+
+                        <div
+                            id="manufacturingList"
+                            class="repeat-list"
+                        ></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- QUALITY -->
+
+                <section id="section-quality" class="section">
+
+                    <div class="section-title">
+                        <h3>Quality</h3>
+                        <p>Manage quality features/cards.</p>
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Eyebrow</label>
+                                <input id="wc_quality_eyebrow">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Heading</label>
+                                <input id="wc_quality_heading">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Description</label>
+                                <textarea id="wc_quality_description"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('quality')"
+                            >
+                                Save Quality Heading
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="repeat-header">
+
+                            <h4>Quality Items</h4>
+
+                            <button
+                                class="btn btn-success btn-small"
+                                onclick="showQualityForm()"
+                            >
+                                + Add Quality
+                            </button>
+
+                        </div>
+
+                        <div id="qualityFormContainer"></div>
+
+                        <div
+                            id="qualityList"
+                            class="repeat-list"
+                        ></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- INDUSTRIES -->
+
+                <section id="section-industries" class="section">
+
+                    <div class="section-title">
+                        <h3>Industries</h3>
+                        <p>Manage industries served by the company.</p>
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Eyebrow</label>
+                                <input id="wc_industries_eyebrow">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Heading</label>
+                                <input id="wc_industries_heading">
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('industries')"
+                            >
+                                Save Industries Heading
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="repeat-header">
+
+                            <h4>Industry List</h4>
+
+                            <button
+                                class="btn btn-success btn-small"
+                                onclick="showIndustryForm()"
+                            >
+                                + Add Industry
+                            </button>
+
+                        </div>
+
+                        <div id="industryFormContainer"></div>
+
+                        <div
+                            id="industriesList"
+                            class="repeat-list"
+                        ></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- GALLERY -->
+
+                <section id="section-gallery" class="section">
+
+                    <div class="section-title">
+                        <h3>Gallery</h3>
+                        <p>Manage website gallery images.</p>
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Eyebrow</label>
+                                <input id="wc_gallery_eyebrow">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Heading</label>
+                                <input id="wc_gallery_heading">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Description</label>
+                                <textarea id="wc_gallery_description"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('gallery')"
+                            >
+                                Save Gallery Heading
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="repeat-header">
+
+                            <h4>Gallery</h4>
+
+                            <button
+                                class="btn btn-success btn-small"
+                                onclick="showGalleryForm()"
+                            >
+                                + Add Image
+                            </button>
+
+                        </div>
+
+                        <div id="galleryFormContainer"></div>
+
+                        <div
+                            id="galleryList"
+                            class="repeat-list"
+                        ></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- TESTIMONIALS -->
+
+                <section id="section-testimonials" class="section">
+
+                    <div class="section-title">
+                        <h3>Testimonials</h3>
+                        <p>Manage customer testimonials.</p>
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Eyebrow</label>
+                                <input id="wc_testimonials_eyebrow">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Heading</label>
+                                <input id="wc_testimonials_heading">
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('testimonials')"
+                            >
+                                Save Testimonials Heading
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="repeat-header">
+
+                            <h4>Testimonials</h4>
+
+                            <button
+                                class="btn btn-success btn-small"
+                                onclick="showTestimonialForm()"
+                            >
+                                + Add Testimonial
+                            </button>
+
+                        </div>
+
+                        <div id="testimonialFormContainer"></div>
+
+                        <div
+                            id="testimonialsList"
+                            class="repeat-list"
+                        ></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- FAQ -->
+
+                <section id="section-faq" class="section">
+
+                    <div class="section-title">
+                        <h3>FAQ</h3>
+                        <p>Manage frequently asked questions.</p>
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Eyebrow</label>
+                                <input id="wc_faq_eyebrow">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Heading</label>
+                                <input id="wc_faq_heading">
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveWebsiteSection('faq')"
+                            >
+                                Save FAQ Heading
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="repeat-header">
+
+                            <h4>FAQ List</h4>
+
+                            <button
+                                class="btn btn-success btn-small"
+                                onclick="showFaqForm()"
+                            >
+                                + Add FAQ
+                            </button>
+
+                        </div>
+
+                        <div id="faqFormContainer"></div>
+
+                        <div
+                            id="faqList"
+                            class="repeat-list"
+                        ></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- CONTACT -->
+
+                <section id="section-contact" class="section">
+
+                    <div class="section-title">
+                        <h3>Contact Section</h3>
+                        <p>Manage the contact section heading and company contact information.</p>
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group full">
+                                <label>Eyebrow</label>
+                                <input id="wc_contact_eyebrow">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Heading</label>
+                                <input id="wc_contact_heading">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Description</label>
+                                <textarea id="wc_contact_description"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input id="wc_contact_phone">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input id="wc_contact_email">
+                            </div>
+
+                            <div class="form-group">
+                                <label>WhatsApp</label>
+                                <input id="wc_contact_whatsapp">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Address</label>
+                                <textarea id="wc_contact_address"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="save-bar">
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveContactSection()"
+                            >
+                                Save Contact
+                            </button>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- DESIGN -->
+
+                <section id="section-design" class="section">
+
+                    <div class="section-title">
+                        <h3>Design</h3>
+                        <p>Select the website template for this client.</p>
+                    </div>
+
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Website Template</label>
+
+                                <select id="wc_template">
+
+                                    <option value="template-v1">
+                                        Template V1
+                                    </option>
+
+                                    <option value="template-v2">
+                                        Template V2
+                                    </option>
+
+                                    <option value="template-v3">
+                                        Template V3
+                                    </option>
+
+                                    <option value="template-v4">
+                                        Template V4
+                                    </option>
+
+                                    <option value="template-v5">
+                                        Template V5
+                                    </option>
+
+                                    <option value="template-v6">
+                                        Template V6
+                                    </option>
+
+                                    <option value="template-v7">
+                                        Template V7
+                                    </option>
+
+                                    <option value="template-v8">
+                                        Template V8
+                                    </option>
+
+                                    <option value="template-v9">
+                                        Template V9
+                                    </option>
+
+                                    <option value="template-v10">
+                                        Template V10
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="actions">
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="saveTemplateSelection()"
+                            >
+                                Save Template
+                            </button>
+
+                            <button
+                                class="btn btn-info"
+                                onclick="previewCurrentWebsite()"
+                            >
+                                Preview Website
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- SOCIAL -->
+
+                <section id="section-social" class="section">
+
+                    <div class="section-title">
+                        <h3>Social Media</h3>
+                        <p>Social media settings can be connected here.</p>
+                    </div>
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Facebook</label>
+                                <input id="social_facebook">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Instagram</label>
+                                <input id="social_instagram">
+                            </div>
+
+                            <div class="form-group">
+                                <label>YouTube</label>
+                                <input id="social_youtube">
+                            </div>
+
+                            <div class="form-group">
+                                <label>LinkedIn</label>
+                                <input id="social_linkedin">
+                            </div>
+
+                        </div>
+
+                        <p class="muted">
+                            Social media database fields are not part of the current verified
+                            client_website_content schema, so these fields are UI placeholders
+                            until the dedicated table is added.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- SEO -->
+
+                <section id="section-seo" class="section">
+
+                    <div class="section-title">
+                        <h3>SEO</h3>
+                        <p>SEO settings will be connected to the database in the SEO module.</p>
+                    </div>
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group full">
+                                <label>Meta Title</label>
+                                <input id="seo_title">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Meta Description</label>
+                                <textarea id="seo_description"></textarea>
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Keywords</label>
+                                <input id="seo_keywords">
+                            </div>
+
+                            <div class="form-group full">
+                                <label>OG Image URL</label>
+                                <input id="seo_og_image">
+                            </div>
+
+                        </div>
+
+                        <p class="muted">
+                            SEO database module can be added separately without changing the
+                            existing website content tables.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- POLICIES -->
+
+                <section id="section-policies" class="section">
+
+                    <div class="section-title">
+                        <h3>Policies</h3>
+                        <p>Privacy, terms and other policy pages.</p>
+                    </div>
+
+                    <div class="subcard">
+
+                        <div class="form-grid">
+
+                            <div class="form-group full">
+                                <label>Privacy Policy</label>
+                                <textarea id="policy_privacy"></textarea>
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Terms & Conditions</label>
+                                <textarea id="policy_terms"></textarea>
+                            </div>
+
+                            <div class="form-group full">
+                                <label>Refund / Shipping Policy</label>
+                                <textarea id="policy_refund"></textarea>
+                            </div>
+
+                        </div>
+
+                        <p class="muted">
+                            Policy database fields will be connected when the policy module
+                            is created.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ENQUIRIES -->
+
+                <section id="section-enquiries" class="section">
+
+                    <div class="section-title">
+                        <h3>Enquiries</h3>
+                        <p>Website enquiries for this client will be shown here.</p>
+                    </div>
+
+                    <div class="subcard">
+
+                        <div id="enquiriesContainer" class="empty">
+                            Enquiry module will be connected here.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- CLIENT ADMIN -->
+
+                <section id="section-client-admin" class="section">
+
+                    <div class="section-title">
+                        <h3>Client Admin</h3>
+                        <p>Client login and user management.</p>
+                    </div>
+
+                    <div class="subcard">
+
+                        <p class="muted">
+                            Client Admin will be connected with the profiles/auth system
+                            after the website content module is completed.
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+<div id="loading" class="loading">
+    <div class="loader-box">
+        Please wait...
+    </div>
 </div>
 
 
 <script>
 
-/* =========================================
-   SUPABASE CONFIG
-========================================= */
+/* =========================================================
+   SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
-"https://ywvdozdoanmcxscfofcf.supabase.co";
+    "https://ywvdozdoanmcxscfofc.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
-
-
-/* =========================================
-   SUPABASE CLIENT
-========================================= */
+    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
 const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-        auth:{
-            persistSession:true,
-            autoRefreshToken:true,
-            detectSessionInUrl:true,
-            storage:window.localStorage
-        }
-    }
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-/* =========================================
-   HELPERS
-========================================= */
+/* =========================================================
+   GLOBALS
+========================================================= */
 
-function setText(id,value){
+let clients = [];
 
-    const element =
-        document.getElementById(id);
+let currentClient = null;
 
-    if(element){
+let currentWebsiteContent = null;
 
-        element.textContent =
-            value ?? "—";
 
-    }
+/* =========================================================
+   CONTENT FIELD MAP
+========================================================= */
+
+const contentFields = {
+
+    general: [
+        "logo_url",
+        "phone",
+        "email",
+        "whatsapp",
+        "address",
+        "topbar_text"
+    ],
+
+    hero: [
+        "hero_eyebrow",
+        "hero_heading",
+        "hero_description",
+        "hero_image_url"
+    ],
+
+    about: [
+        "about_eyebrow",
+        "about_heading",
+        "about_description",
+        "about_image_url",
+        "stat_1_value",
+        "stat_1_label",
+        "stat_2_value",
+        "stat_2_label",
+        "stat_3_value",
+        "stat_3_label",
+        "stat_4_value",
+        "stat_4_label"
+    ],
+
+    products: [
+        "products_eyebrow",
+        "products_heading",
+        "products_description"
+    ],
+
+    manufacturing: [
+        "manufacturing_eyebrow",
+        "manufacturing_heading",
+        "manufacturing_description"
+    ],
+
+    quality: [
+        "quality_eyebrow",
+        "quality_heading",
+        "quality_description"
+    ],
+
+    industries: [
+        "industries_eyebrow",
+        "industries_heading"
+    ],
+
+    gallery: [
+        "gallery_eyebrow",
+        "gallery_heading",
+        "gallery_description"
+    ],
+
+    testimonials: [
+        "testimonials_eyebrow",
+        "testimonials_heading"
+    ],
+
+    faq: [
+        "faq_eyebrow",
+        "faq_heading"
+    ],
+
+    contact: [
+        "contact_eyebrow",
+        "contact_heading",
+        "contact_description"
+    ]
+
+};
+
+
+/* =========================================================
+   UTILITY
+========================================================= */
+
+function showLoading(show = true){
+
+    document
+        .getElementById("loading")
+        .classList
+        .toggle("show", show);
 
 }
 
 
-function resetStats(){
+function showToast(message, type = "success"){
 
-    setText("categoryCount",0);
+    const toast =
+        document.getElementById("toast");
 
-    setText("productCount",0);
+    toast.textContent = message;
 
-    setText("galleryCount",0);
+    toast.className =
+        "toast show " + type;
 
-    setText("enquiryCount",0);
+    setTimeout(() => {
+
+        toast.className = "toast";
+
+    }, 3000);
 
 }
 
 
-/* =========================================
-   SESSION ERROR
-========================================= */
+function escapeHtml(value){
 
-function showSessionError(){
+    if(value === null || value === undefined){
+        return "";
+    }
 
-    const box =
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function normalizeTemplate(value){
+
+    if(!value){
+        return "template-v1";
+    }
+
+    let v = String(value).trim();
+
+    v = v
+        .replace(/^templates\//i,"")
+        .replace(/^template\//i,"")
+        .replace(/\.html$/i,"");
+
+    if(/^v\d+$/i.test(v)){
+        return "template-" + v.toLowerCase();
+    }
+
+    if(/^template-v\d+$/i.test(v)){
+        return v.toLowerCase();
+    }
+
+    return v;
+
+}
+
+
+function templateLabel(value){
+
+    const t =
+        normalizeTemplate(value);
+
+    const match =
+        t.match(/template-v(\d+)/i);
+
+    if(match){
+        return "Template V" + match[1];
+    }
+
+    return value || "-";
+
+}
+
+
+/* =========================================================
+   AUTO SLUG
+========================================================= */
+
+document
+    .getElementById("company_name")
+    .addEventListener("input", function(){
+
+        const slug =
+            this.value
+                .toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9]+/g,"-")
+                .replace(/^-+|-+$/g,"");
+
+        document
+            .getElementById("slug")
+            .value = slug;
+
+    });
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+document
+    .querySelectorAll(".nav-btn")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const section =
+                button.dataset.section;
+
+            document
+                .querySelectorAll(".nav-btn")
+                .forEach(btn =>
+                    btn.classList.remove("active")
+                );
+
+            button.classList.add("active");
+
+            document
+                .querySelectorAll(".section")
+                .forEach(sec =>
+                    sec.classList.remove("active")
+                );
+
+            const target =
+                document.getElementById(
+                    "section-" + section
+                );
+
+            if(target){
+                target.classList.add("active");
+            }
+
+        });
+
+    });
+
+
+/* =========================================================
+   LOAD CLIENTS
+========================================================= */
+
+async function loadClients(){
+
+    const tbody =
         document.getElementById(
-            "sessionError"
+            "clientsTableBody"
         );
 
-    if(box){
-
-        box.style.display =
-            "block";
-
-    }
-
-    setText(
-        "userName",
-        "Not Logged In"
-    );
-
-    setText(
-        "userRole",
-        "Session Missing"
-    );
-
-    setText(
-        "clientName",
-        "No Client"
-    );
-
-    setText(
-        "clientDomain",
-        "Please login again"
-    );
-
-    setText(
-        "clientTemplate",
-        "Template: —"
-    );
-
-    resetStats();
-
-}
-
-
-/* =========================================
-   GET CLIENT
-========================================= */
-
-async function getClient(clientId){
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="8" class="empty">
+                Loading clients...
+            </td>
+        </tr>
+    `;
 
     const {
         data,
         error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,slug,domain,template,status"
-    )
-    .eq(
-        "id",
-        clientId
-    )
-    .maybeSingle();
-
+    } = await supabaseClient
+        .from("clients")
+        .select("*")
+        .order("created_at",{ascending:false});
 
     if(error){
 
-        console.error(
-            "Client Error:",
-            error
+        console.error(error);
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="empty">
+                    ${escapeHtml(error.message)}
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    clients = data || [];
+
+    renderClients();
+
+}
+
+
+function renderClients(){
+
+    const tbody =
+        document.getElementById(
+            "clientsTableBody"
         );
 
-        return null;
+    if(!clients.length){
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="empty">
+                    No clients found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    tbody.innerHTML =
+        clients.map(client => {
+
+            const status =
+                client.status || "active";
+
+            const updated =
+                client.updated_at
+                    ? new Date(
+                        client.updated_at
+                    ).toLocaleString()
+                    : "-";
+
+            return `
+                <tr>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(client.company_name)}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${escapeHtml(client.slug)}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(client.domain || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(client.hosting_type || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            templateLabel(client.template)
+                        )}
+                    </td>
+
+                    <td>
+                        <span class="status ${
+                            status === "active"
+                                ? "status-active"
+                                : "status-inactive"
+                        }">
+                            ${escapeHtml(status)}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${escapeHtml(updated)}
+                    </td>
+
+                    <td>
+
+                        <div class="action-row">
+
+                            <button
+                                class="btn btn-info btn-small"
+                                onclick="openWebsiteManager('${client.id}')"
+                            >
+                                Manage Website
+                            </button>
+
+                            <button
+                                class="btn btn-secondary btn-small"
+                                onclick="previewClient('${client.id}')"
+                            >
+                                Preview
+                            </button>
+
+                            <button
+                                class="btn btn-secondary btn-small"
+                                onclick="openClientWebsite('${client.id}')"
+                            >
+                                Website
+                            </button>
+
+                            <button
+                                class="btn btn-warning btn-small"
+                                onclick="editClient('${client.id}')"
+                            >
+                                Edit
+                            </button>
+
+                            <button
+                                class="btn btn-danger btn-small"
+                                onclick="deleteClient('${client.id}')"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   ADD CLIENT
+========================================================= */
+
+document
+    .getElementById("clientForm")
+    .addEventListener("submit", async function(e){
+
+        e.preventDefault();
+
+        const payload = {
+
+            company_name:
+                document.getElementById(
+                    "company_name"
+                ).value.trim(),
+
+            slug:
+                document.getElementById(
+                    "slug"
+                ).value.trim(),
+
+            domain:
+                document.getElementById(
+                    "domain"
+                ).value.trim() || null,
+
+            hosting_type:
+                document.getElementById(
+                    "hosting_type"
+                ).value,
+
+            hosting_url:
+                document.getElementById(
+                    "hosting_url"
+                ).value.trim() || null,
+
+            template:
+                normalizeTemplate(
+                    document.getElementById(
+                        "template"
+                    ).value
+                ),
+
+            status:
+                document.getElementById(
+                    "status"
+                ).value
+
+        };
+
+        showLoading(true);
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("clients")
+            .insert(payload)
+            .select()
+            .single();
+
+        showLoading(false);
+
+        if(error){
+
+            console.error(error);
+
+            showToast(
+                error.message,
+                "error"
+            );
+
+            return;
+        }
+
+        showToast(
+            "Client added successfully."
+        );
+
+        resetClientForm();
+
+        await loadClients();
+
+    });
+
+
+function resetClientForm(){
+
+    document
+        .getElementById("clientForm")
+        .reset();
+
+    document
+        .getElementById("hosting_type")
+        .value = "GitHub Pages";
+
+    document
+        .getElementById("template")
+        .value = "template-v1";
+
+    document
+        .getElementById("status")
+        .value = "active";
+
+}
+
+
+/* =========================================================
+   EDIT CLIENT
+========================================================= */
+
+async function editClient(id){
+
+    const client =
+        clients.find(c => c.id === id);
+
+    if(!client){
+        return;
+    }
+
+    const company =
+        prompt(
+            "Company Name:",
+            client.company_name || ""
+        );
+
+    if(company === null){
+        return;
+    }
+
+    const slug =
+        prompt(
+            "Slug:",
+            client.slug || ""
+        );
+
+    if(slug === null){
+        return;
+    }
+
+    const domain =
+        prompt(
+            "Domain:",
+            client.domain || ""
+        );
+
+    if(domain === null){
+        return;
+    }
+
+    const hostingUrl =
+        prompt(
+            "Hosting URL:",
+            client.hosting_url || ""
+        );
+
+    if(hostingUrl === null){
+        return;
+    }
+
+    showLoading(true);
+
+    const {
+        error
+    } = await supabaseClient
+        .from("clients")
+        .update({
+
+            company_name:
+                company.trim(),
+
+            slug:
+                slug.trim(),
+
+            domain:
+                domain.trim() || null,
+
+            hosting_url:
+                hostingUrl.trim() || null,
+
+            updated_at:
+                new Date().toISOString()
+
+        })
+        .eq("id",id);
+
+    showLoading(false);
+
+    if(error){
+
+        showToast(
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "Client updated successfully."
+    );
+
+    await loadClients();
+
+}
+
+
+/* =========================================================
+   DELETE CLIENT
+========================================================= */
+
+async function deleteClient(id){
+
+    const client =
+        clients.find(c => c.id === id);
+
+    if(!client){
+        return;
+    }
+
+    const ok =
+        confirm(
+            `Delete client "${client.company_name}"?\n\nThis will delete the client record.`
+        );
+
+    if(!ok){
+        return;
+    }
+
+    showLoading(true);
+
+    const {
+        error
+    } = await supabaseClient
+        .from("clients")
+        .delete()
+        .eq("id",id);
+
+    showLoading(false);
+
+    if(error){
+
+        showToast(
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "Client deleted."
+    );
+
+    await loadClients();
+
+}
+
+
+/* =========================================================
+   PREVIEW / WEBSITE
+========================================================= */
+
+function getClientById(id){
+
+    return clients.find(
+        client => client.id === id
+    );
+
+}
+
+
+function previewClient(id){
+
+    const client =
+        getClientById(id);
+
+    if(!client){
+        return;
+    }
+
+    const url =
+        getWebsiteUrl(client);
+
+    if(!url){
+
+        showToast(
+            "Hosting URL is not available.",
+            "error"
+        );
+
+        return;
+    }
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+function openClientWebsite(id){
+
+    const client =
+        getClientById(id);
+
+    if(!client){
+        return;
+    }
+
+    const url =
+        getWebsiteUrl(client);
+
+    if(!url){
+
+        showToast(
+            "Website URL is not available.",
+            "error"
+        );
+
+        return;
+    }
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+function getWebsiteUrl(client){
+
+    if(client.hosting_url){
+        return client.hosting_url;
+    }
+
+    if(client.domain){
+
+        let domain =
+            client.domain.trim();
+
+        if(
+            !domain.startsWith("http://") &&
+            !domain.startsWith("https://")
+        ){
+
+            domain =
+                "https://" + domain;
+
+        }
+
+        return domain;
+    }
+
+    return null;
+
+}
+
+
+/* =========================================================
+   OPEN WEBSITE MANAGER
+========================================================= */
+
+async function openWebsiteManager(id){
+
+    const client =
+        getClientById(id);
+
+    if(!client){
+        return;
+    }
+
+    currentClient = client;
+
+    document
+        .getElementById(
+            "managerCompanyName"
+        )
+        .textContent =
+            "Manage Website - " +
+            (client.company_name || "");
+
+    document
+        .getElementById(
+            "managerCompanyMeta"
+        )
+        .textContent =
+            `${client.slug || ""} • ${
+                templateLabel(client.template)
+            }`;
+
+    document
+        .getElementById(
+            "websiteModal"
+        )
+        .classList
+        .add("show");
+
+    resetManagerNavigation();
+
+    showLoading(true);
+
+    try{
+
+        await getWebsiteContent();
+
+        await loadRepeatedData();
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            error.message || "Failed to load website data.",
+            "error"
+        );
+
+    }finally{
+
+        showLoading(false);
 
     }
 
+}
+
+
+function resetManagerNavigation(){
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    const first =
+        document.querySelector(
+            '.nav-btn[data-section="general"]'
+        );
+
+    if(first){
+        first.classList.add("active");
+    }
+
+    document
+        .querySelectorAll(".section")
+        .forEach(section =>
+            section.classList.remove("active")
+        );
+
+    document
+        .getElementById("section-general")
+        .classList.add("active");
+
+}
+
+
+function closeWebsiteManager(){
+
+    document
+        .getElementById(
+            "websiteModal"
+        )
+        .classList
+        .remove("show");
+
+    currentClient = null;
+    currentWebsiteContent = null;
+
+}
+
+
+/* =========================================================
+   WEBSITE CONTENT
+========================================================= */
+
+async function getWebsiteContent(){
+
+    if(!currentClient){
+        return null;
+    }
+
+    let {
+        data,
+        error
+    } = await supabaseClient
+        .from("client_website_content")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClient.id
+        )
+        .maybeSingle();
+
+    if(error){
+        throw error;
+    }
+
+    if(!data){
+
+        const {
+            data: inserted,
+            error: insertError
+        } = await supabaseClient
+            .from("client_website_content")
+            .insert({
+                client_id:
+                    currentClient.id
+            })
+            .select()
+            .single();
+
+        if(insertError){
+            throw insertError;
+        }
+
+        data = inserted;
+
+    }
+
+    currentWebsiteContent = data;
+
+    fillWebsiteContent(data);
 
     return data;
 
 }
 
 
-/* =========================================
-   SHOW CLIENT
-========================================= */
+/* =========================================================
+   FILL CONTENT
+========================================================= */
 
-function showActiveClient(client){
+function fillWebsiteContent(data){
 
-    const name =
-        client?.company_name ||
-        "No Client Selected";
+    Object.values(contentFields)
+        .flat()
+        .forEach(field => {
 
-    const domain =
-        client?.domain ||
-        "No domain configured";
+            const element =
+                document.getElementById(
+                    "wc_" + field
+                );
 
-    const template =
-        client?.template ||
-        "default";
+            if(!element){
+                return;
+            }
 
+            element.value =
+                data[field] ?? "";
 
-    setText(
-        "clientName",
-        name
-    );
-
-    setText(
-        "clientDomain",
-        domain
-    );
-
-    setText(
-        "clientTemplate",
-        "Template: " + template
-    );
-
-}
+        });
 
 
-/* =========================================
-   SET CLIENT CONTEXT
-========================================= */
+    /* Design */
 
-function setActiveClient(client){
-
-    if(
-        client &&
-        window.MDKClientContext
-    ){
-
-        MDKClientContext.set(
-            client
+    const templateSelect =
+        document.getElementById(
+            "wc_template"
         );
 
+    if(templateSelect){
+
+        templateSelect.value =
+            normalizeTemplate(
+                currentClient?.template
+            );
+
+    }
+
+
+    /* Contact uses same canonical general
+       contact details */
+
+    const phone =
+        document.getElementById(
+            "wc_contact_phone"
+        );
+
+    const email =
+        document.getElementById(
+            "wc_contact_email"
+        );
+
+    const whatsapp =
+        document.getElementById(
+            "wc_contact_whatsapp"
+        );
+
+    const address =
+        document.getElementById(
+            "wc_contact_address"
+        );
+
+    if(phone){
+        phone.value =
+            data.phone || "";
+    }
+
+    if(email){
+        email.value =
+            data.email || "";
+    }
+
+    if(whatsapp){
+        whatsapp.value =
+            data.whatsapp || "";
+    }
+
+    if(address){
+        address.value =
+            data.address || "";
     }
 
 }
 
 
-/* =========================================
-   LOAD STATS
-========================================= */
+/* =========================================================
+   SAVE SECTION
+========================================================= */
 
-async function loadStats(clientId){
+async function saveWebsiteSection(section){
 
-    if(!clientId){
-
-        resetStats();
-
+    if(!currentClient){
+        showToast(
+            "No client selected.",
+            "error"
+        );
         return;
-
     }
 
+    const fields =
+        contentFields[section] || [];
 
-    const results =
-    await Promise.all([
+    const payload = {};
 
-        supabaseClient
-        .from("categories")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        )
-        .eq(
-            "client_id",
-            clientId
-        ),
+    fields.forEach(field => {
 
-        supabaseClient
-        .from("products")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        )
-        .eq(
-            "client_id",
-            clientId
-        ),
-
-        supabaseClient
-        .from("gallery")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        )
-        .eq(
-            "client_id",
-            clientId
-        ),
-
-        supabaseClient
-        .from("enquiries")
-        .select(
-            "id",
-            {
-                count:"exact",
-                head:true
-            }
-        )
-        .eq(
-            "client_id",
-            clientId
-        )
-
-    ]);
-
-
-    setText(
-        "categoryCount",
-        results[0].error
-            ? 0
-            : results[0].count ?? 0
-    );
-
-    setText(
-        "productCount",
-        results[1].error
-            ? 0
-            : results[1].count ?? 0
-    );
-
-    setText(
-        "galleryCount",
-        results[2].error
-            ? 0
-            : results[2].count ?? 0
-    );
-
-    setText(
-        "enquiryCount",
-        results[3].error
-            ? 0
-            : results[3].count ?? 0
-    );
-
-
-    /*
-     * Show database errors in console
-     * but don't break dashboard.
-     */
-
-    results.forEach(function(result,index){
-
-        if(result.error){
-
-            console.warn(
-                "Dashboard stat error " +
-                index + ":",
-                result.error
+        const element =
+            document.getElementById(
+                "wc_" + field
             );
+
+        if(element){
+
+            payload[field] =
+                element.value.trim() || null;
 
         }
 
     });
 
+    if(!Object.keys(payload).length){
+        return;
+    }
+
+    payload.updated_at =
+        new Date().toISOString();
+
+    showLoading(true);
+
+    try{
+
+        const {
+            error
+        } = await supabaseClient
+            .from("client_website_content")
+            .update(payload)
+            .eq(
+                "client_id",
+                currentClient.id
+            );
+
+        if(error){
+            throw error;
+        }
+
+        Object.assign(
+            currentWebsiteContent || {},
+            payload
+        );
+
+        showToast(
+            sectionName(section) +
+            " saved successfully."
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            error.message,
+            "error"
+        );
+
+    }finally{
+
+        showLoading(false);
+
+    }
+
 }
 
 
-/* =========================================
-   SUPER ADMIN CLIENTS
-========================================= */
+function sectionName(section){
 
-async function setupSuperAdminClients(){
+    const names = {
+
+        general:"General",
+
+        hero:"Hero",
+
+        about:"About",
+
+        products:"Products",
+
+        manufacturing:"Manufacturing",
+
+        quality:"Quality",
+
+        industries:"Industries",
+
+        gallery:"Gallery",
+
+        testimonials:"Testimonials",
+
+        faq:"FAQ",
+
+        contact:"Contact"
+
+    };
+
+    return names[section] || section;
+
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+async function saveContactSection(){
+
+    if(!currentClient){
+        return;
+    }
+
+    const payload = {
+
+        contact_eyebrow:
+            document.getElementById(
+                "wc_contact_eyebrow"
+            ).value.trim() || null,
+
+        contact_heading:
+            document.getElementById(
+                "wc_contact_heading"
+            ).value.trim() || null,
+
+        contact_description:
+            document.getElementById(
+                "wc_contact_description"
+            ).value.trim() || null,
+
+        phone:
+            document.getElementById(
+                "wc_contact_phone"
+            ).value.trim() || null,
+
+        email:
+            document.getElementById(
+                "wc_contact_email"
+            ).value.trim() || null,
+
+        whatsapp:
+            document.getElementById(
+                "wc_contact_whatsapp"
+            ).value.trim() || null,
+
+        address:
+            document.getElementById(
+                "wc_contact_address"
+            ).value.trim() || null,
+
+        updated_at:
+            new Date().toISOString()
+
+    };
+
+    showLoading(true);
+
+    try{
+
+        const {
+            error
+        } = await supabaseClient
+            .from("client_website_content")
+            .update(payload)
+            .eq(
+                "client_id",
+                currentClient.id
+            );
+
+        if(error){
+            throw error;
+        }
+
+        Object.assign(
+            currentWebsiteContent || {},
+            payload
+        );
+
+        /* Keep General fields synced */
+
+        const generalMap = {
+
+            phone:"wc_phone",
+
+            email:"wc_email",
+
+            whatsapp:"wc_whatsapp",
+
+            address:"wc_address"
+
+        };
+
+        Object.keys(generalMap)
+            .forEach(key => {
+
+                const el =
+                    document.getElementById(
+                        generalMap[key]
+                    );
+
+                if(el){
+                    el.value =
+                        payload[key] || "";
+                }
+
+            });
+
+        showToast(
+            "Contact saved successfully."
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            error.message,
+            "error"
+        );
+
+    }finally{
+
+        showLoading(false);
+
+    }
+
+}
+
+
+/* =========================================================
+   SYNC GENERAL -> CONTACT
+========================================================= */
+
+[
+    ["wc_phone","wc_contact_phone"],
+    ["wc_email","wc_contact_email"],
+    ["wc_whatsapp","wc_contact_whatsapp"],
+    ["wc_address","wc_contact_address"]
+].forEach(([source,target]) => {
+
+    const sourceEl =
+        document.getElementById(source);
+
+    if(sourceEl){
+
+        sourceEl.addEventListener(
+            "input",
+            () => {
+
+                const targetEl =
+                    document.getElementById(target);
+
+                if(targetEl){
+                    targetEl.value =
+                        sourceEl.value;
+                }
+
+            }
+        );
+
+    }
+
+});
+
+
+/* =========================================================
+   LOAD REPEATED DATA
+========================================================= */
+
+async function loadRepeatedData(){
+
+    await Promise.all([
+
+        loadProducts(),
+
+        loadManufacturing(),
+
+        loadQuality(),
+
+        loadIndustries(),
+
+        loadGallery(),
+
+        loadTestimonials(),
+
+        loadFaq()
+
+    ]);
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+let products = [];
+
+
+async function loadProducts(){
+
+    if(!currentClient){
+        return;
+    }
 
     const {
         data,
         error
-    } =
-    await supabaseClient
-    .from("clients")
-    .select(
-        "id,company_name,slug,domain,template,status"
-    )
-    .order(
-        "company_name",
-        {
-            ascending:true
-        }
-    );
-
+    } = await supabaseClient
+        .from("client_products")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClient.id
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
 
     if(error){
 
-        console.error(
-            "Client List Error:",
-            error
-        );
-
-        globalClientSelect.innerHTML =
-            "<option value=''>Unable to load clients</option>";
-
-        resetStats();
+        console.error(error);
 
         return;
 
     }
 
+    products = data || [];
 
-    globalClientSelect.innerHTML =
-        "";
+    renderProducts();
 
-
-    if(!data || data.length === 0){
-
-        globalClientSelect.innerHTML =
-            "<option value=''>No clients found</option>";
-
-        showActiveClient(null);
-
-        resetStats();
-
-        return;
-
-    }
+}
 
 
-    data.forEach(function(client){
+function renderProducts(){
 
-        const option =
-            document.createElement(
-                "option"
-            );
-
-        option.value =
-            client.id;
-
-        option.textContent =
-            client.company_name +
-            (
-                client.domain
-                    ? " — " + client.domain
-                    : ""
-            );
-
-        globalClientSelect.appendChild(
-            option
+    const box =
+        document.getElementById(
+            "productsList"
         );
 
-    });
+    if(!products.length){
 
+        box.innerHTML = `
+            <div class="empty">
+                No products added yet.
+            </div>
+        `;
 
-    let activeClient = null;
-
-
-    if(
-        window.MDKClientContext
-    ){
-
-        const saved =
-            MDKClientContext.get();
-
-
-        if(
-            saved &&
-            saved.id
-        ){
-
-            activeClient =
-                data.find(
-                    function(client){
-
-                        return client.id === saved.id;
-
-                    }
-                );
-
-        }
-
+        return;
     }
 
+    box.innerHTML =
+        products.map(item => `
 
-    if(!activeClient){
+            <div class="repeat-item">
 
-        activeClient =
-            data[0];
+                <div class="repeat-item-top">
 
+                    <div>
+
+                        <div class="repeat-item-title">
+                            ${escapeHtml(item.product_name || "-")}
+                        </div>
+
+                        <div class="muted">
+                            Code:
+                            ${escapeHtml(item.product_code || "-")}
+                        </div>
+
+                        <div class="muted">
+                            ${
+                                item.is_active
+                                    ? "Active"
+                                    : "Inactive"
+                            }
+                        </div>
+
+                    </div>
+
+                    <div class="repeat-actions">
+
+                        <button
+                            class="btn btn-warning btn-small"
+                            onclick="editProduct('${item.id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteRepeated('client_products','${item.id}',loadProducts)"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="muted" style="margin-top:8px;">
+                    ${escapeHtml(item.description || "")}
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function showProductForm(item = null){
+
+    const box =
+        document.getElementById(
+            "productFormContainer"
+        );
+
+    const editing =
+        !!item;
+
+    box.innerHTML = `
+
+        <div class="repeat-item">
+
+            <h4>
+                ${editing ? "Edit Product" : "Add Product"}
+            </h4>
+
+            <div class="item-form">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Product Code</label>
+                        <input
+                            id="product_code"
+                            value="${escapeHtml(item?.product_code || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input
+                            id="product_name"
+                            value="${escapeHtml(item?.product_name || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea id="product_description">${escapeHtml(item?.description || "")}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input
+                            id="product_image_url"
+                            value="${escapeHtml(item?.image_url || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Enquiry URL</label>
+                        <input
+                            id="product_enquiry_url"
+                            value="${escapeHtml(item?.enquiry_url || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sort Order</label>
+                        <input
+                            type="number"
+                            id="product_sort_order"
+                            value="${item?.sort_order ?? products.length}"
+                        >
+                    </div>
+
+                </div>
+
+                <label class="active-check">
+                    <input
+                        type="checkbox"
+                        id="product_active"
+                        ${item?.is_active !== false ? "checked" : ""}
+                    >
+                    Active
+                </label>
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveProduct('${item?.id || ""}')"
+                    >
+                        Save Product
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="cancelProductForm()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+function cancelProductForm(){
+
+    document
+        .getElementById(
+            "productFormContainer"
+        )
+        .innerHTML = "";
+
+}
+
+
+function editProduct(id){
+
+    const item =
+        products.find(
+            x => x.id === id
+        );
+
+    if(item){
+        showProductForm(item);
     }
 
-
-    globalClientSelect.value =
-        activeClient.id;
+}
 
 
-    setActiveClient(
-        activeClient
+async function saveProduct(id = ""){
+
+    const payload = {
+
+        client_id:
+            currentClient.id,
+
+        product_code:
+            document.getElementById(
+                "product_code"
+            ).value.trim() || null,
+
+        product_name:
+            document.getElementById(
+                "product_name"
+            ).value.trim() || null,
+
+        description:
+            document.getElementById(
+                "product_description"
+            ).value.trim() || null,
+
+        image_url:
+            document.getElementById(
+                "product_image_url"
+            ).value.trim() || null,
+
+        enquiry_url:
+            document.getElementById(
+                "product_enquiry_url"
+            ).value.trim() || null,
+
+        sort_order:
+            Number(
+                document.getElementById(
+                    "product_sort_order"
+                ).value
+            ) || 0,
+
+        is_active:
+            document.getElementById(
+                "product_active"
+            ).checked
+
+    };
+
+    const result =
+        id
+            ? await supabaseClient
+                .from("client_products")
+                .update(payload)
+                .eq("id",id)
+            : await supabaseClient
+                .from("client_products")
+                .insert(payload);
+
+    if(result.error){
+
+        showToast(
+            result.error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "Product saved."
     );
 
-    showActiveClient(
-        activeClient
+    cancelProductForm();
+
+    await loadProducts();
+
+}
+
+
+/* =========================================================
+   MANUFACTURING
+========================================================= */
+
+let manufacturing = [];
+
+
+async function loadManufacturing(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("client_manufacturing_steps")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClient.id
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    manufacturing = data || [];
+
+    renderManufacturing();
+
+}
+
+
+function renderManufacturing(){
+
+    const box =
+        document.getElementById(
+            "manufacturingList"
+        );
+
+    if(!manufacturing.length){
+
+        box.innerHTML = `
+            <div class="empty">
+                No manufacturing steps added.
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML =
+        manufacturing.map(item => `
+
+            <div class="repeat-item">
+
+                <div class="repeat-item-top">
+
+                    <div>
+
+                        <div class="repeat-item-title">
+                            Step ${escapeHtml(item.step_number)}
+                            -
+                            ${escapeHtml(item.title || "")}
+                        </div>
+
+                        <div class="muted">
+                            ${escapeHtml(item.description || "")}
+                        </div>
+
+                    </div>
+
+                    <div class="repeat-actions">
+
+                        <button
+                            class="btn btn-warning btn-small"
+                            onclick="editManufacturing('${item.id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteRepeated('client_manufacturing_steps','${item.id}',loadManufacturing)"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function showManufacturingForm(item = null){
+
+    const box =
+        document.getElementById(
+            "manufacturingFormContainer"
+        );
+
+    box.innerHTML = `
+
+        <div class="repeat-item">
+
+            <h4>
+                ${item ? "Edit Process Step" : "Add Process Step"}
+            </h4>
+
+            <div class="item-form">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Step Number</label>
+                        <input
+                            type="number"
+                            id="manufacturing_step_number"
+                            value="${item?.step_number ?? manufacturing.length + 1}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sort Order</label>
+                        <input
+                            type="number"
+                            id="manufacturing_sort_order"
+                            value="${item?.sort_order ?? manufacturing.length}"
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Title</label>
+                        <input
+                            id="manufacturing_title"
+                            value="${escapeHtml(item?.title || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea id="manufacturing_description">${escapeHtml(item?.description || "")}</textarea>
+                    </div>
+
+                </div>
+
+                <label class="active-check">
+                    <input
+                        type="checkbox"
+                        id="manufacturing_active"
+                        ${item?.is_active !== false ? "checked" : ""}
+                    >
+                    Active
+                </label>
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveManufacturing('${item?.id || ""}')"
+                    >
+                        Save Step
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="cancelManufacturingForm()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+function cancelManufacturingForm(){
+
+    document
+        .getElementById(
+            "manufacturingFormContainer"
+        )
+        .innerHTML = "";
+
+}
+
+
+function editManufacturing(id){
+
+    const item =
+        manufacturing.find(
+            x => x.id === id
+        );
+
+    if(item){
+        showManufacturingForm(item);
+    }
+
+}
+
+
+async function saveManufacturing(id = ""){
+
+    const payload = {
+
+        client_id:
+            currentClient.id,
+
+        step_number:
+            Number(
+                document.getElementById(
+                    "manufacturing_step_number"
+                ).value
+            ) || 0,
+
+        title:
+            document.getElementById(
+                "manufacturing_title"
+            ).value.trim() || null,
+
+        description:
+            document.getElementById(
+                "manufacturing_description"
+            ).value.trim() || null,
+
+        sort_order:
+            Number(
+                document.getElementById(
+                    "manufacturing_sort_order"
+                ).value
+            ) || 0,
+
+        is_active:
+            document.getElementById(
+                "manufacturing_active"
+            ).checked
+
+    };
+
+    const result =
+        id
+            ? await supabaseClient
+                .from("client_manufacturing_steps")
+                .update(payload)
+                .eq("id",id)
+            : await supabaseClient
+                .from("client_manufacturing_steps")
+                .insert(payload);
+
+    if(result.error){
+
+        showToast(
+            result.error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "Manufacturing step saved."
     );
 
-    await loadStats(
-        activeClient.id
+    cancelManufacturingForm();
+
+    await loadManufacturing();
+
+}
+
+
+/* =========================================================
+   QUALITY
+========================================================= */
+
+let quality = [];
+
+
+async function loadQuality(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("client_quality")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClient.id
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    quality = data || [];
+
+    renderQuality();
+
+}
+
+
+function renderQuality(){
+
+    const box =
+        document.getElementById(
+            "qualityList"
+        );
+
+    if(!quality.length){
+
+        box.innerHTML = `
+            <div class="empty">
+                No quality items added.
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML =
+        quality.map(item => `
+
+            <div class="repeat-item">
+
+                <div class="repeat-item-top">
+
+                    <div>
+
+                        <div class="repeat-item-title">
+                            ${escapeHtml(item.title || "")}
+                        </div>
+
+                        <div class="muted">
+                            Icon:
+                            ${escapeHtml(item.icon || "-")}
+                        </div>
+
+                        <div class="muted">
+                            ${escapeHtml(item.description || "")}
+                        </div>
+
+                    </div>
+
+                    <div class="repeat-actions">
+
+                        <button
+                            class="btn btn-warning btn-small"
+                            onclick="editQuality('${item.id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteRepeated('client_quality','${item.id}',loadQuality)"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function showQualityForm(item = null){
+
+    document.getElementById(
+        "qualityFormContainer"
+    ).innerHTML = `
+
+        <div class="repeat-item">
+
+            <h4>
+                ${item ? "Edit Quality" : "Add Quality"}
+            </h4>
+
+            <div class="item-form">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Icon</label>
+                        <input
+                            id="quality_icon"
+                            value="${escapeHtml(item?.icon || "")}"
+                            placeholder="✓ / shield / star"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sort Order</label>
+                        <input
+                            type="number"
+                            id="quality_sort_order"
+                            value="${item?.sort_order ?? quality.length}"
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Title</label>
+                        <input
+                            id="quality_title"
+                            value="${escapeHtml(item?.title || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea id="quality_description">${escapeHtml(item?.description || "")}</textarea>
+                    </div>
+
+                </div>
+
+                <label class="active-check">
+                    <input
+                        type="checkbox"
+                        id="quality_active"
+                        ${item?.is_active !== false ? "checked" : ""}
+                    >
+                    Active
+                </label>
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveQuality('${item?.id || ""}')"
+                    >
+                        Save Quality
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="cancelQualityForm()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+function cancelQualityForm(){
+
+    document.getElementById(
+        "qualityFormContainer"
+    ).innerHTML = "";
+
+}
+
+
+function editQuality(id){
+
+    const item =
+        quality.find(
+            x => x.id === id
+        );
+
+    if(item){
+        showQualityForm(item);
+    }
+
+}
+
+
+async function saveQuality(id = ""){
+
+    const payload = {
+
+        client_id:
+            currentClient.id,
+
+        icon:
+            document.getElementById(
+                "quality_icon"
+            ).value.trim() || null,
+
+        title:
+            document.getElementById(
+                "quality_title"
+            ).value.trim() || null,
+
+        description:
+            document.getElementById(
+                "quality_description"
+            ).value.trim() || null,
+
+        sort_order:
+            Number(
+                document.getElementById(
+                    "quality_sort_order"
+                ).value
+            ) || 0,
+
+        is_active:
+            document.getElementById(
+                "quality_active"
+            ).checked
+
+    };
+
+    const result =
+        id
+            ? await supabaseClient
+                .from("client_quality")
+                .update(payload)
+                .eq("id",id)
+            : await supabaseClient
+                .from("client_quality")
+                .insert(payload);
+
+    if(result.error){
+
+        showToast(
+            result.error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "Quality item saved."
+    );
+
+    cancelQualityForm();
+
+    await loadQuality();
+
+}
+
+
+/* =========================================================
+   INDUSTRIES
+========================================================= */
+
+let industries = [];
+
+
+async function loadIndustries(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("client_industries")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClient.id
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    industries = data || [];
+
+    renderIndustries();
+
+}
+
+
+function renderIndustries(){
+
+    const box =
+        document.getElementById(
+            "industriesList"
+        );
+
+    if(!industries.length){
+
+        box.innerHTML = `
+            <div class="empty">
+                No industries added.
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML =
+        industries.map(item => `
+
+            <div class="repeat-item">
+
+                <div class="repeat-item-top">
+
+                    <div>
+
+                        <div class="repeat-item-title">
+                            ${escapeHtml(item.name || "")}
+                        </div>
+
+                    </div>
+
+                    <div class="repeat-actions">
+
+                        <button
+                            class="btn btn-warning btn-small"
+                            onclick="editIndustry('${item.id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteRepeated('client_industries','${item.id}',loadIndustries)"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function showIndustryForm(item = null){
+
+    document.getElementById(
+        "industryFormContainer"
+    ).innerHTML = `
+
+        <div class="repeat-item">
+
+            <h4>
+                ${item ? "Edit Industry" : "Add Industry"}
+            </h4>
+
+            <div class="item-form">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Industry Name</label>
+                        <input
+                            id="industry_name"
+                            value="${escapeHtml(item?.name || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sort Order</label>
+                        <input
+                            type="number"
+                            id="industry_sort_order"
+                            value="${item?.sort_order ?? industries.length}"
+                        >
+                    </div>
+
+                </div>
+
+                <label class="active-check">
+                    <input
+                        type="checkbox"
+                        id="industry_active"
+                        ${item?.is_active !== false ? "checked" : ""}
+                    >
+                    Active
+                </label>
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveIndustry('${item?.id || ""}')"
+                    >
+                        Save Industry
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="cancelIndustryForm()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+function cancelIndustryForm(){
+
+    document.getElementById(
+        "industryFormContainer"
+    ).innerHTML = "";
+
+}
+
+
+function editIndustry(id){
+
+    const item =
+        industries.find(
+            x => x.id === id
+        );
+
+    if(item){
+        showIndustryForm(item);
+    }
+
+}
+
+
+async function saveIndustry(id = ""){
+
+    const payload = {
+
+        client_id:
+            currentClient.id,
+
+        name:
+            document.getElementById(
+                "industry_name"
+            ).value.trim() || null,
+
+        sort_order:
+            Number(
+                document.getElementById(
+                    "industry_sort_order"
+                ).value
+            ) || 0,
+
+        is_active:
+            document.getElementById(
+                "industry_active"
+            ).checked
+
+    };
+
+    const result =
+        id
+            ? await supabaseClient
+                .from("client_industries")
+                .update(payload)
+                .eq("id",id)
+            : await supabaseClient
+                .from("client_industries")
+                .insert(payload);
+
+    if(result.error){
+
+        showToast(
+            result.error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "Industry saved."
+    );
+
+    cancelIndustryForm();
+
+    await loadIndustries();
+
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+let gallery = [];
+
+
+async function loadGallery(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("client_gallery")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClient.id
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    gallery = data || [];
+
+    renderGallery();
+
+}
+
+
+function renderGallery(){
+
+    const box =
+        document.getElementById(
+            "galleryList"
+        );
+
+    if(!gallery.length){
+
+        box.innerHTML = `
+            <div class="empty">
+                No gallery images added.
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML =
+        gallery.map(item => `
+
+            <div class="repeat-item">
+
+                <div class="repeat-item-top">
+
+                    <div>
+
+                        <div class="repeat-item-title">
+                            ${escapeHtml(item.title || "Gallery Image")}
+                        </div>
+
+                        <div class="muted">
+                            ${escapeHtml(item.image_url || "")}
+                        </div>
+
+                    </div>
+
+                    <div class="repeat-actions">
+
+                        <button
+                            class="btn btn-warning btn-small"
+                            onclick="editGallery('${item.id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteRepeated('client_gallery','${item.id}',loadGallery)"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function showGalleryForm(item = null){
+
+    document.getElementById(
+        "galleryFormContainer"
+    ).innerHTML = `
+
+        <div class="repeat-item">
+
+            <h4>
+                ${item ? "Edit Gallery Image" : "Add Gallery Image"}
+            </h4>
+
+            <div class="item-form">
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+                        <label>Image URL</label>
+                        <input
+                            id="gallery_image_url"
+                            value="${escapeHtml(item?.image_url || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input
+                            id="gallery_title"
+                            value="${escapeHtml(item?.title || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sort Order</label>
+                        <input
+                            type="number"
+                            id="gallery_sort_order"
+                            value="${item?.sort_order ?? gallery.length}"
+                        >
+                    </div>
+
+                </div>
+
+                <label class="active-check">
+                    <input
+                        type="checkbox"
+                        id="gallery_active"
+                        ${item?.is_active !== false ? "checked" : ""}
+                    >
+                    Active
+                </label>
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveGallery('${item?.id || ""}')"
+                    >
+                        Save Image
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="cancelGalleryForm()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+function cancelGalleryForm(){
+
+    document.getElementById(
+        "galleryFormContainer"
+    ).innerHTML = "";
+
+}
+
+
+function editGallery(id){
+
+    const item =
+        gallery.find(
+            x => x.id === id
+        );
+
+    if(item){
+        showGalleryForm(item);
+    }
+
+}
+
+
+async function saveGallery(id = ""){
+
+    const payload = {
+
+        client_id:
+            currentClient.id,
+
+        image_url:
+            document.getElementById(
+                "gallery_image_url"
+            ).value.trim() || null,
+
+        title:
+            document.getElementById(
+                "gallery_title"
+            ).value.trim() || null,
+
+        sort_order:
+            Number(
+                document.getElementById(
+                    "gallery_sort_order"
+                ).value
+            ) || 0,
+
+        is_active:
+            document.getElementById(
+                "gallery_active"
+            ).checked
+
+    };
+
+    const result =
+        id
+            ? await supabaseClient
+                .from("client_gallery")
+                .update(payload)
+                .eq("id",id)
+            : await supabaseClient
+                .from("client_gallery")
+                .insert(payload);
+
+    if(result.error){
+
+        showToast(
+            result.error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "Gallery image saved."
+    );
+
+    cancelGalleryForm();
+
+    await loadGallery();
+
+}
+
+
+/* =========================================================
+   TESTIMONIALS
+========================================================= */
+
+let testimonials = [];
+
+
+async function loadTestimonials(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("client_testimonials")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClient.id
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    testimonials = data || [];
+
+    renderTestimonials();
+
+}
+
+
+function renderTestimonials(){
+
+    const box =
+        document.getElementById(
+            "testimonialsList"
+        );
+
+    if(!testimonials.length){
+
+        box.innerHTML = `
+            <div class="empty">
+                No testimonials added.
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML =
+        testimonials.map(item => `
+
+            <div class="repeat-item">
+
+                <div class="repeat-item-top">
+
+                    <div>
+
+                        <div class="repeat-item-title">
+                            ${escapeHtml(item.customer_name || "")}
+                        </div>
+
+                        <div class="muted">
+                            ${escapeHtml(item.designation || "")}
+                        </div>
+
+                        <div style="margin-top:8px;">
+                            “${escapeHtml(item.message || "")}”
+                        </div>
+
+                    </div>
+
+                    <div class="repeat-actions">
+
+                        <button
+                            class="btn btn-warning btn-small"
+                            onclick="editTestimonial('${item.id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteRepeated('client_testimonials','${item.id}',loadTestimonials)"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function showTestimonialForm(item = null){
+
+    document.getElementById(
+        "testimonialFormContainer"
+    ).innerHTML = `
+
+        <div class="repeat-item">
+
+            <h4>
+                ${item ? "Edit Testimonial" : "Add Testimonial"}
+            </h4>
+
+            <div class="item-form">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input
+                            id="testimonial_customer_name"
+                            value="${escapeHtml(item?.customer_name || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Designation</label>
+                        <input
+                            id="testimonial_designation"
+                            value="${escapeHtml(item?.designation || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Message</label>
+                        <textarea id="testimonial_message">${escapeHtml(item?.message || "")}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sort Order</label>
+                        <input
+                            type="number"
+                            id="testimonial_sort_order"
+                            value="${item?.sort_order ?? testimonials.length}"
+                        >
+                    </div>
+
+                </div>
+
+                <label class="active-check">
+                    <input
+                        type="checkbox"
+                        id="testimonial_active"
+                        ${item?.is_active !== false ? "checked" : ""}
+                    >
+                    Active
+                </label>
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveTestimonial('${item?.id || ""}')"
+                    >
+                        Save Testimonial
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="cancelTestimonialForm()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+function cancelTestimonialForm(){
+
+    document.getElementById(
+        "testimonialFormContainer"
+    ).innerHTML = "";
+
+}
+
+
+function editTestimonial(id){
+
+    const item =
+        testimonials.find(
+            x => x.id === id
+        );
+
+    if(item){
+        showTestimonialForm(item);
+    }
+
+}
+
+
+async function saveTestimonial(id = ""){
+
+    const payload = {
+
+        client_id:
+            currentClient.id,
+
+        message:
+            document.getElementById(
+                "testimonial_message"
+            ).value.trim() || null,
+
+        customer_name:
+            document.getElementById(
+                "testimonial_customer_name"
+            ).value.trim() || null,
+
+        designation:
+            document.getElementById(
+                "testimonial_designation"
+            ).value.trim() || null,
+
+        sort_order:
+            Number(
+                document.getElementById(
+                    "testimonial_sort_order"
+                ).value
+            ) || 0,
+
+        is_active:
+            document.getElementById(
+                "testimonial_active"
+            ).checked
+
+    };
+
+    const result =
+        id
+            ? await supabaseClient
+                .from("client_testimonials")
+                .update(payload)
+                .eq("id",id)
+            : await supabaseClient
+                .from("client_testimonials")
+                .insert(payload);
+
+    if(result.error){
+
+        showToast(
+            result.error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "Testimonial saved."
+    );
+
+    cancelTestimonialForm();
+
+    await loadTestimonials();
+
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+let faqs = [];
+
+
+async function loadFaq(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("client_faq")
+        .select("*")
+        .eq(
+            "client_id",
+            currentClient.id
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    faqs = data || [];
+
+    renderFaq();
+
+}
+
+
+function renderFaq(){
+
+    const box =
+        document.getElementById(
+            "faqList"
+        );
+
+    if(!faqs.length){
+
+        box.innerHTML = `
+            <div class="empty">
+                No FAQ added.
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML =
+        faqs.map(item => `
+
+            <div class="repeat-item">
+
+                <div class="repeat-item-top">
+
+                    <div>
+
+                        <div class="repeat-item-title">
+                            ${escapeHtml(item.question || "")}
+                        </div>
+
+                        <div class="muted">
+                            ${escapeHtml(item.answer || "")}
+                        </div>
+
+                    </div>
+
+                    <div class="repeat-actions">
+
+                        <button
+                            class="btn btn-warning btn-small"
+                            onclick="editFaq('${item.id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteRepeated('client_faq','${item.id}',loadFaq)"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function showFaqForm(item = null){
+
+    document.getElementById(
+        "faqFormContainer"
+    ).innerHTML = `
+
+        <div class="repeat-item">
+
+            <h4>
+                ${item ? "Edit FAQ" : "Add FAQ"}
+            </h4>
+
+            <div class="item-form">
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+                        <label>Question</label>
+                        <input
+                            id="faq_question"
+                            value="${escapeHtml(item?.question || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Answer</label>
+                        <textarea id="faq_answer">${escapeHtml(item?.answer || "")}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sort Order</label>
+                        <input
+                            type="number"
+                            id="faq_sort_order"
+                            value="${item?.sort_order ?? faqs.length}"
+                        >
+                    </div>
+
+                </div>
+
+                <label class="active-check">
+                    <input
+                        type="checkbox"
+                        id="faq_active"
+                        ${item?.is_active !== false ? "checked" : ""}
+                    >
+                    Active
+                </label>
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="saveFaq('${item?.id || ""}')"
+                    >
+                        Save FAQ
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="cancelFaqForm()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+function cancelFaqForm(){
+
+    document.getElementById(
+        "faqFormContainer"
+    ).innerHTML = "";
+
+}
+
+
+function editFaq(id){
+
+    const item =
+        faqs.find(
+            x => x.id === id
+        );
+
+    if(item){
+        showFaqForm(item);
+    }
+
+}
+
+
+async function saveFaq(id = ""){
+
+    const payload = {
+
+        client_id:
+            currentClient.id,
+
+        question:
+            document.getElementById(
+                "faq_question"
+            ).value.trim() || null,
+
+        answer:
+            document.getElementById(
+                "faq_answer"
+            ).value.trim() || null,
+
+        sort_order:
+            Number(
+                document.getElementById(
+                    "faq_sort_order"
+                ).value
+            ) || 0,
+
+        is_active:
+            document.getElementById(
+                "faq_active"
+            ).checked
+
+    };
+
+    const result =
+        id
+            ? await supabaseClient
+                .from("client_faq")
+                .update(payload)
+                .eq("id",id)
+            : await supabaseClient
+                .from("client_faq")
+                .insert(payload);
+
+    if(result.error){
+
+        showToast(
+            result.error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "FAQ saved."
+    );
+
+    cancelFaqForm();
+
+    await loadFaq();
+
+}
+
+
+/* =========================================================
+   GENERIC DELETE
+========================================================= */
+
+async function deleteRepeated(
+    table,
+    id,
+    reloadFunction
+){
+
+    const ok =
+        confirm(
+            "Are you sure you want to delete this item?"
+        );
+
+    if(!ok){
+        return;
+    }
+
+    const {
+        error
+    } = await supabaseClient
+        .from(table)
+        .delete()
+        .eq("id",id);
+
+    if(error){
+
+        showToast(
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showToast(
+        "Deleted successfully."
+    );
+
+    if(reloadFunction){
+        await reloadFunction();
+    }
+
+}
+
+
+/* =========================================================
+   TEMPLATE
+========================================================= */
+
+async function saveTemplateSelection(){
+
+    if(!currentClient){
+        return;
+    }
+
+    const template =
+        normalizeTemplate(
+            document.getElementById(
+                "wc_template"
+            ).value
+        );
+
+    showLoading(true);
+
+    const {
+        error
+    } = await supabaseClient
+        .from("clients")
+        .update({
+
+            template:template,
+
+            updated_at:
+                new Date().toISOString()
+
+        })
+        .eq(
+            "id",
+            currentClient.id
+        );
+
+    showLoading(false);
+
+    if(error){
+
+        showToast(
+            error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    currentClient.template =
+        template;
+
+    const index =
+        clients.findIndex(
+            c => c.id === currentClient.id
+        );
+
+    if(index !== -1){
+        clients[index].template =
+            template;
+    }
+
+    document
+        .getElementById(
+            "managerCompanyMeta"
+        )
+        .textContent =
+            `${currentClient.slug || ""} • ${
+                templateLabel(template)
+            }`;
+
+    showToast(
+        "Template saved."
+    );
+
+    renderClients();
+
+}
+
+
+function previewCurrentWebsite(){
+
+    if(!currentClient){
+        return;
+    }
+
+    const url =
+        getWebsiteUrl(
+            currentClient
+        );
+
+    if(!url){
+
+        showToast(
+            "Website URL is not available.",
+            "error"
+        );
+
+        return;
+    }
+
+    window.open(
+        url,
+        "_blank"
     );
 
 }
 
 
-/* =========================================
-   CLIENT SELECT CHANGE
-========================================= */
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-globalClientSelect.addEventListener(
-    "change",
-    async function(){
-
-        const clientId =
-            this.value;
-
-
-        if(!clientId){
-
-            showActiveClient(
-                null
-            );
-
-            resetStats();
-
-            return;
-
-        }
-
-
-        const client =
-            await getClient(
-                clientId
-            );
-
-
-        if(!client){
-
-            return;
-
-        }
-
-
-        setActiveClient(
-            client
-        );
-
-        showActiveClient(
-            client
-        );
-
-        await loadStats(
-            client.id
-        );
-
-    }
-);
-
-
-/* =========================================
-   INITIALIZE DASHBOARD
-========================================= */
-
-async function initialize(){
+async function logout(){
 
     try{
 
-        console.log(
-            "Dashboard initializing..."
-        );
+        if(
+            window.MDKClientContext &&
+            typeof MDKClientContext.clear === "function"
+        ){
 
-
-        /*
-         * STEP 1
-         * Get persisted Supabase session.
-         */
-
-        const {
-            data:sessionData,
-            error:sessionError
-        } =
-        await supabaseClient
-        .auth
-        .getSession();
-
-
-        if(sessionError){
-
-            console.error(
-                "Session Error:",
-                sessionError
-            );
-
-            showSessionError();
-
-            return;
+            MDKClientContext.clear();
 
         }
 
+    }catch(e){
+        console.warn(e);
+    }
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href =
+        "admin.html";
+
+}
+
+
+/* =========================================================
+   AUTH CHECK
+========================================================= */
+
+async function init(){
+
+    showLoading(true);
+
+    try{
+
+        const {
+            data:sessionData
+        } = await supabaseClient
+            .auth
+            .getSession();
 
         const session =
             sessionData?.session;
 
-
-        /*
-         * STEP 2
-         * No session.
-         */
-
         if(!session){
 
-            console.warn(
-                "No active Supabase session."
-            );
-
-            showSessionError();
+            window.location.href =
+                "admin.html";
 
             return;
 
         }
 
+        await loadClients();
 
-        console.log(
-            "Supabase session found."
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            error.message ||
+            "Unable to load Client Manager.",
+            "error"
         );
 
+    }finally{
 
-        const user =
-            session.user;
-
-
-        /*
-         * STEP 3
-         * Show logged-in user.
-         */
-
-        setText(
-            "userName",
-            user.email
-        );
-
-
-        /*
-         * STEP 4
-         * Load profile.
-         */
-
-        const {
-            data:profile,
-            error:profileError
-        } =
-        await supabaseClient
-        .from("profiles")
-        .select(
-            "id,role,client_id,full_name"
-        )
-        .eq(
-            "id",
-            user.id
-        )
-        .maybeSingle();
-
-
-        if(profileError){
-
-            console.error(
-                "Profile Error:",
-                profileError
-            );
-
-            setText(
-                "userRole",
-                "Profile Error"
-            );
-
-            return;
-
-        }
-
-
-        if(!profile){
-
-            console.error(
-                "Profile not found for:",
-                user.id
-            );
-
-            setText(
-                "userRole",
-                "Profile Not Found"
-            );
-
-            showActiveClient(
-                null
-            );
-
-            resetStats();
-
-            return;
-
-        }
-
-
-        /*
-         * STEP 5
-         * User information.
-         */
-
-        setText(
-            "userName",
-            profile.full_name ||
-            user.email
-        );
-
-        setText(
-            "userRole",
-            profile.role ||
-            "User"
-        );
-
-
-        /*
-         * STEP 6
-         * SUPER ADMIN
-         */
-
-        if(
-            profile.role ===
-            "super_admin"
-        ){
-
-            globalClientSelect
-                .classList
-                .remove(
-                    "hidden"
-                );
-
-
-            await setupSuperAdminClients();
-
-            return;
-
-        }
-
-
-        /*
-         * STEP 7
-         * Normal client user.
-         */
-
-        globalClientSelect
-            .classList
-            .add(
-                "hidden"
-            );
-
-
-        if(!profile.client_id){
-
-            console.warn(
-                "No client assigned to user."
-            );
-
-            showActiveClient(
-                null
-            );
-
-            resetStats();
-
-            return;
-
-        }
-
-
-        /*
-         * STEP 8
-         * Get assigned client.
-         */
-
-        const client =
-            await getClient(
-                profile.client_id
-            );
-
-
-        if(!client){
-
-            console.error(
-                "Assigned client not found."
-            );
-
-            showActiveClient(
-                null
-            );
-
-            resetStats();
-
-            return;
-
-        }
-
-
-        /*
-         * STEP 9
-         * Save active client.
-         */
-
-        setActiveClient(
-            client
-        );
-
-
-        showActiveClient(
-            client
-        );
-
-
-        /*
-         * STEP 10
-         * Load dashboard statistics.
-         */
-
-        await loadStats(
-            client.id
-        );
-
-
-        console.log(
-            "Dashboard loaded successfully."
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            "Dashboard Error:",
-            error
-        );
-
-        setText(
-            "userRole",
-            "Dashboard Error"
-        );
+        showLoading(false);
 
     }
 
 }
 
 
-/* =========================================
-   AUTH STATE
-========================================= */
-
-supabaseClient
-.auth
-.onAuthStateChange(
-    function(event,session){
-
-        console.log(
-            "Auth Event:",
-            event
-        );
-
-    }
-);
-
-
-/* =========================================
-   LOGOUT
-========================================= */
+/* =========================================================
+   CLOSE MODAL ON BACKDROP
+========================================================= */
 
 document
-.getElementById("logoutBtn")
-.addEventListener(
-    "click",
-    async function(){
+    .getElementById("websiteModal")
+    .addEventListener("click",function(e){
 
-        try{
+        if(e.target === this){
 
-            if(
-                window.MDKClientContext
-            ){
-
-                MDKClientContext.clear();
-
-            }
-
-
-            const {
-                error
-            } =
-            await supabaseClient
-            .auth
-            .signOut();
-
-
-            if(error){
-
-                console.error(
-                    "Logout Error:",
-                    error
-                );
-
-            }
-
-
-        }
-        catch(error){
-
-            console.error(
-                "Logout Error:",
-                error
-            );
+            closeWebsiteManager();
 
         }
 
+    });
 
-        /*
-         * replace prevents going back
-         * to dashboard from browser history.
-         */
 
-        window.location.replace(
-            "admin.html"
-        );
+/* =========================================================
+   ESC CLOSE
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.key === "Escape" &&
+            document
+                .getElementById(
+                    "websiteModal"
+                )
+                .classList
+                .contains("show")
+        ){
+
+            closeWebsiteManager();
+
+        }
 
     }
 );
 
 
-/* =========================================
+/* =========================================================
    START
-========================================= */
+========================================================= */
 
-initialize();
+init();
 
 </script>
 
