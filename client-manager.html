@@ -175,6 +175,13 @@ button,input,select,textarea{font-family:inherit}
     border-color:#2563eb;
 }
 
+.field input[readonly],
+.field textarea[readonly]{
+    background:#f8fafc;
+    color:#64748b;
+    cursor:not-allowed;
+}
+
 .full{grid-column:1/-1}
 
 .field small{
@@ -594,37 +601,65 @@ td{
 <body>
 
 <header class="header">
-    <div class="logo">MD <span>KAIF</span></div>
+
+    <div class="logo">
+        MD <span>KAIF</span>
+    </div>
 
     <div class="header-right">
-        <a href="dashboard.html" class="back-btn">Dashboard</a>
-        <button id="logoutBtn" class="logout-btn">Logout</button>
+
+        <a href="dashboard.html" class="back-btn">
+            Dashboard
+        </a>
+
+        <button id="logoutBtn" class="logout-btn">
+            Logout
+        </button>
+
     </div>
+
 </header>
+
 
 <div class="container">
 
     <div class="topbar">
+
         <div class="title">
+
             <h1>Client Manager</h1>
-            <p>Manage clients, hosting, templates and complete website content.</p>
+
+            <p>
+                Manage clients, hosting, templates and complete website content.
+            </p>
+
         </div>
 
-        <button id="addBtn" class="add-btn">+ Add Client</button>
+        <button id="addBtn" class="add-btn">
+            + Add Client
+        </button>
+
     </div>
+
 
     <div class="active-client">
+
         Active Client:
         <span id="activeClientName">None</span>
+
     </div>
 
+
     <div id="message" class="message"></div>
+
 
     <!-- CLIENT FORM -->
 
     <div id="formCard" class="card hidden">
 
-        <div id="formTitle" class="form-title">Add New Client</div>
+        <div id="formTitle" class="form-title">
+            Add New Client
+        </div>
 
         <form id="clientForm">
 
@@ -633,72 +668,157 @@ td{
             <div class="form-grid">
 
                 <div class="field">
+
                     <label>Company Name *</label>
-                    <input id="companyName" required placeholder="ABC Industries">
+
+                    <input
+                        id="companyName"
+                        required
+                        placeholder="ABC Industries">
+
                 </div>
 
+
                 <div class="field">
+
                     <label>Slug *</label>
-                    <input id="slug" required placeholder="abc-industries">
-                    <small>Example: abc-industries</small>
+
+                    <input
+                        id="slug"
+                        required
+                        placeholder="abc-industries">
+
+                    <small>
+                        Example: abc-industries
+                    </small>
+
                 </div>
 
+
                 <div class="field">
+
                     <label>Domain</label>
-                    <input id="domain" placeholder="www.client.com">
+
+                    <input
+                        id="domain"
+                        placeholder="www.client.com">
+
                 </div>
 
+
                 <div class="field">
+
                     <label>Hosting Type</label>
+
                     <select id="hostingType">
-                        <option>GitHub Pages</option>
-                        <option>Custom Domain</option>
-                        <option>Web Hosting</option>
-                        <option>Cloud Hosting</option>
-                        <option>Other</option>
+
+                        <option>
+                            GitHub Pages
+                        </option>
+
+                        <option>
+                            Custom Domain
+                        </option>
+
+                        <option>
+                            Web Hosting
+                        </option>
+
+                        <option>
+                            Cloud Hosting
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
+
                     </select>
+
                 </div>
 
+
                 <div class="field">
+
                     <label>Hosting URL</label>
-                    <input id="hostingUrl"
-                           placeholder="https://username.github.io/project/">
-                    <small>Client's actual hosted website URL.</small>
+
+                    <input
+                        id="hostingUrl"
+                        placeholder="https://username.github.io/project/">
+
+                    <small>
+                        Client's actual hosted website URL.
+                    </small>
+
                 </div>
 
+
                 <div class="field">
+
                     <label>Website Template *</label>
+
                     <select id="template" required>
-                        <option value="">Loading templates...</option>
+
+                        <option value="">
+                            Loading templates...
+                        </option>
+
                     </select>
 
                     <div id="templateStatus" class="template-status">
                         Loading...
                     </div>
+
                 </div>
 
+
                 <div class="field">
+
                     <label>Status</label>
+
                     <select id="status">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
                     </select>
+
                 </div>
 
             </div>
 
+
             <div class="form-actions">
-                <button id="saveBtn" class="save-btn" type="submit">
+
+                <button
+                    id="saveBtn"
+                    class="save-btn"
+                    type="submit">
+
                     Save Client
+
                 </button>
 
-                <button id="cancelBtn" class="cancel-btn" type="button">
+
+                <button
+                    id="cancelBtn"
+                    class="cancel-btn"
+                    type="button">
+
                     Cancel
+
                 </button>
+
             </div>
 
         </form>
+
     </div>
+
 
     <!-- CLIENT TABLE -->
 
@@ -708,12 +828,15 @@ td{
             Loading clients...
         </div>
 
+
         <div id="tableArea" class="table-wrap hidden">
 
             <table>
 
                 <thead>
+
                     <tr>
+
                         <th>COMPANY</th>
                         <th>SLUG</th>
                         <th>DOMAIN</th>
@@ -721,14 +844,18 @@ td{
                         <th>TEMPLATE</th>
                         <th>STATUS</th>
                         <th>ACTIONS</th>
+
                     </tr>
+
                 </thead>
+
 
                 <tbody id="clientTable"></tbody>
 
             </table>
 
         </div>
+
 
         <div id="empty" class="empty hidden">
             No clients found.
@@ -747,86 +874,195 @@ td{
 
     <div class="modal-box">
 
+
         <div class="modal-header">
 
             <div>
-                <h2 id="managerTitle">Manage Website</h2>
-                <p id="managerSubtitle">Client Website</p>
+
+                <h2 id="managerTitle">
+                    Manage Website
+                </h2>
+
+                <p id="managerSubtitle">
+                    Client Website
+                </p>
+
             </div>
 
-            <button id="closeManager" class="close-modal">×</button>
+
+            <button
+                id="closeManager"
+                class="close-modal">
+
+                ×
+
+            </button>
 
         </div>
 
+
         <div class="manager-body">
+
 
             <!-- NAV -->
 
             <aside class="manager-nav">
 
-                <button class="nav-btn active" data-section="general">
+
+                <button
+                    class="nav-btn active"
+                    data-section="general">
+
                     General
+
                 </button>
 
-                <button class="nav-btn" data-section="hero">
+
+                <button
+                    class="nav-btn"
+                    data-section="hero">
+
                     Hero
+
                 </button>
 
-                <button class="nav-btn" data-section="about">
+
+                <button
+                    class="nav-btn"
+                    data-section="about">
+
                     About
+
                 </button>
 
-                <button class="nav-btn" data-section="products">
+
+                <button
+                    class="nav-btn"
+                    data-section="products">
+
                     Products
+
                 </button>
 
-                <button class="nav-btn" data-section="manufacturing">
+
+                <button
+                    class="nav-btn"
+                    data-section="manufacturing">
+
                     Manufacturing
+
                 </button>
 
-                <button class="nav-btn" data-section="quality">
+
+                <button
+                    class="nav-btn"
+                    data-section="quality">
+
                     Quality
+
                 </button>
 
-                <button class="nav-btn" data-section="industries">
+
+                <button
+                    class="nav-btn"
+                    data-section="industries">
+
                     Industries
+
                 </button>
 
-                <button class="nav-btn" data-section="gallery">
+
+                <button
+                    class="nav-btn"
+                    data-section="gallery">
+
                     Gallery
+
                 </button>
 
-                <button class="nav-btn" data-section="testimonials">
+
+                <button
+                    class="nav-btn"
+                    data-section="testimonials">
+
                     Testimonials
+
                 </button>
 
-                <button class="nav-btn" data-section="faq">
+
+                <button
+                    class="nav-btn"
+                    data-section="faq">
+
                     FAQ
+
                 </button>
 
-                <button class="nav-btn" data-section="design">
+
+                <!-- NEW CONTACT NAV -->
+
+                <button
+                    class="nav-btn"
+                    data-section="contact">
+
+                    Contact
+
+                </button>
+
+
+                <button
+                    class="nav-btn"
+                    data-section="design">
+
                     Design
+
                 </button>
 
-                <button class="nav-btn" data-section="social">
+
+                <button
+                    class="nav-btn"
+                    data-section="social">
+
                     Social Media
+
                 </button>
 
-                <button class="nav-btn" data-section="seo">
+
+                <button
+                    class="nav-btn"
+                    data-section="seo">
+
                     SEO
+
                 </button>
 
-                <button class="nav-btn" data-section="policies">
+
+                <button
+                    class="nav-btn"
+                    data-section="policies">
+
                     Policies
+
                 </button>
 
-                <button class="nav-btn" data-section="enquiries">
+
+                <button
+                    class="nav-btn"
+                    data-section="enquiries">
+
                     Enquiries
+
                 </button>
 
-                <button class="nav-btn" data-section="admin">
+
+                <button
+                    class="nav-btn"
+                    data-section="admin">
+
                     Client Admin
+
                 </button>
+
 
             </aside>
 
@@ -835,56 +1071,96 @@ td{
 
             <main class="manager-content">
 
+
                 <!-- GENERAL -->
 
-                <section id="section-general" class="section active">
+                <section
+                    id="section-general"
+                    class="section active">
 
-                    <div class="section-title">General Website Settings</div>
+
+                    <div class="section-title">
+                        General Website Settings
+                    </div>
+
 
                     <div class="section-subtitle">
                         Company contact information and common website content.
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="website-grid">
 
+
                             <div class="field">
+
                                 <label>Logo URL</label>
+
                                 <input id="wc_logo_url">
+
                             </div>
 
+
                             <div class="field">
+
                                 <label>Phone</label>
+
                                 <input id="wc_phone">
+
                             </div>
 
+
                             <div class="field">
+
                                 <label>Email</label>
+
                                 <input id="wc_email">
+
                             </div>
+
 
                             <div class="field">
+
                                 <label>WhatsApp</label>
+
                                 <input id="wc_whatsapp">
+
                             </div>
 
+
                             <div class="field full">
+
                                 <label>Address</label>
+
                                 <textarea id="wc_address"></textarea>
+
                             </div>
 
+
                             <div class="field full">
+
                                 <label>Topbar Text</label>
+
                                 <input id="wc_topbar_text">
+
                             </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save General Settings
+
                             </button>
+
                         </div>
 
                     </div>
@@ -894,44 +1170,75 @@ td{
 
                 <!-- HERO -->
 
-                <section id="section-hero" class="section">
+                <section
+                    id="section-hero"
+                    class="section">
 
-                    <div class="section-title">Hero Section</div>
+
+                    <div class="section-title">
+                        Hero Section
+                    </div>
+
 
                     <div class="section-subtitle">
                         Main heading and image displayed at the top of the website.
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="website-grid">
 
+
                             <div class="field">
+
                                 <label>Eyebrow</label>
+
                                 <input id="wc_hero_eyebrow">
+
                             </div>
+
 
                             <div class="field">
+
                                 <label>Heading</label>
+
                                 <input id="wc_hero_heading">
+
                             </div>
 
+
                             <div class="field full">
+
                                 <label>Description</label>
+
                                 <textarea id="wc_hero_description"></textarea>
+
                             </div>
 
+
                             <div class="field full">
+
                                 <label>Hero Image URL</label>
+
                                 <input id="wc_hero_image_url">
+
                             </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save Hero
+
                             </button>
+
                         </div>
 
                     </div>
@@ -941,40 +1248,70 @@ td{
 
                 <!-- ABOUT -->
 
-                <section id="section-about" class="section">
+                <section
+                    id="section-about"
+                    class="section">
 
-                    <div class="section-title">About Section</div>
+
+                    <div class="section-title">
+                        About Section
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="website-grid">
 
+
                             <div class="field">
+
                                 <label>Eyebrow</label>
+
                                 <input id="wc_about_eyebrow">
+
                             </div>
+
 
                             <div class="field">
+
                                 <label>Heading</label>
+
                                 <input id="wc_about_heading">
+
                             </div>
 
+
                             <div class="field full">
+
                                 <label>Description</label>
+
                                 <textarea id="wc_about_description"></textarea>
+
                             </div>
 
+
                             <div class="field full">
+
                                 <label>About Image URL</label>
+
                                 <input id="wc_about_image_url">
+
                             </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save About
+
                             </button>
+
                         </div>
 
                     </div>
@@ -982,56 +1319,99 @@ td{
 
                     <div class="section-card">
 
-                        <h3>Statistics</h3>
+                        <h3>
+                            Statistics
+                        </h3>
+
 
                         <div class="website-grid">
 
+
                             <div class="field">
+
                                 <label>Stat 1 Value</label>
+
                                 <input id="wc_stat_1_value">
+
                             </div>
 
+
                             <div class="field">
+
                                 <label>Stat 1 Label</label>
+
                                 <input id="wc_stat_1_label">
+
                             </div>
 
+
                             <div class="field">
+
                                 <label>Stat 2 Value</label>
+
                                 <input id="wc_stat_2_value">
+
                             </div>
 
+
                             <div class="field">
+
                                 <label>Stat 2 Label</label>
+
                                 <input id="wc_stat_2_label">
+
                             </div>
 
+
                             <div class="field">
+
                                 <label>Stat 3 Value</label>
+
                                 <input id="wc_stat_3_value">
+
                             </div>
 
+
                             <div class="field">
+
                                 <label>Stat 3 Label</label>
+
                                 <input id="wc_stat_3_label">
+
                             </div>
 
+
                             <div class="field">
+
                                 <label>Stat 4 Value</label>
+
                                 <input id="wc_stat_4_value">
+
                             </div>
 
+
                             <div class="field">
+
                                 <label>Stat 4 Label</label>
+
                                 <input id="wc_stat_4_label">
+
                             </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save Statistics
+
                             </button>
+
                         </div>
 
                     </div>
@@ -1041,51 +1421,89 @@ td{
 
                 <!-- PRODUCTS -->
 
-                <section id="section-products" class="section">
+                <section
+                    id="section-products"
+                    class="section">
 
-                    <div class="section-title">Products</div>
+
+                    <div class="section-title">
+                        Products
+                    </div>
+
 
                     <div class="section-subtitle">
                         Add, edit and delete client products.
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="website-grid">
 
-                            <div class="field">
-                                <label>Products Eyebrow</label>
-                                <input id="wc_products_eyebrow">
-                            </div>
 
                             <div class="field">
-                                <label>Products Heading</label>
-                                <input id="wc_products_heading">
+
+                                <label>Products Eyebrow</label>
+
+                                <input id="wc_products_eyebrow">
+
                             </div>
+
+
+                            <div class="field">
+
+                                <label>Products Heading</label>
+
+                                <input id="wc_products_heading">
+
+                            </div>
+
 
                             <div class="field full">
+
                                 <label>Products Description</label>
+
                                 <textarea id="wc_products_description"></textarea>
+
                             </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save Section
+
                             </button>
+
                         </div>
 
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="repeat-add">
-                            <h3>Product List</h3>
-                            <button class="add-small" onclick="addProduct()">
+
+                            <h3>
+                                Product List
+                            </h3>
+
+                            <button
+                                class="add-small"
+                                onclick="addProduct()">
+
                                 + Add Product
+
                             </button>
+
                         </div>
+
 
                         <div id="productsList"></div>
 
@@ -1096,47 +1514,84 @@ td{
 
                 <!-- MANUFACTURING -->
 
-                <section id="section-manufacturing" class="section">
+                <section
+                    id="section-manufacturing"
+                    class="section">
 
-                    <div class="section-title">Manufacturing Process</div>
+
+                    <div class="section-title">
+                        Manufacturing Process
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="website-grid">
 
-                            <div class="field">
-                                <label>Eyebrow</label>
-                                <input id="wc_manufacturing_eyebrow">
-                            </div>
 
                             <div class="field">
-                                <label>Heading</label>
-                                <input id="wc_manufacturing_heading">
+
+                                <label>Eyebrow</label>
+
+                                <input id="wc_manufacturing_eyebrow">
+
                             </div>
+
+
+                            <div class="field">
+
+                                <label>Heading</label>
+
+                                <input id="wc_manufacturing_heading">
+
+                            </div>
+
 
                             <div class="field full">
+
                                 <label>Description</label>
+
                                 <textarea id="wc_manufacturing_description"></textarea>
+
                             </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save Section
+
                             </button>
+
                         </div>
 
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="repeat-add">
-                            <h3>Manufacturing Steps</h3>
-                            <button class="add-small" onclick="addManufacturingStep()">
+
+                            <h3>
+                                Manufacturing Steps
+                            </h3>
+
+                            <button
+                                class="add-small"
+                                onclick="addManufacturingStep()">
+
                                 + Add Step
+
                             </button>
+
                         </div>
+
 
                         <div id="manufacturingList"></div>
 
@@ -1147,47 +1602,84 @@ td{
 
                 <!-- QUALITY -->
 
-                <section id="section-quality" class="section">
+                <section
+                    id="section-quality"
+                    class="section">
 
-                    <div class="section-title">Quality</div>
+
+                    <div class="section-title">
+                        Quality
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="website-grid">
 
-                            <div class="field">
-                                <label>Eyebrow</label>
-                                <input id="wc_quality_eyebrow">
-                            </div>
 
                             <div class="field">
-                                <label>Heading</label>
-                                <input id="wc_quality_heading">
+
+                                <label>Eyebrow</label>
+
+                                <input id="wc_quality_eyebrow">
+
                             </div>
+
+
+                            <div class="field">
+
+                                <label>Heading</label>
+
+                                <input id="wc_quality_heading">
+
+                            </div>
+
 
                             <div class="field full">
+
                                 <label>Description</label>
+
                                 <textarea id="wc_quality_description"></textarea>
+
                             </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save Section
+
                             </button>
+
                         </div>
 
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="repeat-add">
-                            <h3>Quality Points</h3>
-                            <button class="add-small" onclick="addQuality()">
+
+                            <h3>
+                                Quality Points
+                            </h3>
+
+                            <button
+                                class="add-small"
+                                onclick="addQuality()">
+
                                 + Add Quality
+
                             </button>
+
                         </div>
+
 
                         <div id="qualityList"></div>
 
@@ -1198,42 +1690,75 @@ td{
 
                 <!-- INDUSTRIES -->
 
-                <section id="section-industries" class="section">
+                <section
+                    id="section-industries"
+                    class="section">
 
-                    <div class="section-title">Industries</div>
+
+                    <div class="section-title">
+                        Industries
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="website-grid">
 
-                            <div class="field">
-                                <label>Eyebrow</label>
-                                <input id="wc_industries_eyebrow">
-                            </div>
 
                             <div class="field">
-                                <label>Heading</label>
-                                <input id="wc_industries_heading">
+
+                                <label>Eyebrow</label>
+
+                                <input id="wc_industries_eyebrow">
+
                             </div>
+
+
+                            <div class="field">
+
+                                <label>Heading</label>
+
+                                <input id="wc_industries_heading">
+
+                            </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save Section
+
                             </button>
+
                         </div>
 
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="repeat-add">
-                            <h3>Industry List</h3>
-                            <button class="add-small" onclick="addIndustry()">
+
+                            <h3>
+                                Industry List
+                            </h3>
+
+                            <button
+                                class="add-small"
+                                onclick="addIndustry()">
+
                                 + Add Industry
+
                             </button>
+
                         </div>
+
 
                         <div id="industriesList"></div>
 
@@ -1244,47 +1769,84 @@ td{
 
                 <!-- GALLERY -->
 
-                <section id="section-gallery" class="section">
+                <section
+                    id="section-gallery"
+                    class="section">
 
-                    <div class="section-title">Gallery</div>
+
+                    <div class="section-title">
+                        Gallery
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="website-grid">
 
-                            <div class="field">
-                                <label>Eyebrow</label>
-                                <input id="wc_gallery_eyebrow">
-                            </div>
 
                             <div class="field">
-                                <label>Heading</label>
-                                <input id="wc_gallery_heading">
+
+                                <label>Eyebrow</label>
+
+                                <input id="wc_gallery_eyebrow">
+
                             </div>
+
+
+                            <div class="field">
+
+                                <label>Heading</label>
+
+                                <input id="wc_gallery_heading">
+
+                            </div>
+
 
                             <div class="field full">
+
                                 <label>Description</label>
+
                                 <textarea id="wc_gallery_description"></textarea>
+
                             </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save Section
+
                             </button>
+
                         </div>
 
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="repeat-add">
-                            <h3>Gallery Images</h3>
-                            <button class="add-small" onclick="addGallery()">
+
+                            <h3>
+                                Gallery Images
+                            </h3>
+
+                            <button
+                                class="add-small"
+                                onclick="addGallery()">
+
                                 + Add Image
+
                             </button>
+
                         </div>
+
 
                         <div id="galleryList"></div>
 
@@ -1295,42 +1857,75 @@ td{
 
                 <!-- TESTIMONIALS -->
 
-                <section id="section-testimonials" class="section">
+                <section
+                    id="section-testimonials"
+                    class="section">
 
-                    <div class="section-title">Testimonials</div>
+
+                    <div class="section-title">
+                        Testimonials
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="website-grid">
 
-                            <div class="field">
-                                <label>Eyebrow</label>
-                                <input id="wc_testimonials_eyebrow">
-                            </div>
 
                             <div class="field">
-                                <label>Heading</label>
-                                <input id="wc_testimonials_heading">
+
+                                <label>Eyebrow</label>
+
+                                <input id="wc_testimonials_eyebrow">
+
                             </div>
+
+
+                            <div class="field">
+
+                                <label>Heading</label>
+
+                                <input id="wc_testimonials_heading">
+
+                            </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save Section
+
                             </button>
+
                         </div>
 
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="repeat-add">
-                            <h3>Testimonials</h3>
-                            <button class="add-small" onclick="addTestimonial()">
+
+                            <h3>
+                                Testimonials
+                            </h3>
+
+                            <button
+                                class="add-small"
+                                onclick="addTestimonial()">
+
                                 + Add Testimonial
+
                             </button>
+
                         </div>
+
 
                         <div id="testimonialsList"></div>
 
@@ -1341,42 +1936,75 @@ td{
 
                 <!-- FAQ -->
 
-                <section id="section-faq" class="section">
+                <section
+                    id="section-faq"
+                    class="section">
 
-                    <div class="section-title">FAQ</div>
+
+                    <div class="section-title">
+                        FAQ
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="website-grid">
 
-                            <div class="field">
-                                <label>Eyebrow</label>
-                                <input id="wc_faq_eyebrow">
-                            </div>
 
                             <div class="field">
-                                <label>Heading</label>
-                                <input id="wc_faq_heading">
+
+                                <label>Eyebrow</label>
+
+                                <input id="wc_faq_eyebrow">
+
                             </div>
+
+
+                            <div class="field">
+
+                                <label>Heading</label>
+
+                                <input id="wc_faq_heading">
+
+                            </div>
+
 
                         </div>
 
+
                         <div class="save-section">
-                            <button class="primary" onclick="saveWebsiteContent()">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteContent()">
+
                                 Save Section
+
                             </button>
+
                         </div>
 
                     </div>
 
+
                     <div class="section-card">
 
                         <div class="repeat-add">
-                            <h3>Questions & Answers</h3>
-                            <button class="add-small" onclick="addFaq()">
+
+                            <h3>
+                                Questions & Answers
+                            </h3>
+
+                            <button
+                                class="add-small"
+                                onclick="addFaq()">
+
                                 + Add FAQ
+
                             </button>
+
                         </div>
+
 
                         <div id="faqList"></div>
 
@@ -1385,26 +2013,203 @@ td{
                 </section>
 
 
-                <!-- CONTACT -->
+                <!-- =====================================================
+                     CONTACT — NEW
+                ====================================================== -->
 
-                <section id="section-general-contact" class="section"></section>
+                <section
+                    id="section-contact"
+                    class="section">
+
+
+                    <div class="section-title">
+                        Contact Section
+                    </div>
+
+
+                    <div class="section-subtitle">
+                        Manage the contact section heading and description.
+                        Phone, email, WhatsApp and address are managed from
+                        General Settings.
+                    </div>
+
+
+                    <!-- CONTACT CONTENT -->
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+
+                            <div class="field">
+
+                                <label>Eyebrow</label>
+
+                                <input
+                                    id="wc_contact_eyebrow"
+                                    placeholder="Get In Touch">
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label>Heading</label>
+
+                                <input
+                                    id="wc_contact_heading"
+                                    placeholder="Let's Talk About Your Requirements">
+
+                            </div>
+
+
+                            <div class="field full">
+
+                                <label>Description</label>
+
+                                <textarea
+                                    id="wc_contact_description"
+                                    placeholder="Write the contact section description here..."></textarea>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="save-section">
+
+                            <button
+                                class="primary"
+                                onclick="saveWebsiteSection('contact')">
+
+                                Save Contact
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONTACT DETAILS PREVIEW -->
+
+                    <div class="section-card">
+
+                        <h3>
+                            Contact Details
+                        </h3>
+
+
+                        <div class="section-subtitle">
+                            These details come from General Website Settings.
+                            They are shown here for reference and are not
+                            duplicated in the Contact section.
+                        </div>
+
+
+                        <div class="website-grid">
+
+
+                            <div class="field">
+
+                                <label>Phone</label>
+
+                                <input
+                                    id="contact_preview_phone"
+                                    readonly
+                                    placeholder="Managed from General">
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label>Email</label>
+
+                                <input
+                                    id="contact_preview_email"
+                                    readonly
+                                    placeholder="Managed from General">
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label>WhatsApp</label>
+
+                                <input
+                                    id="contact_preview_whatsapp"
+                                    readonly
+                                    placeholder="Managed from General">
+
+                            </div>
+
+
+                            <div class="field full">
+
+                                <label>Address</label>
+
+                                <textarea
+                                    id="contact_preview_address"
+                                    readonly
+                                    placeholder="Managed from General"></textarea>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="save-section">
+
+                            <button
+                                class="secondary"
+                                type="button"
+                                onclick="focusGeneralContactSettings()">
+
+                                Edit Contact Details in General
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
 
 
                 <!-- DESIGN -->
 
-                <section id="section-design" class="section">
+                <section
+                    id="section-design"
+                    class="section">
 
-                    <div class="section-title">Design</div>
+
+                    <div class="section-title">
+                        Design
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="placeholder">
-                            <strong>Design Settings</strong><br><br>
+
+                            <strong>
+                                Design Settings
+                            </strong>
+
+                            <br><br>
+
                             This area is reserved for template-level design controls
                             such as colors, fonts, buttons, spacing, section visibility
                             and other visual settings.
+
                             <br><br>
+
                             Existing V1 template will not be disturbed by this module.
+
                         </div>
 
                     </div>
@@ -1414,16 +2219,25 @@ td{
 
                 <!-- SOCIAL -->
 
-                <section id="section-social" class="section">
+                <section
+                    id="section-social"
+                    class="section">
 
-                    <div class="section-title">Social Media</div>
+
+                    <div class="section-title">
+                        Social Media
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="placeholder">
+
                             Social media management module is ready for integration.
+
                             It can later include Facebook, Instagram, LinkedIn,
                             YouTube and WhatsApp links.
+
                         </div>
 
                     </div>
@@ -1433,15 +2247,23 @@ td{
 
                 <!-- SEO -->
 
-                <section id="section-seo" class="section">
+                <section
+                    id="section-seo"
+                    class="section">
 
-                    <div class="section-title">SEO</div>
+
+                    <div class="section-title">
+                        SEO
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="placeholder">
+
                             SEO fields can be added here without changing the existing
                             website content structure.
+
                         </div>
 
                     </div>
@@ -1451,15 +2273,23 @@ td{
 
                 <!-- POLICIES -->
 
-                <section id="section-policies" class="section">
+                <section
+                    id="section-policies"
+                    class="section">
 
-                    <div class="section-title">Policies</div>
+
+                    <div class="section-title">
+                        Policies
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="placeholder">
+
                             Privacy Policy, Terms & Conditions, Refund Policy and
                             other website policies can be managed from this section.
+
                         </div>
 
                     </div>
@@ -1469,15 +2299,23 @@ td{
 
                 <!-- ENQUIRIES -->
 
-                <section id="section-enquiries" class="section">
+                <section
+                    id="section-enquiries"
+                    class="section">
 
-                    <div class="section-title">Enquiries</div>
+
+                    <div class="section-title">
+                        Enquiries
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="placeholder">
+
                             Enquiry management will be connected to the existing
                             enquiries system separately.
+
                         </div>
 
                     </div>
@@ -1487,21 +2325,30 @@ td{
 
                 <!-- CLIENT ADMIN -->
 
-                <section id="section-admin" class="section">
+                <section
+                    id="section-admin"
+                    class="section">
 
-                    <div class="section-title">Client Admin</div>
+
+                    <div class="section-title">
+                        Client Admin
+                    </div>
+
 
                     <div class="section-card">
 
                         <div class="placeholder">
+
                             Client login/user management can be connected here.
                             Existing profiles and client_id relationships are kept
                             unchanged.
+
                         </div>
 
                     </div>
 
                 </section>
+
 
             </main>
 
@@ -1603,7 +2450,9 @@ const activeClientName =
 const websiteModal =
     document.getElementById("websiteModal");
 
+
 let selectedWebsiteClientId = null;
+
 let websiteContentId = null;
 
 
@@ -1612,6 +2461,7 @@ let websiteContentId = null;
 ========================================================= */
 
 const FALLBACK_TEMPLATES = [
+
     "template-v1",
     "template-v2",
     "template-v3",
@@ -1622,7 +2472,9 @@ const FALLBACK_TEMPLATES = [
     "template-v8",
     "template-v9",
     "template-v10"
+
 ];
+
 
 let templatesData = [];
 
@@ -1634,22 +2486,30 @@ let templatesData = [];
 function showMessage(text,type){
 
     message.textContent = text;
-    message.className = "message " + type;
+
+    message.className =
+        "message " + type;
 
     setTimeout(()=>{
-        message.className = "message";
+
+        message.className =
+            "message";
+
     },5000);
+
 }
 
 
 function escapeHtml(value){
 
     return String(value ?? "")
+
         .replaceAll("&","&amp;")
         .replaceAll("<","&lt;")
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
+
 }
 
 
@@ -1671,10 +2531,14 @@ function normalizeTemplateSlug(value){
         .trim();
 
     if(/^v\d+$/.test(v)){
-        v = "template-" + v;
+
+        v =
+            "template-" + v;
+
     }
 
     return v;
+
 }
 
 
@@ -1689,6 +2553,7 @@ function getTemplateUrl(value){
         "template/" + v + ".html",
         window.location.href
     ).href;
+
 }
 
 
@@ -1696,20 +2561,29 @@ function buildExternalUrl(value){
 
     if(!value)return "";
 
-    let url = String(value).trim();
+    let url =
+        String(value).trim();
 
     if(!url)return "";
 
     if(!/^https?:\/\//i.test(url)){
-        url = "https://" + url;
+
+        url =
+            "https://" + url;
+
     }
 
     try{
+
         return new URL(url).href;
+
     }
     catch{
+
         return "";
+
     }
+
 }
 
 
@@ -1728,12 +2602,14 @@ async function loadTemplates(){
             .from("templates")
             .select("*");
 
+
         if(!error && Array.isArray(data)){
 
             data.forEach(row=>{
 
                 const value =
                     normalizeTemplateSlug(
+
                         row.slug ||
                         row.template_slug ||
                         row.template ||
@@ -1741,17 +2617,22 @@ async function loadTemplates(){
                         row.name ||
                         row.code ||
                         row.template_code
+
                     );
+
 
                 if(value){
 
                     templatesData.push({
+
                         value,
+
                         label:
                             row.name ||
                             row.template_name ||
                             row.title ||
                             value
+
                     });
 
                 }
@@ -1760,7 +2641,8 @@ async function loadTemplates(){
 
         }
 
-    }catch(error){
+    }
+    catch(error){
 
         console.warn(
             "templates table unavailable:",
@@ -1770,11 +2652,19 @@ async function loadTemplates(){
     }
 
 
-    const map = new Map();
+    const map =
+        new Map();
+
 
     templatesData.forEach(item=>{
-        map.set(item.value,item);
+
+        map.set(
+            item.value,
+            item
+        );
+
     });
+
 
     templatesData =
         Array.from(map.values());
@@ -1784,14 +2674,20 @@ async function loadTemplates(){
 
         templatesData =
             FALLBACK_TEMPLATES.map(value=>({
+
                 value,
-                label:value.toUpperCase()
+
+                label:
+                    value.toUpperCase()
+
             }));
+
 
         templateStatus.textContent =
             "Using template files V1-V10.";
 
-    }else{
+    }
+    else{
 
         templateStatus.textContent =
             templatesData.length +
@@ -1799,12 +2695,15 @@ async function loadTemplates(){
 
     }
 
+
     templateStatus.className =
         "template-status ok";
 
 
     template.innerHTML =
-        `<option value="">Select Website Template</option>`;
+        `<option value="">
+            Select Website Template
+        </option>`;
 
 
     templatesData.forEach(item=>{
@@ -1812,8 +2711,11 @@ async function loadTemplates(){
         const option =
             document.createElement("option");
 
-        option.value = item.value;
-        option.textContent = item.label;
+        option.value =
+            item.value;
+
+        option.textContent =
+            item.label;
 
         template.appendChild(option);
 
@@ -1831,6 +2733,7 @@ async function checkLogin(){
     const {data,error} =
         await supabaseClient.auth.getUser();
 
+
     if(error){
 
         console.error(error);
@@ -1839,7 +2742,9 @@ async function checkLogin(){
             "admin.html";
 
         return false;
+
     }
+
 
     if(!data.user){
 
@@ -1847,9 +2752,12 @@ async function checkLogin(){
             "admin.html";
 
         return false;
+
     }
 
+
     return true;
+
 }
 
 
@@ -1864,6 +2772,7 @@ function updateActiveClientDisplay(){
         const client =
             MDKClientContext.get();
 
+
         if(client){
 
             activeClientName.textContent =
@@ -1871,11 +2780,15 @@ function updateActiveClientDisplay(){
                 client.id;
 
             return;
+
         }
+
     }
+
 
     activeClientName.textContent =
         "None";
+
 }
 
 
@@ -1949,16 +2862,20 @@ clientForm.addEventListener("submit",async e=>{
 
     e.preventDefault();
 
+
     const company =
         companyName.value.trim();
 
+
     const slugValue =
         slug.value.trim();
+
 
     const templateValue =
         normalizeTemplateSlug(
             template.value
         );
+
 
     if(!company){
 
@@ -1968,7 +2885,9 @@ clientForm.addEventListener("submit",async e=>{
         );
 
         return;
+
     }
+
 
     if(!slugValue){
 
@@ -1978,7 +2897,9 @@ clientForm.addEventListener("submit",async e=>{
         );
 
         return;
+
     }
+
 
     if(!templateValue){
 
@@ -1988,18 +2909,23 @@ clientForm.addEventListener("submit",async e=>{
         );
 
         return;
+
     }
 
 
     saveBtn.disabled = true;
-    saveBtn.textContent = "Saving...";
+
+    saveBtn.textContent =
+        "Saving...";
 
 
     const payload = {
 
-        company_name:company,
+        company_name:
+            company,
 
-        slug:slugValue,
+        slug:
+            slugValue,
 
         domain:
             domain.value.trim() || null,
@@ -2010,14 +2936,17 @@ clientForm.addEventListener("submit",async e=>{
         hosting_url:
             hostingUrl.value.trim() || null,
 
-        template:templateValue,
+        template:
+            templateValue,
 
-        status:status.value
+        status:
+            status.value
 
     };
 
 
     let result;
+
 
     if(clientId.value){
 
@@ -2025,12 +2954,20 @@ clientForm.addEventListener("submit",async e=>{
             await supabaseClient
             .from("clients")
             .update({
-                ...payload,
-                updated_at:new Date().toISOString()
-            })
-            .eq("id",clientId.value);
 
-    }else{
+                ...payload,
+
+                updated_at:
+                    new Date().toISOString()
+
+            })
+            .eq(
+                "id",
+                clientId.value
+            );
+
+    }
+    else{
 
         result =
             await supabaseClient
@@ -2054,12 +2991,14 @@ clientForm.addEventListener("submit",async e=>{
             "error"
         );
 
+
         saveBtn.textContent =
             clientId.value
             ? "Update Client"
             : "Save Client";
 
         return;
+
     }
 
 
@@ -2069,17 +3008,22 @@ clientForm.addEventListener("submit",async e=>{
 
 
     showMessage(
+
         clientId.value
         ? "Client updated successfully."
         : "Client created successfully.",
+
         "success"
+
     );
 
 
     formCard.classList.add("hidden");
 
     clientForm.reset();
+
     clientId.value = "";
+
 
     saveBtn.textContent =
         "Save Client";
@@ -2094,6 +3038,7 @@ clientForm.addEventListener("submit",async e=>{
 
     }
 
+
     await loadClients();
 
 });
@@ -2106,7 +3051,9 @@ clientForm.addEventListener("submit",async e=>{
 async function loadClients(){
 
     loading.classList.remove("hidden");
+
     tableArea.classList.add("hidden");
+
     empty.classList.add("hidden");
 
 
@@ -2125,7 +3072,10 @@ async function loadClients(){
             created_at,
             updated_at
         `)
-        .order("created_at",{ascending:false});
+        .order(
+            "created_at",
+            {ascending:false}
+        );
 
 
     loading.classList.add("hidden");
@@ -2142,6 +3092,7 @@ async function loadClients(){
         );
 
         return;
+
     }
 
 
@@ -2150,6 +3101,7 @@ async function loadClients(){
         empty.classList.remove("hidden");
 
         return;
+
     }
 
 
@@ -2183,93 +3135,155 @@ async function loadClients(){
         row.innerHTML = `
 
             <td>
+
                 <div class="company">
-                    ${escapeHtml(client.company_name)}
+
+                    ${escapeHtml(
+                        client.company_name
+                    )}
+
                 </div>
+
             </td>
 
+
             <td>
+
                 <span class="slug">
-                    ${escapeHtml(client.slug)}
+
+                    ${escapeHtml(
+                        client.slug
+                    )}
+
                 </span>
+
             </td>
 
+
             <td>
+
                 <span class="domain">
-                    ${escapeHtml(client.domain || "—")}
+
+                    ${escapeHtml(
+                        client.domain || "—"
+                    )}
+
                 </span>
+
             </td>
 
+
             <td>
+
                 <div class="hosting">
-                    ${escapeHtml(client.hosting_type || "—")}
+
+                    ${escapeHtml(
+                        client.hosting_type || "—"
+                    )}
+
                 </div>
+
             </td>
 
+
             <td>
+
                 <span class="template-badge">
-                    ${escapeHtml(templateSlug || "—")}
+
+                    ${escapeHtml(
+                        templateSlug || "—"
+                    )}
+
                 </span>
+
             </td>
 
+
             <td>
+
                 <span class="badge ${
                     client.status === "active"
                     ? "active"
                     : "inactive"
                 }">
-                    ${escapeHtml(client.status || "active")}
+
+                    ${escapeHtml(
+                        client.status || "active"
+                    )}
+
                 </span>
+
             </td>
+
 
             <td>
 
                 <div class="actions">
 
+
                     <button
                         class="preview-btn"
                         onclick="previewClient('${client.id}')"
                         ${templateUrl ? "" : "disabled"}>
+
                         👁 Preview
+
                     </button>
+
 
                     <button
                         class="website-btn"
                         onclick="openClientWebsite('${client.id}')">
+
                         🌐 Website
+
                     </button>
+
 
                     <button
                         class="use-btn"
                         onclick="useClient('${client.id}')">
+
                         ${
                             activeId === client.id
                             ? "✓ Active"
                             : "Use Client"
                         }
+
                     </button>
+
 
                     <button
                         class="manage-btn"
                         onclick="openWebsiteManager('${client.id}')">
+
                         ⚙ Manage Website
+
                     </button>
+
 
                     <button
                         class="edit-btn"
                         onclick="editClient('${client.id}')">
+
                         Edit
+
                     </button>
+
 
                     <button
                         class="delete-btn"
                         onclick="deleteClient('${client.id}')">
+
                         Delete
+
                     </button>
+
 
                 </div>
 
             </td>
+
         `;
 
 
@@ -2317,6 +3331,7 @@ async function(id,showAlert=true){
         );
 
         return;
+
     }
 
 
@@ -2339,12 +3354,16 @@ async function(id,showAlert=true){
     if(showAlert){
 
         showMessage(
+
             data.company_name +
             " is now the active client.",
+
             "success"
+
         );
 
     }
+
 
     await loadClients();
 
@@ -2383,6 +3402,7 @@ async function(id){
         );
 
         return;
+
     }
 
 
@@ -2400,21 +3420,28 @@ async function(id){
         );
 
         return;
+
     }
 
 
     if(window.MDKClientContext){
 
         MDKClientContext.set({
+
             ...data,
-            template:templateSlug
+
+            template:
+                templateSlug
+
         });
 
     }
 
 
     const baseUrl =
-        getTemplateUrl(templateSlug);
+        getTemplateUrl(
+            templateSlug
+        );
 
 
     if(!baseUrl){
@@ -2425,16 +3452,19 @@ async function(id){
         );
 
         return;
+
     }
 
 
     const url =
         new URL(baseUrl);
 
+
     url.searchParams.set(
         "client",
         data.id
     );
+
 
     url.searchParams.set(
         "preview",
@@ -2480,6 +3510,7 @@ async function(id){
         );
 
         return;
+
     }
 
 
@@ -2498,6 +3529,7 @@ async function(id){
         );
 
         return;
+
     }
 
 
@@ -2515,12 +3547,15 @@ async function(id){
         );
 
         return;
+
     }
 
 
     const previewUrl =
         new URL(
-            getTemplateUrl(templateSlug)
+            getTemplateUrl(
+                templateSlug
+            )
         );
 
 
@@ -2528,6 +3563,7 @@ async function(id){
         "client",
         data.id
     );
+
 
     previewUrl.searchParams.set(
         "preview",
@@ -2576,40 +3612,66 @@ async function(id){
         );
 
         return;
+
     }
 
 
-    clientId.value = data.id;
-    companyName.value = data.company_name || "";
-    slug.value = data.slug || "";
-    domain.value = data.domain || "";
+    clientId.value =
+        data.id;
+
+    companyName.value =
+        data.company_name || "";
+
+    slug.value =
+        data.slug || "";
+
+    domain.value =
+        data.domain || "";
+
     hostingType.value =
-        data.hosting_type || "GitHub Pages";
-    hostingUrl.value = data.hosting_url || "";
+        data.hosting_type ||
+        "GitHub Pages";
+
+    hostingUrl.value =
+        data.hosting_url || "";
+
 
     const templateValue =
-        normalizeTemplateSlug(data.template);
+        normalizeTemplateSlug(
+            data.template
+        );
 
 
-    template.value = templateValue;
+    template.value =
+        templateValue;
+
 
     if(
         templateValue &&
-        !Array.from(template.options)
-        .some(o=>o.value===templateValue)
+        !Array.from(
+            template.options
+        ).some(
+            o=>o.value===templateValue
+        )
     ){
 
         const option =
-            document.createElement("option");
+            document.createElement(
+                "option"
+            );
 
-        option.value = templateValue;
+        option.value =
+            templateValue;
+
         option.textContent =
-            templateValue + " (Existing)";
+            templateValue +
+            " (Existing)";
 
         template.appendChild(option);
 
         template.value =
             templateValue;
+
     }
 
 
@@ -2624,11 +3686,17 @@ async function(id){
         "Update Client";
 
 
-    formCard.classList.remove("hidden");
+    formCard.classList.remove(
+        "hidden"
+    );
+
 
     window.scrollTo({
+
         top:0,
+
         behavior:"smooth"
+
     });
 
 };
@@ -2667,11 +3735,14 @@ async function(id){
         );
 
         return;
+
     }
 
 
-    if(activeId === id &&
-       window.MDKClientContext){
+    if(
+        activeId === id &&
+        window.MDKClientContext
+    ){
 
         MDKClientContext.clear();
 
@@ -2707,17 +3778,27 @@ document.querySelectorAll(".nav-btn")
         document
         .querySelectorAll(".nav-btn")
         .forEach(b=>{
-            b.classList.remove("active");
+
+            b.classList.remove(
+                "active"
+            );
+
         });
 
 
-        btn.classList.add("active");
+        btn.classList.add(
+            "active"
+        );
 
 
         document
         .querySelectorAll(".section")
         .forEach(s=>{
-            s.classList.remove("active");
+
+            s.classList.remove(
+                "active"
+            );
+
         });
 
 
@@ -2728,7 +3809,11 @@ document.querySelectorAll(".nav-btn")
 
 
         if(target){
-            target.classList.add("active");
+
+            target.classList.add(
+                "active"
+            );
+
         }
 
     });
@@ -2741,24 +3826,39 @@ document.querySelectorAll(".nav-btn")
 ========================================================= */
 
 document.getElementById("closeManager")
-.addEventListener("click",closeWebsiteManager);
+.addEventListener(
+    "click",
+    closeWebsiteManager
+);
 
 
-websiteModal.addEventListener("click",e=>{
+websiteModal.addEventListener(
+    "click",
+    e=>{
 
-    if(e.target === websiteModal){
-        closeWebsiteManager();
+        if(e.target === websiteModal){
+
+            closeWebsiteManager();
+
+        }
+
     }
-
-});
+);
 
 
 function closeWebsiteManager(){
 
-    websiteModal.classList.remove("show");
+    websiteModal.classList.remove(
+        "show"
+    );
 
-    selectedWebsiteClientId = null;
-    websiteContentId = null;
+
+    selectedWebsiteClientId =
+        null;
+
+
+    websiteContentId =
+        null;
 
 }
 
@@ -2767,13 +3867,18 @@ function closeWebsiteManager(){
    GET / CREATE WEBSITE CONTENT
 ========================================================= */
 
-async function getWebsiteContent(clientIdValue){
+async function getWebsiteContent(
+    clientIdValue
+){
 
     let {data,error} =
         await supabaseClient
         .from("client_website_content")
         .select("*")
-        .eq("client_id",clientIdValue)
+        .eq(
+            "client_id",
+            clientIdValue
+        )
         .maybeSingle();
 
 
@@ -2782,6 +3887,7 @@ async function getWebsiteContent(clientIdValue){
         console.error(error);
 
         throw error;
+
     }
 
 
@@ -2791,7 +3897,10 @@ async function getWebsiteContent(clientIdValue){
             await supabaseClient
             .from("client_website_content")
             .insert({
-                client_id:clientIdValue
+
+                client_id:
+                    clientIdValue
+
             })
             .select("*")
             .single();
@@ -2800,13 +3909,18 @@ async function getWebsiteContent(clientIdValue){
         if(result.error){
 
             throw result.error;
+
         }
 
-        data = result.data;
+
+        data =
+            result.data;
+
     }
 
 
     return data;
+
 }
 
 
@@ -2817,7 +3931,8 @@ async function getWebsiteContent(clientIdValue){
 window.openWebsiteManager =
 async function(id){
 
-    selectedWebsiteClientId = id;
+    selectedWebsiteClientId =
+        id;
 
 
     const {data:client,error} =
@@ -2843,17 +3958,20 @@ async function(id){
         );
 
         return;
+
     }
 
 
-    document.getElementById("managerTitle")
-        .textContent =
+    document.getElementById(
+        "managerTitle"
+    ).textContent =
         "Manage Website — " +
         (client.company_name || "");
 
 
-    document.getElementById("managerSubtitle")
-        .textContent =
+    document.getElementById(
+        "managerSubtitle"
+    ).textContent =
         client.domain ||
         client.hosting_url ||
         client.slug ||
@@ -2863,20 +3981,28 @@ async function(id){
     try{
 
         const content =
-            await getWebsiteContent(id);
+            await getWebsiteContent(
+                id
+            );
 
 
         websiteContentId =
             content.id;
 
 
-        fillWebsiteContent(content);
+        fillWebsiteContent(
+            content
+        );
 
 
-        await loadRepeatedData(id);
+        await loadRepeatedData(
+            id
+        );
 
 
-        websiteModal.classList.add("show");
+        websiteModal.classList.add(
+            "show"
+        );
 
     }
     catch(error){
@@ -2884,9 +4010,12 @@ async function(id){
         console.error(error);
 
         showMessage(
+
             "Unable to open Website Manager: " +
             error.message,
+
             "error"
+
         );
 
     }
@@ -2895,7 +4024,7 @@ async function(id){
 
 
 /* =========================================================
-   FILL WEBSITE CONTENT
+   CONTENT FIELDS
 ========================================================= */
 
 const contentFields = [
@@ -2958,6 +4087,10 @@ const contentFields = [
 ];
 
 
+/* =========================================================
+   FILL WEBSITE CONTENT
+========================================================= */
+
 function fillWebsiteContent(data){
 
     contentFields.forEach(field=>{
@@ -2966,6 +4099,7 @@ function fillWebsiteContent(data){
             document.getElementById(
                 "wc_" + field
             );
+
 
         if(el){
 
@@ -2976,11 +4110,56 @@ function fillWebsiteContent(data){
 
     });
 
+
+    /* =====================================================
+       CONTACT DETAILS PREVIEW
+       These values come from General fields
+    ===================================================== */
+
+    const contactPreviewFields = {
+
+        phone:
+            "contact_preview_phone",
+
+        email:
+            "contact_preview_email",
+
+        whatsapp:
+            "contact_preview_whatsapp",
+
+        address:
+            "contact_preview_address"
+
+    };
+
+
+    Object.entries(
+        contactPreviewFields
+    ).forEach(
+        ([field,id])=>{
+
+            const el =
+                document.getElementById(
+                    id
+                );
+
+
+            if(el){
+
+                el.value =
+                    data[field] ?? "";
+
+            }
+
+        }
+    );
+
 }
 
 
 /* =========================================================
    SAVE WEBSITE CONTENT
+   EXISTING FUNCTION — UNCHANGED
 ========================================================= */
 
 window.saveWebsiteContent =
@@ -2994,11 +4173,15 @@ async function(){
         );
 
         return;
+
     }
 
 
     const payload = {
-        client_id:selectedWebsiteClientId
+
+        client_id:
+            selectedWebsiteClientId
+
     };
 
 
@@ -3008,6 +4191,7 @@ async function(){
             document.getElementById(
                 "wc_" + field
             );
+
 
         if(el){
 
@@ -3028,9 +4212,13 @@ async function(){
             await supabaseClient
             .from("client_website_content")
             .update(payload)
-            .eq("id",websiteContentId);
+            .eq(
+                "id",
+                websiteContentId
+            );
 
-    }else{
+    }
+    else{
 
         result =
             await supabaseClient
@@ -3038,6 +4226,7 @@ async function(){
             .insert(payload)
             .select("id")
             .single();
+
 
         if(!result.error){
 
@@ -3054,12 +4243,16 @@ async function(){
         console.error(result.error);
 
         showMessage(
+
             "Save failed: " +
             result.error.message,
+
             "error"
+
         );
 
         return;
+
     }
 
 
@@ -3072,19 +4265,217 @@ async function(){
 
 
 /* =========================================================
+   CONTACT — SAVE ONLY CONTACT FIELDS
+========================================================= */
+
+window.saveWebsiteSection =
+async function(section){
+
+    if(!selectedWebsiteClientId){
+
+        showMessage(
+            "No client selected.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const sectionFields = {
+
+        contact: [
+
+            "contact_eyebrow",
+            "contact_heading",
+            "contact_description"
+
+        ]
+
+    };
+
+
+    const fields =
+        sectionFields[section];
+
+
+    if(!fields){
+
+        showMessage(
+            "Invalid section.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const payload = {
+
+        client_id:
+            selectedWebsiteClientId
+
+    };
+
+
+    fields.forEach(field=>{
+
+        const el =
+            document.getElementById(
+                "wc_" + field
+            );
+
+
+        if(el){
+
+            payload[field] =
+                el.value.trim() || null;
+
+        }
+
+    });
+
+
+    let result;
+
+
+    if(websiteContentId){
+
+        result =
+            await supabaseClient
+            .from("client_website_content")
+            .update(payload)
+            .eq(
+                "id",
+                websiteContentId
+            );
+
+    }
+    else{
+
+        result =
+            await supabaseClient
+            .from("client_website_content")
+            .insert(payload)
+            .select("id")
+            .single();
+
+
+        if(!result.error){
+
+            websiteContentId =
+                result.data.id;
+
+        }
+
+    }
+
+
+    if(result.error){
+
+        console.error(result.error);
+
+        showMessage(
+
+            "Contact save failed: " +
+            result.error.message,
+
+            "error"
+
+        );
+
+        return;
+
+    }
+
+
+    showMessage(
+        "Contact section saved successfully.",
+        "success"
+    );
+
+};
+
+
+/* =========================================================
+   CONTACT — GO TO GENERAL
+========================================================= */
+
+window.focusGeneralContactSettings =
+function(){
+
+    const generalBtn =
+        document.querySelector(
+            '.nav-btn[data-section="general"]'
+        );
+
+
+    if(generalBtn){
+
+        generalBtn.click();
+
+    }
+
+
+    setTimeout(()=>{
+
+        const phone =
+            document.getElementById(
+                "wc_phone"
+            );
+
+
+        if(phone){
+
+            phone.focus();
+
+        }
+
+    },50);
+
+};
+
+
+/* =========================================================
    REPEATED DATA LOAD
 ========================================================= */
 
-async function loadRepeatedData(clientIdValue){
+async function loadRepeatedData(
+    clientIdValue
+){
 
     await Promise.all([
-        loadProducts(clientIdValue),
-        loadManufacturing(clientIdValue),
-        loadQuality(clientIdValue),
-        loadIndustries(clientIdValue),
-        loadGallery(clientIdValue),
-        loadTestimonials(clientIdValue),
-        loadFaq(clientIdValue)
+
+        loadProducts(
+            clientIdValue
+        ),
+
+        loadManufacturing(
+            clientIdValue
+        ),
+
+        loadQuality(
+            clientIdValue
+        ),
+
+        loadIndustries(
+            clientIdValue
+        ),
+
+        loadGallery(
+            clientIdValue
+        ),
+
+        loadTestimonials(
+            clientIdValue
+        ),
+
+        loadFaq(
+            clientIdValue
+        )
+
     ]);
 
 }
@@ -3094,14 +4485,22 @@ async function loadRepeatedData(clientIdValue){
    PRODUCTS
 ========================================================= */
 
-async function loadProducts(clientIdValue){
+async function loadProducts(
+    clientIdValue
+){
 
     const {data,error} =
         await supabaseClient
         .from("client_products")
         .select("*")
-        .eq("client_id",clientIdValue)
-        .order("sort_order",{ascending:true});
+        .eq(
+            "client_id",
+            clientIdValue
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
 
 
     if(error){
@@ -3109,19 +4508,25 @@ async function loadProducts(clientIdValue){
         console.error(error);
 
         return;
+
     }
 
 
     const box =
-        document.getElementById("productsList");
+        document.getElementById(
+            "productsList"
+        );
+
 
     box.innerHTML = "";
 
 
     (data || []).forEach(item=>{
+
         box.appendChild(
             productElement(item)
         );
+
     });
 
 }
@@ -3130,98 +4535,200 @@ async function loadProducts(clientIdValue){
 function productElement(item={}){
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.className =
         "repeat-item";
+
 
     div.innerHTML = `
 
         <div class="repeat-item-grid">
 
             <div class="field">
-                <label>Product Code</label>
-                <input data-field="product_code"
-                       value="${escapeHtml(item.product_code || "")}">
+
+                <label>
+                    Product Code
+                </label>
+
+                <input
+                    data-field="product_code"
+                    value="${escapeHtml(
+                        item.product_code || ""
+                    )}">
+
             </div>
 
+
             <div class="field">
-                <label>Product Name</label>
-                <input data-field="product_name"
-                       value="${escapeHtml(item.product_name || "")}">
+
+                <label>
+                    Product Name
+                </label>
+
+                <input
+                    data-field="product_name"
+                    value="${escapeHtml(
+                        item.product_name || ""
+                    )}">
+
             </div>
+
 
             <div class="field full">
-                <label>Description</label>
-                <textarea data-field="description">${escapeHtml(item.description || "")}</textarea>
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    data-field="description">${escapeHtml(
+                        item.description || ""
+                    )}</textarea>
+
             </div>
 
-            <div class="field">
-                <label>Image URL</label>
-                <input data-field="image_url"
-                       value="${escapeHtml(item.image_url || "")}">
-            </div>
 
             <div class="field">
-                <label>Enquiry URL</label>
-                <input data-field="enquiry_url"
-                       value="${escapeHtml(item.enquiry_url || "")}">
+
+                <label>
+                    Image URL
+                </label>
+
+                <input
+                    data-field="image_url"
+                    value="${escapeHtml(
+                        item.image_url || ""
+                    )}">
+
             </div>
 
-            <div class="field">
-                <label>Sort Order</label>
-                <input type="number"
-                       data-field="sort_order"
-                       value="${item.sort_order ?? 0}">
-            </div>
 
             <div class="field">
-                <label>Active</label>
+
+                <label>
+                    Enquiry URL
+                </label>
+
+                <input
+                    data-field="enquiry_url"
+                    value="${escapeHtml(
+                        item.enquiry_url || ""
+                    )}">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    type="number"
+                    data-field="sort_order"
+                    value="${item.sort_order ?? 0}">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Active
+                </label>
+
                 <select data-field="is_active">
-                    <option value="true" ${item.is_active !== false ? "selected":""}>
+
+                    <option
+                        value="true"
+                        ${item.is_active !== false ? "selected":""}>
+
                         Yes
+
                     </option>
-                    <option value="false" ${item.is_active === false ? "selected":""}>
+
+                    <option
+                        value="false"
+                        ${item.is_active === false ? "selected":""}>
+
                         No
+
                     </option>
+
                 </select>
+
             </div>
 
         </div>
+
 
         <div class="repeat-actions">
 
-            <button class="small-save"
-                    onclick="saveProduct(this,'${item.id || ""}')">
+            <button
+                class="small-save"
+                onclick="saveProduct(
+                    this,
+                    '${item.id || ""}'
+                )">
+
                 Save
+
             </button>
+
 
             ${
                 item.id
-                ? `<button class="small-delete"
-                           onclick="deleteRepeated('client_products','${item.id}',loadProducts)">
+
+                ? `<button
+                       class="small-delete"
+                       onclick="deleteRepeated(
+                           'client_products',
+                           '${item.id}',
+                           loadProducts
+                       )">
+
                        Delete
+
                    </button>`
+
                 : ""
+
             }
 
         </div>
+
     `;
 
+
     return div;
+
 }
 
 
-window.addProduct=function(){
+window.addProduct =
+function(){
 
     const box =
-        document.getElementById("productsList");
+        document.getElementById(
+            "productsList"
+        );
+
 
     box.prepend(
+
         productElement({
+
             is_active:true,
+
             sort_order:0
+
         })
+
     );
 
 };
@@ -3231,37 +4738,58 @@ window.saveProduct =
 async function(button,id){
 
     const item =
-        button.closest(".repeat-item");
+        button.closest(
+            ".repeat-item"
+        );
+
 
     const payload = {
 
-        client_id:selectedWebsiteClientId,
+        client_id:
+            selectedWebsiteClientId,
 
         product_code:
-            item.querySelector('[data-field="product_code"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="product_code"]'
+            ).value.trim() || null,
 
         product_name:
-            item.querySelector('[data-field="product_name"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="product_name"]'
+            ).value.trim() || null,
 
         description:
-            item.querySelector('[data-field="description"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="description"]'
+            ).value.trim() || null,
 
         image_url:
-            item.querySelector('[data-field="image_url"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="image_url"]'
+            ).value.trim() || null,
 
         enquiry_url:
-            item.querySelector('[data-field="enquiry_url"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="enquiry_url"]'
+            ).value.trim() || null,
 
         sort_order:
-            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+            Number(
+                item.querySelector(
+                    '[data-field="sort_order"]'
+                ).value || 0
+            ),
 
         is_active:
-            item.querySelector('[data-field="is_active"]').value === "true"
+            item.querySelector(
+                '[data-field="is_active"]'
+            ).value === "true"
 
     };
 
 
     let result;
+
 
     if(id){
 
@@ -3271,7 +4799,8 @@ async function(button,id){
             .update(payload)
             .eq("id",id);
 
-    }else{
+    }
+    else{
 
         result =
             await supabaseClient
@@ -3283,13 +4812,19 @@ async function(button,id){
 
     if(result.error){
 
-        alert(result.error.message);
+        alert(
+            result.error.message
+        );
 
         return;
+
     }
 
 
-    await loadProducts(selectedWebsiteClientId);
+    await loadProducts(
+        selectedWebsiteClientId
+    );
+
 
     showMessage(
         "Product saved.",
@@ -3303,21 +4838,32 @@ async function(button,id){
    MANUFACTURING
 ========================================================= */
 
-async function loadManufacturing(clientIdValue){
+async function loadManufacturing(
+    clientIdValue
+){
 
     const {data,error} =
         await supabaseClient
         .from("client_manufacturing_steps")
         .select("*")
-        .eq("client_id",clientIdValue)
-        .order("sort_order",{ascending:true});
+        .eq(
+            "client_id",
+            clientIdValue
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
 
 
     if(error)return;
 
 
     const box =
-        document.getElementById("manufacturingList");
+        document.getElementById(
+            "manufacturingList"
+        );
+
 
     box.innerHTML = "";
 
@@ -3325,64 +4871,135 @@ async function loadManufacturing(clientIdValue){
     (data || []).forEach(item=>{
 
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         div.className =
             "repeat-item";
+
 
         div.innerHTML = `
 
             <div class="repeat-item-grid">
 
                 <div class="field">
-                    <label>Step Number</label>
-                    <input data-field="step_number"
-                           type="number"
-                           value="${item.step_number ?? 1}">
+
+                    <label>
+                        Step Number
+                    </label>
+
+                    <input
+                        data-field="step_number"
+                        type="number"
+                        value="${item.step_number ?? 1}">
+
                 </div>
 
+
                 <div class="field">
-                    <label>Title</label>
-                    <input data-field="title"
-                           value="${escapeHtml(item.title || "")}">
+
+                    <label>
+                        Title
+                    </label>
+
+                    <input
+                        data-field="title"
+                        value="${escapeHtml(
+                            item.title || ""
+                        )}">
+
                 </div>
+
 
                 <div class="field full">
-                    <label>Description</label>
-                    <textarea data-field="description">${escapeHtml(item.description || "")}</textarea>
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        data-field="description">${escapeHtml(
+                            item.description || ""
+                        )}</textarea>
+
                 </div>
 
-                <div class="field">
-                    <label>Sort Order</label>
-                    <input data-field="sort_order"
-                           type="number"
-                           value="${item.sort_order ?? 0}">
-                </div>
 
                 <div class="field">
-                    <label>Active</label>
+
+                    <label>
+                        Sort Order
+                    </label>
+
+                    <input
+                        data-field="sort_order"
+                        type="number"
+                        value="${item.sort_order ?? 0}">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Active
+                    </label>
+
                     <select data-field="is_active">
-                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
-                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+
+                        <option
+                            value="true"
+                            ${item.is_active !== false ? "selected":""}>
+
+                            Yes
+
+                        </option>
+
+                        <option
+                            value="false"
+                            ${item.is_active === false ? "selected":""}>
+
+                            No
+
+                        </option>
+
                     </select>
+
                 </div>
 
             </div>
+
 
             <div class="repeat-actions">
 
-                <button class="small-save"
-                    onclick="saveManufacturing(this,'${item.id}')">
+                <button
+                    class="small-save"
+                    onclick="saveManufacturing(
+                        this,
+                        '${item.id}'
+                    )">
+
                     Save
+
                 </button>
 
-                <button class="small-delete"
-                    onclick="deleteManufacturing('${item.id}')">
+
+                <button
+                    class="small-delete"
+                    onclick="deleteManufacturing(
+                        '${item.id}'
+                    )">
+
                     Delete
+
                 </button>
 
             </div>
+
         `;
+
 
         box.appendChild(div);
 
@@ -3391,64 +5008,122 @@ async function loadManufacturing(clientIdValue){
 }
 
 
-window.addManufacturingStep=function(){
+window.addManufacturingStep =
+function(){
 
     const box =
-        document.getElementById("manufacturingList");
+        document.getElementById(
+            "manufacturingList"
+        );
+
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.className =
         "repeat-item";
+
 
     div.innerHTML = `
 
         <div class="repeat-item-grid">
 
             <div class="field">
-                <label>Step Number</label>
-                <input data-field="step_number"
-                       type="number"
-                       value="1">
+
+                <label>
+                    Step Number
+                </label>
+
+                <input
+                    data-field="step_number"
+                    type="number"
+                    value="1">
+
             </div>
 
+
             <div class="field">
-                <label>Title</label>
-                <input data-field="title">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    data-field="title">
+
             </div>
+
 
             <div class="field full">
-                <label>Description</label>
-                <textarea data-field="description"></textarea>
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    data-field="description"></textarea>
+
             </div>
 
-            <div class="field">
-                <label>Sort Order</label>
-                <input data-field="sort_order"
-                       type="number"
-                       value="0">
-            </div>
 
             <div class="field">
-                <label>Active</label>
-                <select data-field="is_active">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    data-field="sort_order"
+                    type="number"
+                    value="0">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Active
+                </label>
+
+                <select
+                    data-field="is_active">
+
+                    <option value="true">
+                        Yes
+                    </option>
+
+                    <option value="false">
+                        No
+                    </option>
+
                 </select>
+
             </div>
 
         </div>
+
 
         <div class="repeat-actions">
 
-            <button class="small-save"
-                onclick="saveManufacturing(this,'')">
+            <button
+                class="small-save"
+                onclick="saveManufacturing(
+                    this,
+                    ''
+                )">
+
                 Save
+
             </button>
 
         </div>
+
     `;
+
 
     box.prepend(div);
 
@@ -3459,45 +5134,69 @@ window.saveManufacturing =
 async function(button,id){
 
     const item =
-        button.closest(".repeat-item");
+        button.closest(
+            ".repeat-item"
+        );
+
 
     const payload = {
 
-        client_id:selectedWebsiteClientId,
+        client_id:
+            selectedWebsiteClientId,
 
         step_number:
-            Number(item.querySelector('[data-field="step_number"]').value || 1),
+            Number(
+                item.querySelector(
+                    '[data-field="step_number"]'
+                ).value || 1
+            ),
 
         title:
-            item.querySelector('[data-field="title"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="title"]'
+            ).value.trim() || null,
 
         description:
-            item.querySelector('[data-field="description"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="description"]'
+            ).value.trim() || null,
 
         sort_order:
-            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+            Number(
+                item.querySelector(
+                    '[data-field="sort_order"]'
+                ).value || 0
+            ),
 
         is_active:
-            item.querySelector('[data-field="is_active"]').value === "true"
+            item.querySelector(
+                '[data-field="is_active"]'
+            ).value === "true"
 
     };
 
 
     let result;
 
+
     if(id){
 
         result =
             await supabaseClient
-            .from("client_manufacturing_steps")
+            .from(
+                "client_manufacturing_steps"
+            )
             .update(payload)
             .eq("id",id);
 
-    }else{
+    }
+    else{
 
         result =
             await supabaseClient
-            .from("client_manufacturing_steps")
+            .from(
+                "client_manufacturing_steps"
+            )
             .insert(payload);
 
     }
@@ -3505,14 +5204,19 @@ async function(button,id){
 
     if(result.error){
 
-        alert(result.error.message);
+        alert(
+            result.error.message
+        );
+
         return;
+
     }
 
 
     await loadManufacturing(
         selectedWebsiteClientId
     );
+
 
     showMessage(
         "Manufacturing step saved.",
@@ -3538,21 +5242,32 @@ async function(id){
    QUALITY
 ========================================================= */
 
-async function loadQuality(clientIdValue){
+async function loadQuality(
+    clientIdValue
+){
 
     const {data,error} =
         await supabaseClient
         .from("client_quality")
         .select("*")
-        .eq("client_id",clientIdValue)
-        .order("sort_order",{ascending:true});
+        .eq(
+            "client_id",
+            clientIdValue
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
 
 
     if(error)return;
 
 
     const box =
-        document.getElementById("qualityList");
+        document.getElementById(
+            "qualityList"
+        );
+
 
     box.innerHTML = "";
 
@@ -3560,63 +5275,136 @@ async function loadQuality(clientIdValue){
     (data || []).forEach(item=>{
 
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         div.className =
             "repeat-item";
+
 
         div.innerHTML = `
 
             <div class="repeat-item-grid">
 
                 <div class="field">
-                    <label>Icon</label>
-                    <input data-field="icon"
-                           value="${escapeHtml(item.icon || "")}">
+
+                    <label>
+                        Icon
+                    </label>
+
+                    <input
+                        data-field="icon"
+                        value="${escapeHtml(
+                            item.icon || ""
+                        )}">
+
                 </div>
 
+
                 <div class="field">
-                    <label>Title</label>
-                    <input data-field="title"
-                           value="${escapeHtml(item.title || "")}">
+
+                    <label>
+                        Title
+                    </label>
+
+                    <input
+                        data-field="title"
+                        value="${escapeHtml(
+                            item.title || ""
+                        )}">
+
                 </div>
+
 
                 <div class="field full">
-                    <label>Description</label>
-                    <textarea data-field="description">${escapeHtml(item.description || "")}</textarea>
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        data-field="description">${escapeHtml(
+                            item.description || ""
+                        )}</textarea>
+
                 </div>
 
-                <div class="field">
-                    <label>Sort Order</label>
-                    <input data-field="sort_order"
-                           type="number"
-                           value="${item.sort_order ?? 0}">
-                </div>
 
                 <div class="field">
-                    <label>Active</label>
+
+                    <label>
+                        Sort Order
+                    </label>
+
+                    <input
+                        data-field="sort_order"
+                        type="number"
+                        value="${item.sort_order ?? 0}">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Active
+                    </label>
+
                     <select data-field="is_active">
-                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
-                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+
+                        <option
+                            value="true"
+                            ${item.is_active !== false ? "selected":""}>
+
+                            Yes
+
+                        </option>
+
+                        <option
+                            value="false"
+                            ${item.is_active === false ? "selected":""}>
+
+                            No
+
+                        </option>
+
                     </select>
+
                 </div>
 
             </div>
+
 
             <div class="repeat-actions">
 
-                <button class="small-save"
-                    onclick="saveQuality(this,'${item.id}')">
+                <button
+                    class="small-save"
+                    onclick="saveQuality(
+                        this,
+                        '${item.id}'
+                    )">
+
                     Save
+
                 </button>
 
-                <button class="small-delete"
-                    onclick="deleteQuality('${item.id}')">
+
+                <button
+                    class="small-delete"
+                    onclick="deleteQuality(
+                        '${item.id}'
+                    )">
+
                     Delete
+
                 </button>
 
             </div>
+
         `;
+
 
         box.appendChild(div);
 
@@ -3625,60 +5413,120 @@ async function loadQuality(clientIdValue){
 }
 
 
-window.addQuality=function(){
+window.addQuality =
+function(){
 
     const box =
-        document.getElementById("qualityList");
+        document.getElementById(
+            "qualityList"
+        );
+
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.className =
         "repeat-item";
+
 
     div.innerHTML = `
 
         <div class="repeat-item-grid">
 
             <div class="field">
-                <label>Icon</label>
-                <input data-field="icon">
+
+                <label>
+                    Icon
+                </label>
+
+                <input
+                    data-field="icon">
+
             </div>
 
+
             <div class="field">
-                <label>Title</label>
-                <input data-field="title">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    data-field="title">
+
             </div>
+
 
             <div class="field full">
-                <label>Description</label>
-                <textarea data-field="description"></textarea>
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    data-field="description"></textarea>
+
             </div>
 
-            <div class="field">
-                <label>Sort Order</label>
-                <input data-field="sort_order" type="number" value="0">
-            </div>
 
             <div class="field">
-                <label>Active</label>
-                <select data-field="is_active">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    data-field="sort_order"
+                    type="number"
+                    value="0">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Active
+                </label>
+
+                <select
+                    data-field="is_active">
+
+                    <option value="true">
+                        Yes
+                    </option>
+
+                    <option value="false">
+                        No
+                    </option>
+
                 </select>
+
             </div>
 
         </div>
+
 
         <div class="repeat-actions">
 
-            <button class="small-save"
-                onclick="saveQuality(this,'')">
+            <button
+                class="small-save"
+                onclick="saveQuality(
+                    this,
+                    ''
+                )">
+
                 Save
+
             </button>
 
         </div>
+
     `;
+
 
     box.prepend(div);
 
@@ -3689,31 +5537,48 @@ window.saveQuality =
 async function(button,id){
 
     const item =
-        button.closest(".repeat-item");
+        button.closest(
+            ".repeat-item"
+        );
+
 
     const payload = {
 
-        client_id:selectedWebsiteClientId,
+        client_id:
+            selectedWebsiteClientId,
 
         icon:
-            item.querySelector('[data-field="icon"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="icon"]'
+            ).value.trim() || null,
 
         title:
-            item.querySelector('[data-field="title"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="title"]'
+            ).value.trim() || null,
 
         description:
-            item.querySelector('[data-field="description"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="description"]'
+            ).value.trim() || null,
 
         sort_order:
-            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+            Number(
+                item.querySelector(
+                    '[data-field="sort_order"]'
+                ).value || 0
+            ),
 
         is_active:
-            item.querySelector('[data-field="is_active"]').value === "true"
+            item.querySelector(
+                '[data-field="is_active"]'
+            ).value === "true"
 
     };
 
 
     let result;
+
 
     if(id){
 
@@ -3723,7 +5588,8 @@ async function(button,id){
             .update(payload)
             .eq("id",id);
 
-    }else{
+    }
+    else{
 
         result =
             await supabaseClient
@@ -3735,14 +5601,19 @@ async function(button,id){
 
     if(result.error){
 
-        alert(result.error.message);
+        alert(
+            result.error.message
+        );
+
         return;
+
     }
 
 
     await loadQuality(
         selectedWebsiteClientId
     );
+
 
     showMessage(
         "Quality item saved.",
@@ -3768,21 +5639,32 @@ async function(id){
    INDUSTRIES
 ========================================================= */
 
-async function loadIndustries(clientIdValue){
+async function loadIndustries(
+    clientIdValue
+){
 
     const {data,error} =
         await supabaseClient
         .from("client_industries")
         .select("*")
-        .eq("client_id",clientIdValue)
-        .order("sort_order",{ascending:true});
+        .eq(
+            "client_id",
+            clientIdValue
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
 
 
     if(error)return;
 
 
     const box =
-        document.getElementById("industriesList");
+        document.getElementById(
+            "industriesList"
+        );
+
 
     box.innerHTML = "";
 
@@ -3790,52 +5672,108 @@ async function loadIndustries(clientIdValue){
     (data || []).forEach(item=>{
 
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         div.className =
             "repeat-item";
+
 
         div.innerHTML = `
 
             <div class="repeat-item-grid">
 
                 <div class="field">
-                    <label>Industry Name</label>
-                    <input data-field="name"
-                           value="${escapeHtml(item.name || "")}">
+
+                    <label>
+                        Industry Name
+                    </label>
+
+                    <input
+                        data-field="name"
+                        value="${escapeHtml(
+                            item.name || ""
+                        )}">
+
                 </div>
 
-                <div class="field">
-                    <label>Sort Order</label>
-                    <input data-field="sort_order"
-                           type="number"
-                           value="${item.sort_order ?? 0}">
-                </div>
 
                 <div class="field">
-                    <label>Active</label>
-                    <select data-field="is_active">
-                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
-                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+
+                    <label>
+                        Sort Order
+                    </label>
+
+                    <input
+                        data-field="sort_order"
+                        type="number"
+                        value="${item.sort_order ?? 0}">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Active
+                    </label>
+
+                    <select
+                        data-field="is_active">
+
+                        <option
+                            value="true"
+                            ${item.is_active !== false ? "selected":""}>
+
+                            Yes
+
+                        </option>
+
+                        <option
+                            value="false"
+                            ${item.is_active === false ? "selected":""}>
+
+                            No
+
+                        </option>
+
                     </select>
+
                 </div>
 
             </div>
+
 
             <div class="repeat-actions">
 
-                <button class="small-save"
-                    onclick="saveIndustry(this,'${item.id}')">
+                <button
+                    class="small-save"
+                    onclick="saveIndustry(
+                        this,
+                        '${item.id}'
+                    )">
+
                     Save
+
                 </button>
 
-                <button class="small-delete"
-                    onclick="deleteIndustry('${item.id}')">
+
+                <button
+                    class="small-delete"
+                    onclick="deleteIndustry(
+                        '${item.id}'
+                    )">
+
                     Delete
+
                 </button>
 
             </div>
+
         `;
+
 
         box.appendChild(div);
 
@@ -3844,52 +5782,96 @@ async function loadIndustries(clientIdValue){
 }
 
 
-window.addIndustry=function(){
+window.addIndustry =
+function(){
 
     const box =
-        document.getElementById("industriesList");
+        document.getElementById(
+            "industriesList"
+        );
+
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.className =
         "repeat-item";
+
 
     div.innerHTML = `
 
         <div class="repeat-item-grid">
 
             <div class="field">
-                <label>Industry Name</label>
-                <input data-field="name">
+
+                <label>
+                    Industry Name
+                </label>
+
+                <input
+                    data-field="name">
+
             </div>
 
-            <div class="field">
-                <label>Sort Order</label>
-                <input data-field="sort_order"
-                       type="number"
-                       value="0">
-            </div>
 
             <div class="field">
-                <label>Active</label>
-                <select data-field="is_active">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    data-field="sort_order"
+                    type="number"
+                    value="0">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Active
+                </label>
+
+                <select
+                    data-field="is_active">
+
+                    <option value="true">
+                        Yes
+                    </option>
+
+                    <option value="false">
+                        No
+                    </option>
+
                 </select>
+
             </div>
 
         </div>
+
 
         <div class="repeat-actions">
 
-            <button class="small-save"
-                onclick="saveIndustry(this,'')">
+            <button
+                class="small-save"
+                onclick="saveIndustry(
+                    this,
+                    ''
+                )">
+
                 Save
+
             </button>
 
         </div>
+
     `;
+
 
     box.prepend(div);
 
@@ -3900,25 +5882,38 @@ window.saveIndustry =
 async function(button,id){
 
     const item =
-        button.closest(".repeat-item");
+        button.closest(
+            ".repeat-item"
+        );
+
 
     const payload = {
 
-        client_id:selectedWebsiteClientId,
+        client_id:
+            selectedWebsiteClientId,
 
         name:
-            item.querySelector('[data-field="name"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="name"]'
+            ).value.trim() || null,
 
         sort_order:
-            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+            Number(
+                item.querySelector(
+                    '[data-field="sort_order"]'
+                ).value || 0
+            ),
 
         is_active:
-            item.querySelector('[data-field="is_active"]').value === "true"
+            item.querySelector(
+                '[data-field="is_active"]'
+            ).value === "true"
 
     };
 
 
     let result;
+
 
     if(id){
 
@@ -3928,7 +5923,8 @@ async function(button,id){
             .update(payload)
             .eq("id",id);
 
-    }else{
+    }
+    else{
 
         result =
             await supabaseClient
@@ -3940,14 +5936,19 @@ async function(button,id){
 
     if(result.error){
 
-        alert(result.error.message);
+        alert(
+            result.error.message
+        );
+
         return;
+
     }
 
 
     await loadIndustries(
         selectedWebsiteClientId
     );
+
 
     showMessage(
         "Industry saved.",
@@ -3973,21 +5974,32 @@ async function(id){
    GALLERY
 ========================================================= */
 
-async function loadGallery(clientIdValue){
+async function loadGallery(
+    clientIdValue
+){
 
     const {data,error} =
         await supabaseClient
         .from("client_gallery")
         .select("*")
-        .eq("client_id",clientIdValue)
-        .order("sort_order",{ascending:true});
+        .eq(
+            "client_id",
+            clientIdValue
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
 
 
     if(error)return;
 
 
     const box =
-        document.getElementById("galleryList");
+        document.getElementById(
+            "galleryList"
+        );
+
 
     box.innerHTML = "";
 
@@ -3995,58 +6007,122 @@ async function loadGallery(clientIdValue){
     (data || []).forEach(item=>{
 
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         div.className =
             "repeat-item";
+
 
         div.innerHTML = `
 
             <div class="repeat-item-grid">
 
                 <div class="field full">
-                    <label>Image URL</label>
-                    <input data-field="image_url"
-                           value="${escapeHtml(item.image_url || "")}">
+
+                    <label>
+                        Image URL
+                    </label>
+
+                    <input
+                        data-field="image_url"
+                        value="${escapeHtml(
+                            item.image_url || ""
+                        )}">
+
                 </div>
 
-                <div class="field">
-                    <label>Title</label>
-                    <input data-field="title"
-                           value="${escapeHtml(item.title || "")}">
-                </div>
 
                 <div class="field">
-                    <label>Sort Order</label>
-                    <input data-field="sort_order"
-                           type="number"
-                           value="${item.sort_order ?? 0}">
+
+                    <label>
+                        Title
+                    </label>
+
+                    <input
+                        data-field="title"
+                        value="${escapeHtml(
+                            item.title || ""
+                        )}">
+
                 </div>
 
+
                 <div class="field">
-                    <label>Active</label>
+
+                    <label>
+                        Sort Order
+                    </label>
+
+                    <input
+                        data-field="sort_order"
+                        type="number"
+                        value="${item.sort_order ?? 0}">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Active
+                    </label>
+
                     <select data-field="is_active">
-                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
-                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+
+                        <option
+                            value="true"
+                            ${item.is_active !== false ? "selected":""}>
+
+                            Yes
+
+                        </option>
+
+                        <option
+                            value="false"
+                            ${item.is_active === false ? "selected":""}>
+
+                            No
+
+                        </option>
+
                     </select>
+
                 </div>
 
             </div>
+
 
             <div class="repeat-actions">
 
-                <button class="small-save"
-                    onclick="saveGallery(this,'${item.id}')">
+                <button
+                    class="small-save"
+                    onclick="saveGallery(
+                        this,
+                        '${item.id}'
+                    )">
+
                     Save
+
                 </button>
 
-                <button class="small-delete"
-                    onclick="deleteGallery('${item.id}')">
+
+                <button
+                    class="small-delete"
+                    onclick="deleteGallery(
+                        '${item.id}'
+                    )">
+
                     Delete
+
                 </button>
 
             </div>
+
         `;
+
 
         box.appendChild(div);
 
@@ -4055,57 +6131,107 @@ async function loadGallery(clientIdValue){
 }
 
 
-window.addGallery=function(){
+window.addGallery =
+function(){
 
     const box =
-        document.getElementById("galleryList");
+        document.getElementById(
+            "galleryList"
+        );
+
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.className =
         "repeat-item";
+
 
     div.innerHTML = `
 
         <div class="repeat-item-grid">
 
             <div class="field full">
-                <label>Image URL</label>
-                <input data-field="image_url">
+
+                <label>
+                    Image URL
+                </label>
+
+                <input
+                    data-field="image_url">
+
             </div>
 
-            <div class="field">
-                <label>Title</label>
-                <input data-field="title">
-            </div>
 
             <div class="field">
-                <label>Sort Order</label>
-                <input data-field="sort_order"
-                       type="number"
-                       value="0">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    data-field="title">
+
             </div>
 
+
             <div class="field">
-                <label>Active</label>
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    data-field="sort_order"
+                    type="number"
+                    value="0">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Active
+                </label>
+
                 <select data-field="is_active">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+
+                    <option value="true">
+                        Yes
+                    </option>
+
+                    <option value="false">
+                        No
+                    </option>
+
                 </select>
+
             </div>
 
         </div>
+
 
         <div class="repeat-actions">
 
-            <button class="small-save"
-                onclick="saveGallery(this,'')">
+            <button
+                class="small-save"
+                onclick="saveGallery(
+                    this,
+                    ''
+                )">
+
                 Save
+
             </button>
 
         </div>
+
     `;
+
 
     box.prepend(div);
 
@@ -4116,28 +6242,43 @@ window.saveGallery =
 async function(button,id){
 
     const item =
-        button.closest(".repeat-item");
+        button.closest(
+            ".repeat-item"
+        );
+
 
     const payload = {
 
-        client_id:selectedWebsiteClientId,
+        client_id:
+            selectedWebsiteClientId,
 
         image_url:
-            item.querySelector('[data-field="image_url"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="image_url"]'
+            ).value.trim() || null,
 
         title:
-            item.querySelector('[data-field="title"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="title"]'
+            ).value.trim() || null,
 
         sort_order:
-            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+            Number(
+                item.querySelector(
+                    '[data-field="sort_order"]'
+                ).value || 0
+            ),
 
         is_active:
-            item.querySelector('[data-field="is_active"]').value === "true"
+            item.querySelector(
+                '[data-field="is_active"]'
+            ).value === "true"
 
     };
 
 
     let result;
+
 
     if(id){
 
@@ -4147,7 +6288,8 @@ async function(button,id){
             .update(payload)
             .eq("id",id);
 
-    }else{
+    }
+    else{
 
         result =
             await supabaseClient
@@ -4159,14 +6301,19 @@ async function(button,id){
 
     if(result.error){
 
-        alert(result.error.message);
+        alert(
+            result.error.message
+        );
+
         return;
+
     }
 
 
     await loadGallery(
         selectedWebsiteClientId
     );
+
 
     showMessage(
         "Gallery item saved.",
@@ -4192,21 +6339,32 @@ async function(id){
    TESTIMONIALS
 ========================================================= */
 
-async function loadTestimonials(clientIdValue){
+async function loadTestimonials(
+    clientIdValue
+){
 
     const {data,error} =
         await supabaseClient
         .from("client_testimonials")
         .select("*")
-        .eq("client_id",clientIdValue)
-        .order("sort_order",{ascending:true});
+        .eq(
+            "client_id",
+            clientIdValue
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
 
 
     if(error)return;
 
 
     const box =
-        document.getElementById("testimonialsList");
+        document.getElementById(
+            "testimonialsList"
+        );
+
 
     box.innerHTML = "";
 
@@ -4214,63 +6372,136 @@ async function loadTestimonials(clientIdValue){
     (data || []).forEach(item=>{
 
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         div.className =
             "repeat-item";
+
 
         div.innerHTML = `
 
             <div class="repeat-item-grid">
 
                 <div class="field full">
-                    <label>Message</label>
-                    <textarea data-field="message">${escapeHtml(item.message || "")}</textarea>
+
+                    <label>
+                        Message
+                    </label>
+
+                    <textarea
+                        data-field="message">${escapeHtml(
+                            item.message || ""
+                        )}</textarea>
+
                 </div>
 
-                <div class="field">
-                    <label>Customer Name</label>
-                    <input data-field="customer_name"
-                           value="${escapeHtml(item.customer_name || "")}">
-                </div>
 
                 <div class="field">
-                    <label>Designation</label>
-                    <input data-field="designation"
-                           value="${escapeHtml(item.designation || "")}">
+
+                    <label>
+                        Customer Name
+                    </label>
+
+                    <input
+                        data-field="customer_name"
+                        value="${escapeHtml(
+                            item.customer_name || ""
+                        )}">
+
                 </div>
 
-                <div class="field">
-                    <label>Sort Order</label>
-                    <input data-field="sort_order"
-                           type="number"
-                           value="${item.sort_order ?? 0}">
-                </div>
 
                 <div class="field">
-                    <label>Active</label>
+
+                    <label>
+                        Designation
+                    </label>
+
+                    <input
+                        data-field="designation"
+                        value="${escapeHtml(
+                            item.designation || ""
+                        )}">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Sort Order
+                    </label>
+
+                    <input
+                        data-field="sort_order"
+                        type="number"
+                        value="${item.sort_order ?? 0}">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Active
+                    </label>
+
                     <select data-field="is_active">
-                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
-                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+
+                        <option
+                            value="true"
+                            ${item.is_active !== false ? "selected":""}>
+
+                            Yes
+
+                        </option>
+
+                        <option
+                            value="false"
+                            ${item.is_active === false ? "selected":""}>
+
+                            No
+
+                        </option>
+
                     </select>
+
                 </div>
 
             </div>
+
 
             <div class="repeat-actions">
 
-                <button class="small-save"
-                    onclick="saveTestimonial(this,'${item.id}')">
+                <button
+                    class="small-save"
+                    onclick="saveTestimonial(
+                        this,
+                        '${item.id}'
+                    )">
+
                     Save
+
                 </button>
 
-                <button class="small-delete"
-                    onclick="deleteTestimonial('${item.id}')">
+
+                <button
+                    class="small-delete"
+                    onclick="deleteTestimonial(
+                        '${item.id}'
+                    )">
+
                     Delete
+
                 </button>
 
             </div>
+
         `;
+
 
         box.appendChild(div);
 
@@ -4279,62 +6510,119 @@ async function loadTestimonials(clientIdValue){
 }
 
 
-window.addTestimonial=function(){
+window.addTestimonial =
+function(){
 
     const box =
-        document.getElementById("testimonialsList");
+        document.getElementById(
+            "testimonialsList"
+        );
+
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.className =
         "repeat-item";
+
 
     div.innerHTML = `
 
         <div class="repeat-item-grid">
 
             <div class="field full">
-                <label>Message</label>
-                <textarea data-field="message"></textarea>
+
+                <label>
+                    Message
+                </label>
+
+                <textarea
+                    data-field="message"></textarea>
+
             </div>
 
-            <div class="field">
-                <label>Customer Name</label>
-                <input data-field="customer_name">
-            </div>
 
             <div class="field">
-                <label>Designation</label>
-                <input data-field="designation">
+
+                <label>
+                    Customer Name
+                </label>
+
+                <input
+                    data-field="customer_name">
+
             </div>
 
-            <div class="field">
-                <label>Sort Order</label>
-                <input data-field="sort_order"
-                       type="number"
-                       value="0">
-            </div>
 
             <div class="field">
-                <label>Active</label>
+
+                <label>
+                    Designation
+                </label>
+
+                <input
+                    data-field="designation">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    data-field="sort_order"
+                    type="number"
+                    value="0">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Active
+                </label>
+
                 <select data-field="is_active">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+
+                    <option value="true">
+                        Yes
+                    </option>
+
+                    <option value="false">
+                        No
+                    </option>
+
                 </select>
+
             </div>
 
         </div>
+
 
         <div class="repeat-actions">
 
-            <button class="small-save"
-                onclick="saveTestimonial(this,'')">
+            <button
+                class="small-save"
+                onclick="saveTestimonial(
+                    this,
+                    ''
+                )">
+
                 Save
+
             </button>
 
         </div>
+
     `;
+
 
     box.prepend(div);
 
@@ -4345,31 +6633,48 @@ window.saveTestimonial =
 async function(button,id){
 
     const item =
-        button.closest(".repeat-item");
+        button.closest(
+            ".repeat-item"
+        );
+
 
     const payload = {
 
-        client_id:selectedWebsiteClientId,
+        client_id:
+            selectedWebsiteClientId,
 
         message:
-            item.querySelector('[data-field="message"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="message"]'
+            ).value.trim() || null,
 
         customer_name:
-            item.querySelector('[data-field="customer_name"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="customer_name"]'
+            ).value.trim() || null,
 
         designation:
-            item.querySelector('[data-field="designation"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="designation"]'
+            ).value.trim() || null,
 
         sort_order:
-            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+            Number(
+                item.querySelector(
+                    '[data-field="sort_order"]'
+                ).value || 0
+            ),
 
         is_active:
-            item.querySelector('[data-field="is_active"]').value === "true"
+            item.querySelector(
+                '[data-field="is_active"]'
+            ).value === "true"
 
     };
 
 
     let result;
+
 
     if(id){
 
@@ -4379,7 +6684,8 @@ async function(button,id){
             .update(payload)
             .eq("id",id);
 
-    }else{
+    }
+    else{
 
         result =
             await supabaseClient
@@ -4391,14 +6697,19 @@ async function(button,id){
 
     if(result.error){
 
-        alert(result.error.message);
+        alert(
+            result.error.message
+        );
+
         return;
+
     }
 
 
     await loadTestimonials(
         selectedWebsiteClientId
     );
+
 
     showMessage(
         "Testimonial saved.",
@@ -4424,21 +6735,32 @@ async function(id){
    FAQ
 ========================================================= */
 
-async function loadFaq(clientIdValue){
+async function loadFaq(
+    clientIdValue
+){
 
     const {data,error} =
         await supabaseClient
         .from("client_faq")
         .select("*")
-        .eq("client_id",clientIdValue)
-        .order("sort_order",{ascending:true});
+        .eq(
+            "client_id",
+            clientIdValue
+        )
+        .order(
+            "sort_order",
+            {ascending:true}
+        );
 
 
     if(error)return;
 
 
     const box =
-        document.getElementById("faqList");
+        document.getElementById(
+            "faqList"
+        );
+
 
     box.innerHTML = "";
 
@@ -4446,57 +6768,121 @@ async function loadFaq(clientIdValue){
     (data || []).forEach(item=>{
 
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         div.className =
             "repeat-item";
+
 
         div.innerHTML = `
 
             <div class="repeat-item-grid">
 
                 <div class="field full">
-                    <label>Question</label>
-                    <input data-field="question"
-                           value="${escapeHtml(item.question || "")}">
+
+                    <label>
+                        Question
+                    </label>
+
+                    <input
+                        data-field="question"
+                        value="${escapeHtml(
+                            item.question || ""
+                        )}">
+
                 </div>
+
 
                 <div class="field full">
-                    <label>Answer</label>
-                    <textarea data-field="answer">${escapeHtml(item.answer || "")}</textarea>
+
+                    <label>
+                        Answer
+                    </label>
+
+                    <textarea
+                        data-field="answer">${escapeHtml(
+                            item.answer || ""
+                        )}</textarea>
+
                 </div>
 
-                <div class="field">
-                    <label>Sort Order</label>
-                    <input data-field="sort_order"
-                           type="number"
-                           value="${item.sort_order ?? 0}">
-                </div>
 
                 <div class="field">
-                    <label>Active</label>
+
+                    <label>
+                        Sort Order
+                    </label>
+
+                    <input
+                        data-field="sort_order"
+                        type="number"
+                        value="${item.sort_order ?? 0}">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Active
+                    </label>
+
                     <select data-field="is_active">
-                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
-                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+
+                        <option
+                            value="true"
+                            ${item.is_active !== false ? "selected":""}>
+
+                            Yes
+
+                        </option>
+
+                        <option
+                            value="false"
+                            ${item.is_active === false ? "selected":""}>
+
+                            No
+
+                        </option>
+
                     </select>
+
                 </div>
 
             </div>
+
 
             <div class="repeat-actions">
 
-                <button class="small-save"
-                    onclick="saveFaq(this,'${item.id}')">
+                <button
+                    class="small-save"
+                    onclick="saveFaq(
+                        this,
+                        '${item.id}'
+                    )">
+
                     Save
+
                 </button>
 
-                <button class="small-delete"
-                    onclick="deleteFaq('${item.id}')">
+
+                <button
+                    class="small-delete"
+                    onclick="deleteFaq(
+                        '${item.id}'
+                    )">
+
                     Delete
+
                 </button>
 
             </div>
+
         `;
+
 
         box.appendChild(div);
 
@@ -4505,57 +6891,107 @@ async function loadFaq(clientIdValue){
 }
 
 
-window.addFaq=function(){
+window.addFaq =
+function(){
 
     const box =
-        document.getElementById("faqList");
+        document.getElementById(
+            "faqList"
+        );
+
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.className =
         "repeat-item";
+
 
     div.innerHTML = `
 
         <div class="repeat-item-grid">
 
             <div class="field full">
-                <label>Question</label>
-                <input data-field="question">
+
+                <label>
+                    Question
+                </label>
+
+                <input
+                    data-field="question">
+
             </div>
+
 
             <div class="field full">
-                <label>Answer</label>
-                <textarea data-field="answer"></textarea>
+
+                <label>
+                    Answer
+                </label>
+
+                <textarea
+                    data-field="answer"></textarea>
+
             </div>
 
-            <div class="field">
-                <label>Sort Order</label>
-                <input data-field="sort_order"
-                       type="number"
-                       value="0">
-            </div>
 
             <div class="field">
-                <label>Active</label>
+
+                <label>
+                    Sort Order
+                </label>
+
+                <input
+                    data-field="sort_order"
+                    type="number"
+                    value="0">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Active
+                </label>
+
                 <select data-field="is_active">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+
+                    <option value="true">
+                        Yes
+                    </option>
+
+                    <option value="false">
+                        No
+                    </option>
+
                 </select>
+
             </div>
 
         </div>
+
 
         <div class="repeat-actions">
 
-            <button class="small-save"
-                onclick="saveFaq(this,'')">
+            <button
+                class="small-save"
+                onclick="saveFaq(
+                    this,
+                    ''
+                )">
+
                 Save
+
             </button>
 
         </div>
+
     `;
+
 
     box.prepend(div);
 
@@ -4566,28 +7002,43 @@ window.saveFaq =
 async function(button,id){
 
     const item =
-        button.closest(".repeat-item");
+        button.closest(
+            ".repeat-item"
+        );
+
 
     const payload = {
 
-        client_id:selectedWebsiteClientId,
+        client_id:
+            selectedWebsiteClientId,
 
         question:
-            item.querySelector('[data-field="question"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="question"]'
+            ).value.trim() || null,
 
         answer:
-            item.querySelector('[data-field="answer"]').value.trim() || null,
+            item.querySelector(
+                '[data-field="answer"]'
+            ).value.trim() || null,
 
         sort_order:
-            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+            Number(
+                item.querySelector(
+                    '[data-field="sort_order"]'
+                ).value || 0
+            ),
 
         is_active:
-            item.querySelector('[data-field="is_active"]').value === "true"
+            item.querySelector(
+                '[data-field="is_active"]'
+            ).value === "true"
 
     };
 
 
     let result;
+
 
     if(id){
 
@@ -4597,7 +7048,8 @@ async function(button,id){
             .update(payload)
             .eq("id",id);
 
-    }else{
+    }
+    else{
 
         result =
             await supabaseClient
@@ -4609,14 +7061,19 @@ async function(button,id){
 
     if(result.error){
 
-        alert(result.error.message);
+        alert(
+            result.error.message
+        );
+
         return;
+
     }
 
 
     await loadFaq(
         selectedWebsiteClientId
     );
+
 
     showMessage(
         "FAQ saved.",
@@ -4662,8 +7119,12 @@ async function deleteRepeated(
 
     if(error){
 
-        alert(error.message);
+        alert(
+            error.message
+        );
+
         return;
+
     }
 
 
@@ -4685,26 +7146,34 @@ async function deleteRepeated(
 ========================================================= */
 
 document.getElementById("logoutBtn")
-.addEventListener("click",async()=>{
+.addEventListener(
+    "click",
+    async()=>{
 
-    try{
+        try{
 
-        if(window.MDKClientContext){
-            MDKClientContext.clear();
+            if(window.MDKClientContext){
+
+                MDKClientContext.clear();
+
+            }
+
+
+            await supabaseClient.auth.signOut();
+
+        }
+        catch(error){
+
+            console.error(error);
+
         }
 
-        await supabaseClient.auth.signOut();
 
-    }catch(error){
-
-        console.error(error);
+        window.location.href =
+            "admin.html";
 
     }
-
-    window.location.href =
-        "admin.html";
-
-});
+);
 
 
 /* =========================================================
@@ -4718,12 +7187,15 @@ document.getElementById("logoutBtn")
         const loggedIn =
             await checkLogin();
 
+
         if(!loggedIn)return;
 
 
         await loadTemplates();
 
+
         updateActiveClientDisplay();
+
 
         await loadClients();
 
@@ -4735,10 +7207,14 @@ document.getElementById("logoutBtn")
             error
         );
 
+
         showMessage(
+
             "Client Manager error: " +
             error.message,
+
             "error"
+
         );
 
     }
