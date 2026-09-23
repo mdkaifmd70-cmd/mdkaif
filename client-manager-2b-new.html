@@ -2,590 +2,584 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>MD Kaif Web Platform — Client Manager</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-    font-family:Inter,Arial,sans-serif;
-    background:#f4f7fb;
-    color:#172033;
+font-family:Inter,Arial,sans-serif;
+background:#f4f7fb;
+color:#172033;
 }
 
-button,input,select,textarea{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
 
 .topbar{
-    height:64px;
-    background:#0b172a;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 24px;
-    position:sticky;
-    top:0;
-    z-index:100;
+height:64px;
+background:#0b172a;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 24px;
+position:sticky;
+top:0;
+z-index:100;
 }
 
-.brand{
-    font-size:20px;
-    font-weight:800;
-    letter-spacing:.3px;
-}
+.brand{font-size:20px;font-weight:800}
 
 .top-actions{
-    display:flex;
-    gap:10px;
+display:flex;
+gap:10px;
 }
 
 .top-btn{
-    border:1px solid rgba(255,255,255,.18);
-    background:rgba(255,255,255,.08);
-    color:#fff;
-    padding:9px 14px;
-    border-radius:8px;
+border:1px solid #ffffff2e;
+background:#ffffff14;
+color:#fff;
+padding:9px 14px;
+border-radius:8px;
 }
 
 .layout{
-    display:flex;
-    min-height:calc(100vh - 64px);
+display:flex;
+min-height:calc(100vh - 64px);
 }
 
 .sidebar{
-    width:230px;
-    background:#101d31;
-    color:#dce5f2;
-    padding:18px 12px;
-    flex-shrink:0;
+width:230px;
+background:#101d31;
+color:#dce5f2;
+padding:18px 12px;
+flex-shrink:0;
 }
 
 .sidebar-title{
-    font-size:11px;
-    color:#8090a8;
-    text-transform:uppercase;
-    margin:12px 10px 8px;
+font-size:11px;
+color:#8090a8;
+text-transform:uppercase;
+margin:18px 10px 8px;
 }
 
 .nav-item{
-    display:block;
-    color:#dce5f2;
-    text-decoration:none;
-    padding:11px 12px;
-    border-radius:8px;
-    margin-bottom:4px;
-    font-size:14px;
+display:block;
+color:#dce5f2;
+text-decoration:none;
+padding:11px 12px;
+border-radius:8px;
+margin-bottom:4px;
+font-size:14px;
 }
 
 .nav-item:hover,
 .nav-item.active{
-    background:#1b2d49;
-    color:#fff;
+background:#1b2d49;
+color:#fff;
 }
 
 .main{
-    flex:1;
-    padding:25px;
-    min-width:0;
+flex:1;
+padding:25px;
+min-width:0;
 }
 
 .page-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    margin-bottom:22px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+margin-bottom:22px;
 }
 
 .page-title{
-    font-size:27px;
-    font-weight:800;
+font-size:27px;
+font-weight:800;
 }
 
 .page-subtitle{
-    color:#69778c;
-    margin-top:5px;
-    font-size:14px;
+color:#69778c;
+margin-top:5px;
+font-size:14px;
 }
 
 .primary-btn{
-    background:#0b7cff;
-    color:#fff;
-    border:0;
-    padding:11px 17px;
-    border-radius:9px;
-    font-weight:700;
+background:#0b7cff;
+color:#fff;
+border:0;
+padding:11px 17px;
+border-radius:9px;
+font-weight:700;
 }
 
 .primary-btn:hover{
-    background:#0669dc;
+background:#0669dc;
 }
 
 .stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:22px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:22px;
 }
 
 .stat-card{
-    background:#fff;
-    border:1px solid #e4eaf2;
-    border-radius:12px;
-    padding:18px;
-    box-shadow:0 2px 8px rgba(20,40,70,.04);
+background:#fff;
+border:1px solid #e4eaf2;
+border-radius:12px;
+padding:18px;
+box-shadow:0 2px 8px #1428460a;
 }
 
 .stat-label{
-    font-size:13px;
-    color:#748196;
+font-size:13px;
+color:#748196;
 }
 
 .stat-value{
-    font-size:28px;
-    font-weight:800;
-    margin-top:8px;
+font-size:28px;
+font-weight:800;
+margin-top:8px;
 }
 
 .toolbar{
-    background:#fff;
-    border:1px solid #e4eaf2;
-    padding:14px;
-    border-radius:12px;
-    display:flex;
-    gap:10px;
-    margin-bottom:18px;
+background:#fff;
+border:1px solid #e4eaf2;
+padding:14px;
+border-radius:12px;
+display:flex;
+gap:10px;
+margin-bottom:18px;
 }
 
 .toolbar input,
 .toolbar select{
-    border:1px solid #d8e0ea;
-    border-radius:8px;
-    padding:10px 12px;
-    background:#fff;
+border:1px solid #d8e0ea;
+border-radius:8px;
+padding:10px 12px;
+background:#fff;
 }
 
-.search{
-    flex:1;
-}
+.search{flex:1}
 
 .clients-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
-    gap:16px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+gap:16px;
 }
 
 .client-card{
-    background:#fff;
-    border:1px solid #e2e8f0;
-    border-radius:14px;
-    padding:18px;
-    box-shadow:0 3px 12px rgba(20,40,70,.05);
+background:#fff;
+border:1px solid #e2e8f0;
+border-radius:14px;
+padding:18px;
+box-shadow:0 3px 12px #1428460d;
 }
 
 .client-top{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
+display:flex;
+justify-content:space-between;
+gap:10px;
 }
 
 .client-name{
-    font-size:18px;
-    font-weight:800;
+font-size:18px;
+font-weight:800;
 }
 
 .badge{
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:700;
-    text-transform:uppercase;
+padding:5px 9px;
+border-radius:20px;
+font-size:11px;
+font-weight:700;
+text-transform:uppercase;
 }
 
 .badge.active{
-    background:#dcfce7;
-    color:#15803d;
+background:#dcfce7;
+color:#15803d;
 }
 
 .badge.inactive{
-    background:#fee2e2;
-    color:#b91c1c;
+background:#fee2e2;
+color:#b91c1c;
 }
 
 .client-info{
-    margin-top:14px;
-    display:grid;
-    gap:8px;
+margin-top:14px;
+display:grid;
+gap:8px;
 }
 
 .info-row{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    font-size:13px;
+display:flex;
+justify-content:space-between;
+gap:10px;
+font-size:13px;
 }
 
-.info-label{
-    color:#7b8798;
-}
+.info-label{color:#7b8798}
 
 .info-value{
-    text-align:right;
-    max-width:65%;
-    word-break:break-word;
+text-align:right;
+max-width:65%;
+word-break:break-word;
 }
 
 .client-actions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:7px;
-    margin-top:16px;
+display:flex;
+flex-wrap:wrap;
+gap:7px;
+margin-top:16px;
 }
 
 .small-btn{
-    border:1px solid #d8e0ea;
-    background:#fff;
-    color:#263449;
-    padding:8px 10px;
-    border-radius:7px;
-    font-size:12px;
-    font-weight:700;
+border:1px solid #d8e0ea;
+background:#fff;
+color:#263449;
+padding:8px 10px;
+border-radius:7px;
+font-size:12px;
+font-weight:700;
 }
 
 .small-btn:hover{
-    background:#f4f7fb;
+background:#f4f7fb;
 }
 
 .manage-btn{
-    background:#0f766e;
-    border-color:#0f766e;
-    color:#fff;
+background:#0f766e;
+border-color:#0f766e;
+color:#fff;
 }
 
 .danger{
-    color:#b91c1c;
+color:#b91c1c;
 }
 
 .empty{
-    background:#fff;
-    border:1px dashed #ccd6e3;
-    padding:40px;
-    text-align:center;
-    border-radius:12px;
-    color:#718096;
+background:#fff;
+border:1px dashed #ccd6e3;
+padding:40px;
+text-align:center;
+border-radius:12px;
+color:#718096;
 }
 
-/* Modal */
 .modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(5,15,30,.58);
-    z-index:500;
-    padding:25px;
-    overflow:auto;
+display:none;
+position:fixed;
+inset:0;
+background:#050f1e94;
+z-index:500;
+padding:25px;
+overflow:auto;
 }
 
 .modal.show{
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
+display:flex;
+align-items:flex-start;
+justify-content:center;
 }
 
 .modal-box{
-    width:min(850px,100%);
-    background:#fff;
-    border-radius:15px;
-    margin:20px auto;
-    overflow:hidden;
+width:min(850px,100%);
+background:#fff;
+border-radius:15px;
+margin:20px auto;
+overflow:hidden;
 }
 
 .modal-head{
-    background:#0b172a;
-    color:#fff;
-    padding:17px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+background:#0b172a;
+color:#fff;
+padding:17px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 .modal-title{
-    font-size:18px;
-    font-weight:800;
+font-size:18px;
+font-weight:800;
 }
 
 .close{
-    background:transparent;
-    color:#fff;
-    border:0;
-    font-size:24px;
+background:transparent;
+color:#fff;
+border:0;
+font-size:24px;
 }
 
 .modal-body{
-    padding:22px;
+padding:22px;
 }
 
 .form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
 }
 
 .field{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
+display:flex;
+flex-direction:column;
+gap:6px;
 }
 
 .field.full{
-    grid-column:1/-1;
+grid-column:1/-1;
 }
 
 .field label{
-    font-size:12px;
-    font-weight:700;
-    color:#526174;
+font-size:12px;
+font-weight:700;
+color:#526174;
 }
 
 .field input,
 .field select,
 .field textarea{
-    width:100%;
-    border:1px solid #d6dee9;
-    border-radius:8px;
-    padding:10px 11px;
-    outline:none;
+width:100%;
+border:1px solid #d6dee9;
+border-radius:8px;
+padding:10px 11px;
+outline:none;
 }
 
 .field textarea{
-    min-height:105px;
-    resize:vertical;
+min-height:105px;
+resize:vertical;
 }
 
 .modal-footer{
-    padding:16px 22px;
-    border-top:1px solid #e6ebf2;
-    display:flex;
-    justify-content:flex-end;
-    gap:10px;
+padding:16px 22px;
+border-top:1px solid #e6ebf2;
+display:flex;
+justify-content:flex-end;
+gap:10px;
 }
 
-/* Website Manager */
 .website-modal .modal-box{
-    width:min(1250px,100%);
+width:min(1250px,100%);
 }
 
 .website-layout{
-    display:grid;
-    grid-template-columns:220px 1fr;
-    min-height:620px;
+display:grid;
+grid-template-columns:220px 1fr;
+min-height:620px;
 }
 
 .website-sidebar{
-    background:#f7f9fc;
-    border-right:1px solid #e2e8f0;
-    padding:14px;
+background:#f7f9fc;
+border-right:1px solid #e2e8f0;
+padding:14px;
 }
 
 .website-client{
-    background:#0b172a;
-    color:#fff;
-    padding:14px;
-    border-radius:9px;
-    margin-bottom:15px;
+background:#0b172a;
+color:#fff;
+padding:14px;
+border-radius:9px;
+margin-bottom:15px;
 }
 
 .website-client small{
-    display:block;
-    color:#9dacbf;
-    margin-bottom:5px;
+display:block;
+color:#9dacbf;
+margin-bottom:5px;
 }
 
 .website-nav button{
-    display:block;
-    width:100%;
-    border:0;
-    background:transparent;
-    text-align:left;
-    padding:10px;
-    border-radius:7px;
-    color:#3c4a5d;
-    margin-bottom:3px;
-    font-size:13px;
+display:block;
+width:100%;
+border:0;
+background:transparent;
+text-align:left;
+padding:10px;
+border-radius:7px;
+color:#3c4a5d;
+margin-bottom:3px;
+font-size:13px;
 }
 
 .website-nav button:hover,
 .website-nav button.active{
-    background:#e7eef8;
-    color:#0b172a;
-    font-weight:700;
+background:#e7eef8;
+color:#0b172a;
+font-weight:700;
 }
 
 .website-content{
-    padding:22px;
-    overflow:auto;
-    max-height:650px;
+padding:22px;
+overflow:auto;
+max-height:650px;
 }
 
 .manager-head{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    align-items:flex-start;
-    margin-bottom:20px;
+display:flex;
+justify-content:space-between;
+gap:15px;
+align-items:flex-start;
+margin-bottom:20px;
 }
 
 .manager-title{
-    font-size:22px;
-    font-weight:800;
+font-size:22px;
+font-weight:800;
 }
 
 .manager-description{
-    color:#718096;
-    font-size:13px;
-    margin-top:5px;
+color:#718096;
+font-size:13px;
+margin-top:5px;
 }
 
 .section-card{
-    background:#fff;
-    border:1px solid #e1e7ef;
-    border-radius:11px;
-    padding:18px;
-    margin-bottom:15px;
+background:#fff;
+border:1px solid #e1e7ef;
+border-radius:11px;
+padding:18px;
+margin-bottom:15px;
 }
 
 .section-title{
-    font-size:16px;
-    font-weight:800;
-    margin-bottom:15px;
+font-size:16px;
+font-weight:800;
+margin-bottom:15px;
 }
 
 .repeat-item{
-    border:1px solid #e1e7ef;
-    border-radius:10px;
-    padding:15px;
-    margin-bottom:12px;
-    background:#fafcff;
+border:1px solid #e1e7ef;
+border-radius:10px;
+padding:15px;
+margin-bottom:12px;
+background:#fafcff;
 }
 
 .repeat-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:12px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
 }
 
 .repeat-number{
-    font-weight:800;
-    color:#334155;
+font-weight:800;
+color:#334155;
 }
 
 .loading{
-    text-align:center;
-    padding:30px;
-    color:#718096;
+text-align:center;
+padding:30px;
+color:#718096;
 }
 
 .notice{
-    background:#fff7ed;
-    border:1px solid #fed7aa;
-    color:#9a3412;
-    padding:12px;
-    border-radius:8px;
-    font-size:13px;
-    margin-bottom:15px;
+background:#fff7ed;
+border:1px solid #fed7aa;
+color:#9a3412;
+padding:12px;
+border-radius:8px;
+font-size:13px;
+margin-bottom:15px;
+}
+
+.error-box{
+background:#fef2f2;
+border:1px solid #fecaca;
+color:#991b1b;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+white-space:pre-wrap;
 }
 
 .toast{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    background:#0b172a;
-    color:#fff;
-    padding:12px 16px;
-    border-radius:9px;
-    box-shadow:0 5px 20px rgba(0,0,0,.2);
-    display:none;
-    z-index:1000;
+position:fixed;
+right:20px;
+bottom:20px;
+background:#0b172a;
+color:#fff;
+padding:12px 16px;
+border-radius:9px;
+box-shadow:0 5px 20px #0003;
+display:none;
+z-index:1000;
+max-width:420px;
 }
 
 .toast.show{
-    display:block;
+display:block;
 }
 
 @media(max-width:900px){
-    .sidebar{
-        width:70px;
-    }
 
-    .sidebar .nav-item{
-        font-size:0;
-        text-align:center;
-    }
+.sidebar{
+width:70px;
+}
 
-    .sidebar-title{
-        display:none;
-    }
+.sidebar .nav-item{
+font-size:0;
+text-align:center;
+}
 
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
+.sidebar-title{
+display:none;
+}
 
-    .website-layout{
-        grid-template-columns:1fr;
-    }
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
 
-    .website-sidebar{
-        border-right:0;
-        border-bottom:1px solid #e2e8f0;
-    }
+.website-layout{
+grid-template-columns:1fr;
+}
 
-    .website-nav{
-        display:flex;
-        overflow:auto;
-        gap:5px;
-    }
+.website-sidebar{
+border-right:0;
+border-bottom:1px solid #e2e8f0;
+}
 
-    .website-nav button{
-        min-width:max-content;
-    }
+.website-nav{
+display:flex;
+overflow:auto;
+gap:5px;
+}
+
+.website-nav button{
+min-width:max-content;
+}
 }
 
 @media(max-width:600px){
-    .main{
-        padding:15px;
-    }
 
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
+.main{
+padding:15px;
+}
 
-    .form-grid{
-        grid-template-columns:1fr;
-    }
+.form-grid{
+grid-template-columns:1fr;
+}
 
-    .field.full{
-        grid-column:auto;
-    }
+.field.full{
+grid-column:auto;
+}
 
-    .page-head{
-        flex-direction:column;
-        align-items:flex-start;
-    }
+.page-head{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.stats{
+grid-template-columns:1fr 1fr;
+}
+
 }
 </style>
 </head>
@@ -593,3421 +587,4067 @@ button{
 <body>
 
 <header class="topbar">
-    <div class="brand">MD Kaif Web Platform</div>
 
-    <div class="top-actions">
-        <button class="top-btn" onclick="location.href='dashboard.html'">
-            Dashboard
-        </button>
-        <button class="top-btn" onclick="logout()">
-            Logout
-        </button>
-    </div>
+<div class="brand">
+MD Kaif Web Platform
+</div>
+
+<div class="top-actions">
+
+<button class="top-btn"
+onclick="location.href='dashboard.html'">
+Dashboard
+</button>
+
+<button class="top-btn"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
 </header>
+
 
 <div class="layout">
 
 <aside class="sidebar">
 
-    <a class="nav-item" href="dashboard.html">🏠 Dashboard</a>
-    <a class="nav-item active" href="client-manager-2b-new.html">👥 Client Manager</a>
-    <a class="nav-item" href="template-manager.html">🎨 Template Manager</a>
+<a class="nav-item"
+href="dashboard.html">
+🏠 Dashboard
+</a>
 
-    <div class="sidebar-title">Management</div>
+<a class="nav-item active"
+href="client-manager-2b-new.html">
+👥 Client Manager
+</a>
 
-    <a class="nav-item" href="#website-management">
-        ⚙️ Website Management
-    </a>
+<a class="nav-item"
+href="template-manager.html">
+🎨 Template Manager
+</a>
 
-    <a class="nav-item" href="#enquiries">
-        📩 Enquiries
-    </a>
+<div class="sidebar-title">
+Management
+</div>
+
+<a class="nav-item"
+href="#website-management"
+onclick="return false">
+⚙️ Website Management
+</a>
+
+<a class="nav-item"
+href="#enquiries"
+onclick="return false">
+📩 Enquiries
+</a>
 
 </aside>
 
+
 <main class="main">
 
-    <div class="page-head">
-        <div>
-            <div class="page-title">Client Manager</div>
-            <div class="page-subtitle">
-                Manage clients, websites, templates and website content from one place.
-            </div>
-        </div>
+<div class="page-head">
 
-        <button class="primary-btn" onclick="openCreateModal()">
-            + Add Client
-        </button>
-    </div>
+<div>
 
-    <section class="stats">
+<div class="page-title">
+Client Manager
+</div>
 
-        <div class="stat-card">
-            <div class="stat-label">Total Clients</div>
-            <div class="stat-value" id="totalClients">0</div>
-        </div>
+<div class="page-subtitle">
+Manage clients, websites, templates and website content from one place.
+</div>
 
-        <div class="stat-card">
-            <div class="stat-label">Active Clients</div>
-            <div class="stat-value" id="activeClients">0</div>
-        </div>
+</div>
 
-        <div class="stat-card">
-            <div class="stat-label">Inactive Clients</div>
-            <div class="stat-value" id="inactiveClients">0</div>
-        </div>
+<button class="primary-btn"
+onclick="openCreateModal()">
++ Add Client
+</button>
 
-        <div class="stat-card">
-            <div class="stat-label">Templates Assigned</div>
-            <div class="stat-value" id="templateClients">0</div>
-        </div>
+</div>
 
-    </section>
 
-    <div class="toolbar">
+<section class="stats">
 
-        <input
-            class="search"
-            id="searchInput"
-            placeholder="Search company, slug, domain..."
-            oninput="renderClients()"
-        >
+<div class="stat-card">
+<div class="stat-label">Total Clients</div>
+<div class="stat-value" id="totalClients">0</div>
+</div>
 
-        <select id="statusFilter" onchange="renderClients()">
-            <option value="">All Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-        </select>
+<div class="stat-card">
+<div class="stat-label">Active Clients</div>
+<div class="stat-value" id="activeClients">0</div>
+</div>
 
-    </div>
+<div class="stat-card">
+<div class="stat-label">Inactive Clients</div>
+<div class="stat-value" id="inactiveClients">0</div>
+</div>
 
-    <div id="clientsContainer" class="clients-grid"></div>
+<div class="stat-card">
+<div class="stat-label">Templates Assigned</div>
+<div class="stat-value" id="templateClients">0</div>
+</div>
+
+</section>
+
+
+<div class="toolbar">
+
+<input
+class="search"
+id="searchInput"
+placeholder="Search company, slug, domain..."
+oninput="renderClients()">
+
+<select
+id="statusFilter"
+onchange="renderClients()">
+
+<option value="">
+All Status
+</option>
+
+<option value="active">
+Active
+</option>
+
+<option value="inactive">
+Inactive
+</option>
+
+</select>
+
+</div>
+
+
+<div id="clientsContainer"
+class="clients-grid">
+</div>
 
 </main>
 
 </div>
 
 
-<!-- CREATE / EDIT CLIENT MODAL -->
+<!-- CLIENT MODAL -->
 
-<div class="modal" id="clientModal">
+<div class="modal"
+id="clientModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div class="modal-head">
-            <div class="modal-title" id="clientModalTitle">
-                Add Client
-            </div>
+<div class="modal-head">
 
-            <button class="close" onclick="closeModal('clientModal')">
-                ×
-            </button>
-        </div>
+<div class="modal-title"
+id="clientModalTitle">
+Add Client
+</div>
 
-        <div class="modal-body">
+<button class="close"
+onclick="closeModal('clientModal')">
+×
+</button>
 
-            <div class="form-grid">
+</div>
 
-                <div class="field">
-                    <label>Company Name</label>
-                    <input id="companyName">
-                </div>
 
-                <div class="field">
-                    <label>Client Slug</label>
-                    <input id="clientSlug">
-                </div>
+<div class="modal-body">
 
-                <div class="field">
-                    <label>Status</label>
+<div class="form-grid">
 
-                    <select id="clientStatus">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
-                </div>
+<div class="field">
 
-                <div class="field">
-                    <label>Domain</label>
-                    <input id="clientDomain" placeholder="example.com">
-                </div>
+<label>
+Company Name
+</label>
 
-                <div class="field">
-                    <label>Hosting Type</label>
+<input
+id="companyName">
 
-                    <select id="hostingType">
-                        <option value="GitHub Pages">GitHub Pages</option>
-                        <option value="Custom Domain">Custom Domain</option>
-                        <option value="Web Hosting">Web Hosting</option>
-                        <option value="Cloud Hosting">Cloud Hosting</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+</div>
 
-                <div class="field">
-                    <label>Hosting URL</label>
-                    <input id="hostingUrl" placeholder="https://example.github.io/site/">
-                </div>
 
-                <div class="field">
-                    <label>Website Template</label>
+<div class="field">
 
-                    <select id="clientTemplate">
-                        <option value="template-v1">Template V1</option>
-                        <option value="template-v2">Template V2</option>
-                        <option value="template-v3">Template V3</option>
-                        <option value="template-v4">Template V4</option>
-                        <option value="template-v5">Template V5</option>
-                        <option value="template-v6">Template V6</option>
-                        <option value="template-v7">Template V7</option>
-                        <option value="template-v8">Template V8</option>
-                        <option value="template-v9">Template V9</option>
-                        <option value="template-v10">Template V10</option>
-                    </select>
+<label>
+Client Slug
+</label>
 
-                </div>
+<input
+id="clientSlug">
 
-            </div>
+</div>
 
-        </div>
 
-        <div class="modal-footer">
+<div class="field">
 
-            <button class="small-btn" onclick="closeModal('clientModal')">
-                Cancel
-            </button>
+<label>
+Status
+</label>
 
-            <button class="primary-btn" onclick="saveClient()">
-                Save Client
-            </button>
+<select id="clientStatus">
 
-        </div>
+<option value="active">
+Active
+</option>
 
-    </div>
+<option value="inactive">
+Inactive
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Domain
+</label>
+
+<input
+id="clientDomain"
+placeholder="example.com">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Hosting Type
+</label>
+
+<select id="hostingType">
+
+<option>
+GitHub Pages
+</option>
+
+<option>
+Custom Domain
+</option>
+
+<option>
+Web Hosting
+</option>
+
+<option>
+Cloud Hosting
+</option>
+
+<option>
+Other
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Hosting URL
+</label>
+
+<input
+id="hostingUrl"
+placeholder="https://example.github.io/site/">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Website Template
+</label>
+
+<select id="clientTemplate">
+
+<option value="template-v1">Template V1</option>
+<option value="template-v2">Template V2</option>
+<option value="template-v3">Template V3</option>
+<option value="template-v4">Template V4</option>
+<option value="template-v5">Template V5</option>
+<option value="template-v6">Template V6</option>
+<option value="template-v7">Template V7</option>
+<option value="template-v8">Template V8</option>
+<option value="template-v9">Template V9</option>
+<option value="template-v10">Template V10</option>
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="modal-footer">
+
+<button class="small-btn"
+onclick="closeModal('clientModal')">
+Cancel
+</button>
+
+<button class="primary-btn"
+onclick="saveClient()">
+Save Client
+</button>
+
+</div>
+
+</div>
 
 </div>
 
 
 <!-- WEBSITE MANAGER -->
 
-<div class="modal website-modal" id="websiteModal">
+<div class="modal website-modal"
+id="websiteModal">
 
 <div class="modal-box">
 
-    <div class="modal-head">
+<div class="modal-head">
 
-        <div>
-            <div class="modal-title">
-                Website Management
-            </div>
-        </div>
+<div class="modal-title">
+Website Management
+</div>
 
-        <button class="close" onclick="closeModal('websiteModal')">
-            ×
-        </button>
+<button class="close"
+onclick="closeModal('websiteModal')">
+×
+</button>
 
-    </div>
+</div>
 
-    <div class="website-layout">
 
-        <aside class="website-sidebar">
+<div class="website-layout">
 
-            <div class="website-client">
-                <small>Managing Website</small>
-                <strong id="managerClientName">Client</strong>
-            </div>
 
-            <div class="website-nav">
+<aside class="website-sidebar">
 
-                <button class="active"
-                        onclick="openWebsiteSection('general',this)">
-                    ⚙️ General
-                </button>
+<div class="website-client">
 
-                <button onclick="openWebsiteSection('hero',this)">
-                    🖼️ Hero
-                </button>
+<small>
+Managing Website
+</small>
 
-                <button onclick="openWebsiteSection('about',this)">
-                    ℹ️ About
-                </button>
+<strong id="managerClientName">
+Client
+</strong>
 
-                <button onclick="openWebsiteSection('products',this)">
-                    📦 Products
-                </button>
+</div>
 
-                <button onclick="openWebsiteSection('manufacturing',this)">
-                    🏭 Manufacturing
-                </button>
 
-                <button onclick="openWebsiteSection('quality',this)">
-                    ✅ Quality
-                </button>
+<div class="website-nav">
 
-                <button onclick="openWebsiteSection('industries',this)">
-                    🌐 Industries
-                </button>
+<button
+data-section="general"
+class="active"
+onclick="openWebsiteSection('general',this)">
+⚙️ General
+</button>
 
-                <button onclick="openWebsiteSection('gallery',this)">
-                    🖼️ Gallery
-                </button>
+<button
+data-section="hero"
+onclick="openWebsiteSection('hero',this)">
+🖼️ Hero
+</button>
 
-                <button onclick="openWebsiteSection('testimonials',this)">
-                    ⭐ Testimonials
-                </button>
+<button
+data-section="about"
+onclick="openWebsiteSection('about',this)">
+ℹ️ About
+</button>
 
-                <button onclick="openWebsiteSection('faq',this)">
-                    ❓ FAQ
-                </button>
+<button
+data-section="products"
+onclick="openWebsiteSection('products',this)">
+📦 Products
+</button>
 
-                <button onclick="openComingSoonSection('Design')">
-                    🎨 Design
-                </button>
+<button
+data-section="manufacturing"
+onclick="openWebsiteSection('manufacturing',this)">
+🏭 Manufacturing
+</button>
 
-                <button onclick="openComingSoonSection('Social Media')">
-                    📱 Social Media
-                </button>
+<button
+data-section="quality"
+onclick="openWebsiteSection('quality',this)">
+✅ Quality
+</button>
 
-                <button onclick="openComingSoonSection('SEO')">
-                    🔎 SEO
-                </button>
+<button
+data-section="industries"
+onclick="openWebsiteSection('industries',this)">
+🌐 Industries
+</button>
 
-                <button onclick="openComingSoonSection('Policies')">
-                    📄 Policies
-                </button>
+<button
+data-section="gallery"
+onclick="openWebsiteSection('gallery',this)">
+🖼️ Gallery
+</button>
 
-                <button onclick="openComingSoonSection('Enquiries')">
-                    📩 Enquiries
-                </button>
+<button
+data-section="testimonials"
+onclick="openWebsiteSection('testimonials',this)">
+⭐ Testimonials
+</button>
 
-                <button onclick="openComingSoonSection('Client Admin')">
-                    👤 Client Admin
-                </button>
+<button
+data-section="faq"
+onclick="openWebsiteSection('faq',this)">
+❓ FAQ
+</button>
 
-            </div>
+<button
+data-section="contact"
+onclick="openWebsiteSection('contact',this)">
+📞 Contact
+</button>
 
-        </aside>
+<button
+onclick="openComingSoonSection('Design')">
+🎨 Design
+</button>
 
-        <section class="website-content">
+<button
+onclick="openComingSoonSection('Social Media')">
+📱 Social Media
+</button>
 
-            <div id="websiteManagerContent">
-                <div class="loading">
-                    Select a website section.
-                </div>
-            </div>
+<button
+onclick="openComingSoonSection('SEO')">
+🔎 SEO
+</button>
 
-        </section>
+<button
+onclick="openComingSoonSection('Policies')">
+📄 Policies
+</button>
 
-    </div>
+<button
+onclick="openComingSoonSection('Enquiries')">
+📩 Enquiries
+</button>
+
+<button
+onclick="openComingSoonSection('Client Admin')">
+👤 Client Admin
+</button>
+
+</div>
+
+</aside>
+
+
+<section class="website-content">
+
+<div id="websiteManagerContent">
+
+<div class="loading">
+Select a website section.
+</div>
+
+</div>
+
+</section>
 
 </div>
 
 </div>
 
+</div>
 
-<div class="toast" id="toast"></div>
+
+<div class="toast"
+id="toast">
+</div>
 
 
 <script>
 
+"use strict";
+
+
+/* =========================
+SUPABASE
+========================= */
+
 const SUPABASE_URL =
-    "https://ywvdozdoanmcxscfofc.supabase.co";
+"https://ywvdozdoanmcxscfofc.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
+"sb_publishable_aAqO96BmDbYivhlgl_3z7g_1orXAscB";
 
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
+let supabaseClient = null;
 
 let clients = [];
+
 let currentUser = null;
+
 let currentProfile = null;
+
 let editingClientId = null;
+
 let selectedClientId = null;
 
 let websiteContent = null;
 
 
-/* TEMPLATE MAP */
-
-const templateMap = {
-
-    "template-v1":
-        "template/template-v1.html",
-
-    "template-v2":
-        "template/template-v2.html",
-
-    "template-v3":
-        "template/template-v3.html",
-
-    "template-v4":
-        "template/template-v4.html",
-
-    "template-v5":
-        "template/template-v5.html",
-
-    "template-v6":
-        "template/template-v6.html",
-
-    "template-v7":
-        "template/template-v7.html",
-
-    "template-v8":
-        "template/template-v8.html",
-
-    "template-v9":
-        "template/template-v9.html",
-
-    "template-v10":
-        "template/template-v10.html"
-
-};
-
-
-/* AUTH */
-
-async function init(){
-
-    try{
-
-        const {
-            data:{session},
-            error
-        } = await supabaseClient.auth.getSession();
-
-        if(error){
-            console.error(error);
-        }
-
-        if(!session){
-            location.href = "admin.html";
-            return;
-        }
-
-        currentUser = session.user;
-
-        await loadProfile();
-
-        await loadClients();
-
-    }catch(error){
-
-        console.error(error);
-
-        showToast(
-            "Unable to initialize Client Manager"
-        );
-
-    }
-
-}
-
-
-async function loadProfile(){
-
-    const {data,error} =
-        await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq("id",currentUser.id)
-        .maybeSingle();
-
-    if(error){
-
-        console.error(error);
-
-        showToast(
-            "Profile loading failed"
-        );
-
-        return;
-    }
-
-    currentProfile = data;
-
-}
-
-
-function isSuperAdmin(){
-
-    if(!currentProfile) return false;
-
-    return (
-        currentProfile.role === "super_admin" ||
-        currentProfile.role === "admin"
-    );
-
-}
-
-
-/* CLIENTS */
-
-async function loadClients(){
-
-    let query =
-        supabaseClient
-        .from("clients")
-        .select("*")
-        .order("created_at",{ascending:false});
-
-
-    if(!isSuperAdmin()){
-
-        if(!currentProfile?.client_id){
-
-            clients = [];
-
-            renderClients();
-
-            return;
-        }
-
-        query =
-            query.eq(
-                "id",
-                currentProfile.client_id
-            );
-
-    }
-
-
-    const {data,error} =
-        await query;
-
-
-    if(error){
-
-        console.error(error);
-
-        showToast(
-            "Clients load failed: " +
-            error.message
-        );
-
-        return;
-    }
-
-
-    clients = data || [];
-
-    updateStats();
-
-    renderClients();
-
-}
-
-
-function updateStats(){
-
-    const total =
-        clients.length;
-
-    const active =
-        clients.filter(
-            c => c.status === "active"
-        ).length;
-
-    const inactive =
-        clients.filter(
-            c => c.status === "inactive"
-        ).length;
-
-    const templates =
-        clients.filter(
-            c => c.template
-        ).length;
-
-
-    document.getElementById(
-        "totalClients"
-    ).textContent = total;
-
-    document.getElementById(
-        "activeClients"
-    ).textContent = active;
-
-    document.getElementById(
-        "inactiveClients"
-    ).textContent = inactive;
-
-    document.getElementById(
-        "templateClients"
-    ).textContent = templates;
-
-}
-
-
-/* RENDER CLIENTS */
-
-function renderClients(){
-
-    const container =
-        document.getElementById(
-            "clientsContainer"
-        );
-
-    const search =
-        document.getElementById(
-            "searchInput"
-        ).value
-        .toLowerCase()
-        .trim();
-
-    const status =
-        document.getElementById(
-            "statusFilter"
-        ).value;
-
-
-    let filtered =
-        clients.filter(client => {
-
-            const text = (
-
-                client.company_name || ""
-
-            ) + " " + (
-
-                client.slug || ""
-
-            ) + " " + (
-
-                client.domain || ""
-
-            ) + " " + (
-
-                client.hosting_url || ""
-
-            );
-
-
-            const matchSearch =
-                !search ||
-                text.toLowerCase()
-                .includes(search);
-
-
-            const matchStatus =
-                !status ||
-                client.status === status;
-
-
-            return matchSearch &&
-                   matchStatus;
-
-        });
-
-
-    if(!filtered.length){
-
-        container.innerHTML = `
-            <div class="empty">
-                No clients found.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        filtered.map(client => {
-
-            const template =
-                normalizeTemplate(
-                    client.template
-                );
-
-
-            return `
-
-            <div class="client-card">
-
-                <div class="client-top">
-
-                    <div class="client-name">
-                        ${escapeHtml(
-                            client.company_name || "Unnamed Client"
-                        )}
-                    </div>
-
-                    <span class="badge ${
-                        client.status === "active"
-                        ? "active"
-                        : "inactive"
-                    }">
-                        ${escapeHtml(
-                            client.status || "inactive"
-                        )}
-                    </span>
-
-                </div>
-
-
-                <div class="client-info">
-
-                    <div class="info-row">
-                        <span class="info-label">
-                            Slug
-                        </span>
-
-                        <span class="info-value">
-                            ${escapeHtml(
-                                client.slug || "-"
-                            )}
-                        </span>
-                    </div>
-
-
-                    <div class="info-row">
-                        <span class="info-label">
-                            Domain
-                        </span>
-
-                        <span class="info-value">
-                            ${escapeHtml(
-                                client.domain || "-"
-                            )}
-                        </span>
-                    </div>
-
-
-                    <div class="info-row">
-                        <span class="info-label">
-                            Template
-                        </span>
-
-                        <span class="info-value">
-                            ${escapeHtml(
-                                client.template || "-"
-                            )}
-                        </span>
-                    </div>
-
-
-                    <div class="info-row">
-                        <span class="info-label">
-                            Hosting
-                        </span>
-
-                        <span class="info-value">
-                            ${escapeHtml(
-                                client.hosting_type || "-"
-                            )}
-                        </span>
-                    </div>
-
-
-                    <div class="info-row">
-                        <span class="info-label">
-                            Hosting URL
-                        </span>
-
-                        <span class="info-value">
-                            ${escapeHtml(
-                                client.hosting_url || "-"
-                            )}
-                        </span>
-                    </div>
-
-                </div>
-
-
-                <div class="client-actions">
-
-                    <button
-                        class="small-btn"
-                        onclick="previewClient('${client.id}')">
-                        👁 Preview
-                    </button>
-
-                    <button
-                        class="small-btn"
-                        onclick="openLiveWebsite('${client.id}')">
-                        🌐 Live Website
-                    </button>
-
-                    <button
-                        class="small-btn manage-btn"
-                        onclick="openWebsiteManager('${client.id}')">
-                        ⚙️ Manage Website
-                    </button>
-
-                    <button
-                        class="small-btn"
-                        onclick="editClient('${client.id}')">
-                        ✏️ Edit
-                    </button>
-
-                    <button
-                        class="small-btn"
-                        onclick="toggleClientStatus('${client.id}')">
-                        ${
-                            client.status === "active"
-                            ? "⏸ Deactivate"
-                            : "▶ Activate"
-                        }
-                    </button>
-
-                    ${
-                        isSuperAdmin()
-                        ? `
-                        <button
-                            class="small-btn danger"
-                            onclick="deleteClient('${client.id}')">
-                            🗑 Delete
-                        </button>
-                        `
-                        : ""
-                    }
-
-                </div>
-
-            </div>
-
-            `;
-
-        }).join("");
-
-}
-
-
-/* CREATE CLIENT */
-
-function openCreateModal(){
-
-    editingClientId = null;
-
-    document.getElementById(
-        "clientModalTitle"
-    ).textContent = "Add Client";
-
-
-    document.getElementById(
-        "companyName"
-    ).value = "";
-
-    document.getElementById(
-        "clientSlug"
-    ).value = "";
-
-    document.getElementById(
-        "clientStatus"
-    ).value = "active";
-
-    document.getElementById(
-        "clientDomain"
-    ).value = "";
-
-    document.getElementById(
-        "hostingType"
-    ).value = "GitHub Pages";
-
-    document.getElementById(
-        "hostingUrl"
-    ).value = "";
-
-    document.getElementById(
-        "clientTemplate"
-    ).value = "template-v1";
-
-
-    openModal("clientModal");
-
-}
-
-
-document.getElementById(
-    "companyName"
-).addEventListener(
-    "input",
-    function(){
-
-        if(editingClientId) return;
-
-        document.getElementById(
-            "clientSlug"
-        ).value =
-            slugify(this.value);
-
-    }
-);
-
-
-/* EDIT CLIENT */
-
-function editClient(id){
-
-    const client =
-        clients.find(
-            c => c.id === id
-        );
-
-    if(!client) return;
-
-
-    editingClientId = id;
-
-
-    document.getElementById(
-        "clientModalTitle"
-    ).textContent = "Edit Client";
-
-
-    document.getElementById(
-        "companyName"
-    ).value =
-        client.company_name || "";
-
-
-    document.getElementById(
-        "clientSlug"
-    ).value =
-        client.slug || "";
-
-
-    document.getElementById(
-        "clientStatus"
-    ).value =
-        client.status || "active";
-
-
-    document.getElementById(
-        "clientDomain"
-    ).value =
-        client.domain || "";
-
-
-    document.getElementById(
-        "hostingType"
-    ).value =
-        client.hosting_type ||
-        "GitHub Pages";
-
-
-    document.getElementById(
-        "hostingUrl"
-    ).value =
-        client.hosting_url || "";
-
-
-    document.getElementById(
-        "clientTemplate"
-    ).value =
-        normalizeTemplate(
-            client.template
-        );
-
-
-    openModal("clientModal");
-
-}
-
-
-/* SAVE CLIENT */
-
-async function saveClient(){
-
-    const companyName =
-        document.getElementById(
-            "companyName"
-        ).value.trim();
-
-
-    const slug =
-        document.getElementById(
-            "clientSlug"
-        ).value.trim();
-
-
-    if(!companyName){
-
-        showToast(
-            "Company name required"
-        );
-
-        return;
-    }
-
-
-    if(!slug){
-
-        showToast(
-            "Client slug required"
-        );
-
-        return;
-    }
-
-
-    const payload = {
-
-        company_name:
-            companyName,
-
-        slug:
-            slug,
-
-        status:
-            document.getElementById(
-                "clientStatus"
-            ).value,
-
-        domain:
-            document.getElementById(
-                "clientDomain"
-            ).value.trim(),
-
-        hosting_type:
-            document.getElementById(
-                "hostingType"
-            ).value,
-
-        hosting_url:
-            document.getElementById(
-                "hostingUrl"
-            ).value.trim(),
-
-        template:
-            document.getElementById(
-                "clientTemplate"
-            ).value
-
-    };
-
-
-    let result;
-
-
-    if(editingClientId){
-
-        result =
-            await supabaseClient
-            .from("clients")
-            .update(payload)
-            .eq("id",editingClientId);
-
-    }else{
-
-        result =
-            await supabaseClient
-            .from("clients")
-            .insert(payload);
-
-    }
-
-
-    if(result.error){
-
-        console.error(result.error);
-
-        showToast(
-            result.error.message
-        );
-
-        return;
-    }
-
-
-    closeModal("clientModal");
-
-    showToast(
-        editingClientId
-        ? "Client updated successfully"
-        : "Client created successfully"
-    );
-
-
-    await loadClients();
-
-}
-
-
-/* STATUS */
-
-async function toggleClientStatus(id){
-
-    const client =
-        clients.find(
-            c => c.id === id
-        );
-
-    if(!client) return;
-
-
-    const newStatus =
-        client.status === "active"
-        ? "inactive"
-        : "active";
-
-
-    const {error} =
-        await supabaseClient
-        .from("clients")
-        .update({
-            status:newStatus
-        })
-        .eq("id",id);
-
-
-    if(error){
-
-        showToast(
-            error.message
-        );
-
-        return;
-    }
-
-
-    showToast(
-        newStatus === "active"
-        ? "Client activated"
-        : "Client deactivated"
-    );
-
-
-    await loadClients();
-
-}
-
-
-/* DELETE */
-
-async function deleteClient(id){
-
-    const client =
-        clients.find(
-            c => c.id === id
-        );
-
-    if(!client) return;
-
-
-    const ok =
-        confirm(
-            `Delete "${client.company_name}"?\n\nThis action cannot be undone.`
-        );
-
-
-    if(!ok) return;
-
-
-    const {error} =
-        await supabaseClient
-        .from("clients")
-        .delete()
-        .eq("id",id);
-
-
-    if(error){
-
-        showToast(
-            error.message
-        );
-
-        return;
-    }
-
-
-    showToast(
-        "Client deleted"
-    );
-
-
-    await loadClients();
-
-}
-
-
-/* PREVIEW */
-
-function previewClient(id){
-
-    window.open(
-        `preview.html?client=${encodeURIComponent(id)}`,
-        "_blank"
-    );
-
-}
-
-
-/* LIVE WEBSITE */
-
-function openLiveWebsite(id){
-
-    const client =
-        clients.find(
-            c => c.id === id
-        );
-
-    if(!client) return;
-
-
-    let url =
-        client.hosting_url ||
-        client.domain;
-
-
-    if(!url){
-
-        showToast(
-            "Hosting URL / domain is not available"
-        );
-
-        return;
-    }
-
-
-    if(
-        !url.startsWith("http://") &&
-        !url.startsWith("https://")
-    ){
-
-        url =
-            "https://" + url;
-
-    }
-
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-}
-
-
 /* =========================
-   WEBSITE MANAGER
+HELPERS
 ========================= */
-
-async function openWebsiteManager(id){
-
-    const client =
-        clients.find(
-            c => c.id === id
-        );
-
-    if(!client) return;
-
-
-    selectedClientId = id;
-
-
-    document.getElementById(
-        "managerClientName"
-    ).textContent =
-        client.company_name || "Client";
-
-
-    openModal(
-        "websiteModal"
-    );
-
-
-    await openWebsiteSection(
-        "general",
-        document.querySelector(
-            ".website-nav button"
-        )
-    );
-
-}
-
-
-async function openWebsiteSection(
-    section,
-    button
-){
-
-    document
-        .querySelectorAll(
-            ".website-nav button"
-        )
-        .forEach(
-            b => b.classList.remove("active")
-        );
-
-
-    if(button){
-        button.classList.add("active");
-    }
-
-
-    const container =
-        document.getElementById(
-            "websiteManagerContent"
-        );
-
-
-    container.innerHTML =
-        `<div class="loading">
-            Loading ${section}...
-        </div>`;
-
-
-    try{
-
-        switch(section){
-
-            case "general":
-                await renderGeneral(container);
-                break;
-
-            case "hero":
-                await renderHero(container);
-                break;
-
-            case "about":
-                await renderAbout(container);
-                break;
-
-            case "products":
-                await renderProducts(container);
-                break;
-
-            case "manufacturing":
-                await renderManufacturing(container);
-                break;
-
-            case "quality":
-                await renderQuality(container);
-                break;
-
-            case "industries":
-                await renderIndustries(container);
-                break;
-
-            case "gallery":
-                await renderGallery(container);
-                break;
-
-            case "testimonials":
-                await renderTestimonials(container);
-                break;
-
-            case "faq":
-                await renderFAQ(container);
-                break;
-
-        }
-
-    }catch(error){
-
-        console.error(error);
-
-        container.innerHTML =
-            `<div class="notice">
-                ${escapeHtml(
-                    error.message
-                )}
-            </div>`;
-
-    }
-
-}
-
-
-/* MAIN CONTENT ROW */
-
-async function getWebsiteContent(){
-
-    const {data,error} =
-        await supabaseClient
-        .from("client_website_content")
-        .select("*")
-        .eq("client_id",selectedClientId)
-        .maybeSingle();
-
-
-    if(error) throw error;
-
-
-    if(data){
-
-        websiteContent = data;
-
-        return data;
-
-    }
-
-
-    const {data:newData,error:newError} =
-        await supabaseClient
-        .from("client_website_content")
-        .insert({
-            client_id:selectedClientId
-        })
-        .select()
-        .single();
-
-
-    if(newError) throw newError;
-
-
-    websiteContent = newData;
-
-    return newData;
-
-}
-
-
-/* GENERAL */
-
-async function renderGeneral(container){
-
-    const data =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-
-            <div>
-                <div class="manager-title">
-                    General Website Settings
-                </div>
-
-                <div class="manager-description">
-                    Logo, contact details and top bar information.
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="section-title">
-                General / Contact
-            </div>
-
-            <div class="form-grid">
-
-                ${field(
-                    "logo_url",
-                    "Logo URL",
-                    data.logo_url
-                )}
-
-                ${field(
-                    "phone",
-                    "Phone",
-                    data.phone
-                )}
-
-                ${field(
-                    "email",
-                    "Email",
-                    data.email
-                )}
-
-                ${field(
-                    "whatsapp",
-                    "WhatsApp",
-                    data.whatsapp
-                )}
-
-                ${field(
-                    "address",
-                    "Address",
-                    data.address,
-                    true
-                )}
-
-                ${field(
-                    "topbar_text",
-                    "Top Bar Text",
-                    data.topbar_text,
-                    true
-                )}
-
-            </div>
-
-        </div>
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save General Settings
-        </button>
-
-    `;
-
-}
-
-
-/* HERO */
-
-async function renderHero(container){
-
-    const data =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-            <div>
-                <div class="manager-title">
-                    Hero Section
-                </div>
-
-                <div class="manager-description">
-                    Main website hero content.
-                </div>
-            </div>
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="form-grid">
-
-                ${field(
-                    "hero_eyebrow",
-                    "Hero Eyebrow",
-                    data.hero_eyebrow
-                )}
-
-                ${field(
-                    "hero_heading",
-                    "Hero Heading",
-                    data.hero_heading
-                )}
-
-                ${field(
-                    "hero_image_url",
-                    "Hero Image URL",
-                    data.hero_image_url
-                )}
-
-                ${field(
-                    "hero_description",
-                    "Hero Description",
-                    data.hero_description,
-                    true
-                )}
-
-            </div>
-
-        </div>
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save Hero
-        </button>
-
-    `;
-
-}
-
-
-/* ABOUT */
-
-async function renderAbout(container){
-
-    const data =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-            <div>
-                <div class="manager-title">
-                    About Section
-                </div>
-
-                <div class="manager-description">
-                    Company introduction and about image.
-                </div>
-            </div>
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="form-grid">
-
-                ${field(
-                    "about_eyebrow",
-                    "About Eyebrow",
-                    data.about_eyebrow
-                )}
-
-                ${field(
-                    "about_heading",
-                    "About Heading",
-                    data.about_heading
-                )}
-
-                ${field(
-                    "about_image_url",
-                    "About Image URL",
-                    data.about_image_url
-                )}
-
-                ${field(
-                    "about_description",
-                    "About Description",
-                    data.about_description,
-                    true
-                )}
-
-            </div>
-
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="section-title">
-                Statistics
-            </div>
-
-            <div class="form-grid">
-
-                ${field(
-                    "stat_1_value",
-                    "Stat 1 Value",
-                    data.stat_1_value
-                )}
-
-                ${field(
-                    "stat_1_label",
-                    "Stat 1 Label",
-                    data.stat_1_label
-                )}
-
-                ${field(
-                    "stat_2_value",
-                    "Stat 2 Value",
-                    data.stat_2_value
-                )}
-
-                ${field(
-                    "stat_2_label",
-                    "Stat 2 Label",
-                    data.stat_2_label
-                )}
-
-                ${field(
-                    "stat_3_value",
-                    "Stat 3 Value",
-                    data.stat_3_value
-                )}
-
-                ${field(
-                    "stat_3_label",
-                    "Stat 3 Label",
-                    data.stat_3_label
-                )}
-
-                ${field(
-                    "stat_4_value",
-                    "Stat 4 Value",
-                    data.stat_4_value
-                )}
-
-                ${field(
-                    "stat_4_label",
-                    "Stat 4 Label",
-                    data.stat_4_label
-                )}
-
-            </div>
-
-        </div>
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save About
-        </button>
-
-    `;
-
-}
-
-
-/* PRODUCTS */
-
-async function renderProducts(container){
-
-    const {data,error} =
-        await supabaseClient
-        .from("client_products")
-        .select("*")
-        .eq("client_id",selectedClientId)
-        .order("sort_order",{ascending:true});
-
-
-    if(error) throw error;
-
-
-    const content =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-            <div>
-                <div class="manager-title">
-                    Products
-                </div>
-
-                <div class="manager-description">
-                    Manage product section heading and products.
-                </div>
-            </div>
-
-            <button
-                class="primary-btn"
-                onclick="addProduct()">
-                + Add Product
-            </button>
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="form-grid">
-
-                ${field(
-                    "products_eyebrow",
-                    "Products Eyebrow",
-                    content.products_eyebrow
-                )}
-
-                ${field(
-                    "products_heading",
-                    "Products Heading",
-                    content.products_heading
-                )}
-
-                ${field(
-                    "products_description",
-                    "Products Description",
-                    content.products_description,
-                    true
-                )}
-
-            </div>
-
-        </div>
-
-
-        <div id="productsList">
-
-            ${
-                data.length
-                ? data.map(
-                    (item,index) =>
-                    productHtml(item,index)
-                  ).join("")
-                : `
-                    <div class="empty">
-                        No products added yet.
-                    </div>
-                  `
-            }
-
-        </div>
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save Products Section
-        </button>
-
-    `;
-
-}
-
-
-function productHtml(item,index){
-
-    return `
-
-        <div class="repeat-item">
-
-            <div class="repeat-head">
-
-                <span class="repeat-number">
-                    Product ${index + 1}
-                </span>
-
-                <button
-                    class="small-btn danger"
-                    onclick="deleteRow(
-                        'client_products',
-                        '${item.id}',
-                        'products'
-                    )">
-                    Delete
-                </button>
-
-            </div>
-
-            <div class="form-grid">
-
-                ${rowField(
-                    "product_name",
-                    "Product Name",
-                    item.product_name
-                )}
-
-                ${rowField(
-                    "product_code",
-                    "Product Code",
-                    item.product_code
-                )}
-
-                ${rowField(
-                    "image_url",
-                    "Image URL",
-                    item.image_url
-                )}
-
-                ${rowField(
-                    "enquiry_url",
-                    "Enquiry URL",
-                    item.enquiry_url
-                )}
-
-                ${rowField(
-                    "description",
-                    "Description",
-                    item.description,
-                    true
-                )}
-
-                ${rowField(
-                    "sort_order",
-                    "Sort Order",
-                    item.sort_order ?? index
-                )}
-
-            </div>
-
-            <button
-                class="small-btn"
-                onclick="updateRow(
-                    'client_products',
-                    '${item.id}',
-                    this.closest('.repeat-item')
-                )">
-                Save Product
-            </button>
-
-        </div>
-
-    `;
-
-}
-
-
-async function addProduct(){
-
-    const {error} =
-        await supabaseClient
-        .from("client_products")
-        .insert({
-            client_id:selectedClientId,
-            product_name:"New Product",
-            sort_order:0,
-            is_active:true
-        });
-
-
-    if(error){
-
-        showToast(error.message);
-
-        return;
-    }
-
-
-    showToast(
-        "Product added"
-    );
-
-
-    await openWebsiteSection(
-        "products",
-        findNavButton("products")
-    );
-
-}
-
-
-/* MANUFACTURING */
-
-async function renderManufacturing(container){
-
-    const {data,error} =
-        await supabaseClient
-        .from("client_manufacturing_steps")
-        .select("*")
-        .eq("client_id",selectedClientId)
-        .order("sort_order",{ascending:true});
-
-
-    if(error) throw error;
-
-
-    const content =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-
-            <div>
-                <div class="manager-title">
-                    Manufacturing Process
-                </div>
-
-                <div class="manager-description">
-                    Manage process section and manufacturing steps.
-                </div>
-            </div>
-
-            <button
-                class="primary-btn"
-                onclick="addManufacturingStep()">
-                + Add Step
-            </button>
-
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="form-grid">
-
-                ${field(
-                    "manufacturing_eyebrow",
-                    "Section Eyebrow",
-                    content.manufacturing_eyebrow
-                )}
-
-                ${field(
-                    "manufacturing_heading",
-                    "Section Heading",
-                    content.manufacturing_heading
-                )}
-
-                ${field(
-                    "manufacturing_description",
-                    "Section Description",
-                    content.manufacturing_description,
-                    true
-                )}
-
-            </div>
-
-        </div>
-
-
-        ${
-            data.length
-            ? data.map(
-                (item,index) => `
-
-                <div class="repeat-item">
-
-                    <div class="repeat-head">
-
-                        <span class="repeat-number">
-                            Step ${index + 1}
-                        </span>
-
-                        <button
-                            class="small-btn danger"
-                            onclick="deleteRow(
-                                'client_manufacturing_steps',
-                                '${item.id}',
-                                'manufacturing'
-                            )">
-                            Delete
-                        </button>
-
-                    </div>
-
-                    <div class="form-grid">
-
-                        ${rowField(
-                            "step_number",
-                            "Step Number",
-                            item.step_number
-                        )}
-
-                        ${rowField(
-                            "title",
-                            "Title",
-                            item.title
-                        )}
-
-                        ${rowField(
-                            "description",
-                            "Description",
-                            item.description,
-                            true
-                        )}
-
-                        ${rowField(
-                            "sort_order",
-                            "Sort Order",
-                            item.sort_order ?? index
-                        )}
-
-                    </div>
-
-                    <button
-                        class="small-btn"
-                        onclick="updateRow(
-                            'client_manufacturing_steps',
-                            '${item.id}',
-                            this.closest('.repeat-item')
-                        )">
-                        Save Step
-                    </button>
-
-                </div>
-
-                `
-              ).join("")
-            : `
-                <div class="empty">
-                    No manufacturing steps added.
-                </div>
-              `
-        }
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save Section
-        </button>
-
-    `;
-
-}
-
-
-async function addManufacturingStep(){
-
-    const {error} =
-        await supabaseClient
-        .from("client_manufacturing_steps")
-        .insert({
-            client_id:selectedClientId,
-            step_number:1,
-            title:"New Step",
-            description:"",
-            sort_order:0,
-            is_active:true
-        });
-
-
-    if(error){
-
-        showToast(error.message);
-
-        return;
-    }
-
-
-    await openWebsiteSection(
-        "manufacturing",
-        findNavButton("manufacturing")
-    );
-
-}
-
-
-/* QUALITY */
-
-async function renderQuality(container){
-
-    const {data,error} =
-        await supabaseClient
-        .from("client_quality")
-        .select("*")
-        .eq("client_id",selectedClientId)
-        .order("sort_order",{ascending:true});
-
-
-    if(error) throw error;
-
-
-    const content =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-
-            <div>
-                <div class="manager-title">
-                    Quality
-                </div>
-
-                <div class="manager-description">
-                    Manage quality section and quality points.
-                </div>
-            </div>
-
-            <button
-                class="primary-btn"
-                onclick="addQuality()">
-                + Add Quality
-            </button>
-
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="form-grid">
-
-                ${field(
-                    "quality_eyebrow",
-                    "Quality Eyebrow",
-                    content.quality_eyebrow
-                )}
-
-                ${field(
-                    "quality_heading",
-                    "Quality Heading",
-                    content.quality_heading
-                )}
-
-                ${field(
-                    "quality_description",
-                    "Quality Description",
-                    content.quality_description,
-                    true
-                )}
-
-            </div>
-
-        </div>
-
-
-        ${
-            data.length
-            ? data.map(
-                (item,index) => `
-
-                <div class="repeat-item">
-
-                    <div class="repeat-head">
-
-                        <span class="repeat-number">
-                            Quality ${index + 1}
-                        </span>
-
-                        <button
-                            class="small-btn danger"
-                            onclick="deleteRow(
-                                'client_quality',
-                                '${item.id}',
-                                'quality'
-                            )">
-                            Delete
-                        </button>
-
-                    </div>
-
-                    <div class="form-grid">
-
-                        ${rowField(
-                            "icon",
-                            "Icon",
-                            item.icon
-                        )}
-
-                        ${rowField(
-                            "title",
-                            "Title",
-                            item.title
-                        )}
-
-                        ${rowField(
-                            "description",
-                            "Description",
-                            item.description,
-                            true
-                        )}
-
-                        ${rowField(
-                            "sort_order",
-                            "Sort Order",
-                            item.sort_order ?? index
-                        )}
-
-                    </div>
-
-                    <button
-                        class="small-btn"
-                        onclick="updateRow(
-                            'client_quality',
-                            '${item.id}',
-                            this.closest('.repeat-item')
-                        )">
-                        Save Quality
-                    </button>
-
-                </div>
-
-                `
-              ).join("")
-            : `
-                <div class="empty">
-                    No quality points added.
-                </div>
-              `
-        }
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save Section
-        </button>
-
-    `;
-
-}
-
-
-async function addQuality(){
-
-    const {error} =
-        await supabaseClient
-        .from("client_quality")
-        .insert({
-            client_id:selectedClientId,
-            title:"New Quality Point",
-            description:"",
-            sort_order:0,
-            is_active:true
-        });
-
-
-    if(error){
-
-        showToast(error.message);
-
-        return;
-    }
-
-
-    await openWebsiteSection(
-        "quality",
-        findNavButton("quality")
-    );
-
-}
-
-
-/* INDUSTRIES */
-
-async function renderIndustries(container){
-
-    const {data,error} =
-        await supabaseClient
-        .from("client_industries")
-        .select("*")
-        .eq("client_id",selectedClientId)
-        .order("sort_order",{ascending:true});
-
-
-    if(error) throw error;
-
-
-    const content =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-
-            <div>
-                <div class="manager-title">
-                    Industries
-                </div>
-
-                <div class="manager-description">
-                    Manage industries displayed on the website.
-                </div>
-            </div>
-
-            <button
-                class="primary-btn"
-                onclick="addIndustry()">
-                + Add Industry
-            </button>
-
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="form-grid">
-
-                ${field(
-                    "industries_eyebrow",
-                    "Industries Eyebrow",
-                    content.industries_eyebrow
-                )}
-
-                ${field(
-                    "industries_heading",
-                    "Industries Heading",
-                    content.industries_heading
-                )}
-
-            </div>
-
-        </div>
-
-
-        ${
-            data.length
-            ? data.map(
-                (item,index) => `
-
-                <div class="repeat-item">
-
-                    <div class="repeat-head">
-
-                        <span class="repeat-number">
-                            Industry ${index + 1}
-                        </span>
-
-                        <button
-                            class="small-btn danger"
-                            onclick="deleteRow(
-                                'client_industries',
-                                '${item.id}',
-                                'industries'
-                            )">
-                            Delete
-                        </button>
-
-                    </div>
-
-                    <div class="form-grid">
-
-                        ${rowField(
-                            "name",
-                            "Industry Name",
-                            item.name
-                        )}
-
-                        ${rowField(
-                            "sort_order",
-                            "Sort Order",
-                            item.sort_order ?? index
-                        )}
-
-                    </div>
-
-                    <button
-                        class="small-btn"
-                        onclick="updateRow(
-                            'client_industries',
-                            '${item.id}',
-                            this.closest('.repeat-item')
-                        )">
-                        Save Industry
-                    </button>
-
-                </div>
-
-                `
-              ).join("")
-            : `
-                <div class="empty">
-                    No industries added.
-                </div>
-              `
-        }
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save Section
-        </button>
-
-    `;
-
-}
-
-
-async function addIndustry(){
-
-    const {error} =
-        await supabaseClient
-        .from("client_industries")
-        .insert({
-            client_id:selectedClientId,
-            name:"New Industry",
-            sort_order:0,
-            is_active:true
-        });
-
-
-    if(error){
-
-        showToast(error.message);
-
-        return;
-    }
-
-
-    await openWebsiteSection(
-        "industries",
-        findNavButton("industries")
-    );
-
-}
-
-
-/* GALLERY */
-
-async function renderGallery(container){
-
-    const {data,error} =
-        await supabaseClient
-        .from("client_gallery")
-        .select("*")
-        .eq("client_id",selectedClientId)
-        .order("sort_order",{ascending:true});
-
-
-    if(error) throw error;
-
-
-    const content =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-
-            <div>
-                <div class="manager-title">
-                    Gallery
-                </div>
-
-                <div class="manager-description">
-                    Manage website gallery images.
-                </div>
-            </div>
-
-            <button
-                class="primary-btn"
-                onclick="addGallery()">
-                + Add Image
-            </button>
-
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="form-grid">
-
-                ${field(
-                    "gallery_eyebrow",
-                    "Gallery Eyebrow",
-                    content.gallery_eyebrow
-                )}
-
-                ${field(
-                    "gallery_heading",
-                    "Gallery Heading",
-                    content.gallery_heading
-                )}
-
-                ${field(
-                    "gallery_description",
-                    "Gallery Description",
-                    content.gallery_description,
-                    true
-                )}
-
-            </div>
-
-        </div>
-
-
-        ${
-            data.length
-            ? data.map(
-                (item,index) => `
-
-                <div class="repeat-item">
-
-                    <div class="repeat-head">
-
-                        <span class="repeat-number">
-                            Image ${index + 1}
-                        </span>
-
-                        <button
-                            class="small-btn danger"
-                            onclick="deleteRow(
-                                'client_gallery',
-                                '${item.id}',
-                                'gallery'
-                            )">
-                            Delete
-                        </button>
-
-                    </div>
-
-                    <div class="form-grid">
-
-                        ${rowField(
-                            "image_url",
-                            "Image URL",
-                            item.image_url
-                        )}
-
-                        ${rowField(
-                            "title",
-                            "Title",
-                            item.title
-                        )}
-
-                        ${rowField(
-                            "sort_order",
-                            "Sort Order",
-                            item.sort_order ?? index
-                        )}
-
-                    </div>
-
-                    <button
-                        class="small-btn"
-                        onclick="updateRow(
-                            'client_gallery',
-                            '${item.id}',
-                            this.closest('.repeat-item')
-                        )">
-                        Save Image
-                    </button>
-
-                </div>
-
-                `
-              ).join("")
-            : `
-                <div class="empty">
-                    No gallery images added.
-                </div>
-              `
-        }
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save Gallery Section
-        </button>
-
-    `;
-
-}
-
-
-async function addGallery(){
-
-    const {error} =
-        await supabaseClient
-        .from("client_gallery")
-        .insert({
-            client_id:selectedClientId,
-            image_url:"",
-            title:"New Image",
-            sort_order:0,
-            is_active:true
-        });
-
-
-    if(error){
-
-        showToast(error.message);
-
-        return;
-    }
-
-
-    await openWebsiteSection(
-        "gallery",
-        findNavButton("gallery")
-    );
-
-}
-
-
-/* TESTIMONIALS */
-
-async function renderTestimonials(container){
-
-    const {data,error} =
-        await supabaseClient
-        .from("client_testimonials")
-        .select("*")
-        .eq("client_id",selectedClientId)
-        .order("sort_order",{ascending:true});
-
-
-    if(error) throw error;
-
-
-    const content =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-
-            <div>
-                <div class="manager-title">
-                    Testimonials
-                </div>
-
-                <div class="manager-description">
-                    Manage client/customer testimonials.
-                </div>
-            </div>
-
-            <button
-                class="primary-btn"
-                onclick="addTestimonial()">
-                + Add Testimonial
-            </button>
-
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="form-grid">
-
-                ${field(
-                    "testimonials_eyebrow",
-                    "Testimonials Eyebrow",
-                    content.testimonials_eyebrow
-                )}
-
-                ${field(
-                    "testimonials_heading",
-                    "Testimonials Heading",
-                    content.testimonials_heading
-                )}
-
-            </div>
-
-        </div>
-
-
-        ${
-            data.length
-            ? data.map(
-                (item,index) => `
-
-                <div class="repeat-item">
-
-                    <div class="repeat-head">
-
-                        <span class="repeat-number">
-                            Testimonial ${index + 1}
-                        </span>
-
-                        <button
-                            class="small-btn danger"
-                            onclick="deleteRow(
-                                'client_testimonials',
-                                '${item.id}',
-                                'testimonials'
-                            )">
-                            Delete
-                        </button>
-
-                    </div>
-
-                    <div class="form-grid">
-
-                        ${rowField(
-                            "customer_name",
-                            "Customer Name",
-                            item.customer_name
-                        )}
-
-                        ${rowField(
-                            "designation",
-                            "Designation",
-                            item.designation
-                        )}
-
-                        ${rowField(
-                            "message",
-                            "Message",
-                            item.message,
-                            true
-                        )}
-
-                        ${rowField(
-                            "sort_order",
-                            "Sort Order",
-                            item.sort_order ?? index
-                        )}
-
-                    </div>
-
-                    <button
-                        class="small-btn"
-                        onclick="updateRow(
-                            'client_testimonials',
-                            '${item.id}',
-                            this.closest('.repeat-item')
-                        )">
-                        Save Testimonial
-                    </button>
-
-                </div>
-
-                `
-              ).join("")
-            : `
-                <div class="empty">
-                    No testimonials added.
-                </div>
-              `
-        }
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save Testimonials Section
-        </button>
-
-    `;
-
-}
-
-
-async function addTestimonial(){
-
-    const {error} =
-        await supabaseClient
-        .from("client_testimonials")
-        .insert({
-            client_id:selectedClientId,
-            customer_name:"New Customer",
-            message:"",
-            sort_order:0,
-            is_active:true
-        });
-
-
-    if(error){
-
-        showToast(error.message);
-
-        return;
-    }
-
-
-    await openWebsiteSection(
-        "testimonials",
-        findNavButton("testimonials")
-    );
-
-}
-
-
-/* FAQ */
-
-async function renderFAQ(container){
-
-    const {data,error} =
-        await supabaseClient
-        .from("client_faq")
-        .select("*")
-        .eq("client_id",selectedClientId)
-        .order("sort_order",{ascending:true});
-
-
-    if(error) throw error;
-
-
-    const content =
-        await getWebsiteContent();
-
-
-    container.innerHTML = `
-
-        <div class="manager-head">
-
-            <div>
-                <div class="manager-title">
-                    FAQ
-                </div>
-
-                <div class="manager-description">
-                    Manage frequently asked questions.
-                </div>
-            </div>
-
-            <button
-                class="primary-btn"
-                onclick="addFAQ()">
-                + Add FAQ
-            </button>
-
-        </div>
-
-
-        <div class="section-card">
-
-            <div class="form-grid">
-
-                ${field(
-                    "faq_eyebrow",
-                    "FAQ Eyebrow",
-                    content.faq_eyebrow
-                )}
-
-                ${field(
-                    "faq_heading",
-                    "FAQ Heading",
-                    content.faq_heading
-                )}
-
-            </div>
-
-        </div>
-
-
-        ${
-            data.length
-            ? data.map(
-                (item,index) => `
-
-                <div class="repeat-item">
-
-                    <div class="repeat-head">
-
-                        <span class="repeat-number">
-                            FAQ ${index + 1}
-                        </span>
-
-                        <button
-                            class="small-btn danger"
-                            onclick="deleteRow(
-                                'client_faq',
-                                '${item.id}',
-                                'faq'
-                            )">
-                            Delete
-                        </button>
-
-                    </div>
-
-                    <div class="form-grid">
-
-                        ${rowField(
-                            "question",
-                            "Question",
-                            item.question
-                        )}
-
-                        ${rowField(
-                            "sort_order",
-                            "Sort Order",
-                            item.sort_order ?? index
-                        )}
-
-                        ${rowField(
-                            "answer",
-                            "Answer",
-                            item.answer,
-                            true
-                        )}
-
-                    </div>
-
-                    <button
-                        class="small-btn"
-                        onclick="updateRow(
-                            'client_faq',
-                            '${item.id}',
-                            this.closest('.repeat-item')
-                        )">
-                        Save FAQ
-                    </button>
-
-                </div>
-
-                `
-              ).join("")
-            : `
-                <div class="empty">
-                    No FAQs added.
-                </div>
-              `
-        }
-
-
-        <button
-            class="primary-btn"
-            onclick="saveWebsiteFields()">
-            Save FAQ Section
-        </button>
-
-    `;
-
-}
-
-
-async function addFAQ(){
-
-    const {error} =
-        await supabaseClient
-        .from("client_faq")
-        .insert({
-            client_id:selectedClientId,
-            question:"New Question",
-            answer:"",
-            sort_order:0,
-            is_active:true
-        });
-
-
-    if(error){
-
-        showToast(error.message);
-
-        return;
-    }
-
-
-    await openWebsiteSection(
-        "faq",
-        findNavButton("faq")
-    );
-
-}
-
-
-/* SAVE MAIN CONTENT */
-
-async function saveWebsiteFields(){
-
-    const fields =
-        document.querySelectorAll(
-            "#websiteManagerContent [data-field]"
-        );
-
-
-    const payload = {};
-
-
-    fields.forEach(input => {
-
-        payload[
-            input.dataset.field
-        ] =
-            input.value;
-
-    });
-
-
-    if(!Object.keys(payload).length){
-
-        showToast(
-            "Nothing to save"
-        );
-
-        return;
-    }
-
-
-    const {error} =
-        await supabaseClient
-        .from("client_website_content")
-        .update(payload)
-        .eq("client_id",selectedClientId);
-
-
-    if(error){
-
-        console.error(error);
-
-        showToast(
-            error.message
-        );
-
-        return;
-    }
-
-
-    showToast(
-        "Website content saved successfully"
-    );
-
-}
-
-
-/* UPDATE REPEATED ROW */
-
-async function updateRow(
-    table,
-    id,
-    box
-){
-
-    const inputs =
-        box.querySelectorAll(
-            "[data-row-field]"
-        );
-
-
-    const payload = {};
-
-
-    inputs.forEach(input => {
-
-        let value =
-            input.value;
-
-        if(
-            input.dataset.rowField ===
-            "sort_order" ||
-            input.dataset.rowField ===
-            "step_number"
-        ){
-
-            value =
-                value === ""
-                ? null
-                : Number(value);
-
-        }
-
-
-        payload[
-            input.dataset.rowField
-        ] = value;
-
-    });
-
-
-    const {error} =
-        await supabaseClient
-        .from(table)
-        .update(payload)
-        .eq("id",id)
-        .eq("client_id",selectedClientId);
-
-
-    if(error){
-
-        showToast(
-            error.message
-        );
-
-        return;
-    }
-
-
-    showToast(
-        "Saved successfully"
-    );
-
-}
-
-
-/* DELETE ROW */
-
-async function deleteRow(
-    table,
-    id,
-    section
-){
-
-    if(
-        !confirm(
-            "Delete this item?"
-        )
-    ) return;
-
-
-    const {error} =
-        await supabaseClient
-        .from(table)
-        .delete()
-        .eq("id",id)
-        .eq("client_id",selectedClientId);
-
-
-    if(error){
-
-        showToast(
-            error.message
-        );
-
-        return;
-    }
-
-
-    showToast(
-        "Deleted successfully"
-    );
-
-
-    await openWebsiteSection(
-        section,
-        findNavButton(section)
-    );
-
-}
-
-
-/* FIELD HELPERS */
-
-function field(
-    name,
-    label,
-    value,
-    full=false
-){
-
-    return `
-
-        <div class="field ${full ? "full" : ""}">
-
-            <label>
-                ${escapeHtml(label)}
-            </label>
-
-            ${
-                full
-                ? `
-                <textarea
-                    data-field="${name}"
-                >${escapeHtml(value || "")}</textarea>
-                `
-                : `
-                <input
-                    data-field="${name}"
-                    value="${escapeAttr(value || "")}"
-                >
-                `
-            }
-
-        </div>
-
-    `;
-
-}
-
-
-function rowField(
-    name,
-    label,
-    value,
-    full=false
-){
-
-    return `
-
-        <div class="field ${full ? "full" : ""}">
-
-            <label>
-                ${escapeHtml(label)}
-            </label>
-
-            ${
-                full
-                ? `
-                <textarea
-                    data-row-field="${name}"
-                >${escapeHtml(value || "")}</textarea>
-                `
-                : `
-                <input
-                    data-row-field="${name}"
-                    value="${escapeAttr(value ?? "")}"
-                >
-                `
-            }
-
-        </div>
-
-    `;
-
-}
-
-
-/* COMING SOON */
-
-function openComingSoonSection(name){
-
-    document.getElementById(
-        "websiteManagerContent"
-    ).innerHTML = `
-
-        <div class="manager-head">
-
-            <div>
-                <div class="manager-title">
-                    ${escapeHtml(name)}
-                </div>
-
-                <div class="manager-description">
-                    This module is reserved for the next database-backed phase.
-                </div>
-            </div>
-
-        </div>
-
-        <div class="notice">
-
-            ${escapeHtml(name)} ka UI central
-            Client Manager me reserved hai.
-
-            Is module ko tab connect karenge jab
-            iska database structure final hoga.
-
-        </div>
-
-    `;
-
-}
-
-
-/* UTILITIES */
-
-function normalizeTemplate(value){
-
-    if(!value)
-        return "template-v1";
-
-
-    let v =
-        value
-        .replace(/^\/+/,"")
-        .trim();
-
-
-    if(v.includes("template-v1"))
-        return "template-v1";
-
-    if(v.includes("template-v2"))
-        return "template-v2";
-
-    if(v.includes("template-v3"))
-        return "template-v3";
-
-    if(v.includes("template-v4"))
-        return "template-v4";
-
-    if(v.includes("template-v5"))
-        return "template-v5";
-
-    if(v.includes("template-v6"))
-        return "template-v6";
-
-    if(v.includes("template-v7"))
-        return "template-v7";
-
-    if(v.includes("template-v8"))
-        return "template-v8";
-
-    if(v.includes("template-v9"))
-        return "template-v9";
-
-    if(v.includes("template-v10"))
-        return "template-v10";
-
-
-    return value;
-
-}
-
-
-function slugify(value){
-
-    return value
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g,"-")
-        .replace(/^-+|-+$/g,"");
-
-}
-
 
 function escapeHtml(value){
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
 
 function escapeAttr(value){
 
-    return escapeHtml(value);
+return escapeHtml(value);
 
 }
 
 
-function findNavButton(section){
+function slugify(value){
 
-    const buttons =
-        document.querySelectorAll(
-            ".website-nav button"
-        );
-
-
-    const textMap = {
-
-        general:"General",
-        hero:"Hero",
-        about:"About",
-        products:"Products",
-        manufacturing:"Manufacturing",
-        quality:"Quality",
-        industries:"Industries",
-        gallery:"Gallery",
-        testimonials:"Testimonials",
-        faq:"FAQ"
-
-    };
-
-
-    return [...buttons]
-        .find(
-            b =>
-            b.textContent
-            .toLowerCase()
-            .includes(
-                (textMap[section] || section)
-                .toLowerCase()
-            )
-        ) || null;
+return String(value || "")
+.toLowerCase()
+.trim()
+.replace(/[^a-z0-9]+/g,"-")
+.replace(/^-+|-+$/g,"");
 
 }
 
 
-/* MODAL */
+function normalizeTemplate(value){
+
+if(!value)
+return "template-v1";
+
+const s =
+String(value)
+.replace(/^\/+/,"")
+.trim()
+.toLowerCase();
+
+const match =
+s.match(/template-v(10|[1-9])/);
+
+return match
+? `template-v${match[1]}`
+: "template-v1";
+
+}
+
+
+function safeUrl(value){
+
+let url =
+String(value || "").trim();
+
+if(!url)
+return "";
+
+if(!/^https?:\/\//i.test(url))
+url = "https://" + url;
+
+return url;
+
+}
+
+
+function showToast(message){
+
+const toast =
+document.getElementById("toast");
+
+toast.textContent =
+String(message || "");
+
+toast.classList.add("show");
+
+clearTimeout(window.toastTimer);
+
+window.toastTimer =
+setTimeout(
+()=>{
+toast.classList.remove("show");
+},
+3500
+);
+
+}
+
+
+function fatal(message){
+
+console.error(message);
+
+const box =
+document.getElementById("clientsContainer");
+
+if(box){
+
+box.innerHTML = `
+<div class="error-box">
+<b>Client Manager Error</b><br><br>
+${escapeHtml(message)}
+</div>
+`;
+
+}
+
+}
+
+
+/* =========================
+INIT
+========================= */
+
+async function init(){
+
+try{
+
+if(
+!window.supabase ||
+!window.supabase.createClient
+){
+
+throw new Error(
+"Supabase library load nahi hui. Internet/CDN check karo."
+);
+
+}
+
+
+supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY,
+{
+auth:{
+persistSession:true,
+autoRefreshToken:true,
+detectSessionInUrl:true,
+storage:window.localStorage
+}
+}
+);
+
+
+const {
+data,
+error
+} =
+await supabaseClient.auth.getSession();
+
+
+if(error)
+throw error;
+
+
+if(!data.session){
+
+location.href =
+"admin.html";
+
+return;
+
+}
+
+
+currentUser =
+data.session.user;
+
+
+await loadProfile();
+
+await loadClients();
+
+
+}catch(error){
+
+console.error(error);
+
+fatal(
+error?.message ||
+"Client Manager initialize nahi ho saka."
+);
+
+}
+
+}
+
+
+/* =========================
+PROFILE
+========================= */
+
+async function loadProfile(){
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("profiles")
+.select("*")
+.eq("id",currentUser.id)
+.maybeSingle();
+
+
+if(error)
+throw error;
+
+
+if(!data){
+
+throw new Error(
+"Logged-in user ka profile nahi mila."
+);
+
+}
+
+
+currentProfile =
+data;
+
+}
+
+
+function isSuperAdmin(){
+
+return [
+"super_admin",
+"admin"
+].includes(
+currentProfile?.role
+);
+
+}
+
+
+/* =========================
+CLIENTS
+========================= */
+
+async function loadClients(){
+
+let query =
+supabaseClient
+.from("clients")
+.select("*")
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if(!isSuperAdmin()){
+
+if(!currentProfile?.client_id){
+
+clients = [];
+
+updateStats();
+
+renderClients();
+
+return;
+
+}
+
+query =
+query.eq(
+"id",
+currentProfile.client_id
+);
+
+}
+
+
+const {
+data,
+error
+} =
+await query;
+
+
+if(error)
+throw error;
+
+
+clients =
+data || [];
+
+
+updateStats();
+
+renderClients();
+
+}
+
+
+function updateStats(){
+
+document.getElementById(
+"totalClients"
+).textContent =
+clients.length;
+
+
+document.getElementById(
+"activeClients"
+).textContent =
+clients.filter(
+c=>c.status==="active"
+).length;
+
+
+document.getElementById(
+"inactiveClients"
+).textContent =
+clients.filter(
+c=>c.status==="inactive"
+).length;
+
+
+document.getElementById(
+"templateClients"
+).textContent =
+clients.filter(
+c=>c.template
+).length;
+
+}
+
+
+/* =========================
+CLIENT CARD
+========================= */
+
+function renderClients(){
+
+const box =
+document.getElementById(
+"clientsContainer"
+);
+
+
+const search =
+(
+document.getElementById(
+"searchInput"
+).value || ""
+)
+.toLowerCase()
+.trim();
+
+
+const status =
+document.getElementById(
+"statusFilter"
+).value;
+
+
+const list =
+clients.filter(client=>{
+
+const searchable = [
+client.company_name,
+client.slug,
+client.domain,
+client.hosting_url,
+client.template
+]
+.filter(Boolean)
+.join(" ")
+.toLowerCase();
+
+
+return (
+(!search ||
+searchable.includes(search))
+&&
+(!status ||
+client.status===status)
+);
+
+});
+
+
+if(!list.length){
+
+box.innerHTML =
+`
+<div class="empty">
+No clients found.
+</div>
+`;
+
+return;
+
+}
+
+
+box.innerHTML =
+list.map(client=>`
+
+<div class="client-card">
+
+<div class="client-top">
+
+<div class="client-name">
+${escapeHtml(
+client.company_name ||
+"Unnamed Client"
+)}
+</div>
+
+<span class="badge ${
+client.status==="active"
+?"active"
+:"inactive"
+}">
+${escapeHtml(
+client.status || "inactive"
+)}
+</span>
+
+</div>
+
+
+<div class="client-info">
+
+${info(
+"Slug",
+client.slug
+)}
+
+${info(
+"Domain",
+client.domain
+)}
+
+${info(
+"Template",
+normalizeTemplate(client.template)
+)}
+
+${info(
+"Hosting",
+client.hosting_type
+)}
+
+${info(
+"Hosting URL",
+client.hosting_url
+)}
+
+</div>
+
+
+<div class="client-actions">
+
+<button
+class="small-btn"
+onclick="previewClient('${client.id}')">
+👁 Preview
+</button>
+
+
+<button
+class="small-btn"
+onclick="openLiveWebsite('${client.id}')">
+🌐 Live Website
+</button>
+
+
+<button
+class="small-btn manage-btn"
+onclick="openWebsiteManager('${client.id}')">
+⚙️ Manage Website
+</button>
+
+
+<button
+class="small-btn"
+onclick="editClient('${client.id}')">
+✏️ Edit
+</button>
+
+
+<button
+class="small-btn"
+onclick="toggleClientStatus('${client.id}')">
+
+${
+client.status==="active"
+?"⏸ Deactivate"
+:"▶ Activate"
+}
+
+</button>
+
+
+${
+isSuperAdmin()
+?
+`
+<button
+class="small-btn danger"
+onclick="deleteClient('${client.id}')">
+🗑 Delete
+</button>
+`
+:""
+}
+
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+
+function info(label,value){
+
+return `
+
+<div class="info-row">
+
+<span class="info-label">
+${escapeHtml(label)}
+</span>
+
+<span class="info-value">
+${escapeHtml(value || "-")}
+</span>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+CLIENT MODAL
+========================= */
+
+function openCreateModal(){
+
+editingClientId = null;
+
+document.getElementById(
+"clientModalTitle"
+).textContent =
+"Add Client";
+
+
+document.getElementById(
+"companyName"
+).value = "";
+
+
+document.getElementById(
+"clientSlug"
+).value = "";
+
+
+document.getElementById(
+"clientDomain"
+).value = "";
+
+
+document.getElementById(
+"hostingUrl"
+).value = "";
+
+
+document.getElementById(
+"clientStatus"
+).value =
+"active";
+
+
+document.getElementById(
+"hostingType"
+).value =
+"GitHub Pages";
+
+
+document.getElementById(
+"clientTemplate"
+).value =
+"template-v1";
+
+
+openModal(
+"clientModal"
+);
+
+}
+
+
+document.getElementById(
+"companyName"
+).addEventListener(
+"input",
+function(){
+
+if(!editingClientId){
+
+document.getElementById(
+"clientSlug"
+).value =
+slugify(this.value);
+
+}
+
+}
+);
+
+
+/* =========================
+EDIT CLIENT
+========================= */
+
+function editClient(id){
+
+const client =
+clients.find(
+x=>x.id===id
+);
+
+
+if(!client)
+return;
+
+
+editingClientId = id;
+
+
+document.getElementById(
+"clientModalTitle"
+).textContent =
+"Edit Client";
+
+
+document.getElementById(
+"companyName"
+).value =
+client.company_name || "";
+
+
+document.getElementById(
+"clientSlug"
+).value =
+client.slug || "";
+
+
+document.getElementById(
+"clientDomain"
+).value =
+client.domain || "";
+
+
+document.getElementById(
+"hostingUrl"
+).value =
+client.hosting_url || "";
+
+
+document.getElementById(
+"clientStatus"
+).value =
+client.status || "active";
+
+
+document.getElementById(
+"hostingType"
+).value =
+client.hosting_type ||
+"GitHub Pages";
+
+
+document.getElementById(
+"clientTemplate"
+).value =
+normalizeTemplate(
+client.template
+);
+
+
+openModal(
+"clientModal"
+);
+
+}
+
+
+/* =========================
+SAVE CLIENT
+========================= */
+
+async function saveClient(){
+
+try{
+
+const company_name =
+document.getElementById(
+"companyName"
+).value.trim();
+
+
+const slug =
+slugify(
+document.getElementById(
+"clientSlug"
+).value
+);
+
+
+if(!company_name){
+
+showToast(
+"Company name required."
+);
+
+return;
+
+}
+
+
+if(!slug){
+
+showToast(
+"Client slug required."
+);
+
+return;
+
+}
+
+
+const payload = {
+
+company_name,
+
+slug,
+
+status:
+document.getElementById(
+"clientStatus"
+).value,
+
+domain:
+document.getElementById(
+"clientDomain"
+).value.trim(),
+
+hosting_type:
+document.getElementById(
+"hostingType"
+).value,
+
+hosting_url:
+document.getElementById(
+"hostingUrl"
+).value.trim(),
+
+template:
+document.getElementById(
+"clientTemplate"
+).value
+
+};
+
+
+let result;
+
+
+if(editingClientId){
+
+result =
+await supabaseClient
+.from("clients")
+.update(payload)
+.eq(
+"id",
+editingClientId
+);
+
+}else{
+
+result =
+await supabaseClient
+.from("clients")
+.insert(payload);
+
+}
+
+
+if(result.error){
+
+if(
+result.error.code === "23505"
+){
+
+throw new Error(
+"Ye client slug already exist karta hai. Dusra slug use karo."
+);
+
+}
+
+throw result.error;
+
+}
+
+
+closeModal(
+"clientModal"
+);
+
+
+showToast(
+editingClientId
+?
+"Client updated successfully."
+:
+"Client created successfully."
+);
+
+
+await loadClients();
+
+
+}catch(error){
+
+console.error(error);
+
+showToast(
+error.message ||
+"Client save nahi ho saka."
+);
+
+}
+
+}
+
+
+/* =========================
+STATUS
+========================= */
+
+async function toggleClientStatus(id){
+
+try{
+
+const client =
+clients.find(
+x=>x.id===id
+);
+
+if(!client)
+return;
+
+
+const status =
+client.status==="active"
+?
+"inactive"
+:
+"active";
+
+
+const {
+error
+} =
+await supabaseClient
+.from("clients")
+.update({status})
+.eq("id",id);
+
+
+if(error)
+throw error;
+
+
+showToast(
+status==="active"
+?
+"Client activated."
+:
+"Client deactivated."
+);
+
+
+await loadClients();
+
+
+}catch(error){
+
+showToast(
+error.message
+);
+
+}
+
+}
+
+
+/* =========================
+DELETE
+========================= */
+
+async function deleteClient(id){
+
+const client =
+clients.find(
+x=>x.id===id
+);
+
+
+if(!client)
+return;
+
+
+if(
+!confirm(
+`Delete "${client.company_name}"?\n\nThis action cannot be undone.`
+)
+)
+return;
+
+
+try{
+
+const {
+error
+} =
+await supabaseClient
+.from("clients")
+.delete()
+.eq("id",id);
+
+
+if(error)
+throw error;
+
+
+showToast(
+"Client deleted."
+);
+
+
+await loadClients();
+
+
+}catch(error){
+
+showToast(
+error.message
+);
+
+}
+
+}
+
+
+/* =========================
+PREVIEW / LIVE
+========================= */
+
+function previewClient(id){
+
+window.open(
+`preview.html?client=${encodeURIComponent(id)}`,
+"_blank"
+);
+
+}
+
+
+function openLiveWebsite(id){
+
+const client =
+clients.find(
+x=>x.id===id
+);
+
+
+if(!client)
+return;
+
+
+const url =
+safeUrl(
+client.hosting_url ||
+client.domain
+);
+
+
+if(!url){
+
+showToast(
+"Hosting URL / domain available nahi hai."
+);
+
+return;
+
+}
+
+
+window.open(
+url,
+"_blank"
+);
+
+}
+
+
+/* =========================
+WEBSITE MANAGER
+========================= */
+
+async function openWebsiteManager(id){
+
+const client =
+clients.find(
+x=>x.id===id
+);
+
+
+if(!client)
+return;
+
+
+selectedClientId = id;
+
+websiteContent = null;
+
+
+document.getElementById(
+"managerClientName"
+).textContent =
+client.company_name ||
+"Client";
+
+
+openModal(
+"websiteModal"
+);
+
+
+const generalButton =
+document.querySelector(
+'.website-nav button[data-section="general"]'
+);
+
+
+await openWebsiteSection(
+"general",
+generalButton
+);
+
+}
+
+
+/* =========================
+WEBSITE SECTION ROUTER
+========================= */
+
+async function openWebsiteSection(
+section,
+button
+){
+
+document
+.querySelectorAll(
+".website-nav button[data-section]"
+)
+.forEach(
+b=>b.classList.toggle(
+"active",
+b===button
+)
+);
+
+
+const box =
+document.getElementById(
+"websiteManagerContent"
+);
+
+
+box.innerHTML =
+`
+<div class="loading">
+Loading ${escapeHtml(section)}...
+</div>
+`;
+
+
+try{
+
+const handlers = {
+
+general:renderGeneral,
+
+hero:renderHero,
+
+about:renderAbout,
+
+products:renderProducts,
+
+manufacturing:renderManufacturing,
+
+quality:renderQuality,
+
+industries:renderIndustries,
+
+gallery:renderGallery,
+
+testimonials:renderTestimonials,
+
+faq:renderFAQ,
+
+contact:renderContact
+
+};
+
+
+if(!handlers[section]){
+
+throw new Error(
+"Unknown website section."
+);
+
+}
+
+
+await handlers[section](box);
+
+
+}catch(error){
+
+console.error(error);
+
+
+box.innerHTML =
+`
+<div class="error-box">
+
+<b>Section load error</b>
+
+<br><br>
+
+${escapeHtml(
+error.message
+)}
+
+</div>
+`;
+
+}
+
+}
+
+
+/* =========================
+MAIN WEBSITE CONTENT
+========================= */
+
+async function getWebsiteContent(){
+
+if(!selectedClientId){
+
+throw new Error(
+"No client selected."
+);
+
+}
+
+
+if(
+websiteContent &&
+websiteContent.client_id === selectedClientId
+){
+
+return websiteContent;
+
+}
+
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("client_website_content")
+.select("*")
+.eq(
+"client_id",
+selectedClientId
+)
+.maybeSingle();
+
+
+if(error)
+throw error;
+
+
+if(data){
+
+websiteContent = data;
+
+return data;
+
+}
+
+
+const {
+data:newData,
+error:newError
+} =
+await supabaseClient
+.from("client_website_content")
+.insert({
+client_id:selectedClientId
+})
+.select()
+.single();
+
+
+if(newError)
+throw newError;
+
+
+websiteContent =
+newData;
+
+
+return newData;
+
+}
+
+
+/* =========================
+FORM FIELD
+========================= */
+
+function field(
+name,
+label,
+value,
+full=false
+){
+
+return `
+
+<div class="field ${
+full ? "full" : ""
+}">
+
+<label>
+${escapeHtml(label)}
+</label>
+
+${
+full
+
+?
+
+`
+<textarea
+data-field="${name}">
+${escapeHtml(value || "")}
+</textarea>
+`
+
+:
+
+`
+<input
+data-field="${name}"
+value="${escapeAttr(value || "")}">
+`
+
+}
+
+</div>
+
+`;
+
+}
+
+
+function rowField(
+name,
+label,
+value,
+full=false
+){
+
+return `
+
+<div class="field ${
+full ? "full" : ""
+}">
+
+<label>
+${escapeHtml(label)}
+</label>
+
+${
+full
+
+?
+
+`
+<textarea
+data-row-field="${name}">
+${escapeHtml(value || "")}
+</textarea>
+`
+
+:
+
+`
+<input
+data-row-field="${name}"
+value="${escapeAttr(value ?? "")}">
+`
+
+}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+GENERAL
+========================= */
+
+async function renderGeneral(box){
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+General Website Settings
+</div>
+
+<div class="manager-description">
+Logo, contact details and top bar information.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="section-title">
+General / Contact
+</div>
+
+<div class="form-grid">
+
+${field(
+"logo_url",
+"Logo URL",
+d.logo_url
+)}
+
+${field(
+"phone",
+"Phone",
+d.phone
+)}
+
+${field(
+"email",
+"Email",
+d.email
+)}
+
+${field(
+"whatsapp",
+"WhatsApp",
+d.whatsapp
+)}
+
+${field(
+"address",
+"Address",
+d.address,
+true
+)}
+
+${field(
+"topbar_text",
+"Top Bar Text",
+d.topbar_text,
+true
+)}
+
+</div>
+
+</div>
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save General Settings
+</button>
+
+`;
+
+}
+
+
+/* =========================
+HERO
+========================= */
+
+async function renderHero(box){
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+Hero Section
+</div>
+
+<div class="manager-description">
+Main website hero content.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"hero_eyebrow",
+"Hero Eyebrow",
+d.hero_eyebrow
+)}
+
+${field(
+"hero_heading",
+"Hero Heading",
+d.hero_heading
+)}
+
+${field(
+"hero_image_url",
+"Hero Image URL",
+d.hero_image_url
+)}
+
+${field(
+"hero_description",
+"Hero Description",
+d.hero_description,
+true
+)}
+
+</div>
+
+</div>
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save Hero
+</button>
+
+`;
+
+}
+
+
+/* =========================
+ABOUT
+========================= */
+
+async function renderAbout(box){
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+About Section
+</div>
+
+<div class="manager-description">
+Company introduction and statistics.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"about_eyebrow",
+"About Eyebrow",
+d.about_eyebrow
+)}
+
+${field(
+"about_heading",
+"About Heading",
+d.about_heading
+)}
+
+${field(
+"about_image_url",
+"About Image URL",
+d.about_image_url
+)}
+
+${field(
+"about_description",
+"About Description",
+d.about_description,
+true
+)}
+
+</div>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="section-title">
+Statistics
+</div>
+
+<div class="form-grid">
+
+${field(
+"stat_1_value",
+"Stat 1 Value",
+d.stat_1_value
+)}
+
+${field(
+"stat_1_label",
+"Stat 1 Label",
+d.stat_1_label
+)}
+
+${field(
+"stat_2_value",
+"Stat 2 Value",
+d.stat_2_value
+)}
+
+${field(
+"stat_2_label",
+"Stat 2 Label",
+d.stat_2_label
+)}
+
+${field(
+"stat_3_value",
+"Stat 3 Value",
+d.stat_3_value
+)}
+
+${field(
+"stat_3_label",
+"Stat 3 Label",
+d.stat_3_label
+)}
+
+${field(
+"stat_4_value",
+"Stat 4 Value",
+d.stat_4_value
+)}
+
+${field(
+"stat_4_label",
+"Stat 4 Label",
+d.stat_4_label
+)}
+
+</div>
+
+</div>
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save About
+</button>
+
+`;
+
+}
+
+
+/* =========================
+CONTACT
+========================= */
+
+async function renderContact(box){
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+Contact Section
+</div>
+
+<div class="manager-description">
+Website contact section content.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"contact_eyebrow",
+"Contact Eyebrow",
+d.contact_eyebrow
+)}
+
+${field(
+"contact_heading",
+"Contact Heading",
+d.contact_heading
+)}
+
+${field(
+"contact_description",
+"Contact Description",
+d.contact_description,
+true
+)}
+
+</div>
+
+</div>
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save Contact
+</button>
+
+`;
+
+}
+
+
+/* =========================
+PRODUCTS
+========================= */
+
+async function renderProducts(box){
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("client_products")
+.select("*")
+.eq(
+"client_id",
+selectedClientId
+)
+.order(
+"sort_order",
+{ascending:true}
+);
+
+
+if(error)
+throw error;
+
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+Products
+</div>
+
+<div class="manager-description">
+Manage product section and products.
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="addProduct()">
++ Add Product
+</button>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"products_eyebrow",
+"Products Eyebrow",
+d.products_eyebrow
+)}
+
+${field(
+"products_heading",
+"Products Heading",
+d.products_heading
+)}
+
+${field(
+"products_description",
+"Products Description",
+d.products_description,
+true
+)}
+
+</div>
+
+</div>
+
+
+<div>
+
+${
+data?.length
+
+?
+
+data.map(
+(x,i)=>productHtml(x,i)
+).join("")
+
+:
+
+`
+<div class="empty">
+No products added yet.
+</div>
+`
+
+}
+
+</div>
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save Products Section
+</button>
+
+`;
+
+}
+
+
+function productHtml(x,i){
+
+return `
+
+<div class="repeat-item">
+
+<div class="repeat-head">
+
+<span class="repeat-number">
+Product ${i+1}
+</span>
+
+<button
+class="small-btn danger"
+onclick="deleteRow(
+'client_products',
+'${x.id}',
+'products'
+)">
+Delete
+</button>
+
+</div>
+
+
+<div class="form-grid">
+
+${rowField(
+"product_name",
+"Product Name",
+x.product_name
+)}
+
+${rowField(
+"product_code",
+"Product Code",
+x.product_code
+)}
+
+${rowField(
+"image_url",
+"Image URL",
+x.image_url
+)}
+
+${rowField(
+"enquiry_url",
+"Enquiry URL",
+x.enquiry_url
+)}
+
+${rowField(
+"description",
+"Description",
+x.description,
+true
+)}
+
+${rowField(
+"sort_order",
+"Sort Order",
+x.sort_order ?? i
+)}
+
+</div>
+
+
+<button
+class="small-btn"
+onclick="
+updateRow(
+'client_products',
+'${x.id}',
+this.closest('.repeat-item')
+)">
+Save Product
+</button>
+
+</div>
+
+`;
+
+}
+
+
+async function addProduct(){
+
+await addRow(
+"client_products",
+{
+product_name:"New Product",
+product_code:"",
+description:"",
+image_url:"",
+enquiry_url:"",
+sort_order:0,
+is_active:true
+},
+"products"
+);
+
+}
+
+
+/* =========================
+MANUFACTURING
+========================= */
+
+async function renderManufacturing(box){
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("client_manufacturing_steps")
+.select("*")
+.eq(
+"client_id",
+selectedClientId
+)
+.order(
+"sort_order",
+{ascending:true}
+);
+
+
+if(error)
+throw error;
+
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+Manufacturing Process
+</div>
+
+<div class="manager-description">
+Manage process section and steps.
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="addManufacturingStep()">
++ Add Step
+</button>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"manufacturing_eyebrow",
+"Section Eyebrow",
+d.manufacturing_eyebrow
+)}
+
+${field(
+"manufacturing_heading",
+"Section Heading",
+d.manufacturing_heading
+)}
+
+${field(
+"manufacturing_description",
+"Section Description",
+d.manufacturing_description,
+true
+)}
+
+</div>
+
+</div>
+
+
+${
+data?.length
+
+?
+
+data.map(
+(x,i)=>`
+
+<div class="repeat-item">
+
+<div class="repeat-head">
+
+<span class="repeat-number">
+Step ${i+1}
+</span>
+
+<button
+class="small-btn danger"
+onclick="
+deleteRow(
+'client_manufacturing_steps',
+'${x.id}',
+'manufacturing'
+)">
+Delete
+</button>
+
+</div>
+
+
+<div class="form-grid">
+
+${rowField(
+"step_number",
+"Step Number",
+x.step_number
+)}
+
+${rowField(
+"title",
+"Title",
+x.title
+)}
+
+${rowField(
+"description",
+"Description",
+x.description,
+true
+)}
+
+${rowField(
+"sort_order",
+"Sort Order",
+x.sort_order ?? i
+)}
+
+</div>
+
+
+<button
+class="small-btn"
+onclick="
+updateRow(
+'client_manufacturing_steps',
+'${x.id}',
+this.closest('.repeat-item')
+)">
+Save Step
+</button>
+
+</div>
+
+`
+).join("")
+
+:
+
+`
+<div class="empty">
+No manufacturing steps added.
+</div>
+`
+
+}
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save Section
+</button>
+
+`;
+
+}
+
+
+async function addManufacturingStep(){
+
+await addRow(
+"client_manufacturing_steps",
+{
+step_number:1,
+title:"New Step",
+description:"",
+sort_order:0,
+is_active:true
+},
+"manufacturing"
+);
+
+}
+
+
+/* =========================
+QUALITY
+========================= */
+
+async function renderQuality(box){
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("client_quality")
+.select("*")
+.eq(
+"client_id",
+selectedClientId
+)
+.order(
+"sort_order",
+{ascending:true}
+);
+
+
+if(error)
+throw error;
+
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+Quality
+</div>
+
+<div class="manager-description">
+Manage quality section and quality points.
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="addQuality()">
++ Add Quality
+</button>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"quality_eyebrow",
+"Quality Eyebrow",
+d.quality_eyebrow
+)}
+
+${field(
+"quality_heading",
+"Quality Heading",
+d.quality_heading
+)}
+
+${field(
+"quality_description",
+"Quality Description",
+d.quality_description,
+true
+)}
+
+</div>
+
+</div>
+
+
+${
+data?.length
+
+?
+
+data.map(
+(x,i)=>`
+
+<div class="repeat-item">
+
+<div class="repeat-head">
+
+<span class="repeat-number">
+Quality ${i+1}
+</span>
+
+<button
+class="small-btn danger"
+onclick="
+deleteRow(
+'client_quality',
+'${x.id}',
+'quality'
+)">
+Delete
+</button>
+
+</div>
+
+
+<div class="form-grid">
+
+${rowField(
+"icon",
+"Icon",
+x.icon
+)}
+
+${rowField(
+"title",
+"Title",
+x.title
+)}
+
+${rowField(
+"description",
+"Description",
+x.description,
+true
+)}
+
+${rowField(
+"sort_order",
+"Sort Order",
+x.sort_order ?? i
+)}
+
+</div>
+
+
+<button
+class="small-btn"
+onclick="
+updateRow(
+'client_quality',
+'${x.id}',
+this.closest('.repeat-item')
+)">
+Save Quality
+</button>
+
+</div>
+
+`
+).join("")
+
+:
+
+`
+<div class="empty">
+No quality points added.
+</div>
+`
+
+}
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save Section
+</button>
+
+`;
+
+}
+
+
+async function addQuality(){
+
+await addRow(
+"client_quality",
+{
+icon:"",
+title:"New Quality Point",
+description:"",
+sort_order:0,
+is_active:true
+},
+"quality"
+);
+
+}
+
+
+/* =========================
+INDUSTRIES
+========================= */
+
+async function renderIndustries(box){
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("client_industries")
+.select("*")
+.eq(
+"client_id",
+selectedClientId
+)
+.order(
+"sort_order",
+{ascending:true}
+);
+
+
+if(error)
+throw error;
+
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+Industries
+</div>
+
+<div class="manager-description">
+Manage industries displayed on website.
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="addIndustry()">
++ Add Industry
+</button>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"industries_eyebrow",
+"Industries Eyebrow",
+d.industries_eyebrow
+)}
+
+${field(
+"industries_heading",
+"Industries Heading",
+d.industries_heading
+)}
+
+</div>
+
+</div>
+
+
+${
+data?.length
+
+?
+
+data.map(
+(x,i)=>`
+
+<div class="repeat-item">
+
+<div class="repeat-head">
+
+<span class="repeat-number">
+Industry ${i+1}
+</span>
+
+<button
+class="small-btn danger"
+onclick="
+deleteRow(
+'client_industries',
+'${x.id}',
+'industries'
+)">
+Delete
+</button>
+
+</div>
+
+
+<div class="form-grid">
+
+${rowField(
+"name",
+"Industry Name",
+x.name
+)}
+
+${rowField(
+"sort_order",
+"Sort Order",
+x.sort_order ?? i
+)}
+
+</div>
+
+
+<button
+class="small-btn"
+onclick="
+updateRow(
+'client_industries',
+'${x.id}',
+this.closest('.repeat-item')
+)">
+Save Industry
+</button>
+
+</div>
+
+`
+).join("")
+
+:
+
+`
+<div class="empty">
+No industries added.
+</div>
+`
+
+}
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save Section
+</button>
+
+`;
+
+}
+
+
+async function addIndustry(){
+
+await addRow(
+"client_industries",
+{
+name:"New Industry",
+sort_order:0,
+is_active:true
+},
+"industries"
+);
+
+}
+
+
+/* =========================
+GALLERY
+========================= */
+
+async function renderGallery(box){
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("client_gallery")
+.select("*")
+.eq(
+"client_id",
+selectedClientId
+)
+.order(
+"sort_order",
+{ascending:true}
+);
+
+
+if(error)
+throw error;
+
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+Gallery
+</div>
+
+<div class="manager-description">
+Manage website gallery images.
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="addGallery()">
++ Add Image
+</button>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"gallery_eyebrow",
+"Gallery Eyebrow",
+d.gallery_eyebrow
+)}
+
+${field(
+"gallery_heading",
+"Gallery Heading",
+d.gallery_heading
+)}
+
+${field(
+"gallery_description",
+"Gallery Description",
+d.gallery_description,
+true
+)}
+
+</div>
+
+</div>
+
+
+${
+data?.length
+
+?
+
+data.map(
+(x,i)=>`
+
+<div class="repeat-item">
+
+<div class="repeat-head">
+
+<span class="repeat-number">
+Image ${i+1}
+</span>
+
+<button
+class="small-btn danger"
+onclick="
+deleteRow(
+'client_gallery',
+'${x.id}',
+'gallery'
+)">
+Delete
+</button>
+
+</div>
+
+
+<div class="form-grid">
+
+${rowField(
+"image_url",
+"Image URL",
+x.image_url
+)}
+
+${rowField(
+"title",
+"Title",
+x.title
+)}
+
+${rowField(
+"sort_order",
+"Sort Order",
+x.sort_order ?? i
+)}
+
+</div>
+
+
+<button
+class="small-btn"
+onclick="
+updateRow(
+'client_gallery',
+'${x.id}',
+this.closest('.repeat-item')
+)">
+Save Image
+</button>
+
+</div>
+
+`
+).join("")
+
+:
+
+`
+<div class="empty">
+No gallery images added.
+</div>
+`
+
+}
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save Gallery Section
+</button>
+
+`;
+
+}
+
+
+async function addGallery(){
+
+await addRow(
+"client_gallery",
+{
+image_url:"",
+title:"New Image",
+sort_order:0,
+is_active:true
+},
+"gallery"
+);
+
+}
+
+
+/* =========================
+TESTIMONIALS
+========================= */
+
+async function renderTestimonials(box){
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("client_testimonials")
+.select("*")
+.eq(
+"client_id",
+selectedClientId
+)
+.order(
+"sort_order",
+{ascending:true}
+);
+
+
+if(error)
+throw error;
+
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+Testimonials
+</div>
+
+<div class="manager-description">
+Manage client/customer testimonials.
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="addTestimonial()">
++ Add Testimonial
+</button>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"testimonials_eyebrow",
+"Testimonials Eyebrow",
+d.testimonials_eyebrow
+)}
+
+${field(
+"testimonials_heading",
+"Testimonials Heading",
+d.testimonials_heading
+)}
+
+</div>
+
+</div>
+
+
+${
+data?.length
+
+?
+
+data.map(
+(x,i)=>`
+
+<div class="repeat-item">
+
+<div class="repeat-head">
+
+<span class="repeat-number">
+Testimonial ${i+1}
+</span>
+
+<button
+class="small-btn danger"
+onclick="
+deleteRow(
+'client_testimonials',
+'${x.id}',
+'testimonials'
+)">
+Delete
+</button>
+
+</div>
+
+
+<div class="form-grid">
+
+${rowField(
+"customer_name",
+"Customer Name",
+x.customer_name
+)}
+
+${rowField(
+"designation",
+"Designation",
+x.designation
+)}
+
+${rowField(
+"message",
+"Message",
+x.message,
+true
+)}
+
+${rowField(
+"sort_order",
+"Sort Order",
+x.sort_order ?? i
+)}
+
+</div>
+
+
+<button
+class="small-btn"
+onclick="
+updateRow(
+'client_testimonials',
+'${x.id}',
+this.closest('.repeat-item')
+)">
+Save Testimonial
+</button>
+
+</div>
+
+`
+).join("")
+
+:
+
+`
+<div class="empty">
+No testimonials added.
+</div>
+`
+
+}
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save Section
+</button>
+
+`;
+
+}
+
+
+async function addTestimonial(){
+
+await addRow(
+"client_testimonials",
+{
+customer_name:"New Customer",
+designation:"",
+message:"",
+sort_order:0,
+is_active:true
+},
+"testimonials"
+);
+
+}
+
+
+/* =========================
+FAQ
+========================= */
+
+async function renderFAQ(box){
+
+const {
+data,
+error
+} =
+await supabaseClient
+.from("client_faq")
+.select("*")
+.eq(
+"client_id",
+selectedClientId
+)
+.order(
+"sort_order",
+{ascending:true}
+);
+
+
+if(error)
+throw error;
+
+
+const d =
+await getWebsiteContent();
+
+
+box.innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+FAQ
+</div>
+
+<div class="manager-description">
+Manage frequently asked questions.
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="addFAQ()">
++ Add FAQ
+</button>
+
+</div>
+
+
+<div class="section-card">
+
+<div class="form-grid">
+
+${field(
+"faq_eyebrow",
+"FAQ Eyebrow",
+d.faq_eyebrow
+)}
+
+${field(
+"faq_heading",
+"FAQ Heading",
+d.faq_heading
+)}
+
+</div>
+
+</div>
+
+
+${
+data?.length
+
+?
+
+data.map(
+(x,i)=>`
+
+<div class="repeat-item">
+
+<div class="repeat-head">
+
+<span class="repeat-number">
+FAQ ${i+1}
+</span>
+
+<button
+class="small-btn danger"
+onclick="
+deleteRow(
+'client_faq',
+'${x.id}',
+'faq'
+)">
+Delete
+</button>
+
+</div>
+
+
+<div class="form-grid">
+
+${rowField(
+"question",
+"Question",
+x.question
+)}
+
+${rowField(
+"sort_order",
+"Sort Order",
+x.sort_order ?? i
+)}
+
+${rowField(
+"answer",
+"Answer",
+x.answer,
+true
+)}
+
+</div>
+
+
+<button
+class="small-btn"
+onclick="
+updateRow(
+'client_faq',
+'${x.id}',
+this.closest('.repeat-item')
+)">
+Save FAQ
+</button>
+
+</div>
+
+`
+).join("")
+
+:
+
+`
+<div class="empty">
+No FAQs added.
+</div>
+`
+
+}
+
+
+<button
+class="primary-btn"
+onclick="saveWebsiteFields()">
+Save FAQ Section
+</button>
+
+`;
+
+}
+
+
+async function addFAQ(){
+
+await addRow(
+"client_faq",
+{
+question:"New Question",
+answer:"",
+sort_order:0,
+is_active:true
+},
+"faq"
+);
+
+}
+
+
+/* =========================
+ADD REPEATED ROW
+========================= */
+
+async function addRow(
+table,
+payload,
+section
+){
+
+try{
+
+const {
+error
+} =
+await supabaseClient
+.from(table)
+.insert({
+...payload,
+client_id:selectedClientId
+});
+
+
+if(error)
+throw error;
+
+
+showToast(
+"Item added successfully."
+);
+
+
+await openWebsiteSection(
+section,
+document.querySelector(
+`.website-nav button[data-section="${section}"]`
+)
+);
+
+
+}catch(error){
+
+console.error(error);
+
+showToast(
+error.message
+);
+
+}
+
+}
+
+
+/* =========================
+SAVE MAIN WEBSITE CONTENT
+========================= */
+
+async function saveWebsiteFields(){
+
+try{
+
+const fields =
+document.querySelectorAll(
+"#websiteManagerContent [data-field]"
+);
+
+
+const payload = {};
+
+
+fields.forEach(
+field=>{
+
+payload[
+field.dataset.field
+] =
+field.value;
+
+}
+);
+
+
+if(
+!Object.keys(payload).length
+){
+
+showToast(
+"Nothing to save."
+);
+
+return;
+
+}
+
+
+const {
+error
+} =
+await supabaseClient
+.from("client_website_content")
+.update(payload)
+.eq(
+"client_id",
+selectedClientId
+);
+
+
+if(error)
+throw error;
+
+
+if(websiteContent){
+
+Object.assign(
+websiteContent,
+payload
+);
+
+}
+
+
+showToast(
+"Website content saved successfully."
+);
+
+
+}catch(error){
+
+console.error(error);
+
+showToast(
+error.message
+);
+
+}
+
+}
+
+
+/* =========================
+UPDATE REPEATED ROW
+========================= */
+
+async function updateRow(
+table,
+id,
+box
+){
+
+try{
+
+const payload = {};
+
+
+box
+.querySelectorAll(
+"[data-row-field]"
+)
+.forEach(
+field=>{
+
+let value =
+field.value;
+
+
+if(
+["sort_order","step_number"]
+.includes(
+field.dataset.rowField
+)
+){
+
+value =
+value === ""
+?
+null
+:
+Number(value);
+
+}
+
+
+payload[
+field.dataset.rowField
+] =
+value;
+
+}
+);
+
+
+const {
+error
+} =
+await supabaseClient
+.from(table)
+.update(payload)
+.eq("id",id)
+.eq(
+"client_id",
+selectedClientId
+);
+
+
+if(error)
+throw error;
+
+
+showToast(
+"Saved successfully."
+);
+
+
+}catch(error){
+
+console.error(error);
+
+showToast(
+error.message
+);
+
+}
+
+}
+
+
+/* =========================
+DELETE REPEATED ROW
+========================= */
+
+async function deleteRow(
+table,
+id,
+section
+){
+
+if(
+!confirm(
+"Delete this item?"
+)
+)
+return;
+
+
+try{
+
+const {
+error
+} =
+await supabaseClient
+.from(table)
+.delete()
+.eq("id",id)
+.eq(
+"client_id",
+selectedClientId
+);
+
+
+if(error)
+throw error;
+
+
+showToast(
+"Deleted successfully."
+);
+
+
+await openWebsiteSection(
+section,
+document.querySelector(
+`.website-nav button[data-section="${section}"]`
+)
+);
+
+
+}catch(error){
+
+console.error(error);
+
+showToast(
+error.message
+);
+
+}
+
+}
+
+
+/* =========================
+COMING SOON
+========================= */
+
+function openComingSoonSection(name){
+
+document
+.querySelectorAll(
+".website-nav button[data-section]"
+)
+.forEach(
+b=>b.classList.remove("active")
+);
+
+
+document.getElementById(
+"websiteManagerContent"
+).innerHTML = `
+
+<div class="manager-head">
+
+<div>
+
+<div class="manager-title">
+${escapeHtml(name)}
+</div>
+
+<div class="manager-description">
+Reserved module
+</div>
+
+</div>
+
+</div>
+
+
+<div class="notice">
+
+${escapeHtml(name)}
+module ka UI central Client Manager me reserved hai.
+Isko tab database se connect karenge jab iska
+database structure final hoga.
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+MODAL
+========================= */
 
 function openModal(id){
 
-    document
-        .getElementById(id)
-        .classList.add("show");
+document
+.getElementById(id)
+?.classList.add("show");
 
 }
 
 
 function closeModal(id){
 
-    document
-        .getElementById(id)
-        .classList.remove("show");
+document
+.getElementById(id)
+?.classList.remove("show");
 
 }
 
 
-/* TOAST */
-
-function showToast(message){
-
-    const toast =
-        document.getElementById(
-            "toast"
-        );
-
-
-    toast.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        window.__toastTimer
-    );
-
-
-    window.__toastTimer =
-        setTimeout(
-            () => {
-                toast.classList.remove(
-                    "show"
-                );
-            },
-            3000
-        );
-
-}
-
-
-/* LOGOUT */
+/* =========================
+LOGOUT
+========================= */
 
 async function logout(){
 
-    await supabaseClient.auth.signOut();
+try{
 
-    location.href =
-        "admin.html";
+if(supabaseClient){
+
+await supabaseClient
+.auth
+.signOut();
+
+}
+
+}finally{
+
+location.href =
+"admin.html";
+
+}
 
 }
 
 
-/* START */
+/* =========================
+CLICK OUTSIDE MODAL
+========================= */
+
+document.addEventListener(
+"click",
+function(event){
+
+if(
+event.target.classList.contains(
+"modal"
+)
+){
+
+event.target.classList.remove(
+"show"
+);
+
+}
+
+}
+);
+
+
+/* =========================
+ERROR DEBUG
+========================= */
+
+window.addEventListener(
+"error",
+function(event){
+
+console.error(
+"JS Error:",
+event.error ||
+event.message
+);
+
+}
+);
+
+
+window.addEventListener(
+"unhandledrejection",
+function(event){
+
+console.error(
+"Unhandled Promise:",
+event.reason
+);
+
+}
+);
+
+
+/* =========================
+START
+========================= */
+
+if(
+document.readyState === "loading"
+){
+
+document.addEventListener(
+"DOMContentLoaded",
+init
+);
+
+}else{
 
 init();
+
+}
 
 </script>
 
