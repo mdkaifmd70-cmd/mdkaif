@@ -1,30 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Client Manager - MD Kaif Web Platform</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- COMMON CLIENT CONTEXT -->
 <script src="client-context.js"></script>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f1f5f9;
     color:#0f172a;
 }
+
+button,input,select,textarea{font-family:inherit}
 
 .header{
     height:70px;
@@ -40,10 +34,7 @@ body{
     font-size:21px;
     font-weight:900;
 }
-
-.logo span{
-    color:#60a5fa;
-}
+.logo span{color:#60a5fa}
 
 .header-right{
     display:flex;
@@ -51,28 +42,26 @@ body{
     align-items:center;
 }
 
-.back-btn,
-.logout-btn{
+.back-btn,.logout-btn{
     border:0;
     padding:9px 14px;
     border-radius:8px;
     cursor:pointer;
     font-weight:700;
+    text-decoration:none;
 }
 
 .back-btn{
     background:#334155;
     color:#fff;
-    text-decoration:none;
 }
-
 .logout-btn{
     background:#dc2626;
     color:#fff;
 }
 
 .container{
-    max-width:1450px;
+    max-width:1500px;
     margin:auto;
     padding:25px;
 }
@@ -85,10 +74,7 @@ body{
     margin-bottom:20px;
 }
 
-.title h1{
-    font-size:28px;
-}
-
+.title h1{font-size:28px}
 .title p{
     margin-top:5px;
     color:#64748b;
@@ -105,10 +91,6 @@ body{
     font-weight:800;
 }
 
-.add-btn:hover{
-    background:#1d4ed8;
-}
-
 .card{
     background:#fff;
     border:1px solid #e2e8f0;
@@ -117,9 +99,7 @@ body{
     margin-bottom:20px;
 }
 
-.hidden{
-    display:none !important;
-}
+.hidden{display:none!important}
 
 .active-client{
     background:#eff6ff;
@@ -173,9 +153,10 @@ body{
 }
 
 .field input,
-.field select{
+.field select,
+.field textarea{
     width:100%;
-    padding:12px;
+    padding:11px 12px;
     border:1px solid #cbd5e1;
     border-radius:8px;
     outline:none;
@@ -183,10 +164,18 @@ body{
     background:#fff;
 }
 
+.field textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
 .field input:focus,
-.field select:focus{
+.field select:focus,
+.field textarea:focus{
     border-color:#2563eb;
 }
+
+.full{grid-column:1/-1}
 
 .field small{
     display:block;
@@ -201,8 +190,7 @@ body{
     gap:10px;
 }
 
-.save-btn,
-.cancel-btn{
+.save-btn,.cancel-btn{
     border:0;
     padding:11px 18px;
     border-radius:8px;
@@ -214,33 +202,17 @@ body{
     background:#16a34a;
     color:#fff;
 }
-
 .cancel-btn{
     background:#e2e8f0;
     color:#334155;
 }
 
-.template-status{
-    margin-top:6px;
-    font-size:11px;
-}
-
-.template-status.ok{
-    color:#16a34a;
-}
-
-.template-status.err{
-    color:#dc2626;
-}
-
-.table-wrap{
-    overflow-x:auto;
-}
+.table-wrap{overflow-x:auto}
 
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:1150px;
+    min-width:1200px;
 }
 
 th{
@@ -259,17 +231,9 @@ td{
     vertical-align:middle;
 }
 
-.company{
-    font-weight:800;
-}
-
-.slug{
-    color:#64748b;
-}
-
-.domain{
-    color:#475569;
-}
+.company{font-weight:800}
+.slug{color:#64748b}
+.domain{color:#475569}
 
 .template-badge{
     display:inline-block;
@@ -320,46 +284,263 @@ td{
     white-space:nowrap;
 }
 
-.preview-btn{
-    background:#fef3c7;
-    color:#92400e;
-}
+.preview-btn{background:#fef3c7;color:#92400e}
+.website-btn{background:#e0f2fe;color:#0369a1}
+.use-btn{background:#dcfce7;color:#166534}
+.edit-btn{background:#dbeafe;color:#1d4ed8}
+.manage-btn{background:#ede9fe;color:#6d28d9}
+.delete-btn{background:#fee2e2;color:#b91c1c}
 
-.website-btn{
-    background:#e0f2fe;
-    color:#0369a1;
-}
-
-.use-btn{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.edit-btn{
-    background:#dbeafe;
-    color:#1d4ed8;
-}
-
-.delete-btn{
-    background:#fee2e2;
-    color:#b91c1c;
-}
-
-.actions button:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-}
-
-.loading,
-.empty{
+.loading,.empty{
     text-align:center;
     padding:35px;
     color:#64748b;
 }
 
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.72);
+    z-index:1000;
+    display:none;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal-box{
+    background:#fff;
+    width:min(1450px,100%);
+    height:min(92vh,1000px);
+    border-radius:16px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.modal-header{
+    background:#0f172a;
+    color:#fff;
+    padding:16px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.modal-header h2{
+    font-size:19px;
+}
+
+.modal-header p{
+    font-size:12px;
+    color:#cbd5e1;
+    margin-top:3px;
+}
+
+.close-modal{
+    border:0;
+    background:#334155;
+    color:#fff;
+    width:38px;
+    height:38px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.manager-body{
+    display:flex;
+    min-height:0;
+    flex:1;
+}
+
+.manager-nav{
+    width:220px;
+    background:#f8fafc;
+    border-right:1px solid #e2e8f0;
+    padding:12px;
+    overflow-y:auto;
+}
+
+.nav-btn{
+    width:100%;
+    text-align:left;
+    border:0;
+    background:transparent;
+    padding:11px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:700;
+    color:#475569;
+    margin-bottom:3px;
+}
+
+.nav-btn:hover{
+    background:#e2e8f0;
+}
+
+.nav-btn.active{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.manager-content{
+    flex:1;
+    overflow-y:auto;
+    padding:24px;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.section-title{
+    font-size:22px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.section-subtitle{
+    color:#64748b;
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.section-card{
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.section-card h3{
+    font-size:16px;
+    margin-bottom:15px;
+}
+
+.website-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.save-section{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+}
+
+.primary{
+    background:#2563eb;
+    color:#fff;
+    border:0;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:800;
+}
+
+.secondary{
+    background:#e2e8f0;
+    color:#334155;
+    border:0;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:800;
+}
+
+/* REPEATED DATA */
+
+.repeat-add{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.repeat-add h3{
+    margin:0;
+}
+
+.add-small{
+    border:0;
+    background:#2563eb;
+    color:#fff;
+    padding:9px 13px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:800;
+}
+
+.repeat-item{
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:12px;
+    background:#f8fafc;
+}
+
+.repeat-item-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.repeat-actions{
+    margin-top:12px;
+    display:flex;
+    gap:7px;
+}
+
+.small-save,.small-delete{
+    border:0;
+    padding:8px 12px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:800;
+}
+
+.small-save{
+    background:#16a34a;
+    color:#fff;
+}
+
+.small-delete{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.placeholder{
+    padding:25px;
+    background:#f8fafc;
+    border:1px dashed #cbd5e1;
+    border-radius:10px;
+    color:#64748b;
+    line-height:1.6;
+}
+
 @media(max-width:850px){
 
-    .form-grid{
+    .form-grid,
+    .website-grid,
+    .repeat-item-grid{
         grid-template-columns:1fr;
     }
 
@@ -376,284 +557,163 @@ td{
         padding:0 15px;
     }
 
+    .manager-body{
+        flex-direction:column;
+    }
+
+    .manager-nav{
+        width:100%;
+        border-right:0;
+        border-bottom:1px solid #e2e8f0;
+        display:flex;
+        overflow-x:auto;
+        gap:5px;
+    }
+
+    .nav-btn{
+        min-width:max-content;
+        margin:0;
+    }
+
+    .manager-content{
+        padding:15px;
+    }
+
+    .modal{
+        padding:0;
+    }
+
+    .modal-box{
+        height:100vh;
+        border-radius:0;
+    }
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header class="header">
-
-    <div class="logo">
-        MD <span>KAIF</span>
-    </div>
+    <div class="logo">MD <span>KAIF</span></div>
 
     <div class="header-right">
-
-        <a href="dashboard.html" class="back-btn">
-            Dashboard
-        </a>
-
-        <button id="logoutBtn" class="logout-btn">
-            Logout
-        </button>
-
+        <a href="dashboard.html" class="back-btn">Dashboard</a>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
     </div>
-
 </header>
-
 
 <div class="container">
 
     <div class="topbar">
-
         <div class="title">
-
             <h1>Client Manager</h1>
-
-            <p>
-                Manage clients, domains, hosting and website templates.
-            </p>
-
+            <p>Manage clients, hosting, templates and complete website content.</p>
         </div>
 
-        <button id="addBtn" class="add-btn">
-            + Add Client
-        </button>
-
+        <button id="addBtn" class="add-btn">+ Add Client</button>
     </div>
-
 
     <div class="active-client">
-
         Active Client:
-        <span id="activeClientName">
-            None
-        </span>
-
+        <span id="activeClientName">None</span>
     </div>
 
-
     <div id="message" class="message"></div>
-
 
     <!-- CLIENT FORM -->
 
     <div id="formCard" class="card hidden">
 
-        <div id="formTitle" class="form-title">
-            Add New Client
-        </div>
+        <div id="formTitle" class="form-title">Add New Client</div>
 
         <form id="clientForm">
 
-            <input
-                type="hidden"
-                id="clientId"
-            >
+            <input type="hidden" id="clientId">
 
             <div class="form-grid">
 
                 <div class="field">
-
-                    <label>
-                        Company Name *
-                    </label>
-
-                    <input
-                        id="companyName"
-                        type="text"
-                        placeholder="ABC Industries"
-                        required
-                    >
-
+                    <label>Company Name *</label>
+                    <input id="companyName" required placeholder="ABC Industries">
                 </div>
 
-
                 <div class="field">
-
-                    <label>
-                        Slug *
-                    </label>
-
-                    <input
-                        id="slug"
-                        type="text"
-                        placeholder="abc-industries"
-                        required
-                    >
-
-                    <small>
-                        Example: abc-industries
-                    </small>
-
+                    <label>Slug *</label>
+                    <input id="slug" required placeholder="abc-industries">
+                    <small>Example: abc-industries</small>
                 </div>
 
-
                 <div class="field">
-
-                    <label>
-                        Domain
-                    </label>
-
-                    <input
-                        id="domain"
-                        type="text"
-                        placeholder="www.client.com"
-                    >
-
+                    <label>Domain</label>
+                    <input id="domain" placeholder="www.client.com">
                 </div>
 
-
                 <div class="field">
-
-                    <label>
-                        Hosting Type
-                    </label>
-
+                    <label>Hosting Type</label>
                     <select id="hostingType">
-
-                        <option value="GitHub Pages">
-                            GitHub Pages
-                        </option>
-
-                        <option value="Custom Domain">
-                            Custom Domain
-                        </option>
-
-                        <option value="Web Hosting">
-                            Web Hosting
-                        </option>
-
-                        <option value="Cloud Hosting">
-                            Cloud Hosting
-                        </option>
-
-                        <option value="Other">
-                            Other
-                        </option>
-
+                        <option>GitHub Pages</option>
+                        <option>Custom Domain</option>
+                        <option>Web Hosting</option>
+                        <option>Cloud Hosting</option>
+                        <option>Other</option>
                     </select>
-
                 </div>
 
-
                 <div class="field">
-
-                    <label>
-                        Hosting URL
-                    </label>
-
-                    <input
-                        id="hostingUrl"
-                        type="text"
-                        placeholder="https://username.github.io/project/"
-                    >
-
-                    <small>
-                        Client's actual hosted website URL
-                    </small>
-
+                    <label>Hosting URL</label>
+                    <input id="hostingUrl"
+                           placeholder="https://username.github.io/project/">
+                    <small>Client's actual hosted website URL.</small>
                 </div>
 
-
                 <div class="field">
-
-                    <label>
-                        Website Template *
-                    </label>
-
+                    <label>Website Template *</label>
                     <select id="template" required>
-
-                        <option value="">
-                            Loading templates...
-                        </option>
-
+                        <option value="">Loading templates...</option>
                     </select>
 
-                    <div
-                        id="templateStatus"
-                        class="template-status"
-                    >
+                    <div id="templateStatus" class="template-status">
                         Loading...
                     </div>
-
                 </div>
 
-
                 <div class="field">
-
-                    <label>
-                        Status
-                    </label>
-
+                    <label>Status</label>
                     <select id="status">
-
-                        <option value="active">
-                            Active
-                        </option>
-
-                        <option value="inactive">
-                            Inactive
-                        </option>
-
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
                     </select>
-
                 </div>
 
             </div>
 
-
             <div class="form-actions">
-
-                <button
-                    id="saveBtn"
-                    class="save-btn"
-                    type="submit"
-                >
+                <button id="saveBtn" class="save-btn" type="submit">
                     Save Client
                 </button>
 
-                <button
-                    id="cancelBtn"
-                    class="cancel-btn"
-                    type="button"
-                >
+                <button id="cancelBtn" class="cancel-btn" type="button">
                     Cancel
                 </button>
-
             </div>
 
         </form>
-
     </div>
-
 
     <!-- CLIENT TABLE -->
 
     <div class="card">
 
-        <div
-            id="loading"
-            class="loading"
-        >
+        <div id="loading" class="loading">
             Loading clients...
         </div>
 
-
-        <div
-            id="tableArea"
-            class="table-wrap hidden"
-        >
+        <div id="tableArea" class="table-wrap hidden">
 
             <table>
 
                 <thead>
-
                     <tr>
-
                         <th>COMPANY</th>
                         <th>SLUG</th>
                         <th>DOMAIN</th>
@@ -661,9 +721,7 @@ td{
                         <th>TEMPLATE</th>
                         <th>STATUS</th>
                         <th>ACTIONS</th>
-
                     </tr>
-
                 </thead>
 
                 <tbody id="clientTable"></tbody>
@@ -672,12 +730,781 @@ td{
 
         </div>
 
-
-        <div
-            id="empty"
-            class="empty hidden"
-        >
+        <div id="empty" class="empty hidden">
             No clients found.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     FULL WEBSITE MANAGER
+========================================================= -->
+
+<div id="websiteModal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <div>
+                <h2 id="managerTitle">Manage Website</h2>
+                <p id="managerSubtitle">Client Website</p>
+            </div>
+
+            <button id="closeManager" class="close-modal">×</button>
+
+        </div>
+
+        <div class="manager-body">
+
+            <!-- NAV -->
+
+            <aside class="manager-nav">
+
+                <button class="nav-btn active" data-section="general">
+                    General
+                </button>
+
+                <button class="nav-btn" data-section="hero">
+                    Hero
+                </button>
+
+                <button class="nav-btn" data-section="about">
+                    About
+                </button>
+
+                <button class="nav-btn" data-section="products">
+                    Products
+                </button>
+
+                <button class="nav-btn" data-section="manufacturing">
+                    Manufacturing
+                </button>
+
+                <button class="nav-btn" data-section="quality">
+                    Quality
+                </button>
+
+                <button class="nav-btn" data-section="industries">
+                    Industries
+                </button>
+
+                <button class="nav-btn" data-section="gallery">
+                    Gallery
+                </button>
+
+                <button class="nav-btn" data-section="testimonials">
+                    Testimonials
+                </button>
+
+                <button class="nav-btn" data-section="faq">
+                    FAQ
+                </button>
+
+                <button class="nav-btn" data-section="design">
+                    Design
+                </button>
+
+                <button class="nav-btn" data-section="social">
+                    Social Media
+                </button>
+
+                <button class="nav-btn" data-section="seo">
+                    SEO
+                </button>
+
+                <button class="nav-btn" data-section="policies">
+                    Policies
+                </button>
+
+                <button class="nav-btn" data-section="enquiries">
+                    Enquiries
+                </button>
+
+                <button class="nav-btn" data-section="admin">
+                    Client Admin
+                </button>
+
+            </aside>
+
+
+            <!-- CONTENT -->
+
+            <main class="manager-content">
+
+                <!-- GENERAL -->
+
+                <section id="section-general" class="section active">
+
+                    <div class="section-title">General Website Settings</div>
+
+                    <div class="section-subtitle">
+                        Company contact information and common website content.
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Logo URL</label>
+                                <input id="wc_logo_url">
+                            </div>
+
+                            <div class="field">
+                                <label>Phone</label>
+                                <input id="wc_phone">
+                            </div>
+
+                            <div class="field">
+                                <label>Email</label>
+                                <input id="wc_email">
+                            </div>
+
+                            <div class="field">
+                                <label>WhatsApp</label>
+                                <input id="wc_whatsapp">
+                            </div>
+
+                            <div class="field full">
+                                <label>Address</label>
+                                <textarea id="wc_address"></textarea>
+                            </div>
+
+                            <div class="field full">
+                                <label>Topbar Text</label>
+                                <input id="wc_topbar_text">
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save General Settings
+                            </button>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- HERO -->
+
+                <section id="section-hero" class="section">
+
+                    <div class="section-title">Hero Section</div>
+
+                    <div class="section-subtitle">
+                        Main heading and image displayed at the top of the website.
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Eyebrow</label>
+                                <input id="wc_hero_eyebrow">
+                            </div>
+
+                            <div class="field">
+                                <label>Heading</label>
+                                <input id="wc_hero_heading">
+                            </div>
+
+                            <div class="field full">
+                                <label>Description</label>
+                                <textarea id="wc_hero_description"></textarea>
+                            </div>
+
+                            <div class="field full">
+                                <label>Hero Image URL</label>
+                                <input id="wc_hero_image_url">
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save Hero
+                            </button>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ABOUT -->
+
+                <section id="section-about" class="section">
+
+                    <div class="section-title">About Section</div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Eyebrow</label>
+                                <input id="wc_about_eyebrow">
+                            </div>
+
+                            <div class="field">
+                                <label>Heading</label>
+                                <input id="wc_about_heading">
+                            </div>
+
+                            <div class="field full">
+                                <label>Description</label>
+                                <textarea id="wc_about_description"></textarea>
+                            </div>
+
+                            <div class="field full">
+                                <label>About Image URL</label>
+                                <input id="wc_about_image_url">
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save About
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="section-card">
+
+                        <h3>Statistics</h3>
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Stat 1 Value</label>
+                                <input id="wc_stat_1_value">
+                            </div>
+
+                            <div class="field">
+                                <label>Stat 1 Label</label>
+                                <input id="wc_stat_1_label">
+                            </div>
+
+                            <div class="field">
+                                <label>Stat 2 Value</label>
+                                <input id="wc_stat_2_value">
+                            </div>
+
+                            <div class="field">
+                                <label>Stat 2 Label</label>
+                                <input id="wc_stat_2_label">
+                            </div>
+
+                            <div class="field">
+                                <label>Stat 3 Value</label>
+                                <input id="wc_stat_3_value">
+                            </div>
+
+                            <div class="field">
+                                <label>Stat 3 Label</label>
+                                <input id="wc_stat_3_label">
+                            </div>
+
+                            <div class="field">
+                                <label>Stat 4 Value</label>
+                                <input id="wc_stat_4_value">
+                            </div>
+
+                            <div class="field">
+                                <label>Stat 4 Label</label>
+                                <input id="wc_stat_4_label">
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save Statistics
+                            </button>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- PRODUCTS -->
+
+                <section id="section-products" class="section">
+
+                    <div class="section-title">Products</div>
+
+                    <div class="section-subtitle">
+                        Add, edit and delete client products.
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Products Eyebrow</label>
+                                <input id="wc_products_eyebrow">
+                            </div>
+
+                            <div class="field">
+                                <label>Products Heading</label>
+                                <input id="wc_products_heading">
+                            </div>
+
+                            <div class="field full">
+                                <label>Products Description</label>
+                                <textarea id="wc_products_description"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save Section
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="repeat-add">
+                            <h3>Product List</h3>
+                            <button class="add-small" onclick="addProduct()">
+                                + Add Product
+                            </button>
+                        </div>
+
+                        <div id="productsList"></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- MANUFACTURING -->
+
+                <section id="section-manufacturing" class="section">
+
+                    <div class="section-title">Manufacturing Process</div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Eyebrow</label>
+                                <input id="wc_manufacturing_eyebrow">
+                            </div>
+
+                            <div class="field">
+                                <label>Heading</label>
+                                <input id="wc_manufacturing_heading">
+                            </div>
+
+                            <div class="field full">
+                                <label>Description</label>
+                                <textarea id="wc_manufacturing_description"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save Section
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="repeat-add">
+                            <h3>Manufacturing Steps</h3>
+                            <button class="add-small" onclick="addManufacturingStep()">
+                                + Add Step
+                            </button>
+                        </div>
+
+                        <div id="manufacturingList"></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- QUALITY -->
+
+                <section id="section-quality" class="section">
+
+                    <div class="section-title">Quality</div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Eyebrow</label>
+                                <input id="wc_quality_eyebrow">
+                            </div>
+
+                            <div class="field">
+                                <label>Heading</label>
+                                <input id="wc_quality_heading">
+                            </div>
+
+                            <div class="field full">
+                                <label>Description</label>
+                                <textarea id="wc_quality_description"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save Section
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="repeat-add">
+                            <h3>Quality Points</h3>
+                            <button class="add-small" onclick="addQuality()">
+                                + Add Quality
+                            </button>
+                        </div>
+
+                        <div id="qualityList"></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- INDUSTRIES -->
+
+                <section id="section-industries" class="section">
+
+                    <div class="section-title">Industries</div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Eyebrow</label>
+                                <input id="wc_industries_eyebrow">
+                            </div>
+
+                            <div class="field">
+                                <label>Heading</label>
+                                <input id="wc_industries_heading">
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save Section
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="repeat-add">
+                            <h3>Industry List</h3>
+                            <button class="add-small" onclick="addIndustry()">
+                                + Add Industry
+                            </button>
+                        </div>
+
+                        <div id="industriesList"></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- GALLERY -->
+
+                <section id="section-gallery" class="section">
+
+                    <div class="section-title">Gallery</div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Eyebrow</label>
+                                <input id="wc_gallery_eyebrow">
+                            </div>
+
+                            <div class="field">
+                                <label>Heading</label>
+                                <input id="wc_gallery_heading">
+                            </div>
+
+                            <div class="field full">
+                                <label>Description</label>
+                                <textarea id="wc_gallery_description"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save Section
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="repeat-add">
+                            <h3>Gallery Images</h3>
+                            <button class="add-small" onclick="addGallery()">
+                                + Add Image
+                            </button>
+                        </div>
+
+                        <div id="galleryList"></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- TESTIMONIALS -->
+
+                <section id="section-testimonials" class="section">
+
+                    <div class="section-title">Testimonials</div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Eyebrow</label>
+                                <input id="wc_testimonials_eyebrow">
+                            </div>
+
+                            <div class="field">
+                                <label>Heading</label>
+                                <input id="wc_testimonials_heading">
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save Section
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="repeat-add">
+                            <h3>Testimonials</h3>
+                            <button class="add-small" onclick="addTestimonial()">
+                                + Add Testimonial
+                            </button>
+                        </div>
+
+                        <div id="testimonialsList"></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- FAQ -->
+
+                <section id="section-faq" class="section">
+
+                    <div class="section-title">FAQ</div>
+
+                    <div class="section-card">
+
+                        <div class="website-grid">
+
+                            <div class="field">
+                                <label>Eyebrow</label>
+                                <input id="wc_faq_eyebrow">
+                            </div>
+
+                            <div class="field">
+                                <label>Heading</label>
+                                <input id="wc_faq_heading">
+                            </div>
+
+                        </div>
+
+                        <div class="save-section">
+                            <button class="primary" onclick="saveWebsiteContent()">
+                                Save Section
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="section-card">
+
+                        <div class="repeat-add">
+                            <h3>Questions & Answers</h3>
+                            <button class="add-small" onclick="addFaq()">
+                                + Add FAQ
+                            </button>
+                        </div>
+
+                        <div id="faqList"></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- CONTACT -->
+
+                <section id="section-general-contact" class="section"></section>
+
+
+                <!-- DESIGN -->
+
+                <section id="section-design" class="section">
+
+                    <div class="section-title">Design</div>
+
+                    <div class="section-card">
+
+                        <div class="placeholder">
+                            <strong>Design Settings</strong><br><br>
+                            This area is reserved for template-level design controls
+                            such as colors, fonts, buttons, spacing, section visibility
+                            and other visual settings.
+                            <br><br>
+                            Existing V1 template will not be disturbed by this module.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- SOCIAL -->
+
+                <section id="section-social" class="section">
+
+                    <div class="section-title">Social Media</div>
+
+                    <div class="section-card">
+
+                        <div class="placeholder">
+                            Social media management module is ready for integration.
+                            It can later include Facebook, Instagram, LinkedIn,
+                            YouTube and WhatsApp links.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- SEO -->
+
+                <section id="section-seo" class="section">
+
+                    <div class="section-title">SEO</div>
+
+                    <div class="section-card">
+
+                        <div class="placeholder">
+                            SEO fields can be added here without changing the existing
+                            website content structure.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- POLICIES -->
+
+                <section id="section-policies" class="section">
+
+                    <div class="section-title">Policies</div>
+
+                    <div class="section-card">
+
+                        <div class="placeholder">
+                            Privacy Policy, Terms & Conditions, Refund Policy and
+                            other website policies can be managed from this section.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ENQUIRIES -->
+
+                <section id="section-enquiries" class="section">
+
+                    <div class="section-title">Enquiries</div>
+
+                    <div class="section-card">
+
+                        <div class="placeholder">
+                            Enquiry management will be connected to the existing
+                            enquiries system separately.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- CLIENT ADMIN -->
+
+                <section id="section-admin" class="section">
+
+                    <div class="section-title">Client Admin</div>
+
+                    <div class="section-card">
+
+                        <div class="placeholder">
+                            Client login/user management can be connected here.
+                            Existing profiles and client_id relationships are kept
+                            unchanged.
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </main>
+
         </div>
 
     </div>
@@ -687,9 +1514,9 @@ td{
 
 <script>
 
-/* =====================================================
+/* =========================================================
    SUPABASE
-===================================================== */
+========================================================= */
 
 const SUPABASE_URL =
     "https://ywvdozdoanmcxscfofcf.supabase.co";
@@ -712,9 +1539,9 @@ const supabaseClient =
     );
 
 
-/* =====================================================
+/* =========================================================
    ELEMENTS
-===================================================== */
+========================================================= */
 
 const formCard =
     document.getElementById("formCard");
@@ -773,15 +1600,16 @@ const formTitle =
 const activeClientName =
     document.getElementById("activeClientName");
 
+const websiteModal =
+    document.getElementById("websiteModal");
 
-/* =====================================================
-   FALLBACK TEMPLATES
-   IMPORTANT:
-   GitHub files are:
-   template/template-v1.html
-   ...
-   template/template-v10.html
-===================================================== */
+let selectedWebsiteClientId = null;
+let websiteContentId = null;
+
+
+/* =========================================================
+   TEMPLATES
+========================================================= */
 
 const FALLBACK_TEMPLATES = [
     "template-v1",
@@ -799,30 +1627,20 @@ const FALLBACK_TEMPLATES = [
 let templatesData = [];
 
 
-/* =====================================================
-   MESSAGE
-===================================================== */
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function showMessage(text,type){
 
     message.textContent = text;
+    message.className = "message " + type;
 
-    message.className =
-        "message " + type;
-
-    setTimeout(function(){
-
-        message.className =
-            "message";
-
-    },4000);
-
+    setTimeout(()=>{
+        message.className = "message";
+    },5000);
 }
 
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
 
 function escapeHtml(value){
 
@@ -832,103 +1650,87 @@ function escapeHtml(value){
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
-
 }
 
 
-/* =====================================================
-   NORMALIZE TEMPLATE
-===================================================== */
-
 function normalizeTemplateSlug(value){
 
-    let slugValue =
+    let v =
         String(value || "")
         .trim()
         .toLowerCase();
 
-    if(!slugValue){
-        return "";
-    }
+    if(!v)return "";
 
-    slugValue =
-        slugValue
+    v =
+        v
         .replace(/^https?:\/\/[^/]+\//,"")
         .replace(/^templates\//,"")
         .replace(/^template\//,"")
         .replace(/\.html$/i,"")
         .trim();
 
-    /*
-       Old database values also supported:
-
-       v1
-       template-v1
-       template/template-v1.html
-       templates/template-v1.html
-    */
-
-    if(/^v\d+$/.test(slugValue)){
-
-        slugValue =
-            "template-" + slugValue;
-
+    if(/^v\d+$/.test(v)){
+        v = "template-" + v;
     }
 
-    return slugValue;
-
+    return v;
 }
 
-
-/* =====================================================
-   TEMPLATE URL
-   ONLY SINGULAR template/
-===================================================== */
 
 function getTemplateUrl(value){
 
-    const slugValue =
+    const v =
         normalizeTemplateSlug(value);
 
-    if(!slugValue){
-        return "";
-    }
+    if(!v)return "";
 
     return new URL(
-        "template/" +
-        slugValue +
-        ".html",
+        "template/" + v + ".html",
         window.location.href
     ).href;
-
 }
 
 
-/* =====================================================
+function buildExternalUrl(value){
+
+    if(!value)return "";
+
+    let url = String(value).trim();
+
+    if(!url)return "";
+
+    if(!/^https?:\/\//i.test(url)){
+        url = "https://" + url;
+    }
+
+    try{
+        return new URL(url).href;
+    }
+    catch{
+        return "";
+    }
+}
+
+
+/* =========================================================
    LOAD TEMPLATES
-===================================================== */
+========================================================= */
 
 async function loadTemplates(){
 
     templatesData = [];
 
-    /*
-       First try Supabase templates table.
-    */
-
     try{
 
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
+        const {data,error} =
+            await supabaseClient
             .from("templates")
             .select("*");
 
         if(!error && Array.isArray(data)){
 
-            data.forEach(function(row){
+            data.forEach(row=>{
 
                 const value =
                     normalizeTemplateSlug(
@@ -944,15 +1746,12 @@ async function loadTemplates(){
                 if(value){
 
                     templatesData.push({
-
-                        value:value,
-
+                        value,
                         label:
                             row.name ||
                             row.template_name ||
                             row.title ||
                             value
-
                     });
 
                 }
@@ -961,63 +1760,38 @@ async function loadTemplates(){
 
         }
 
-    }
-    catch(error){
+    }catch(error){
 
-        console.error(
-            "Template table error:",
+        console.warn(
+            "templates table unavailable:",
             error
         );
 
     }
 
 
-    /*
-       Remove duplicates.
-    */
-
     const map = new Map();
 
-    templatesData.forEach(function(item){
-
-        map.set(
-            item.value,
-            item
-        );
-
+    templatesData.forEach(item=>{
+        map.set(item.value,item);
     });
-
 
     templatesData =
         Array.from(map.values());
 
 
-    /*
-       If Supabase template table is empty,
-       use the actual GitHub template files.
-    */
-
-    if(templatesData.length === 0){
+    if(!templatesData.length){
 
         templatesData =
-            FALLBACK_TEMPLATES.map(function(value){
-
-                return {
-
-                    value:value,
-
-                    label:
-                        value.toUpperCase()
-
-                };
-
-            });
+            FALLBACK_TEMPLATES.map(value=>({
+                value,
+                label:value.toUpperCase()
+            }));
 
         templateStatus.textContent =
-            "Using GitHub templates v1-v10.";
+            "Using template files V1-V10.";
 
-    }
-    else{
+    }else{
 
         templateStatus.textContent =
             templatesData.length +
@@ -1025,28 +1799,21 @@ async function loadTemplates(){
 
     }
 
-
     templateStatus.className =
         "template-status ok";
 
 
-    template.innerHTML = `
-        <option value="">
-            Select Website Template
-        </option>
-    `;
+    template.innerHTML =
+        `<option value="">Select Website Template</option>`;
 
 
-    templatesData.forEach(function(item){
+    templatesData.forEach(item=>{
 
         const option =
             document.createElement("option");
 
-        option.value =
-            item.value;
-
-        option.textContent =
-            item.label;
+        option.value = item.value;
+        option.textContent = item.label;
 
         template.appendChild(option);
 
@@ -1055,26 +1822,23 @@ async function loadTemplates(){
 }
 
 
-/* =====================================================
+/* =========================================================
    LOGIN
-===================================================== */
+========================================================= */
 
 async function checkLogin(){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-        .auth
-        .getUser();
+    const {data,error} =
+        await supabaseClient.auth.getUser();
 
     if(error){
 
         console.error(error);
 
-        return false;
+        window.location.href =
+            "admin.html";
 
+        return false;
     }
 
     if(!data.user){
@@ -1083,23 +1847,19 @@ async function checkLogin(){
             "admin.html";
 
         return false;
-
     }
 
     return true;
-
 }
 
 
-/* =====================================================
+/* =========================================================
    ACTIVE CLIENT
-===================================================== */
+========================================================= */
 
 function updateActiveClientDisplay(){
 
-    if(
-        window.MDKClientContext
-    ){
+    if(window.MDKClientContext){
 
         const client =
             MDKClientContext.get();
@@ -1111,24 +1871,20 @@ function updateActiveClientDisplay(){
                 client.id;
 
             return;
-
         }
-
     }
 
     activeClientName.textContent =
         "None";
-
 }
 
 
-/* =====================================================
+/* =========================================================
    ADD CLIENT
-===================================================== */
+========================================================= */
 
-document
-.getElementById("addBtn")
-.addEventListener("click",function(){
+document.getElementById("addBtn")
+.addEventListener("click",()=>{
 
     clientForm.reset();
 
@@ -1153,294 +1909,209 @@ document
 });
 
 
-/* =====================================================
+/* =========================================================
    CANCEL
-===================================================== */
+========================================================= */
 
-document
-.getElementById("cancelBtn")
-.addEventListener("click",function(){
+document.getElementById("cancelBtn")
+.addEventListener("click",()=>{
 
     formCard.classList.add("hidden");
 
 });
 
 
-/* =====================================================
+/* =========================================================
    AUTO SLUG
-===================================================== */
+========================================================= */
 
-companyName.addEventListener(
-    "input",
-    function(){
+companyName.addEventListener("input",()=>{
 
-        if(!clientId.value){
+    if(!clientId.value){
 
-            slug.value =
-                companyName.value
-                    .toLowerCase()
-                    .trim()
-                    .replace(/[^a-z0-9]+/g,"-")
-                    .replace(/^-+|-+$/g,"");
-
-        }
+        slug.value =
+            companyName.value
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9]+/g,"-")
+            .replace(/^-+|-+$/g,"");
 
     }
-);
+
+});
 
 
-/* =====================================================
+/* =========================================================
    SAVE CLIENT
-===================================================== */
+========================================================= */
 
-clientForm.addEventListener(
-    "submit",
-    async function(e){
+clientForm.addEventListener("submit",async e=>{
 
-        e.preventDefault();
+    e.preventDefault();
 
+    const company =
+        companyName.value.trim();
 
-        const company =
-            companyName.value.trim();
+    const slugValue =
+        slug.value.trim();
 
-        const slugValue =
-            slug.value.trim();
-
-        const domainValue =
-            domain.value.trim();
-
-        const hostingTypeValue =
-            hostingType.value;
-
-        const hostingUrlValue =
-            hostingUrl.value.trim();
-
-        /*
-           IMPORTANT:
-           Always store normalized value:
-           template-v1
-           template-v2
-           ...
-        */
-
-        const templateValue =
-            normalizeTemplateSlug(
-                template.value
-            );
-
-        const statusValue =
-            status.value;
-
-
-        if(!company){
-
-            showMessage(
-                "Company name is required.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        if(!slugValue){
-
-            showMessage(
-                "Slug is required.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        if(!templateValue){
-
-            showMessage(
-                "Please select a website template.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        saveBtn.disabled = true;
-
-        saveBtn.textContent =
-            "Saving...";
-
-
-        let result;
-
-
-        const payload = {
-
-            company_name:
-                company,
-
-            slug:
-                slugValue,
-
-            domain:
-                domainValue || null,
-
-            hosting_type:
-                hostingTypeValue || null,
-
-            hosting_url:
-                hostingUrlValue || null,
-
-            template:
-                templateValue,
-
-            status:
-                statusValue
-
-        };
-
-
-        if(clientId.value){
-
-            result =
-                await supabaseClient
-                    .from("clients")
-                    .update({
-                        ...payload,
-                        updated_at:
-                            new Date().toISOString()
-                    })
-                    .eq(
-                        "id",
-                        clientId.value
-                    );
-
-        }
-        else{
-
-            result =
-                await supabaseClient
-                    .from("clients")
-                    .insert(payload);
-
-        }
-
-
-        saveBtn.disabled = false;
-
-
-        if(result.error){
-
-            console.error(
-                result.error
-            );
-
-            showMessage(
-                result.error.message,
-                "error"
-            );
-
-            saveBtn.textContent =
-                clientId.value
-                ? "Update Client"
-                : "Save Client";
-
-            return;
-
-        }
-
-
-        const savedId =
-            clientId.value;
-
-
-        showMessage(
-            savedId
-            ? "Client updated successfully."
-            : "Client created successfully.",
-            "success"
+    const templateValue =
+        normalizeTemplateSlug(
+            template.value
         );
 
+    if(!company){
 
-        formCard.classList.add("hidden");
+        showMessage(
+            "Company name is required.",
+            "error"
+        );
+
+        return;
+    }
+
+    if(!slugValue){
+
+        showMessage(
+            "Slug is required.",
+            "error"
+        );
+
+        return;
+    }
+
+    if(!templateValue){
+
+        showMessage(
+            "Please select a website template.",
+            "error"
+        );
+
+        return;
+    }
 
 
-        clientForm.reset();
-
-        clientId.value = "";
-
-
-        saveBtn.textContent =
-            "Save Client";
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Saving...";
 
 
-        /*
-           Automatically make saved client active.
-        */
+    const payload = {
 
-        let targetId =
-            savedId;
+        company_name:company,
+
+        slug:slugValue,
+
+        domain:
+            domain.value.trim() || null,
+
+        hosting_type:
+            hostingType.value || null,
+
+        hosting_url:
+            hostingUrl.value.trim() || null,
+
+        template:templateValue,
+
+        status:status.value
+
+    };
 
 
-        if(!targetId){
+    let result;
 
-            const {
-                data
-            } =
+    if(clientId.value){
+
+        result =
             await supabaseClient
-                .from("clients")
-                .select("id")
-                .eq(
-                    "slug",
-                    slugValue
-                )
-                .maybeSingle();
+            .from("clients")
+            .update({
+                ...payload,
+                updated_at:new Date().toISOString()
+            })
+            .eq("id",clientId.value);
 
-            targetId =
-                data
-                ? data.id
-                : null;
+    }else{
 
-        }
-
-
-        if(targetId){
-
-            await useClient(
-                targetId,
-                false
-            );
-
-        }
-
-
-        await loadClients();
+        result =
+            await supabaseClient
+            .from("clients")
+            .insert(payload)
+            .select("id")
+            .single();
 
     }
-);
 
 
-/* =====================================================
+    saveBtn.disabled = false;
+
+
+    if(result.error){
+
+        console.error(result.error);
+
+        showMessage(
+            result.error.message,
+            "error"
+        );
+
+        saveBtn.textContent =
+            clientId.value
+            ? "Update Client"
+            : "Save Client";
+
+        return;
+    }
+
+
+    const savedId =
+        clientId.value ||
+        result.data?.id;
+
+
+    showMessage(
+        clientId.value
+        ? "Client updated successfully."
+        : "Client created successfully.",
+        "success"
+    );
+
+
+    formCard.classList.add("hidden");
+
+    clientForm.reset();
+    clientId.value = "";
+
+    saveBtn.textContent =
+        "Save Client";
+
+
+    if(savedId){
+
+        await useClient(
+            savedId,
+            false
+        );
+
+    }
+
+    await loadClients();
+
+});
+
+
+/* =========================================================
    LOAD CLIENTS
-===================================================== */
+========================================================= */
 
 async function loadClients(){
 
     loading.classList.remove("hidden");
-
     tableArea.classList.add("hidden");
-
     empty.classList.add("hidden");
 
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
+    const {data,error} =
+        await supabaseClient
         .from("clients")
         .select(`
             id,
@@ -1451,14 +2122,10 @@ async function loadClients(){
             hosting_url,
             template,
             status,
-            created_at
+            created_at,
+            updated_at
         `)
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+        .order("created_at",{ascending:false});
 
 
     loading.classList.add("hidden");
@@ -1475,16 +2142,14 @@ async function loadClients(){
         );
 
         return;
-
     }
 
 
-    if(!data || data.length === 0){
+    if(!data || !data.length){
 
         empty.classList.remove("hidden");
 
         return;
-
     }
 
 
@@ -1497,7 +2162,7 @@ async function loadClients(){
         : null;
 
 
-    data.forEach(function(client){
+    data.forEach(client=>{
 
         const row =
             document.createElement("tr");
@@ -1515,168 +2180,96 @@ async function loadClients(){
             );
 
 
-        const websiteUrl =
-            client.domain
-            ? buildExternalUrl(
-                client.domain
-            )
-            : (
-                client.hosting_url
-                ? buildExternalUrl(
-                    client.hosting_url
-                )
-                : ""
-            );
-
-
         row.innerHTML = `
 
             <td>
-
                 <div class="company">
-
-                    ${escapeHtml(
-                        client.company_name
-                    )}
-
+                    ${escapeHtml(client.company_name)}
                 </div>
-
             </td>
 
-
             <td>
-
                 <span class="slug">
-
-                    ${escapeHtml(
-                        client.slug
-                    )}
-
+                    ${escapeHtml(client.slug)}
                 </span>
-
             </td>
 
-
             <td>
-
                 <span class="domain">
-
-                    ${escapeHtml(
-                        client.domain || "—"
-                    )}
-
+                    ${escapeHtml(client.domain || "—")}
                 </span>
-
             </td>
 
-
             <td>
-
                 <div class="hosting">
-
-                    ${escapeHtml(
-                        client.hosting_type || "—"
-                    )}
-
+                    ${escapeHtml(client.hosting_type || "—")}
                 </div>
-
             </td>
 
-
             <td>
-
                 <span class="template-badge">
-
-                    ${escapeHtml(
-                        templateSlug || "—"
-                    )}
-
+                    ${escapeHtml(templateSlug || "—")}
                 </span>
-
             </td>
 
-
             <td>
-
                 <span class="badge ${
                     client.status === "active"
                     ? "active"
                     : "inactive"
                 }">
-
-                    ${escapeHtml(
-                        client.status || "active"
-                    )}
-
+                    ${escapeHtml(client.status || "active")}
                 </span>
-
             </td>
-
 
             <td>
 
                 <div class="actions">
 
-
                     <button
                         class="preview-btn"
                         onclick="previewClient('${client.id}')"
-                        ${templateUrl ? "" : "disabled"}
-                    >
-
+                        ${templateUrl ? "" : "disabled"}>
                         👁 Preview
-
                     </button>
-
 
                     <button
                         class="website-btn"
-                        onclick="openClientWebsite('${client.id}')"
-                    >
-
+                        onclick="openClientWebsite('${client.id}')">
                         🌐 Website
-
                     </button>
-
 
                     <button
                         class="use-btn"
-                        onclick="useClient('${client.id}')"
-                    >
-
+                        onclick="useClient('${client.id}')">
                         ${
                             activeId === client.id
                             ? "✓ Active"
                             : "Use Client"
                         }
-
                     </button>
 
+                    <button
+                        class="manage-btn"
+                        onclick="openWebsiteManager('${client.id}')">
+                        ⚙ Manage Website
+                    </button>
 
                     <button
                         class="edit-btn"
-                        onclick="editClient('${client.id}')"
-                    >
-
+                        onclick="editClient('${client.id}')">
                         Edit
-
                     </button>
-
 
                     <button
                         class="delete-btn"
-                        onclick="deleteClient('${client.id}')"
-                    >
-
+                        onclick="deleteClient('${client.id}')">
                         Delete
-
                     </button>
-
 
                 </div>
 
             </td>
-
         `;
 
 
@@ -1692,61 +2285,15 @@ async function loadClients(){
 }
 
 
-/* =====================================================
-   EXTERNAL URL
-===================================================== */
-
-function buildExternalUrl(value){
-
-    if(!value){
-        return "";
-    }
-
-    let url =
-        String(value).trim();
-
-    if(!url){
-        return "";
-    }
-
-    if(
-        !/^https?:\/\//i.test(url)
-    ){
-
-        url =
-            "https://" + url;
-
-    }
-
-    try{
-
-        return new URL(url).href;
-
-    }
-    catch(error){
-
-        return "";
-
-    }
-
-}
-
-
-/* =====================================================
+/* =========================================================
    USE CLIENT
-===================================================== */
+========================================================= */
 
 window.useClient =
-async function(
-    id,
-    showAlert = true
-){
+async function(id,showAlert=true){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
+    const {data,error} =
+        await supabaseClient
         .from("clients")
         .select(`
             id,
@@ -1758,16 +2305,11 @@ async function(
             template,
             status
         `)
-        .eq(
-            "id",
-            id
-        )
+        .eq("id",id)
         .single();
 
 
     if(error){
-
-        console.error(error);
 
         showMessage(
             error.message,
@@ -1775,14 +2317,8 @@ async function(
         );
 
         return;
-
     }
 
-
-    /*
-       Normalize template before saving
-       to local context.
-    */
 
     data.template =
         normalizeTemplateSlug(
@@ -1790,9 +2326,7 @@ async function(
         );
 
 
-    if(
-        window.MDKClientContext
-    ){
+    if(window.MDKClientContext){
 
         MDKClientContext.set(data);
 
@@ -1812,24 +2346,20 @@ async function(
 
     }
 
-
     await loadClients();
 
 };
 
 
-/* =====================================================
-   PREVIEW CLIENT
-===================================================== */
+/* =========================================================
+   PREVIEW
+========================================================= */
 
 window.previewClient =
 async function(id){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
+    const {data,error} =
+        await supabaseClient
         .from("clients")
         .select(`
             id,
@@ -1841,16 +2371,11 @@ async function(id){
             template,
             status
         `)
-        .eq(
-            "id",
-            id
-        )
+        .eq("id",id)
         .single();
 
 
     if(error || !data){
-
-        console.error(error);
 
         showMessage(
             "Unable to find client.",
@@ -1858,7 +2383,6 @@ async function(id){
         );
 
         return;
-
     }
 
 
@@ -1871,22 +2395,15 @@ async function(id){
     if(!templateSlug){
 
         showMessage(
-            "No template assigned to this client.",
+            "No template assigned.",
             "error"
         );
 
         return;
-
     }
 
 
-    /*
-       Make client active before preview.
-    */
-
-    if(
-        window.MDKClientContext
-    ){
+    if(window.MDKClientContext){
 
         MDKClientContext.set({
             ...data,
@@ -1896,24 +2413,8 @@ async function(id){
     }
 
 
-    /*
-       EXACT PATH:
-
-       template/template-v1.html
-
-       NOT:
-
-       templates/template-v1.html
-
-       NOT:
-
-       industria.html
-    */
-
     const baseUrl =
-        getTemplateUrl(
-            templateSlug
-        );
+        getTemplateUrl(templateSlug);
 
 
     if(!baseUrl){
@@ -1924,29 +2425,20 @@ async function(id){
         );
 
         return;
-
     }
 
 
     const url =
         new URL(baseUrl);
 
-
     url.searchParams.set(
         "client",
         data.id
     );
 
-
     url.searchParams.set(
         "preview",
         "1"
-    );
-
-
-    console.log(
-        "CLIENT PREVIEW URL:",
-        url.href
     );
 
 
@@ -1959,18 +2451,15 @@ async function(id){
 };
 
 
-/* =====================================================
-   OPEN ACTUAL CLIENT WEBSITE
-===================================================== */
+/* =========================================================
+   LIVE WEBSITE
+========================================================= */
 
 window.openClientWebsite =
 async function(id){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
+    const {data,error} =
+        await supabaseClient
         .from("clients")
         .select(`
             id,
@@ -1979,10 +2468,7 @@ async function(id){
             hosting_url,
             template
         `)
-        .eq(
-            "id",
-            id
-        )
+        .eq("id",id)
         .single();
 
 
@@ -1994,17 +2480,8 @@ async function(id){
         );
 
         return;
-
     }
 
-
-    /*
-       Priority:
-
-       1. Domain
-       2. Hosting URL
-       3. Template preview
-    */
 
     let url =
         data.domain
@@ -2021,14 +2498,8 @@ async function(id){
         );
 
         return;
-
     }
 
-
-    /*
-       If client has no external URL,
-       open our template preview instead.
-    */
 
     const templateSlug =
         normalizeTemplateSlug(
@@ -2039,20 +2510,17 @@ async function(id){
     if(!templateSlug){
 
         showMessage(
-            "No domain, hosting URL or template found.",
+            "No website URL or template found.",
             "error"
         );
 
         return;
-
     }
 
 
     const previewUrl =
         new URL(
-            getTemplateUrl(
-                templateSlug
-            )
+            getTemplateUrl(templateSlug)
         );
 
 
@@ -2060,7 +2528,6 @@ async function(id){
         "client",
         data.id
     );
-
 
     previewUrl.searchParams.set(
         "preview",
@@ -2077,18 +2544,15 @@ async function(id){
 };
 
 
-/* =====================================================
+/* =========================================================
    EDIT CLIENT
-===================================================== */
+========================================================= */
 
 window.editClient =
 async function(id){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
+    const {data,error} =
+        await supabaseClient
         .from("clients")
         .select(`
             id,
@@ -2100,10 +2564,7 @@ async function(id){
             template,
             status
         `)
-        .eq(
-            "id",
-            id
-        )
+        .eq("id",id)
         .single();
 
 
@@ -2115,85 +2576,45 @@ async function(id){
         );
 
         return;
-
     }
 
 
-    clientId.value =
-        data.id;
-
-    companyName.value =
-        data.company_name || "";
-
-    slug.value =
-        data.slug || "";
-
-    domain.value =
-        data.domain || "";
-
+    clientId.value = data.id;
+    companyName.value = data.company_name || "";
+    slug.value = data.slug || "";
+    domain.value = data.domain || "";
     hostingType.value =
-        data.hosting_type ||
-        "GitHub Pages";
+        data.hosting_type || "GitHub Pages";
+    hostingUrl.value = data.hosting_url || "";
 
-    hostingUrl.value =
-        data.hosting_url || "";
-
-    template.value =
-        normalizeTemplateSlug(
-            data.template
-        );
-
-    status.value =
-        data.status ||
-        "active";
+    const templateValue =
+        normalizeTemplateSlug(data.template);
 
 
-    /*
-       If old template value isn't
-       in dropdown, create option.
-    */
+    template.value = templateValue;
 
     if(
-        data.template &&
-        !Array.from(
-            template.options
-        ).some(
-            option =>
-                option.value ===
-                normalizeTemplateSlug(
-                    data.template
-                )
-        )
+        templateValue &&
+        !Array.from(template.options)
+        .some(o=>o.value===templateValue)
     ){
 
-        const value =
-            normalizeTemplateSlug(
-                data.template
-            );
+        const option =
+            document.createElement("option");
 
-        if(value){
+        option.value = templateValue;
+        option.textContent =
+            templateValue + " (Existing)";
 
-            const option =
-                document.createElement(
-                    "option"
-                );
+        template.appendChild(option);
 
-            option.value =
-                value;
-
-            option.textContent =
-                value + " (Existing)";
-
-            template.appendChild(
-                option
-            );
-
-            template.value =
-                value;
-
-        }
-
+        template.value =
+            templateValue;
     }
+
+
+    status.value =
+        data.status || "active";
 
 
     formTitle.textContent =
@@ -2203,10 +2624,7 @@ async function(id){
         "Update Client";
 
 
-    formCard.classList.remove(
-        "hidden"
-    );
-
+    formCard.classList.remove("hidden");
 
     window.scrollTo({
         top:0,
@@ -2216,22 +2634,16 @@ async function(id){
 };
 
 
-/* =====================================================
-   DELETE CLIENT
-===================================================== */
+/* =========================================================
+   DELETE
+========================================================= */
 
 window.deleteClient =
 async function(id){
 
-    const confirmed =
-        confirm(
-            "Are you sure you want to delete this client?"
-        );
-
-
-    if(!confirmed){
-        return;
-    }
+    if(!confirm(
+        "Are you sure you want to delete this client?"
+    ))return;
 
 
     const activeId =
@@ -2240,21 +2652,14 @@ async function(id){
         : null;
 
 
-    const {
-        error
-    } =
-    await supabaseClient
+    const {error} =
+        await supabaseClient
         .from("clients")
         .delete()
-        .eq(
-            "id",
-            id
-        );
+        .eq("id",id);
 
 
     if(error){
-
-        console.error(error);
 
         showMessage(
             error.message,
@@ -2262,14 +2667,11 @@ async function(id){
         );
 
         return;
-
     }
 
 
-    if(
-        activeId === id &&
-        window.MDKClientContext
-    ){
+    if(activeId === id &&
+       window.MDKClientContext){
 
         MDKClientContext.clear();
 
@@ -2289,65 +2691,2057 @@ async function(id){
 };
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
+/* =========================================================
+   WEBSITE MANAGER NAVIGATION
+========================================================= */
 
-document
-.getElementById("logoutBtn")
-.addEventListener(
-    "click",
-    async function(){
+document.querySelectorAll(".nav-btn")
+.forEach(btn=>{
 
-        try{
+    btn.addEventListener("click",()=>{
 
-            if(
-                window.MDKClientContext
-            ){
+        const section =
+            btn.dataset.section;
 
-                MDKClientContext.clear();
 
-            }
+        document
+        .querySelectorAll(".nav-btn")
+        .forEach(b=>{
+            b.classList.remove("active");
+        });
 
-            await supabaseClient
-                .auth
-                .signOut();
 
+        btn.classList.add("active");
+
+
+        document
+        .querySelectorAll(".section")
+        .forEach(s=>{
+            s.classList.remove("active");
+        });
+
+
+        const target =
+            document.getElementById(
+                "section-" + section
+            );
+
+
+        if(target){
+            target.classList.add("active");
         }
-        catch(error){
 
-            console.error(error);
+    });
 
-        }
+});
 
 
-        window.location.href =
-            "admin.html";
+/* =========================================================
+   CLOSE MANAGER
+========================================================= */
 
+document.getElementById("closeManager")
+.addEventListener("click",closeWebsiteManager);
+
+
+websiteModal.addEventListener("click",e=>{
+
+    if(e.target === websiteModal){
+        closeWebsiteManager();
     }
-);
+
+});
 
 
-/* =====================================================
-   START
-===================================================== */
+function closeWebsiteManager(){
 
-(async function(){
+    websiteModal.classList.remove("show");
 
-    const loggedIn =
-        await checkLogin();
+    selectedWebsiteClientId = null;
+    websiteContentId = null;
+
+}
 
 
-    if(!loggedIn){
+/* =========================================================
+   GET / CREATE WEBSITE CONTENT
+========================================================= */
+
+async function getWebsiteContent(clientIdValue){
+
+    let {data,error} =
+        await supabaseClient
+        .from("client_website_content")
+        .select("*")
+        .eq("client_id",clientIdValue)
+        .maybeSingle();
+
+
+    if(error){
+
+        console.error(error);
+
+        throw error;
+    }
+
+
+    if(!data){
+
+        const result =
+            await supabaseClient
+            .from("client_website_content")
+            .insert({
+                client_id:clientIdValue
+            })
+            .select("*")
+            .single();
+
+
+        if(result.error){
+
+            throw result.error;
+        }
+
+        data = result.data;
+    }
+
+
+    return data;
+}
+
+
+/* =========================================================
+   OPEN WEBSITE MANAGER
+========================================================= */
+
+window.openWebsiteManager =
+async function(id){
+
+    selectedWebsiteClientId = id;
+
+
+    const {data:client,error} =
+        await supabaseClient
+        .from("clients")
+        .select(`
+            id,
+            company_name,
+            slug,
+            domain,
+            hosting_url,
+            template
+        `)
+        .eq("id",id)
+        .single();
+
+
+    if(error){
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
         return;
     }
 
 
-    await loadTemplates();
+    document.getElementById("managerTitle")
+        .textContent =
+        "Manage Website — " +
+        (client.company_name || "");
 
-    updateActiveClientDisplay();
 
-    await loadClients();
+    document.getElementById("managerSubtitle")
+        .textContent =
+        client.domain ||
+        client.hosting_url ||
+        client.slug ||
+        "Client Website";
+
+
+    try{
+
+        const content =
+            await getWebsiteContent(id);
+
+
+        websiteContentId =
+            content.id;
+
+
+        fillWebsiteContent(content);
+
+
+        await loadRepeatedData(id);
+
+
+        websiteModal.classList.add("show");
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showMessage(
+            "Unable to open Website Manager: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+};
+
+
+/* =========================================================
+   FILL WEBSITE CONTENT
+========================================================= */
+
+const contentFields = [
+
+    "logo_url",
+    "phone",
+    "email",
+    "whatsapp",
+    "address",
+    "topbar_text",
+
+    "hero_eyebrow",
+    "hero_heading",
+    "hero_description",
+    "hero_image_url",
+
+    "about_eyebrow",
+    "about_heading",
+    "about_description",
+    "about_image_url",
+
+    "stat_1_value",
+    "stat_1_label",
+    "stat_2_value",
+    "stat_2_label",
+    "stat_3_value",
+    "stat_3_label",
+    "stat_4_value",
+    "stat_4_label",
+
+    "products_eyebrow",
+    "products_heading",
+    "products_description",
+
+    "manufacturing_eyebrow",
+    "manufacturing_heading",
+    "manufacturing_description",
+
+    "quality_eyebrow",
+    "quality_heading",
+    "quality_description",
+
+    "industries_eyebrow",
+    "industries_heading",
+
+    "gallery_eyebrow",
+    "gallery_heading",
+    "gallery_description",
+
+    "testimonials_eyebrow",
+    "testimonials_heading",
+
+    "faq_eyebrow",
+    "faq_heading",
+
+    "contact_eyebrow",
+    "contact_heading",
+    "contact_description"
+
+];
+
+
+function fillWebsiteContent(data){
+
+    contentFields.forEach(field=>{
+
+        const el =
+            document.getElementById(
+                "wc_" + field
+            );
+
+        if(el){
+
+            el.value =
+                data[field] ?? "";
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   SAVE WEBSITE CONTENT
+========================================================= */
+
+window.saveWebsiteContent =
+async function(){
+
+    if(!selectedWebsiteClientId){
+
+        showMessage(
+            "No client selected.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const payload = {
+        client_id:selectedWebsiteClientId
+    };
+
+
+    contentFields.forEach(field=>{
+
+        const el =
+            document.getElementById(
+                "wc_" + field
+            );
+
+        if(el){
+
+            payload[field] =
+                el.value.trim() || null;
+
+        }
+
+    });
+
+
+    let result;
+
+
+    if(websiteContentId){
+
+        result =
+            await supabaseClient
+            .from("client_website_content")
+            .update(payload)
+            .eq("id",websiteContentId);
+
+    }else{
+
+        result =
+            await supabaseClient
+            .from("client_website_content")
+            .insert(payload)
+            .select("id")
+            .single();
+
+        if(!result.error){
+
+            websiteContentId =
+                result.data.id;
+
+        }
+
+    }
+
+
+    if(result.error){
+
+        console.error(result.error);
+
+        showMessage(
+            "Save failed: " +
+            result.error.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    showMessage(
+        "Website content saved successfully.",
+        "success"
+    );
+
+};
+
+
+/* =========================================================
+   REPEATED DATA LOAD
+========================================================= */
+
+async function loadRepeatedData(clientIdValue){
+
+    await Promise.all([
+        loadProducts(clientIdValue),
+        loadManufacturing(clientIdValue),
+        loadQuality(clientIdValue),
+        loadIndustries(clientIdValue),
+        loadGallery(clientIdValue),
+        loadTestimonials(clientIdValue),
+        loadFaq(clientIdValue)
+    ]);
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+async function loadProducts(clientIdValue){
+
+    const {data,error} =
+        await supabaseClient
+        .from("client_products")
+        .select("*")
+        .eq("client_id",clientIdValue)
+        .order("sort_order",{ascending:true});
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+    }
+
+
+    const box =
+        document.getElementById("productsList");
+
+    box.innerHTML = "";
+
+
+    (data || []).forEach(item=>{
+        box.appendChild(
+            productElement(item)
+        );
+    });
+
+}
+
+
+function productElement(item={}){
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "repeat-item";
+
+    div.innerHTML = `
+
+        <div class="repeat-item-grid">
+
+            <div class="field">
+                <label>Product Code</label>
+                <input data-field="product_code"
+                       value="${escapeHtml(item.product_code || "")}">
+            </div>
+
+            <div class="field">
+                <label>Product Name</label>
+                <input data-field="product_name"
+                       value="${escapeHtml(item.product_name || "")}">
+            </div>
+
+            <div class="field full">
+                <label>Description</label>
+                <textarea data-field="description">${escapeHtml(item.description || "")}</textarea>
+            </div>
+
+            <div class="field">
+                <label>Image URL</label>
+                <input data-field="image_url"
+                       value="${escapeHtml(item.image_url || "")}">
+            </div>
+
+            <div class="field">
+                <label>Enquiry URL</label>
+                <input data-field="enquiry_url"
+                       value="${escapeHtml(item.enquiry_url || "")}">
+            </div>
+
+            <div class="field">
+                <label>Sort Order</label>
+                <input type="number"
+                       data-field="sort_order"
+                       value="${item.sort_order ?? 0}">
+            </div>
+
+            <div class="field">
+                <label>Active</label>
+                <select data-field="is_active">
+                    <option value="true" ${item.is_active !== false ? "selected":""}>
+                        Yes
+                    </option>
+                    <option value="false" ${item.is_active === false ? "selected":""}>
+                        No
+                    </option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="repeat-actions">
+
+            <button class="small-save"
+                    onclick="saveProduct(this,'${item.id || ""}')">
+                Save
+            </button>
+
+            ${
+                item.id
+                ? `<button class="small-delete"
+                           onclick="deleteRepeated('client_products','${item.id}',loadProducts)">
+                       Delete
+                   </button>`
+                : ""
+            }
+
+        </div>
+    `;
+
+    return div;
+}
+
+
+window.addProduct=function(){
+
+    const box =
+        document.getElementById("productsList");
+
+    box.prepend(
+        productElement({
+            is_active:true,
+            sort_order:0
+        })
+    );
+
+};
+
+
+window.saveProduct =
+async function(button,id){
+
+    const item =
+        button.closest(".repeat-item");
+
+    const payload = {
+
+        client_id:selectedWebsiteClientId,
+
+        product_code:
+            item.querySelector('[data-field="product_code"]').value.trim() || null,
+
+        product_name:
+            item.querySelector('[data-field="product_name"]').value.trim() || null,
+
+        description:
+            item.querySelector('[data-field="description"]').value.trim() || null,
+
+        image_url:
+            item.querySelector('[data-field="image_url"]').value.trim() || null,
+
+        enquiry_url:
+            item.querySelector('[data-field="enquiry_url"]').value.trim() || null,
+
+        sort_order:
+            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+
+        is_active:
+            item.querySelector('[data-field="is_active"]').value === "true"
+
+    };
+
+
+    let result;
+
+    if(id){
+
+        result =
+            await supabaseClient
+            .from("client_products")
+            .update(payload)
+            .eq("id",id);
+
+    }else{
+
+        result =
+            await supabaseClient
+            .from("client_products")
+            .insert(payload);
+
+    }
+
+
+    if(result.error){
+
+        alert(result.error.message);
+
+        return;
+    }
+
+
+    await loadProducts(selectedWebsiteClientId);
+
+    showMessage(
+        "Product saved.",
+        "success"
+    );
+
+};
+
+
+/* =========================================================
+   MANUFACTURING
+========================================================= */
+
+async function loadManufacturing(clientIdValue){
+
+    const {data,error} =
+        await supabaseClient
+        .from("client_manufacturing_steps")
+        .select("*")
+        .eq("client_id",clientIdValue)
+        .order("sort_order",{ascending:true});
+
+
+    if(error)return;
+
+
+    const box =
+        document.getElementById("manufacturingList");
+
+    box.innerHTML = "";
+
+
+    (data || []).forEach(item=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "repeat-item";
+
+        div.innerHTML = `
+
+            <div class="repeat-item-grid">
+
+                <div class="field">
+                    <label>Step Number</label>
+                    <input data-field="step_number"
+                           type="number"
+                           value="${item.step_number ?? 1}">
+                </div>
+
+                <div class="field">
+                    <label>Title</label>
+                    <input data-field="title"
+                           value="${escapeHtml(item.title || "")}">
+                </div>
+
+                <div class="field full">
+                    <label>Description</label>
+                    <textarea data-field="description">${escapeHtml(item.description || "")}</textarea>
+                </div>
+
+                <div class="field">
+                    <label>Sort Order</label>
+                    <input data-field="sort_order"
+                           type="number"
+                           value="${item.sort_order ?? 0}">
+                </div>
+
+                <div class="field">
+                    <label>Active</label>
+                    <select data-field="is_active">
+                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
+                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="repeat-actions">
+
+                <button class="small-save"
+                    onclick="saveManufacturing(this,'${item.id}')">
+                    Save
+                </button>
+
+                <button class="small-delete"
+                    onclick="deleteManufacturing('${item.id}')">
+                    Delete
+                </button>
+
+            </div>
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+window.addManufacturingStep=function(){
+
+    const box =
+        document.getElementById("manufacturingList");
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "repeat-item";
+
+    div.innerHTML = `
+
+        <div class="repeat-item-grid">
+
+            <div class="field">
+                <label>Step Number</label>
+                <input data-field="step_number"
+                       type="number"
+                       value="1">
+            </div>
+
+            <div class="field">
+                <label>Title</label>
+                <input data-field="title">
+            </div>
+
+            <div class="field full">
+                <label>Description</label>
+                <textarea data-field="description"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Sort Order</label>
+                <input data-field="sort_order"
+                       type="number"
+                       value="0">
+            </div>
+
+            <div class="field">
+                <label>Active</label>
+                <select data-field="is_active">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="repeat-actions">
+
+            <button class="small-save"
+                onclick="saveManufacturing(this,'')">
+                Save
+            </button>
+
+        </div>
+    `;
+
+    box.prepend(div);
+
+};
+
+
+window.saveManufacturing =
+async function(button,id){
+
+    const item =
+        button.closest(".repeat-item");
+
+    const payload = {
+
+        client_id:selectedWebsiteClientId,
+
+        step_number:
+            Number(item.querySelector('[data-field="step_number"]').value || 1),
+
+        title:
+            item.querySelector('[data-field="title"]').value.trim() || null,
+
+        description:
+            item.querySelector('[data-field="description"]').value.trim() || null,
+
+        sort_order:
+            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+
+        is_active:
+            item.querySelector('[data-field="is_active"]').value === "true"
+
+    };
+
+
+    let result;
+
+    if(id){
+
+        result =
+            await supabaseClient
+            .from("client_manufacturing_steps")
+            .update(payload)
+            .eq("id",id);
+
+    }else{
+
+        result =
+            await supabaseClient
+            .from("client_manufacturing_steps")
+            .insert(payload);
+
+    }
+
+
+    if(result.error){
+
+        alert(result.error.message);
+        return;
+    }
+
+
+    await loadManufacturing(
+        selectedWebsiteClientId
+    );
+
+    showMessage(
+        "Manufacturing step saved.",
+        "success"
+    );
+
+};
+
+
+window.deleteManufacturing =
+async function(id){
+
+    await deleteRepeated(
+        "client_manufacturing_steps",
+        id,
+        loadManufacturing
+    );
+
+};
+
+
+/* =========================================================
+   QUALITY
+========================================================= */
+
+async function loadQuality(clientIdValue){
+
+    const {data,error} =
+        await supabaseClient
+        .from("client_quality")
+        .select("*")
+        .eq("client_id",clientIdValue)
+        .order("sort_order",{ascending:true});
+
+
+    if(error)return;
+
+
+    const box =
+        document.getElementById("qualityList");
+
+    box.innerHTML = "";
+
+
+    (data || []).forEach(item=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "repeat-item";
+
+        div.innerHTML = `
+
+            <div class="repeat-item-grid">
+
+                <div class="field">
+                    <label>Icon</label>
+                    <input data-field="icon"
+                           value="${escapeHtml(item.icon || "")}">
+                </div>
+
+                <div class="field">
+                    <label>Title</label>
+                    <input data-field="title"
+                           value="${escapeHtml(item.title || "")}">
+                </div>
+
+                <div class="field full">
+                    <label>Description</label>
+                    <textarea data-field="description">${escapeHtml(item.description || "")}</textarea>
+                </div>
+
+                <div class="field">
+                    <label>Sort Order</label>
+                    <input data-field="sort_order"
+                           type="number"
+                           value="${item.sort_order ?? 0}">
+                </div>
+
+                <div class="field">
+                    <label>Active</label>
+                    <select data-field="is_active">
+                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
+                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="repeat-actions">
+
+                <button class="small-save"
+                    onclick="saveQuality(this,'${item.id}')">
+                    Save
+                </button>
+
+                <button class="small-delete"
+                    onclick="deleteQuality('${item.id}')">
+                    Delete
+                </button>
+
+            </div>
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+window.addQuality=function(){
+
+    const box =
+        document.getElementById("qualityList");
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "repeat-item";
+
+    div.innerHTML = `
+
+        <div class="repeat-item-grid">
+
+            <div class="field">
+                <label>Icon</label>
+                <input data-field="icon">
+            </div>
+
+            <div class="field">
+                <label>Title</label>
+                <input data-field="title">
+            </div>
+
+            <div class="field full">
+                <label>Description</label>
+                <textarea data-field="description"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Sort Order</label>
+                <input data-field="sort_order" type="number" value="0">
+            </div>
+
+            <div class="field">
+                <label>Active</label>
+                <select data-field="is_active">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="repeat-actions">
+
+            <button class="small-save"
+                onclick="saveQuality(this,'')">
+                Save
+            </button>
+
+        </div>
+    `;
+
+    box.prepend(div);
+
+};
+
+
+window.saveQuality =
+async function(button,id){
+
+    const item =
+        button.closest(".repeat-item");
+
+    const payload = {
+
+        client_id:selectedWebsiteClientId,
+
+        icon:
+            item.querySelector('[data-field="icon"]').value.trim() || null,
+
+        title:
+            item.querySelector('[data-field="title"]').value.trim() || null,
+
+        description:
+            item.querySelector('[data-field="description"]').value.trim() || null,
+
+        sort_order:
+            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+
+        is_active:
+            item.querySelector('[data-field="is_active"]').value === "true"
+
+    };
+
+
+    let result;
+
+    if(id){
+
+        result =
+            await supabaseClient
+            .from("client_quality")
+            .update(payload)
+            .eq("id",id);
+
+    }else{
+
+        result =
+            await supabaseClient
+            .from("client_quality")
+            .insert(payload);
+
+    }
+
+
+    if(result.error){
+
+        alert(result.error.message);
+        return;
+    }
+
+
+    await loadQuality(
+        selectedWebsiteClientId
+    );
+
+    showMessage(
+        "Quality item saved.",
+        "success"
+    );
+
+};
+
+
+window.deleteQuality =
+async function(id){
+
+    await deleteRepeated(
+        "client_quality",
+        id,
+        loadQuality
+    );
+
+};
+
+
+/* =========================================================
+   INDUSTRIES
+========================================================= */
+
+async function loadIndustries(clientIdValue){
+
+    const {data,error} =
+        await supabaseClient
+        .from("client_industries")
+        .select("*")
+        .eq("client_id",clientIdValue)
+        .order("sort_order",{ascending:true});
+
+
+    if(error)return;
+
+
+    const box =
+        document.getElementById("industriesList");
+
+    box.innerHTML = "";
+
+
+    (data || []).forEach(item=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "repeat-item";
+
+        div.innerHTML = `
+
+            <div class="repeat-item-grid">
+
+                <div class="field">
+                    <label>Industry Name</label>
+                    <input data-field="name"
+                           value="${escapeHtml(item.name || "")}">
+                </div>
+
+                <div class="field">
+                    <label>Sort Order</label>
+                    <input data-field="sort_order"
+                           type="number"
+                           value="${item.sort_order ?? 0}">
+                </div>
+
+                <div class="field">
+                    <label>Active</label>
+                    <select data-field="is_active">
+                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
+                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="repeat-actions">
+
+                <button class="small-save"
+                    onclick="saveIndustry(this,'${item.id}')">
+                    Save
+                </button>
+
+                <button class="small-delete"
+                    onclick="deleteIndustry('${item.id}')">
+                    Delete
+                </button>
+
+            </div>
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+window.addIndustry=function(){
+
+    const box =
+        document.getElementById("industriesList");
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "repeat-item";
+
+    div.innerHTML = `
+
+        <div class="repeat-item-grid">
+
+            <div class="field">
+                <label>Industry Name</label>
+                <input data-field="name">
+            </div>
+
+            <div class="field">
+                <label>Sort Order</label>
+                <input data-field="sort_order"
+                       type="number"
+                       value="0">
+            </div>
+
+            <div class="field">
+                <label>Active</label>
+                <select data-field="is_active">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="repeat-actions">
+
+            <button class="small-save"
+                onclick="saveIndustry(this,'')">
+                Save
+            </button>
+
+        </div>
+    `;
+
+    box.prepend(div);
+
+};
+
+
+window.saveIndustry =
+async function(button,id){
+
+    const item =
+        button.closest(".repeat-item");
+
+    const payload = {
+
+        client_id:selectedWebsiteClientId,
+
+        name:
+            item.querySelector('[data-field="name"]').value.trim() || null,
+
+        sort_order:
+            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+
+        is_active:
+            item.querySelector('[data-field="is_active"]').value === "true"
+
+    };
+
+
+    let result;
+
+    if(id){
+
+        result =
+            await supabaseClient
+            .from("client_industries")
+            .update(payload)
+            .eq("id",id);
+
+    }else{
+
+        result =
+            await supabaseClient
+            .from("client_industries")
+            .insert(payload);
+
+    }
+
+
+    if(result.error){
+
+        alert(result.error.message);
+        return;
+    }
+
+
+    await loadIndustries(
+        selectedWebsiteClientId
+    );
+
+    showMessage(
+        "Industry saved.",
+        "success"
+    );
+
+};
+
+
+window.deleteIndustry =
+async function(id){
+
+    await deleteRepeated(
+        "client_industries",
+        id,
+        loadIndustries
+    );
+
+};
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+async function loadGallery(clientIdValue){
+
+    const {data,error} =
+        await supabaseClient
+        .from("client_gallery")
+        .select("*")
+        .eq("client_id",clientIdValue)
+        .order("sort_order",{ascending:true});
+
+
+    if(error)return;
+
+
+    const box =
+        document.getElementById("galleryList");
+
+    box.innerHTML = "";
+
+
+    (data || []).forEach(item=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "repeat-item";
+
+        div.innerHTML = `
+
+            <div class="repeat-item-grid">
+
+                <div class="field full">
+                    <label>Image URL</label>
+                    <input data-field="image_url"
+                           value="${escapeHtml(item.image_url || "")}">
+                </div>
+
+                <div class="field">
+                    <label>Title</label>
+                    <input data-field="title"
+                           value="${escapeHtml(item.title || "")}">
+                </div>
+
+                <div class="field">
+                    <label>Sort Order</label>
+                    <input data-field="sort_order"
+                           type="number"
+                           value="${item.sort_order ?? 0}">
+                </div>
+
+                <div class="field">
+                    <label>Active</label>
+                    <select data-field="is_active">
+                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
+                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="repeat-actions">
+
+                <button class="small-save"
+                    onclick="saveGallery(this,'${item.id}')">
+                    Save
+                </button>
+
+                <button class="small-delete"
+                    onclick="deleteGallery('${item.id}')">
+                    Delete
+                </button>
+
+            </div>
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+window.addGallery=function(){
+
+    const box =
+        document.getElementById("galleryList");
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "repeat-item";
+
+    div.innerHTML = `
+
+        <div class="repeat-item-grid">
+
+            <div class="field full">
+                <label>Image URL</label>
+                <input data-field="image_url">
+            </div>
+
+            <div class="field">
+                <label>Title</label>
+                <input data-field="title">
+            </div>
+
+            <div class="field">
+                <label>Sort Order</label>
+                <input data-field="sort_order"
+                       type="number"
+                       value="0">
+            </div>
+
+            <div class="field">
+                <label>Active</label>
+                <select data-field="is_active">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="repeat-actions">
+
+            <button class="small-save"
+                onclick="saveGallery(this,'')">
+                Save
+            </button>
+
+        </div>
+    `;
+
+    box.prepend(div);
+
+};
+
+
+window.saveGallery =
+async function(button,id){
+
+    const item =
+        button.closest(".repeat-item");
+
+    const payload = {
+
+        client_id:selectedWebsiteClientId,
+
+        image_url:
+            item.querySelector('[data-field="image_url"]').value.trim() || null,
+
+        title:
+            item.querySelector('[data-field="title"]').value.trim() || null,
+
+        sort_order:
+            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+
+        is_active:
+            item.querySelector('[data-field="is_active"]').value === "true"
+
+    };
+
+
+    let result;
+
+    if(id){
+
+        result =
+            await supabaseClient
+            .from("client_gallery")
+            .update(payload)
+            .eq("id",id);
+
+    }else{
+
+        result =
+            await supabaseClient
+            .from("client_gallery")
+            .insert(payload);
+
+    }
+
+
+    if(result.error){
+
+        alert(result.error.message);
+        return;
+    }
+
+
+    await loadGallery(
+        selectedWebsiteClientId
+    );
+
+    showMessage(
+        "Gallery item saved.",
+        "success"
+    );
+
+};
+
+
+window.deleteGallery =
+async function(id){
+
+    await deleteRepeated(
+        "client_gallery",
+        id,
+        loadGallery
+    );
+
+};
+
+
+/* =========================================================
+   TESTIMONIALS
+========================================================= */
+
+async function loadTestimonials(clientIdValue){
+
+    const {data,error} =
+        await supabaseClient
+        .from("client_testimonials")
+        .select("*")
+        .eq("client_id",clientIdValue)
+        .order("sort_order",{ascending:true});
+
+
+    if(error)return;
+
+
+    const box =
+        document.getElementById("testimonialsList");
+
+    box.innerHTML = "";
+
+
+    (data || []).forEach(item=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "repeat-item";
+
+        div.innerHTML = `
+
+            <div class="repeat-item-grid">
+
+                <div class="field full">
+                    <label>Message</label>
+                    <textarea data-field="message">${escapeHtml(item.message || "")}</textarea>
+                </div>
+
+                <div class="field">
+                    <label>Customer Name</label>
+                    <input data-field="customer_name"
+                           value="${escapeHtml(item.customer_name || "")}">
+                </div>
+
+                <div class="field">
+                    <label>Designation</label>
+                    <input data-field="designation"
+                           value="${escapeHtml(item.designation || "")}">
+                </div>
+
+                <div class="field">
+                    <label>Sort Order</label>
+                    <input data-field="sort_order"
+                           type="number"
+                           value="${item.sort_order ?? 0}">
+                </div>
+
+                <div class="field">
+                    <label>Active</label>
+                    <select data-field="is_active">
+                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
+                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="repeat-actions">
+
+                <button class="small-save"
+                    onclick="saveTestimonial(this,'${item.id}')">
+                    Save
+                </button>
+
+                <button class="small-delete"
+                    onclick="deleteTestimonial('${item.id}')">
+                    Delete
+                </button>
+
+            </div>
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+window.addTestimonial=function(){
+
+    const box =
+        document.getElementById("testimonialsList");
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "repeat-item";
+
+    div.innerHTML = `
+
+        <div class="repeat-item-grid">
+
+            <div class="field full">
+                <label>Message</label>
+                <textarea data-field="message"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Customer Name</label>
+                <input data-field="customer_name">
+            </div>
+
+            <div class="field">
+                <label>Designation</label>
+                <input data-field="designation">
+            </div>
+
+            <div class="field">
+                <label>Sort Order</label>
+                <input data-field="sort_order"
+                       type="number"
+                       value="0">
+            </div>
+
+            <div class="field">
+                <label>Active</label>
+                <select data-field="is_active">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="repeat-actions">
+
+            <button class="small-save"
+                onclick="saveTestimonial(this,'')">
+                Save
+            </button>
+
+        </div>
+    `;
+
+    box.prepend(div);
+
+};
+
+
+window.saveTestimonial =
+async function(button,id){
+
+    const item =
+        button.closest(".repeat-item");
+
+    const payload = {
+
+        client_id:selectedWebsiteClientId,
+
+        message:
+            item.querySelector('[data-field="message"]').value.trim() || null,
+
+        customer_name:
+            item.querySelector('[data-field="customer_name"]').value.trim() || null,
+
+        designation:
+            item.querySelector('[data-field="designation"]').value.trim() || null,
+
+        sort_order:
+            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+
+        is_active:
+            item.querySelector('[data-field="is_active"]').value === "true"
+
+    };
+
+
+    let result;
+
+    if(id){
+
+        result =
+            await supabaseClient
+            .from("client_testimonials")
+            .update(payload)
+            .eq("id",id);
+
+    }else{
+
+        result =
+            await supabaseClient
+            .from("client_testimonials")
+            .insert(payload);
+
+    }
+
+
+    if(result.error){
+
+        alert(result.error.message);
+        return;
+    }
+
+
+    await loadTestimonials(
+        selectedWebsiteClientId
+    );
+
+    showMessage(
+        "Testimonial saved.",
+        "success"
+    );
+
+};
+
+
+window.deleteTestimonial =
+async function(id){
+
+    await deleteRepeated(
+        "client_testimonials",
+        id,
+        loadTestimonials
+    );
+
+};
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+async function loadFaq(clientIdValue){
+
+    const {data,error} =
+        await supabaseClient
+        .from("client_faq")
+        .select("*")
+        .eq("client_id",clientIdValue)
+        .order("sort_order",{ascending:true});
+
+
+    if(error)return;
+
+
+    const box =
+        document.getElementById("faqList");
+
+    box.innerHTML = "";
+
+
+    (data || []).forEach(item=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "repeat-item";
+
+        div.innerHTML = `
+
+            <div class="repeat-item-grid">
+
+                <div class="field full">
+                    <label>Question</label>
+                    <input data-field="question"
+                           value="${escapeHtml(item.question || "")}">
+                </div>
+
+                <div class="field full">
+                    <label>Answer</label>
+                    <textarea data-field="answer">${escapeHtml(item.answer || "")}</textarea>
+                </div>
+
+                <div class="field">
+                    <label>Sort Order</label>
+                    <input data-field="sort_order"
+                           type="number"
+                           value="${item.sort_order ?? 0}">
+                </div>
+
+                <div class="field">
+                    <label>Active</label>
+                    <select data-field="is_active">
+                        <option value="true" ${item.is_active !== false ? "selected":""}>Yes</option>
+                        <option value="false" ${item.is_active === false ? "selected":""}>No</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="repeat-actions">
+
+                <button class="small-save"
+                    onclick="saveFaq(this,'${item.id}')">
+                    Save
+                </button>
+
+                <button class="small-delete"
+                    onclick="deleteFaq('${item.id}')">
+                    Delete
+                </button>
+
+            </div>
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+window.addFaq=function(){
+
+    const box =
+        document.getElementById("faqList");
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "repeat-item";
+
+    div.innerHTML = `
+
+        <div class="repeat-item-grid">
+
+            <div class="field full">
+                <label>Question</label>
+                <input data-field="question">
+            </div>
+
+            <div class="field full">
+                <label>Answer</label>
+                <textarea data-field="answer"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Sort Order</label>
+                <input data-field="sort_order"
+                       type="number"
+                       value="0">
+            </div>
+
+            <div class="field">
+                <label>Active</label>
+                <select data-field="is_active">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="repeat-actions">
+
+            <button class="small-save"
+                onclick="saveFaq(this,'')">
+                Save
+            </button>
+
+        </div>
+    `;
+
+    box.prepend(div);
+
+};
+
+
+window.saveFaq =
+async function(button,id){
+
+    const item =
+        button.closest(".repeat-item");
+
+    const payload = {
+
+        client_id:selectedWebsiteClientId,
+
+        question:
+            item.querySelector('[data-field="question"]').value.trim() || null,
+
+        answer:
+            item.querySelector('[data-field="answer"]').value.trim() || null,
+
+        sort_order:
+            Number(item.querySelector('[data-field="sort_order"]').value || 0),
+
+        is_active:
+            item.querySelector('[data-field="is_active"]').value === "true"
+
+    };
+
+
+    let result;
+
+    if(id){
+
+        result =
+            await supabaseClient
+            .from("client_faq")
+            .update(payload)
+            .eq("id",id);
+
+    }else{
+
+        result =
+            await supabaseClient
+            .from("client_faq")
+            .insert(payload);
+
+    }
+
+
+    if(result.error){
+
+        alert(result.error.message);
+        return;
+    }
+
+
+    await loadFaq(
+        selectedWebsiteClientId
+    );
+
+    showMessage(
+        "FAQ saved.",
+        "success"
+    );
+
+};
+
+
+window.deleteFaq =
+async function(id){
+
+    await deleteRepeated(
+        "client_faq",
+        id,
+        loadFaq
+    );
+
+};
+
+
+/* =========================================================
+   GENERIC DELETE
+========================================================= */
+
+async function deleteRepeated(
+    table,
+    id,
+    reloadFunction
+){
+
+    if(!confirm(
+        "Are you sure you want to delete this item?"
+    ))return;
+
+
+    const {error} =
+        await supabaseClient
+        .from(table)
+        .delete()
+        .eq("id",id);
+
+
+    if(error){
+
+        alert(error.message);
+        return;
+    }
+
+
+    await reloadFunction(
+        selectedWebsiteClientId
+    );
+
+
+    showMessage(
+        "Item deleted successfully.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document.getElementById("logoutBtn")
+.addEventListener("click",async()=>{
+
+    try{
+
+        if(window.MDKClientContext){
+            MDKClientContext.clear();
+        }
+
+        await supabaseClient.auth.signOut();
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+    window.location.href =
+        "admin.html";
+
+});
+
+
+/* =========================================================
+   START
+========================================================= */
+
+(async function(){
+
+    try{
+
+        const loggedIn =
+            await checkLogin();
+
+        if(!loggedIn)return;
+
+
+        await loadTemplates();
+
+        updateActiveClientDisplay();
+
+        await loadClients();
+
+    }
+    catch(error){
+
+        console.error(
+            "Client Manager startup error:",
+            error
+        );
+
+        showMessage(
+            "Client Manager error: " +
+            error.message,
+            "error"
+        );
+
+    }
 
 })();
 
